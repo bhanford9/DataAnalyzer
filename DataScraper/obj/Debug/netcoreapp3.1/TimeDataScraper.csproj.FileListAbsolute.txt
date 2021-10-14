@@ -1,9 +1,0 @@
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\TimeDataScraper\bin\Debug\netcoreapp3.1\TimeDataScraper.deps.json
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\TimeDataScraper\bin\Debug\netcoreapp3.1\TimeDataScraper.dll
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\TimeDataScraper\bin\Debug\netcoreapp3.1\TimeDataScraper.pdb
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\TimeDataScraper\obj\Debug\netcoreapp3.1\TimeDataScraper.csproj.AssemblyReference.cache
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\TimeDataScraper\obj\Debug\netcoreapp3.1\TimeDataScraper.AssemblyInfoInputs.cache
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\TimeDataScraper\obj\Debug\netcoreapp3.1\TimeDataScraper.AssemblyInfo.cs
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\TimeDataScraper\obj\Debug\netcoreapp3.1\TimeDataScraper.csproj.CoreCompileInputs.cache
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\TimeDataScraper\obj\Debug\netcoreapp3.1\TimeDataScraper.dll
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\TimeDataScraper\obj\Debug\netcoreapp3.1\TimeDataScraper.pdb

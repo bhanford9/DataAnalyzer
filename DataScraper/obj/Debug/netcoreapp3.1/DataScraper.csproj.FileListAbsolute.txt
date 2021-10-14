@@ -1,8 +1,0 @@
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\DataScraper\bin\Debug\netcoreapp3.1\DataScraper.deps.json
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\DataScraper\bin\Debug\netcoreapp3.1\DataScraper.dll
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\DataScraper\bin\Debug\netcoreapp3.1\DataScraper.pdb
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\DataScraper\obj\Debug\netcoreapp3.1\DataScraper.AssemblyInfoInputs.cache
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\DataScraper\obj\Debug\netcoreapp3.1\DataScraper.AssemblyInfo.cs
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\DataScraper\obj\Debug\netcoreapp3.1\DataScraper.csproj.CoreCompileInputs.cache
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\DataScraper\obj\Debug\netcoreapp3.1\DataScraper.dll
-C:\Users\bmhanford\source\repos\TimePerformanceAnalyzer\DataScraper\obj\Debug\netcoreapp3.1\DataScraper.pdb
