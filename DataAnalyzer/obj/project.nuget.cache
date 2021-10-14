@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "+EdnbI2+dpuHqVSL9N9xZT1auD1uitCYgvUU+XkYjdLW32cQGvUJB4zgMvFnAbOVpvdoraRNzWDdiAbx2ezEZQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\bmhanford\\source\\repos\\TimePerformanceAnalyzer\\DataAnalyzer\\DataAnalyzer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\bmhanford\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.18\\microsoft.netcore.app.host.win-x64.3.1.18.nupkg.sha512"
+  ],
+  "logs": []
+}
