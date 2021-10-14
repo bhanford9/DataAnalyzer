@@ -2,7 +2,7 @@
 
 namespace DataScraper.DataKeyValues.TimeKeyValues.TimeValues
 {
-  public class QueryableCategoryTimeValue : TimeValue<CategoryType>
+  public class QueryableCategoryValue : ExtractableValue<CategoryType>
   {
     public override CategoryType ExtractValue(string str)
     {

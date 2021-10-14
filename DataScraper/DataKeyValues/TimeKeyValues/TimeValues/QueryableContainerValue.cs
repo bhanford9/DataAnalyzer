@@ -2,7 +2,7 @@
 
 namespace DataScraper.DataKeyValues.TimeKeyValues.TimeValues
 {
-  public class QueryableContainerTimeValue : TimeValue<ContainerType>
+  public class QueryableContainerValue : ExtractableValue<ContainerType>
   {
     public override ContainerType ExtractValue(string str)
     {

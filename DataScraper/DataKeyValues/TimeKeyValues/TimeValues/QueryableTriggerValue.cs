@@ -2,7 +2,7 @@
 
 namespace DataScraper.DataKeyValues.TimeKeyValues.TimeValues
 {
-  public class QueryableTriggerTimeValue : TimeValue<TriggerType>
+  public class QueryableTriggerValue : ExtractableValue<TriggerType>
   {
     public override TriggerType ExtractValue(string str)
     {
