@@ -8,7 +8,7 @@
         xmlns:viewmodels="clr-namespace:DataAnalyzer.ViewModels"
         mc:Ignorable="d"
         Title="Time Performance Analyzer" Height="880" Width="1600">
-  <Grid Background="{StaticResource DarkBackground}">
+  <Grid Background="{StaticResource LightBackground}">
     <Grid.Resources>
       <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
       </Style>
@@ -42,12 +42,15 @@
       <ColumnDefinition Width="650"/>
       <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
-    <views:FileSelectorView Grid.Column="0"
-                            Margin="2 5 0 2">
-      
-    </views:FileSelectorView>
-    <views:StatOrganizer Grid.Column="1"
-                         Margin="0 5 2 2">      
-    </views:StatOrganizer>
+    <Border Style="{StaticResource DarkBackgroundBorderStyle}" Grid.Column="0">
+      <views:FileSelectorView 
+                              Margin="2 5 0 2">
+      </views:FileSelectorView>
+    </Border>
+
+    <Border Style="{StaticResource DarkBackgroundBorderStyle}" Grid.Column="1">
+      <views:StatOrganizerView  Margin="0 5 2 2">
+      </views:StatOrganizerView>
+    </Border>
   </Grid>
 </Window>

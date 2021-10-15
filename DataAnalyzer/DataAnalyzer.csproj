@@ -28,7 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\DataConfigurations\TimeStatConfigurations\" />
+    <Folder Include="Common\DataConfigurations\FilteringConfigurations\" />
+    <Folder Include="Common\DataConfigurations\SortingConfigurations\" />
   </ItemGroup>
 
 </Project>

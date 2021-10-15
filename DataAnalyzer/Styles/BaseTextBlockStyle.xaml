@@ -56,5 +56,11 @@
     </Style>
     <Style x:Key="DarkHeaderTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource HeaderTextBlockStyle}">
         <Setter Property="Foreground" Value="{StaticResource DarkText}"/>
-    </Style>
+  </Style>
+  <Style x:Key="LightestTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}">
+    <Setter Property="Foreground" Value="{StaticResource LightestText}"/>
+  </Style>
+  <Style x:Key="MainAccentTextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BoldTextBlockStyle}">
+    <Setter Property="Foreground" Value="{StaticResource MainAccent}"/>
+  </Style>
 </ResourceDictionary>

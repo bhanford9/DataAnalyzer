@@ -26,12 +26,12 @@ namespace DataAnalyzer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastUsedDirectory {
+        public string LastUsedDataDirectory {
             get {
-                return ((string)(this["LastUsedDirectory"]));
+                return ((string)(this["LastUsedDataDirectory"]));
             }
             set {
-                this["LastUsedDirectory"] = value;
+                this["LastUsedDataDirectory"] = value;
             }
         }
         
@@ -44,6 +44,18 @@ namespace DataAnalyzer.Properties {
             }
             set {
                 this["LastSelectedScraperType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastUsedConfigurationDirectory {
+            get {
+                return ((string)(this["LastUsedConfigurationDirectory"]));
+            }
+            set {
+                this["LastUsedConfigurationDirectory"] = value;
             }
         }
     }

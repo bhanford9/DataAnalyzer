@@ -9,6 +9,9 @@ using System;
 using DataAnalyzer.Common.DataConverters;
 using System.Collections.Generic;
 using DataAnalyzer.Services;
+using DataAnalyzer.Common.DataOrganizers;
+using DataAnalyzer.Common.DataConfigurations.ExcelConfiguration;
+using DataAnalyzer.Common.DataObjects.TimeStats.QueryableTimeStats;
 
 namespace DataAnalyzer.ViewModels
 {
@@ -28,7 +31,7 @@ namespace DataAnalyzer.ViewModels
       this.browseDirectory = new BaseCommand((object o) => this.DoBrowseDirectory());
       this.loadStats = new BaseCommand((object o) => this.DoLoadStats());
 
-      this.ActiveDirectory = Properties.Settings.Default.LastUsedDirectory;
+      this.ActiveDirectory = Properties.Settings.Default.LastUsedDataDirectory;
       this.SelectedScraperType = Properties.Settings.Default.LastSelectedScraperType;
 
       if (this.ActiveDirectory != string.Empty)
@@ -90,6 +93,14 @@ namespace DataAnalyzer.ViewModels
         IDataConverter converter = this.dataConverterLibrary.GetConverter(currentType);
         this.statsModel.LoadStatsForFile(file.Path, converter);
       });
+
+      ExcelConfiguration configuration = new ExcelConfiguration();
+      configuration.AddGroupingRule(0, (stats) => (stats as QueryableTimeStats).MethodName);
+      configuration.AddGroupingRule(1, (stats) => (stats as QueryableTimeStats).ContainerType);
+      configuration.AddGroupingRule(2, (stats) => (stats as QueryableTimeStats).CategoryType);
+
+      DataOrganizer organizer = new DataOrganizer();
+      organizer.Organize(configuration, this.statsModel.Stats);
     }
 
     private ICollection<CheckableTreeViewItem> FlattenFiles()
@@ -119,7 +130,7 @@ namespace DataAnalyzer.ViewModels
 
       this.LoadAllChildren(this.ActiveDirectory, this.Files[0]);
 
-      Properties.Settings.Default.LastUsedDirectory = this.ActiveDirectory;
+      Properties.Settings.Default.LastUsedDataDirectory = this.ActiveDirectory;
       Properties.Settings.Default.Save();
     }
 

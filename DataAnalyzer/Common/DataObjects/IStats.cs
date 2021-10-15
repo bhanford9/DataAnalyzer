@@ -2,5 +2,6 @@
 {
   public interface IStats
   {
+    string Uid { get; }
   }
 }

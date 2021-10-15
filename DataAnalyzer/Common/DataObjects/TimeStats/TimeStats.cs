@@ -1,6 +1,8 @@
-﻿namespace DataAnalyzer.Common.DataObjects.TimeStats
+﻿using System;
+
+namespace DataAnalyzer.Common.DataObjects.TimeStats
 {
-  public class TimeStats : ITimeStats
+  public class TimeStats : Stats, ITimeStats
   {
     public int Iterations { get; set; }
 
