@@ -78,12 +78,41 @@
               Grid.RowSpan="2"
               Visibility="{Binding IsCreating, Converter={StaticResource BooleanToVisibility}}">
           <Grid.RowDefinitions>
+            <RowDefinition Height="38"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
           </Grid.RowDefinitions>
+
+          <Grid Margin="0 2 0 6">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition/>
+              <ColumnDefinition Width="Auto"/>
+              <ColumnDefinition Width="180"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+              <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+                <Setter Property="Margin" Value="2 0 5 0"/>
+              </Style>
+            </Grid.Resources>
+
+            <TextBlock Grid.Column="0"
+                       Text="Configuration Name:"/>
+
+            <TextBox Grid.Column="1"
+                     Text="{Binding ConfigurationName}"/>
+
+            <TextBlock Grid.Column="2"
+                       Text="Data Type:"/>
+
+            <ComboBox Grid.Column="3"
+                      ItemsSource="{Binding DataTypes}"
+                      SelectedItem="{Binding SelectedDataType}"/>
+          </Grid>
           
-          <GroupBox Grid.Row="0"
+          <GroupBox Grid.Row="1"
                     Header="Grouping Settings">
             <Grid>
               <Grid.RowDefinitions>
@@ -106,12 +135,12 @@
             </Grid>
           </GroupBox>
           
-          <GroupBox Grid.Row="1"
+          <GroupBox Grid.Row="2"
                     Header="Sorting Settings">
             
           </GroupBox>
           
-          <Grid Grid.Row="2">
+          <Grid Grid.Row="3">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="*"/>
               <ColumnDefinition Width="180"/>

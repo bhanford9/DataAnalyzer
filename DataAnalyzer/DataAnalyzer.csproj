@@ -25,11 +25,16 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataScraper\DataScraper.csproj" />
+    <ProjectReference Include="..\DataSerialization\DataSerialization.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Common\DataConfigurations\FilteringConfigurations\" />
     <Folder Include="Common\DataConfigurations\SortingConfigurations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro.IconPacks" Version="4.10.0" />
   </ItemGroup>
 
 </Project>

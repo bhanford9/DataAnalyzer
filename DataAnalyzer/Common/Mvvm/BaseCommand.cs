@@ -16,6 +16,14 @@ namespace DataAnalyzer.Common.Mvvm
 
     public event EventHandler CanExecuteChanged;
 
+    public void RaiseCanExecuteChanged()
+    {
+      if (this.CanExecuteChanged != null)
+      {
+        this.CanExecuteChanged(this, EventArgs.Empty);
+      }
+    }
+
     public bool CanExecute(object parameter)
     {
       return this.canExecute?.Invoke(parameter) ?? true;

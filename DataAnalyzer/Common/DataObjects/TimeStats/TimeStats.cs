@@ -1,9 +1,25 @@
-﻿using System;
+﻿using DataAnalyzer.Services;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DataAnalyzer.Common.DataObjects.TimeStats
 {
   public class TimeStats : Stats, ITimeStats
   {
+    private List<string> parameterNames = new List<string>();
+
+    public TimeStats()
+    {
+      parameterNames.Add(nameof(this.Iterations));
+      parameterNames.Add(nameof(this.ContainerSize));
+      parameterNames.Add(nameof(this.TotalTimeMillis));
+      parameterNames.Add(nameof(this.AverageTimeMillis));
+      parameterNames.Add(nameof(this.FastestTimeMillis));
+      parameterNames.Add(nameof(this.SlowestTimeMillis));
+      parameterNames.Add(nameof(this.RangeTimeMillis));
+      parameterNames.Add(nameof(this.ExecuterName));
+    }
+
     public int Iterations { get; set; }
 
     public int ContainerSize { get; set; }
@@ -19,5 +35,14 @@ namespace DataAnalyzer.Common.DataObjects.TimeStats
     public double RangeTimeMillis { get; set; }
 
     public string ExecuterName { get; set; } = string.Empty;
+
+    public override ICollection<string> ParameterNames => this.parameterNames.Union(this.InternalParameterNames).ToList();
+
+    public override T GetEnumeratedParameters<T>()
+    {
+      return (T)(object)StatType.Time;
+    }
+
+    protected virtual ICollection<string> InternalParameterNames => new List<string>();
   }
 }

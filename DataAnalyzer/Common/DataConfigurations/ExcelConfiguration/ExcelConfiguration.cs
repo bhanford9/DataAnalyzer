@@ -1,11 +1,6 @@
-﻿using DataAnalyzer.Common.DataConfigurations.GroupingConfigurations;
-using DataAnalyzer.Common.DataObjects;
-using System;
-using System.Collections.Generic;
-
-namespace DataAnalyzer.Common.DataConfigurations.ExcelConfiguration
+﻿namespace DataAnalyzer.Common.DataConfigurations.ExcelConfiguration
 {
-  public class ExcelConfiguration : DataConfigurations
+  public class ExcelConfiguration : DataConfiguration
   {
     private int groupingLevels = 3;
 

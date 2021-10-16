@@ -15,9 +15,8 @@ namespace DataAnalyzer.Common.Mvvm
       if (!property.Equals(value))
       {
         property = value;
+        this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
       }
-
-      this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
   }
 }

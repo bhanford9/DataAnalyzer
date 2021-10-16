@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DataAnalyzer.Common.DataConfigurations
 {
-  public abstract class DataConfigurations : IDataConfiguration
+  public abstract class DataConfiguration : IDataConfiguration
   {
     protected ICollection<IGroupingConfiguration> groupingConfigurations = new List<IGroupingConfiguration>();
 
@@ -18,11 +18,11 @@ namespace DataAnalyzer.Common.DataConfigurations
     {
       if (level >= this.groupingConfigurations.Count)
       {
-        groupingConfigurations.Add(new GroupingConfiguration(propertyGetter));
+        this.groupingConfigurations.Add(new GroupingConfiguration(propertyGetter));
       }
       else
       {
-        groupingConfigurations.ElementAt(level).AddCondition(propertyGetter);
+        this.groupingConfigurations.ElementAt(level).AddCondition(propertyGetter);
       }
     }
   }
