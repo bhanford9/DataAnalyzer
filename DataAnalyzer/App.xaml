@@ -8,6 +8,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Styles/ColorBrushes.xaml"/>
         <ResourceDictionary Source="Styles/BaseTextBlockStyle.xaml"/>
+        <ResourceDictionary Source="Styles/BaseScrollViewerStyle.xaml"/>
         <ResourceDictionary Source="Styles/BaseTextBoxStyle.xaml"/>
         <ResourceDictionary Source="Styles/BaseTabControlStyle.xaml"/>
         <ResourceDictionary Source="Styles/BaseButtonStyle.xaml"/>
@@ -17,7 +18,6 @@
         <ResourceDictionary Source="Styles/BaseExpanderStyle.xaml"/>
         <ResourceDictionary Source="Styles/BaseListBoxStyle.xaml"/>
         <ResourceDictionary Source="Styles/BaseLabelStyle.xaml"/>
-        <ResourceDictionary Source="Styles/BaseScrollViewerStyle.xaml"/>
         <ResourceDictionary Source="Styles/BaseItemsControlStyle.xaml"/>
         <ResourceDictionary Source="Styles/BaseRadioButtonStyle.xaml"/>
         <ResourceDictionary Source="Styles/BaseTreeViewStyle.xaml"/>

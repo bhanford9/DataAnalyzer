@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DataAnalyzer.Common.DataObjects.TimeStats
 {
-  public class TimeStats : Stats, ITimeStats
+  public abstract class TimeStats : Stats, ITimeStats
   {
     private List<string> parameterNames = new List<string>();
 
@@ -38,11 +38,6 @@ namespace DataAnalyzer.Common.DataObjects.TimeStats
 
     public override ICollection<string> ParameterNames => this.parameterNames.Union(this.InternalParameterNames).ToList();
 
-    public override T GetEnumeratedParameters<T>()
-    {
-      return (T)(object)StatType.Time;
-    }
-
-    protected virtual ICollection<string> InternalParameterNames => new List<string>();
+    protected abstract ICollection<string> InternalParameterNames { get; }
   }
 }

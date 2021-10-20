@@ -1,11 +1,12 @@
 ﻿using DataAnalyzer.Common.DataObjects;
+using DataAnalyzer.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace DataAnalyzer.Common.DataParameters
 {
-  public abstract class DataParameterCollection<T>
-    where T : IStats
+  public abstract class DataParameterCollection : IDataParameterCollection
   {
     protected ICollection<IDataParameter> parameters = new List<IDataParameter>();
 
@@ -13,6 +14,8 @@ namespace DataAnalyzer.Common.DataParameters
     {
       this.InitializeParameters();
     }
+
+    public abstract StatType StatType { get; }
 
     public ICollection<IDataParameter> GetParameters()
     {
@@ -37,6 +40,11 @@ namespace DataAnalyzer.Common.DataParameters
     public ICollection<string> GetSortableParameterNames()
     {
       return this.parameters.Where(x => x.CanSortBy).Select(x => x.Name).ToList();
+    }
+
+    public Func<IStats, IComparable> GetStatAccessor(string name)
+    {
+      return this.parameters.First(x => x.Name.Equals(name)).StatAccessor;
     }
 
     protected abstract void InitializeParameters();

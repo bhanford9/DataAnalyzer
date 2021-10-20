@@ -13,7 +13,7 @@ namespace DataAnalyzer.Common.DataOrganizers
     {
       HeirarchalStats heirarchalStats = new HeirarchalStats();
 
-      LinkedGroupingConfiguration groupingConfigurations = 
+      LinkedGroupingConfiguration groupingConfigurations =
         new LinkedGroupingConfiguration(configuration.GroupingConfigurations.First().GetProperty);
 
       LinkedGroupingConfiguration temp = groupingConfigurations;
@@ -36,21 +36,21 @@ namespace DataAnalyzer.Common.DataOrganizers
       ICollection<IGrouping<IComparable, IStats>> groups =
         stats.GroupBy(x => groupingConfigurations.GetProperty(x)).ToList();
 
-        groups.ToList().ForEach(group =>
+      groups.ToList().ForEach(group =>
+      {
+        HeirarchalStats stats = new HeirarchalStats() { Key = group.Key };
+        group.ToList().ForEach(x => stats.Values.Add(x));
+
+        if (groupingConfigurations.Next != null)
         {
-          HeirarchalStats stats = new HeirarchalStats() { Key = group.Key };
-          group.ToList().ForEach(x => stats.Values.Add(x));
+          this.ApplyNestedGrouping(
+            stats,
+            stats.Values.ToList(),
+            groupingConfigurations.Next);
+        }
 
-          if (groupingConfigurations.Next != null)
-          {
-            this.ApplyNestedGrouping(
-              stats,
-              stats.Values.ToList(),
-              groupingConfigurations.Next);
-          }
-
-          heirarchalStats.Children.Add(stats);
-        });
+        heirarchalStats.Children.Add(stats);
+      });
     }
   }
 }

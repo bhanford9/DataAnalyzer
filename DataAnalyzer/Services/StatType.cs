@@ -3,7 +3,6 @@
   public enum StatType
   {
     Queryable,
-    Time,
     NotApplicable
   }
 }

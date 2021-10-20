@@ -12,7 +12,7 @@ namespace DataAnalyzer.Common.Mvvm
     }
     protected void NotifyPropertyChanged<T>(string propertyName, ref T property, T value)
     {
-      if (!property.Equals(value))
+      if (property == null || !property.Equals(value))
       {
         property = value;
         this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -42,12 +42,12 @@
       <ColumnDefinition Width="650"/>
       <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
+
     <Border Style="{StaticResource DarkBackgroundBorderStyle}" Grid.Column="0">
-      <views:FileSelectorView 
-                              Margin="2 5 0 2">
+      <views:FileSelectorView Margin="2 5 0 2">
       </views:FileSelectorView>
     </Border>
-
+    
     <Border Style="{StaticResource DarkBackgroundBorderStyle}" Grid.Column="1">
       <views:StatOrganizerView  Margin="0 5 2 2">
       </views:StatOrganizerView>

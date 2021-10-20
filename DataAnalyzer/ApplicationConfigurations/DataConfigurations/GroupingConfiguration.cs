@@ -1,5 +1,7 @@
 ﻿using DataAnalyzer.Common.DataObjects;
 using System;
+using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
 {
@@ -10,6 +12,8 @@ namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
 
     public int GroupLevel { get; set; }
 
+    [JsonIgnore]
+    [IgnoreDataMember]
     public Func<IStats, IComparable> Accessor { get; set; }
   }
 }

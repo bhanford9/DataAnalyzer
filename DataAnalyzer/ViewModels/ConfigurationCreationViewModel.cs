@@ -1,4 +1,7 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+using DataAnalyzer.Common.DataObjects;
+using DataAnalyzer.Common.DataObjects.TimeStats.QueryableTimeStats;
+using DataAnalyzer.Common.DataParameters;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Services;
@@ -15,7 +18,7 @@ namespace DataAnalyzer.ViewModels
 {
   public class ConfigurationCreationViewModel : BasePropertyChanged
   {
-    private ConfigurationCreationModel configurationCreationModel = new ConfigurationCreationModel();
+    private ConfigurationCreationModel configurationCreationModel = BaseSingleton<ConfigurationCreationModel>.Instance;
 
     private bool isCreating = false;
     private string configurationDirectory = string.Empty;
@@ -37,7 +40,7 @@ namespace DataAnalyzer.ViewModels
 
       this.ConfigurationDirectory = Properties.Settings.Default.LastUsedConfigurationDirectory;
       this.ApplyConfigurationDirectory(this.ConfigurationDirectory);
-      
+
       Enum.GetNames(typeof(StatType)).ToList().ForEach(x => this.DataTypes.Add(x));
 
       configurationCreationModel.PropertyChanged += this.ConfigurationCreationModelPropertyChanged;
@@ -48,8 +51,11 @@ namespace DataAnalyzer.ViewModels
     public ICommand CancelChanges => this.cancelChanges;
     public ICommand SaveConfiguration => this.saveConfiguration;
 
-    public ObservableCollection<string> DataTypes { get; set; } =
-      new ObservableCollection<string>();
+    public ObservableCollection<string> DataTypes { get; set; }
+      = new ObservableCollection<string>();
+
+    public ObservableCollection<ConfigurationGroupingViewModel> ConfigurationGroupings { get; set; }
+      = new ObservableCollection<ConfigurationGroupingViewModel>();
 
     public bool IsCreating
     {
@@ -63,15 +69,18 @@ namespace DataAnalyzer.ViewModels
       set
       {
         this.NotifyPropertyChanged(nameof(this.ConfigurationDirectory), ref this.configurationDirectory, value);
-        Properties.Settings.Default.LastUsedConfigurationDirectory = value;
-        Properties.Settings.Default.Save();
+        this.configurationCreationModel.ConfigurationDirectory = value;
       }
     }
 
     public string ConfigurationName
     {
       get => this.configurationName;
-      set => this.NotifyPropertyChanged(nameof(this.ConfigurationName), ref this.configurationName, value);
+      set
+      {
+        this.NotifyPropertyChanged(nameof(this.ConfigurationName), ref this.configurationName, value);
+        this.configurationCreationModel.ConfigurationName = value;
+      }
     }
 
     public string SelectedDataType
@@ -90,6 +99,10 @@ namespace DataAnalyzer.ViewModels
       set
       {
         this.NotifyPropertyChanged(nameof(this.GroupingLayersCount), ref this.groupingLayersCount, value);
+        while (this.GroupingLayersCount > this.ConfigurationGroupings.Count)
+        {
+          this.ConfigurationGroupings.Add(new ConfigurationGroupingViewModel(this.ConfigurationGroupings.Count()));
+        }
       }
     }
 
@@ -121,6 +134,27 @@ namespace DataAnalyzer.ViewModels
         // TODO --> Display that there is a problem
         return;
       }
+
+      if (string.IsNullOrEmpty(this.selectedDataType))
+      {
+        // TODO --> Display that there is a problem
+        return;
+      }
+
+      int level = 0;
+      this.ConfigurationGroupings.ToList().ForEach(configGroupingViewModel =>
+      {
+        this.configurationCreationModel.AddGroupingConfiguration(new GroupingConfiguration()
+        {
+          GroupLevel = level++,
+          GroupName = configGroupingViewModel.Name,
+          Accessor = this.configurationCreationModel.DataParameterCollection.GetStatAccessor(configGroupingViewModel.SelectedParameter)
+        });
+      });
+
+      this.configurationCreationModel.SaveConfiguration();
+      // TODO --> reload the list of configurations
+      // TODO --> try to load it back in and load in the correct functions based on DataParameterCollections
     }
 
     private void ApplyConfigurationDirectory(string file)
