@@ -64,15 +64,23 @@
                     Content="Create Configuration"
                     Command="{Binding CreateConfiguration}"/>
 
-            <ItemsControl Grid.Row="1"
-                          ItemsSource="{Binding Configurations}">
-              <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                  <utils:LoadableRemovableRow DataContext="{Binding}"/>
-                </DataTemplate>
-              </ItemsControl.ItemTemplate>
-            </ItemsControl>
-
+            <Border Grid.Row="1"
+                    Margin="2 5"
+                    BorderBrush="{StaticResource LightTextOpacity60}"
+                    BorderThickness="0 1"
+                    Background="Transparent">
+              <ItemsControl ItemsSource="{Binding Configurations}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Border BorderBrush="{StaticResource LightTextOpacity20}"
+                            BorderThickness="0 1"
+                            Background="Transparent">
+                      <utils:LoadableRemovableRow DataContext="{Binding}"/>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </Border>
           </Grid>
         </GroupBox>
         

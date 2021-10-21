@@ -1,7 +1,4 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
-using DataAnalyzer.Common.DataObjects;
-using DataAnalyzer.Common.DataObjects.TimeStats.QueryableTimeStats;
-using DataAnalyzer.Common.DataParameters;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Services;
@@ -46,8 +43,8 @@ namespace DataAnalyzer.ViewModels
 
       configurationCreationModel.PropertyChanged += this.ConfigurationCreationModelPropertyChanged;
 
-      this.Configurations.Add(new LoadableRemovableRowViewModel() { Value = "Hello" });
-      this.Configurations.Add(new LoadableRemovableRowViewModel() { Value = "World" });
+      this.Configurations.Add(new ConfigurationFileListItemViewModel() { Value = "Hello" });
+      this.Configurations.Add(new ConfigurationFileListItemViewModel() { Value = "World" });
     }
 
     public ICommand BrowseDirectory => this.browseDirectory;
@@ -155,13 +152,11 @@ namespace DataAnalyzer.ViewModels
         {
           GroupLevel = level++,
           GroupName = configGroupingViewModel.Name,
-          Accessor = this.configurationCreationModel.DataParameterCollection.GetStatAccessor(configGroupingViewModel.SelectedParameter)
+          SelectedParameter = configGroupingViewModel.SelectedParameter
         });
       });
 
       this.configurationCreationModel.SaveConfiguration();
-      // TODO --> reload the list of configurations
-      // TODO --> try to load it back in and load in the correct functions based on DataParameterCollections
     }
 
     private void ApplyConfigurationDirectory(string file)
@@ -169,8 +164,42 @@ namespace DataAnalyzer.ViewModels
       if (Directory.Exists(file))
       {
         this.ConfigurationDirectory = file;
-        IList<string> configFiles = Directory.GetFiles(file).ToList();
+        List<string> configFiles = Directory.GetFiles(file).ToList();
+        this.Configurations.Clear();
+
+        configFiles.ForEach(configFilePath =>
+        {
+          string configFile = Path.GetFileName(configFilePath);
+          string displayText = configFile;
+          while (displayText.Contains("."))
+          {
+            displayText = Path.GetFileNameWithoutExtension(displayText);
+          }
+
+          this.Configurations.Add(new ConfigurationFileListItemViewModel() { Value = displayText, ToolTipText = configFile });
+        });
       }
+    }
+
+    private void LoadViewModelFromConfiguration()
+    {
+      this.ConfigurationName = this.configurationCreationModel.DataConfiguration.Name;
+      this.GroupingLayersCount = this.configurationCreationModel.DataConfiguration.GroupingConfiguration.Count;
+      this.ConfigurationGroupings.Clear();
+
+      int level = 0;
+      foreach (GroupingConfiguration groupingConfig in this.configurationCreationModel.DataConfiguration.GroupingConfiguration)
+      {
+        this.ConfigurationGroupings.Add(new ConfigurationGroupingViewModel(level++)
+        {
+          Name = groupingConfig.GroupName,
+          SelectedParameter = groupingConfig.SelectedParameter,
+        });
+      }
+
+      // This will update the model which will cause a propogation up to the grouping view models to populate their combo boxes
+      this.SelectedDataType = this.configurationCreationModel.DataConfiguration.StatType.ToString();
+      this.IsCreating = true;
     }
 
     private void ConfigurationCreationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -179,6 +208,9 @@ namespace DataAnalyzer.ViewModels
       {
         case nameof(this.configurationCreationModel.SelectedDataType):
           this.SelectedDataType = Enum.GetName(typeof(StatType), this.configurationCreationModel.SelectedDataType);
+          break;
+        case nameof(this.configurationCreationModel.DataConfiguration):
+          this.LoadViewModelFromConfiguration();
           break;
         default:
           break;

@@ -18,6 +18,8 @@
   <SolidColorBrush x:Key="LightestBackground" Color="#cccccc"/>
   <SolidColorBrush x:Key="DarkText" Color="#353b40"/>
   <SolidColorBrush x:Key="LightText" Color="#e7d7b9"/>
+  <SolidColorBrush x:Key="LightTextOpacity20" Color="#e7d7b9" Opacity="0.2"/>
+  <SolidColorBrush x:Key="LightTextOpacity60" Color="#e7d7b9" Opacity="0.6"/>
   <SolidColorBrush x:Key="LightestText" Color="#fff7e9"/>
   <SolidColorBrush x:Key="DarkBorder" Color="Black"/>
 

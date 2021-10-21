@@ -3,8 +3,10 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-  public class LoadableRemovableRowViewModel : RowViewModel
+  public abstract class LoadableRemovableRowViewModel : RowViewModel
   {
+    private string toolTipText = string.Empty;
+
     private readonly BaseCommand remove;
     private readonly BaseCommand load;
 
@@ -16,15 +18,14 @@ namespace DataAnalyzer.ViewModels.Utilities
 
     public ICommand Remove => this.remove;
     public ICommand Load => this.load;
-
-    private void DoRemove()
+    public string ToolTipText
     {
-
+      get => this.toolTipText;
+      set => this.NotifyPropertyChanged(nameof(this.ToolTipText), ref this.toolTipText, value);
     }
 
-    private void DoLoad()
-    {
+    protected abstract void DoRemove();
 
-    }
+    protected abstract void DoLoad();
   }
 }

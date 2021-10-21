@@ -291,7 +291,7 @@
             </Grid.RowDefinitions>
             <Border Grid.Column="1"
                     BorderThickness="0 1"
-                    BorderBrush="{StaticResource LightText}">
+                    BorderBrush="{StaticResource LightTextOpacity60}">
               <ScrollContentPresenter CanContentScroll="{TemplateBinding CanContentScroll}" />
             </Border>
             <ScrollBar x:Name="PART_VerticalScrollBar"

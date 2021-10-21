@@ -11,13 +11,13 @@ namespace DataAnalyzer.Models
   {
     private readonly SerializationService serializationService = new SerializationService();
     private readonly DataParameterLibrary dataParameterLibrary = new DataParameterLibrary();
-
-    private DataConfiguration dataConfiguration = new DataConfiguration();
     private IDataParameterCollection dataParameterCollection = null;
     private string configurationDirectory = string.Empty;
     private string configurationName = string.Empty;
 
     private StatType selectedStatType = StatType.NotApplicable;
+
+    public DataConfiguration DataConfiguration { get; private set; } = new DataConfiguration();
 
     public StatType SelectedDataType
     {
@@ -49,17 +49,28 @@ namespace DataAnalyzer.Models
     public string ConfigurationName
     {
       get => this.configurationName;
-      set => this.NotifyPropertyChanged(nameof(this.ConfigurationName), ref this.configurationName, value);
+      set
+      {
+        this.NotifyPropertyChanged(nameof(this.ConfigurationName), ref this.configurationName, value);
+        this.DataConfiguration.Name = value;
+      }
     }
 
     public void CreateNewDataConfiguration()
     {
-      this.dataConfiguration = new DataConfiguration();
+      this.DataConfiguration = new DataConfiguration();
     }
 
     public void AddGroupingConfiguration(GroupingConfiguration groupingConfig)
     {
-      this.dataConfiguration.GroupingConfiguration.Add(groupingConfig);
+      this.DataConfiguration.GroupingConfiguration.Add(groupingConfig);
+    }
+
+    public void LoadConfiguration(string configName)
+    {
+      string filePath = this.ConfigurationDirectory + "/" + configName + FileProperties.CONFIGURATION_FILE_EXTENSION;
+      this.DataConfiguration = this.serializationService.JsonDeserializeFromFile<DataConfiguration>(filePath);
+      this.NotifyPropertyChanged(nameof(this.DataConfiguration));
     }
 
     public void SaveConfiguration()
@@ -67,17 +78,18 @@ namespace DataAnalyzer.Models
       DateTime saveTime = DateTime.Now;
       string saveUid = Guid.NewGuid().ToString();
 
-      foreach (GroupingConfiguration groupConfig in this.dataConfiguration.GroupingConfiguration)
+      foreach (GroupingConfiguration groupConfig in this.DataConfiguration.GroupingConfiguration)
       {
         groupConfig.DateTime = saveTime;
         groupConfig.VersionUid = saveUid;
       }
 
-      this.dataConfiguration.DateTime = saveTime;
-      this.dataConfiguration.VersionUid = saveUid;
+      this.DataConfiguration.DateTime = saveTime;
+      this.DataConfiguration.VersionUid = saveUid;
+      this.DataConfiguration.StatType = this.selectedStatType;
 
       string fullFilePath = this.ConfigurationDirectory + "\\" + this.ConfigurationName + FileProperties.CONFIGURATION_FILE_EXTENSION;
-      this.serializationService.JsonSerializeToFile(this.dataConfiguration, fullFilePath);
+      this.serializationService.JsonSerializeToFile(this.DataConfiguration, fullFilePath);
     }
   }
 }
