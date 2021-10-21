@@ -6,7 +6,7 @@ namespace DataAnalyzer.Common.DataObjects.TimeStats
 {
   public abstract class TimeStats : Stats, ITimeStats
   {
-    private List<string> parameterNames = new List<string>();
+    private readonly List<string> parameterNames = new List<string>();
 
     public TimeStats()
     {

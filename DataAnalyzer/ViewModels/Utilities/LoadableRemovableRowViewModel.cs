@@ -3,26 +3,26 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-  public class SelectableRemoveableRowViewModel : RowViewModel
+  public class LoadableRemovableRowViewModel : RowViewModel
   {
     private readonly BaseCommand remove;
-    private readonly BaseCommand select;
+    private readonly BaseCommand load;
 
-    public SelectableRemoveableRowViewModel()
+    public LoadableRemovableRowViewModel()
     {
       this.remove = new BaseCommand((obj) => this.DoRemove());
-      this.select = new BaseCommand((obj) => this.DoSelect());
+      this.load = new BaseCommand((obj) => this.DoLoad());
     }
 
     public ICommand Remove => this.remove;
-    public ICommand Select => this.select;
+    public ICommand Load => this.load;
 
     private void DoRemove()
     {
 
     }
 
-    private void DoSelect()
+    private void DoLoad()
     {
 
     }

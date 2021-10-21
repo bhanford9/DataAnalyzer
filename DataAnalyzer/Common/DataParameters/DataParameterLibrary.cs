@@ -7,7 +7,7 @@ namespace DataAnalyzer.Common.DataParameters
 {
   public class DataParameterLibrary
   {
-    private ICollection<IDataParameterCollection> parameters = new List<IDataParameterCollection>();
+    private readonly ICollection<IDataParameterCollection> parameters = new List<IDataParameterCollection>();
 
     public DataParameterLibrary()
     {

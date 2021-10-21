@@ -5,7 +5,7 @@ namespace DataAnalyzer.Common.DataObjects
 {
   public abstract class Stats : IStats
   {
-    private string uid = Guid.NewGuid().ToString();
+    private readonly string uid = Guid.NewGuid().ToString();
 
     public string Uid => this.uid;
 

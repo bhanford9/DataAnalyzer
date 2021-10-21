@@ -3,13 +3,14 @@ using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.Common.DataParameters;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Services;
+using System;
 
 namespace DataAnalyzer.Models
 {
   public class ConfigurationCreationModel : BasePropertyChanged
   {
-    private SerializationService serializationService = new SerializationService();
-    private DataParameterLibrary dataParameterLibrary = new DataParameterLibrary();
+    private readonly SerializationService serializationService = new SerializationService();
+    private readonly DataParameterLibrary dataParameterLibrary = new DataParameterLibrary();
 
     private DataConfiguration dataConfiguration = new DataConfiguration();
     private IDataParameterCollection dataParameterCollection = null;
@@ -63,9 +64,20 @@ namespace DataAnalyzer.Models
 
     public void SaveConfiguration()
     {
-      // First, create new DateTime and Version Uid and assign to all members
+      DateTime saveTime = DateTime.Now;
+      string saveUid = Guid.NewGuid().ToString();
+
+      foreach (GroupingConfiguration groupConfig in this.dataConfiguration.GroupingConfiguration)
+      {
+        groupConfig.DateTime = saveTime;
+        groupConfig.VersionUid = saveUid;
+      }
+
+      this.dataConfiguration.DateTime = saveTime;
+      this.dataConfiguration.VersionUid = saveUid;
+
       string fullFilePath = this.ConfigurationDirectory + "\\" + this.ConfigurationName + FileProperties.CONFIGURATION_FILE_EXTENSION;
-      this.serializationService.JsonSerializeToFile<DataConfiguration>(this.dataConfiguration, fullFilePath);
+      this.serializationService.JsonSerializeToFile(this.dataConfiguration, fullFilePath);
     }
   }
 }

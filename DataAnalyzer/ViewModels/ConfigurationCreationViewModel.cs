@@ -5,6 +5,7 @@ using DataAnalyzer.Common.DataParameters;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Services;
+using DataAnalyzer.ViewModels.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,7 +19,7 @@ namespace DataAnalyzer.ViewModels
 {
   public class ConfigurationCreationViewModel : BasePropertyChanged
   {
-    private ConfigurationCreationModel configurationCreationModel = BaseSingleton<ConfigurationCreationModel>.Instance;
+    private readonly ConfigurationCreationModel configurationCreationModel = BaseSingleton<ConfigurationCreationModel>.Instance;
 
     private bool isCreating = false;
     private string configurationDirectory = string.Empty;
@@ -26,10 +27,10 @@ namespace DataAnalyzer.ViewModels
     private string selectedDataType = string.Empty;
     private int groupingLayersCount = 0;
 
-    private BaseCommand browseDirectory;
-    private BaseCommand createConfiguration;
-    private BaseCommand cancelChanges;
-    private BaseCommand saveConfiguration;
+    private readonly BaseCommand browseDirectory;
+    private readonly BaseCommand createConfiguration;
+    private readonly BaseCommand cancelChanges;
+    private readonly BaseCommand saveConfiguration;
 
     public ConfigurationCreationViewModel()
     {
@@ -44,6 +45,9 @@ namespace DataAnalyzer.ViewModels
       Enum.GetNames(typeof(StatType)).ToList().ForEach(x => this.DataTypes.Add(x));
 
       configurationCreationModel.PropertyChanged += this.ConfigurationCreationModelPropertyChanged;
+
+      this.Configurations.Add(new LoadableRemovableRowViewModel() { Value = "Hello" });
+      this.Configurations.Add(new LoadableRemovableRowViewModel() { Value = "World" });
     }
 
     public ICommand BrowseDirectory => this.browseDirectory;
@@ -56,6 +60,9 @@ namespace DataAnalyzer.ViewModels
 
     public ObservableCollection<ConfigurationGroupingViewModel> ConfigurationGroupings { get; set; }
       = new ObservableCollection<ConfigurationGroupingViewModel>();
+
+    public ObservableCollection<LoadableRemovableRowViewModel> Configurations { get; set; }
+      = new ObservableCollection<LoadableRemovableRowViewModel>();
 
     public bool IsCreating
     {

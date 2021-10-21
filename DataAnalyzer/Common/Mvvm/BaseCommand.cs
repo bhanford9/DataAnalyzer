@@ -18,10 +18,7 @@ namespace DataAnalyzer.Common.Mvvm
 
     public void RaiseCanExecuteChanged()
     {
-      if (this.CanExecuteChanged != null)
-      {
-        this.CanExecuteChanged(this, EventArgs.Empty);
-      }
+      this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 
     public bool CanExecute(object parameter)

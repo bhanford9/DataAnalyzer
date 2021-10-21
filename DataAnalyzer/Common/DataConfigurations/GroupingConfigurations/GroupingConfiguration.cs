@@ -7,7 +7,7 @@ namespace DataAnalyzer.Common.DataConfigurations.GroupingConfigurations
 {
   public class GroupingConfiguration : IGroupingConfiguration
   {
-    private ICollection<Func<IStats, IComparable>> propertyGetters = new List<Func<IStats, IComparable>>();
+    private readonly ICollection<Func<IStats, IComparable>> propertyGetters = new List<Func<IStats, IComparable>>();
 
     public GroupingConfiguration(Func<IStats, IComparable> propertyGetter)
     {

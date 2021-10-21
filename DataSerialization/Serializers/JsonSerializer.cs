@@ -4,7 +4,7 @@ namespace DataSerialization.Serializers
 {
   internal class JsonSerializer<T> : Serializer<T>
   {
-    private JsonSerializerOptions options = new JsonSerializerOptions()
+    private readonly JsonSerializerOptions options = new JsonSerializerOptions()
     {
       WriteIndented = true
     };

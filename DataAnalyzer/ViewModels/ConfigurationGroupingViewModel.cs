@@ -9,15 +9,14 @@ namespace DataAnalyzer.ViewModels
 {
   public class ConfigurationGroupingViewModel : BasePropertyChanged
   {
-    private ConfigurationCreationModel configurationCreationModel = BaseSingleton<ConfigurationCreationModel>.Instance;
+    private readonly ConfigurationCreationModel configurationCreationModel = BaseSingleton<ConfigurationCreationModel>.Instance;
 
-    private int index = 0;
+    private readonly int index = 0;
     private string name = string.Empty;
     private string selectedParameter = string.Empty;
-    private string groupByText = string.Empty;
     private ICollection<string> parameterNames = new List<string>();
 
-    private BaseCommand addParameter;
+    private readonly BaseCommand addParameter;
 
     public ConfigurationGroupingViewModel(int index)
     {
