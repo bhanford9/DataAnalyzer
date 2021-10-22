@@ -1,6 +1,8 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
@@ -11,25 +13,38 @@ namespace DataAnalyzer.ViewModels
   {
     private readonly ConfigurationCreationModel configurationCreationModel = BaseSingleton<ConfigurationCreationModel>.Instance;
 
-    private readonly int index = 0;
+    private readonly int level = 0;
     private string name = string.Empty;
     private string selectedParameter = string.Empty;
+    private bool isSubRule = false;
     private ICollection<string> parameterNames = new List<string>();
 
     private readonly BaseCommand addParameter;
+    private readonly BaseCommand removeParameter;
 
-    public ConfigurationGroupingViewModel(int index)
+    public ConfigurationGroupingViewModel(int level)
     {
-      this.index = index;
+      this.level = level;
 
       this.addParameter = new BaseCommand((obj) => this.DoAddParameter());
+      this.removeParameter = new BaseCommand((obj) => this.DoRemoveParameter(obj.ToString()));
 
       this.configurationCreationModel.PropertyChanged += this.ConfigurationCreationModelPropertyChanged;
 
       this.LoadParameters();
     }
 
+    public ObservableCollection<ConfigurationGroupingViewModel> Children { get; set; }
+      = new ObservableCollection<ConfigurationGroupingViewModel>();
+
+    public ConfigurationGroupingViewModel Parent { get; private set; } = null;
+
     public ICommand AddParameter => this.addParameter;
+    public ICommand RemoveParameter => this.removeParameter;
+
+    public bool HasChildren => this.Children.Count > 0;
+
+    public string Uid { get; } = Guid.NewGuid().ToString();
 
     public string Name
     {
@@ -43,7 +58,13 @@ namespace DataAnalyzer.ViewModels
       set => this.NotifyPropertyChanged(nameof(this.SelectedParameter), ref this.selectedParameter, value);
     }
 
-    public string GroupByText => this.index == 0 ? "Group By:" : "Then By:";
+    public string GroupByText => this.IsSubRule ? "And By:" : this.level == 0 ? "Group By:" : "Then By:";
+
+    public bool IsSubRule
+    {
+      get => this.isSubRule;
+      set => this.NotifyPropertyChanged(nameof(this.IsSubRule), ref this.isSubRule, value);
+    }
 
     public ICollection<string> ParameterNames
     {
@@ -53,7 +74,27 @@ namespace DataAnalyzer.ViewModels
 
     private void DoAddParameter()
     {
+      this.Children.Add(new ConfigurationGroupingViewModel(this.level) { IsSubRule = true, Parent = this });
+      this.NotifyPropertyChanged(nameof(this.HasChildren));
+    }
 
+    private void DoRemoveParameter(string uid)
+    {
+      if (this.isSubRule)
+      {
+        this.Parent.RemoveChild(uid);
+      }
+      else
+      {
+        this.configurationCreationModel.RemoveGroupingConfiguration(this.level);
+      }
+
+      this.NotifyPropertyChanged(nameof(this.HasChildren));
+    }
+
+    private void RemoveChild(string uid)
+    {
+      this.Children.Remove(this.Children.First(x => x.Uid.Equals(uid)));
     }
 
     private void LoadParameters()

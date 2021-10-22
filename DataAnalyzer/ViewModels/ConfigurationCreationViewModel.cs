@@ -41,10 +41,7 @@ namespace DataAnalyzer.ViewModels
 
       Enum.GetNames(typeof(StatType)).ToList().ForEach(x => this.DataTypes.Add(x));
 
-      configurationCreationModel.PropertyChanged += this.ConfigurationCreationModelPropertyChanged;
-
-      this.Configurations.Add(new ConfigurationFileListItemViewModel() { Value = "Hello" });
-      this.Configurations.Add(new ConfigurationFileListItemViewModel() { Value = "World" });
+      this.configurationCreationModel.PropertyChanged += this.ConfigurationCreationModelPropertyChanged;
     }
 
     public ICommand BrowseDirectory => this.browseDirectory;
@@ -103,9 +100,15 @@ namespace DataAnalyzer.ViewModels
       set
       {
         this.NotifyPropertyChanged(nameof(this.GroupingLayersCount), ref this.groupingLayersCount, value);
+        
         while (this.GroupingLayersCount > this.ConfigurationGroupings.Count)
         {
           this.ConfigurationGroupings.Add(new ConfigurationGroupingViewModel(this.ConfigurationGroupings.Count()));
+        }
+
+        while (this.GroupingLayersCount >= 0 && this.GroupingLayersCount < this.ConfigurationGroupings.Count)
+        {
+          this.ConfigurationGroupings.RemoveAt(this.ConfigurationGroupings.Count - 1);
         }
       }
     }
@@ -123,12 +126,22 @@ namespace DataAnalyzer.ViewModels
     private void DoCreateConfiguration()
     {
       this.IsCreating = true;
+      this.ClearConfigurationData();
       this.configurationCreationModel.CreateNewDataConfiguration();
     }
 
     private void DoCancelChanges()
     {
       this.IsCreating = false;
+      this.ClearConfigurationData();
+    }
+
+    private void ClearConfigurationData()
+    {
+      this.ConfigurationName = string.Empty;
+      this.SelectedDataType = StatType.NotApplicable.ToString();
+      this.GroupingLayersCount = 0;
+      this.ConfigurationGroupings.Clear();
     }
 
     private void DoSaveConfiguration()
@@ -144,6 +157,8 @@ namespace DataAnalyzer.ViewModels
         // TODO --> Display that there is a problem
         return;
       }
+
+      this.configurationCreationModel.ClearGroupingConfigurations();
 
       int level = 0;
       this.ConfigurationGroupings.ToList().ForEach(configGroupingViewModel =>
@@ -211,6 +226,12 @@ namespace DataAnalyzer.ViewModels
           break;
         case nameof(this.configurationCreationModel.DataConfiguration):
           this.LoadViewModelFromConfiguration();
+          break;
+        case nameof(this.configurationCreationModel.RemoveLevel):
+          this.ConfigurationGroupings.RemoveAt(this.configurationCreationModel.RemoveLevel);
+
+          this.groupingLayersCount--;
+          this.NotifyPropertyChanged(nameof(this.GroupingLayersCount));
           break;
         default:
           break;

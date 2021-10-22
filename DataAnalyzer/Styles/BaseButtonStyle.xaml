@@ -175,8 +175,8 @@
   </Style>
 
   <Style x:Key="IconButton" TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
-    <Setter Property="Height" Value="28"/>
-    <Setter Property="Width" Value="28"/>
+    <Setter Property="Height" Value="26"/>
+    <Setter Property="Width" Value="26"/>
     <Setter Property="Margin" Value="2 1"/>
   </Style>
 
@@ -200,6 +200,19 @@
         <DataTemplate>
           <iconPacks:PackIconMaterialDesign
               Kind="FileDownload"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"/>
+        </DataTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style x:Key="IconAddButton" TargetType="Button" BasedOn="{StaticResource IconButton}">
+    <Setter Property="ContentTemplate">
+      <Setter.Value>
+        <DataTemplate>
+          <iconPacks:PackIconMaterialDesign
+              Kind="Add"
               HorizontalAlignment="Center"
               VerticalAlignment="Center"/>
         </DataTemplate>

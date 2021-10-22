@@ -16,7 +16,7 @@ namespace DataAnalyzer.Common.DataParameters
 
     public IDataParameterCollection GetParameters(StatType statType)
     {
-      return this.parameters.First(x => x.StatType == statType);
+      return this.parameters.FirstOrDefault(x => x.StatType == statType);
     }
 
     private void LoadParameters()

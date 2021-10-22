@@ -17,6 +17,7 @@ namespace DataAnalyzer.Models
 
     private StatType selectedStatType = StatType.NotApplicable;
 
+    public int RemoveLevel { get; private set; } = -1;
     public DataConfiguration DataConfiguration { get; private set; } = new DataConfiguration();
 
     public StatType SelectedDataType
@@ -64,6 +65,17 @@ namespace DataAnalyzer.Models
     public void AddGroupingConfiguration(GroupingConfiguration groupingConfig)
     {
       this.DataConfiguration.GroupingConfiguration.Add(groupingConfig);
+    }
+
+    public void RemoveGroupingConfiguration(int level)
+    {
+      this.RemoveLevel = level;
+      this.NotifyPropertyChanged(nameof(this.RemoveLevel));
+    }
+
+    public void ClearGroupingConfigurations()
+    {
+      this.DataConfiguration.GroupingConfiguration.Clear();
     }
 
     public void LoadConfiguration(string configName)
