@@ -123,7 +123,7 @@ namespace DataAnalyzer.ViewModels
       this.Files.Clear();
 
       this.Files.Add(new CheckableTreeViewItem()
-      { 
+      {
         Path = this.ActiveDirectory,
         Name = Path.GetFileName(this.ActiveDirectory)
       });
@@ -142,13 +142,13 @@ namespace DataAnalyzer.ViewModels
         {
           treeRoot.Children.Add(
             new CheckableTreeViewItem()
-            { 
-              Path = file, 
+            {
+              Path = file,
               Name = Path.GetFileName(file)
             });
         }
       }
-      catch {  }
+      catch { }
 
       try
       {
@@ -164,7 +164,7 @@ namespace DataAnalyzer.ViewModels
           this.LoadAllChildren(directory, treeRoot.Children[^1]);
         }
       }
-      catch {  }
+      catch { }
     }
   }
 }

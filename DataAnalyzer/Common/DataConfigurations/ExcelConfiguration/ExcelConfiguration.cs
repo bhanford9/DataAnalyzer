@@ -10,9 +10,9 @@
 
     // Workbook, Worksheet, Clusters
     public override int GroupingLevels
-    { 
-      get => groupingLevels;
-      protected set => groupingLevels = value;
+    {
+      get => this.groupingLevels;
+      protected set => this.groupingLevels = value;
     }
   }
 }

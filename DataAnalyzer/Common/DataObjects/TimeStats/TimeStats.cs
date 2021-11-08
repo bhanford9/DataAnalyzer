@@ -9,14 +9,14 @@ namespace DataAnalyzer.Common.DataObjects.TimeStats
 
     public TimeStats()
     {
-      parameterNames.Add(nameof(this.Iterations));
-      parameterNames.Add(nameof(this.ContainerSize));
-      parameterNames.Add(nameof(this.TotalTimeMillis));
-      parameterNames.Add(nameof(this.AverageTimeMillis));
-      parameterNames.Add(nameof(this.FastestTimeMillis));
-      parameterNames.Add(nameof(this.SlowestTimeMillis));
-      parameterNames.Add(nameof(this.RangeTimeMillis));
-      parameterNames.Add(nameof(this.ExecuterName));
+      this.parameterNames.Add(nameof(this.Iterations));
+      this.parameterNames.Add(nameof(this.ContainerSize));
+      this.parameterNames.Add(nameof(this.TotalTimeMillis));
+      this.parameterNames.Add(nameof(this.AverageTimeMillis));
+      this.parameterNames.Add(nameof(this.FastestTimeMillis));
+      this.parameterNames.Add(nameof(this.SlowestTimeMillis));
+      this.parameterNames.Add(nameof(this.RangeTimeMillis));
+      this.parameterNames.Add(nameof(this.ExecuterName));
     }
 
     public int Iterations { get; set; }

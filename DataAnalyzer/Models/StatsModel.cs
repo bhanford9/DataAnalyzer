@@ -29,7 +29,7 @@ namespace DataAnalyzer.Models
     {
       this.scraperService.ScrapeFromFile(filePath, converter)
         .ToList()
-        .ForEach(stats.Add);
+        .ForEach(this.stats.Add);
 
       this.NotifyPropertyChanged(nameof(this.Stats));
     }

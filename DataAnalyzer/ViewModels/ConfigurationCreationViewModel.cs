@@ -100,7 +100,7 @@ namespace DataAnalyzer.ViewModels
       set
       {
         this.NotifyPropertyChanged(nameof(this.GroupingLayersCount), ref this.groupingLayersCount, value);
-        
+
         while (this.GroupingLayersCount > this.ConfigurationGroupings.Count)
         {
           this.ConfigurationGroupings.Add(new ConfigurationGroupingViewModel(this.ConfigurationGroupings.Count()));

@@ -1,0 +1,9 @@
+﻿namespace ExcelService.DataActions
+{
+  public class ActionInfo
+  {
+    public string Name { get; internal set; } = string.Empty;
+
+    public string Description { get; internal set; } = string.Empty;
+  }
+}

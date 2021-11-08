@@ -7,7 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAnalyzer", "DataAnalyze
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataScraper", "DataScraper\DataScraper.csproj", "{2F120508-4DA5-42A9-B380-125B90F5891D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSerialization", "DataSerialization\DataSerialization.csproj", "{4BC6B053-03DD-4B6D-A36A-FA0AFD72C95D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSerialization", "DataSerialization\DataSerialization.csproj", "{4BC6B053-03DD-4B6D-A36A-FA0AFD72C95D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelService", "ExcelService\ExcelService.csproj", "{BF831B79-C73B-4D31-9999-934E34EC2BE3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{FFB3B34C-865F-411E-B0FE-C15F43A4A217}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelServiceTest", "ExcelServiceTest\ExcelServiceTest.csproj", "{156EC01F-A0C4-4BCB-8497-7C82F2B285AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +33,20 @@ Global
 		{4BC6B053-03DD-4B6D-A36A-FA0AFD72C95D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BC6B053-03DD-4B6D-A36A-FA0AFD72C95D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BC6B053-03DD-4B6D-A36A-FA0AFD72C95D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF831B79-C73B-4D31-9999-934E34EC2BE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF831B79-C73B-4D31-9999-934E34EC2BE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF831B79-C73B-4D31-9999-934E34EC2BE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF831B79-C73B-4D31-9999-934E34EC2BE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{156EC01F-A0C4-4BCB-8497-7C82F2B285AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{156EC01F-A0C4-4BCB-8497-7C82F2B285AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{156EC01F-A0C4-4BCB-8497-7C82F2B285AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{156EC01F-A0C4-4BCB-8497-7C82F2B285AC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{156EC01F-A0C4-4BCB-8497-7C82F2B285AC} = {FFB3B34C-865F-411E-B0FE-C15F43A4A217}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B890BB9-0185-48C8-BAA7-C76619435917}
