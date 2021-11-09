@@ -15,6 +15,7 @@ using ExcelService.Styles.Colors;
 using ExcelService.Styles.Borders;
 using ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters;
 using ExcelService.DataActions.ActionParameters.ClusterStyleParameters;
+using ExcelService.Styles.Alignments;
 
 namespace ExcelServiceTest
 {
@@ -73,11 +74,16 @@ namespace ExcelServiceTest
         {
           NthRow = 0,
           AllBorders = new Border() { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin }
+        },
+        new NthRowAlignmentStyleParameters()
+        {
+          NthRow = 0,
+          Alignments = new AlignmentValues() { HorizontalAlignment = HorizontalAlignment.Center }
         }
       };
 
-      DataCluster dataCluster1 = new DataCluster(rows, "First Cluster", 1, 1, true, clusterActions);
-      DataCluster dataCluster2 = new DataCluster(rows, "Second Cluster", dataCluster1.Rows.Count + 4, 1, true, clusterActions);
+      DataCluster dataCluster1 = new DataCluster(rows, "First Cluster", 3, 1, true, clusterActions, true);
+      DataCluster dataCluster2 = new DataCluster(rows, "Second Cluster", 2, 1, true, clusterActions, true);
 
       ICollection<IDataCluster> dataClusters = new List<IDataCluster>()
       {

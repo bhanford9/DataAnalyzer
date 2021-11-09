@@ -7,21 +7,21 @@ using System.Linq;
 
 namespace ExcelService.DataActions.ClusterActions
 {
-  class NthRowBorderStyleAction : BorderStyleAction
+  public class NthRowAlignmentStyleAction : AlignmentStyleAction
   {
     public override string GetName()
     {
-      return "Nth Row Border Style";
+      return "Nth Row Alignment Style";
     }
 
     public override string GetDescription()
     {
-      return "Sets the color and style of the Border(s) for a Data Cluster's Nth Row";
+      return "Sets the Horizontal and/or Vertical alignments for a Data Cluster's Nth Row";
     }
 
     public override bool IsApplicable(IActionParameters parameters)
     {
-      return this.IsCorrectType(parameters, typeof(NthRowBorderStyleParameters)) &&
+      return this.IsCorrectType(parameters, typeof(NthRowAlignmentStyleParameters)) &&
         parameters.Performer == ActionPerformer.DataCluster;
     }
 
@@ -39,20 +39,20 @@ namespace ExcelService.DataActions.ClusterActions
 
     public override bool Execute(IXLWorkbook workbook, IExcelEntity excelEntity, IActionParameters parameters, out string message)
     {
-      NthRowBorderStyleParameters borderStyleParameters = parameters as NthRowBorderStyleParameters;
+      NthRowAlignmentStyleParameters alignmentStyleParameters = parameters as NthRowAlignmentStyleParameters;
       IDataCluster dataCluster = excelEntity as IDataCluster;
 
-      if (dataCluster.Rows.Count <= borderStyleParameters.NthRow)
+      if (dataCluster.Rows.Count <= alignmentStyleParameters.NthRow)
       {
-        message = $"Cannot assign border style to {borderStyleParameters.NthRow}. " +
+        message = $"Cannot assign alignment style to {alignmentStyleParameters.NthRow}. " +
           $"Only {dataCluster.Rows.Count} rows exist within Data Cluster.";
         return false;
       }
 
       return base.Execute(
         workbook,
-        dataCluster.Rows.ElementAt(borderStyleParameters.NthRow),
-        borderStyleParameters,
+        dataCluster.Rows.ElementAt(alignmentStyleParameters.NthRow),
+        alignmentStyleParameters,
         out message);
     }
   }

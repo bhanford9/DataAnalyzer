@@ -7,6 +7,7 @@
     DataCluster,
     DataClusterHeader,
     Row,
-    Cell
+    Cell,
+    Unassigned
   }
 }

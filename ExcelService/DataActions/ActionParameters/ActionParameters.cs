@@ -6,6 +6,6 @@
 
     public string WorksheetName { get; set; } = string.Empty;
 
-    public abstract ActionPerformer Performer { get; set; }
+    public virtual ActionPerformer Performer { get; set; } = ActionPerformer.Unassigned;
   }
 }

@@ -10,8 +10,6 @@ namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
 
     public override string Name => "Background Color";
 
-    public override ActionPerformer Performer { get; set; }
-
     public bool DoApplyColor { get; set; } = false;
 
     public ColorValue Color

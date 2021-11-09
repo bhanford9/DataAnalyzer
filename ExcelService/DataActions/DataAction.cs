@@ -20,7 +20,7 @@ namespace ExcelService.DataActions
 
     protected bool IsCorrectType(IActionParameters parameters, Type type)
     {
-      return parameters.GetType().IsAssignableFrom(type);
+      return parameters.GetType().Equals(type);
     }
 
   }

@@ -9,11 +9,11 @@ namespace ExcelService.DataActions
 {
   public class ActionLibrary
   {
-    private readonly ICollection<IDataAction> workbookActions = new List<IDataAction>();
-    private readonly ICollection<IDataAction> worksheetActions = new List<IDataAction>();
-    private readonly ICollection<IDataAction> dataClusterActions = new List<IDataAction>();
-    private readonly ICollection<IDataAction> rowActions = new List<IDataAction>();
-    private readonly ICollection<IDataAction> cellActions = new List<IDataAction>();
+    private readonly ICollection<IDataAction> workbookActions = new HashSet<IDataAction>();
+    private readonly ICollection<IDataAction> worksheetActions = new HashSet<IDataAction>();
+    private readonly ICollection<IDataAction> dataClusterActions = new HashSet<IDataAction>();
+    private readonly ICollection<IDataAction> rowActions = new HashSet<IDataAction>();
+    private readonly ICollection<IDataAction> cellActions = new HashSet<IDataAction>();
 
     public ActionLibrary()
     {
@@ -178,6 +178,21 @@ namespace ExcelService.DataActions
 
     internal IDataAction GetAction(IActionParameters parameters)
     {
+      switch (parameters.Performer)
+      {
+        case ActionPerformer.Workbook: return this.GetWorkbookAction(parameters);
+        case ActionPerformer.Worksheet: return this.GetWorksheetAction(parameters);
+        case ActionPerformer.DataCluster:
+        case ActionPerformer.DataClusterHeader: return this.GetDataClusterAction(parameters);
+        case ActionPerformer.Row: return this.GetRowAction(parameters);
+        case ActionPerformer.Cell: return this.GetCellAction(parameters);
+        case ActionPerformer.Unassigned:
+        default: return this.SearchAction(parameters);
+      }
+    }
+
+    private IDataAction SearchAction(IActionParameters parameters)
+    {
       IDataAction dataAction = this.GetWorkbookAction(parameters);
 
       if (dataAction == default)
@@ -244,10 +259,13 @@ namespace ExcelService.DataActions
       this.dataClusterActions.Add(new HeaderMergeCenterFullAction());
       this.dataClusterActions.Add(new HeaderBackgroundStyleAction());
 
+      this.dataClusterActions.Add(new NthRowBorderStyleAction());
+      this.dataClusterActions.Add(new NthRowAlignmentStyleAction());
+
       this.dataClusterActions.Add(new BorderStyleAction());
       this.dataClusterActions.Add(new BackgroundStyleAction());
       this.dataClusterActions.Add(new ColumnBorderStyleAction());
-      this.dataClusterActions.Add(new NthRowBorderStyleAction());
+      this.dataClusterActions.Add(new AlignmentStyleAction());
     }
 
     private void RegisterRowActions()
@@ -255,12 +273,14 @@ namespace ExcelService.DataActions
       this.rowActions.Add(new BorderStyleAction());
       this.rowActions.Add(new BackgroundStyleAction());
       this.rowActions.Add(new ColumnBorderStyleAction());
+      this.rowActions.Add(new AlignmentStyleAction());
     }
 
     private void RegisterCellActions()
     {
       this.cellActions.Add(new BorderStyleAction());
       this.cellActions.Add(new BackgroundStyleAction());
+      this.cellActions.Add(new AlignmentStyleAction());
     }
   }
 }

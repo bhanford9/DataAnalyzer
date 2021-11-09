@@ -83,7 +83,5 @@ namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
     }
 
     public override string Name => "Border Styling";
-
-    public override ActionPerformer Performer { get; set; }
   }
 }
