@@ -5,7 +5,7 @@
     <Setter Property="Background" Value="{StaticResource LightAccent}"/>
     <Setter Property="Foreground" Value="{StaticResource DarkText}"/>
     <Setter Property="FontSize" Value="14"/>
-    <Setter Property="FontFamily" Value="Segoe UI"/>
+    <Setter Property="FontFamily" Value="Segoe UI, Verdana"/>
     <Setter Property="TextWrapping" Value="Wrap"/>
     <Setter Property="VerticalContentAlignment" Value="Center"/>
     <Setter Property="TextAlignment" Value="Center"/>

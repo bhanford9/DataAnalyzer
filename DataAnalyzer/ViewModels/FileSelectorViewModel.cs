@@ -24,6 +24,7 @@ namespace DataAnalyzer.ViewModels
     private readonly BaseCommand loadStats;
 
     private readonly StatsModel statsModel = new StatsModel();
+    private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
     private readonly DataConverterLibrary dataConverterLibrary = new DataConverterLibrary();
 
     public FileSelectorViewModel()
@@ -55,7 +56,11 @@ namespace DataAnalyzer.ViewModels
     public string ActiveDirectory
     {
       get => this.activeDirectory;
-      set => this.NotifyPropertyChanged(nameof(this.ActiveDirectory), ref this.activeDirectory, value);
+      set
+      {
+        this.NotifyPropertyChanged(nameof(this.ActiveDirectory), ref this.activeDirectory, value);
+        this.mainModel.LoadedInputFiles.DirectoryPath = value;
+      }
     }
 
     public string SelectedScraperType
@@ -64,6 +69,7 @@ namespace DataAnalyzer.ViewModels
       set
       {
         this.NotifyPropertyChanged(nameof(this.SelectedScraperType), ref this.selectedScraperType, value);
+        this.mainModel.LoadedInputFiles.DataType = value;
 
         Properties.Settings.Default.LastSelectedScraperType = value;
         Properties.Settings.Default.Save();

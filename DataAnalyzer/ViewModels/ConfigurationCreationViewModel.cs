@@ -17,6 +17,7 @@ namespace DataAnalyzer.ViewModels
   public class ConfigurationCreationViewModel : BasePropertyChanged
   {
     private readonly ConfigurationCreationModel configurationCreationModel = BaseSingleton<ConfigurationCreationModel>.Instance;
+    private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
 
     private bool isCreating = false;
     private string configurationDirectory = string.Empty;
@@ -71,6 +72,7 @@ namespace DataAnalyzer.ViewModels
       {
         this.NotifyPropertyChanged(nameof(this.ConfigurationDirectory), ref this.configurationDirectory, value);
         this.configurationCreationModel.ConfigurationDirectory = value;
+        this.mainModel.LoadedDataStructure.DirectoryPath = value;
       }
     }
 
@@ -81,6 +83,7 @@ namespace DataAnalyzer.ViewModels
       {
         this.NotifyPropertyChanged(nameof(this.ConfigurationName), ref this.configurationName, value);
         this.configurationCreationModel.ConfigurationName = value;
+        this.mainModel.LoadedDataStructure.StructureName = value;
       }
     }
 
@@ -91,6 +94,7 @@ namespace DataAnalyzer.ViewModels
       {
         this.NotifyPropertyChanged(nameof(this.SelectedDataType), ref this.selectedDataType, value);
         this.configurationCreationModel.SelectedDataType = Enum.Parse<StatType>(value);
+        this.mainModel.LoadedDataStructure.DataType = value;
       }
     }
 
@@ -100,6 +104,7 @@ namespace DataAnalyzer.ViewModels
       set
       {
         this.NotifyPropertyChanged(nameof(this.GroupingLayersCount), ref this.groupingLayersCount, value);
+        this.mainModel.LoadedDataStructure.GroupingsCount = value;
 
         while (this.GroupingLayersCount > this.ConfigurationGroupings.Count)
         {

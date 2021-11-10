@@ -2,8 +2,8 @@
 {
   public class ZeroPrependFloatingPrecisionCellDataFormat : ICellDataFormat
   {
-    private int zerosPrependedCount = 0;
-    private int precisionCount = 0;
+    private readonly int zerosPrependedCount = 0;
+    private readonly int precisionCount = 0;
 
     public string Example => "0023.100";
 

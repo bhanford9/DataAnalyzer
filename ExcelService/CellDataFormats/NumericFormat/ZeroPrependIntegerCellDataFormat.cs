@@ -2,7 +2,7 @@
 {
   public class ZeroPrependIntegerCellDataFormat : ICellDataFormat
   {
-    private int zerosPrependedCount = 0;
+    private readonly int zerosPrependedCount = 0;
 
     public string Example
     {

@@ -14,6 +14,12 @@
       <TabItem Header="Configuration Setup">
 
       </TabItem>
+      <TabItem Header="Data Import">
+        <Border Style="{StaticResource DarkBackgroundBorderStyle}" Grid.Column="0">
+          <local:FileSelectorView Margin="2 5 0 2">
+          </local:FileSelectorView>
+        </Border>
+      </TabItem>
     </TabControl>
   </Grid>
 </UserControl>

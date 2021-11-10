@@ -2,7 +2,7 @@
 {
   public class IntegerSeparatorParensCellDataFormat : ICellDataFormat
   {
-    private bool colorRed = false;
+    private readonly bool colorRed = false;
 
     public string Name => "Integer with Separator Negation Parenthesis";
 

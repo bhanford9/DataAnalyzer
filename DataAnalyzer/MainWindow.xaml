@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:DataAnalyzer.Views"
         xmlns:viewmodels="clr-namespace:DataAnalyzer.ViewModels"
         mc:Ignorable="d"
-        Title="Time Performance Analyzer" Height="880" Width="1600">
+        Title="Time Performance Analyzer" Height="820" Width="1500">
   <Grid Background="{StaticResource LightBackground}">
     <Grid.Resources>
       <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
@@ -39,16 +39,25 @@
     </Grid.Resources>
 
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="650"/>
+      <ColumnDefinition Width="350"/>
       <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
 
-    <Border Style="{StaticResource DarkBackgroundBorderStyle}" Grid.Column="0">
-      <views:FileSelectorView Margin="2 5 0 2">
-      </views:FileSelectorView>
+    <Border Grid.Column="0" Style="{StaticResource DarkBackgroundBorderStyle}">
+      <GroupBox Header="Configuration Summary">
+        <ItemsControl ItemsSource="{Binding LoadedConfigs}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <views:LoadedConfigurationItemView 
+                DataContext="{Binding}"
+                Margin="2 5"/>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>       
+      </GroupBox>
     </Border>
     
-    <Border Style="{StaticResource DarkBackgroundBorderStyle}" Grid.Column="1">
+    <Border Grid.Column="1" Style="{StaticResource DarkBackgroundBorderStyle}">
       <views:StatOrganizerView  Margin="0 5 2 2">
       </views:StatOrganizerView>
     </Border>

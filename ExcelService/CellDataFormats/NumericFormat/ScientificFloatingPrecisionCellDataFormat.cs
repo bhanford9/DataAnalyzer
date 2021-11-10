@@ -2,7 +2,7 @@
 {
   public class ScientificFloatingPrecisionCellDataFormat : ICellDataFormat
   {
-    private int precisionCount = 1;
+    private readonly int precisionCount = 1;
 
     public string Name => "Scientific Notation Floating Precision";
 

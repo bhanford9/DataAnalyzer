@@ -2,7 +2,7 @@
 {
   public class FloatingPrecisionCellDataFormat : ICellDataFormat
   {
-    private int precisionCount = 0;
+    private readonly int precisionCount = 0;
 
     public string Example
     {
