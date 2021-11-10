@@ -8,17 +8,17 @@
              d:DesignHeight="450" d:DesignWidth="800">  
   <Grid>
     <TabControl>
-      <TabItem Header="Configuration Creation">
+      <TabItem Header="1. Structure">
         <local:ConfigurationCreationTabView/>
       </TabItem>
-      <TabItem Header="Configuration Setup">
 
+      <TabItem Header="2. Setup">
+        <local:ConfigurationSetupTabView/>
       </TabItem>
-      <TabItem Header="Data Import">
-        <Border Style="{StaticResource DarkBackgroundBorderStyle}" Grid.Column="0">
+      
+      <TabItem Header="3. Process">
           <local:FileSelectorView Margin="2 5 0 2">
           </local:FileSelectorView>
-        </Border>
       </TabItem>
     </TabControl>
   </Grid>

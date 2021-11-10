@@ -7,7 +7,7 @@
         xmlns:views="clr-namespace:DataAnalyzer.Views"
         xmlns:viewmodels="clr-namespace:DataAnalyzer.ViewModels"
         mc:Ignorable="d"
-        Title="Time Performance Analyzer" Height="820" Width="1500">
+        Title="Time Performance Analyzer" Height="780" Width="1400">
   <Grid Background="{StaticResource LightBackground}">
     <Grid.Resources>
       <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
