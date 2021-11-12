@@ -19,6 +19,11 @@ namespace ExcelService.DataActions.ClusterActions
       return "Sets the Horizontal and/or Vertical alignments for a Data Cluster's Nth Row";
     }
 
+    public override IActionParameters GetDefaultParameters()
+    {
+      return new NthRowAlignmentStyleParameters();
+    }
+
     public override bool IsApplicable(IActionParameters parameters)
     {
       return this.IsCorrectType(parameters, typeof(NthRowAlignmentStyleParameters)) &&

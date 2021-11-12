@@ -5,10 +5,10 @@ namespace ExcelService.Styles.Colors
   public class ColorValue
   {
     private const int FULL_OPAQUE = 255;
-    private int a = 0;
-    private int r = 0;
-    private int g = 0;
-    private int b = 0;
+    private int alpha = -1;
+    private int red = -1;
+    private int green = -1;
+    private int blue = -1;
     private readonly Color color;
 
     public ColorValue() { }
@@ -767,7 +767,7 @@ namespace ExcelService.Styles.Colors
 
     public XLColor ToXlColorFromArgb()
     {
-      return XLColor.FromArgb(this.a, this.r, this.g, this.b);
+      return XLColor.FromArgb(this.alpha, this.red, this.green, this.blue);
     }
 
     public XLColor ToXlColorFromLocal()
@@ -775,12 +775,22 @@ namespace ExcelService.Styles.Colors
       return this.ToXlColor(this.color);
     }
 
+    public System.Drawing.Color ToSystemColor()
+    {
+      if (this.alpha == -1 && this.red == -1 && this.green == -1 && this.blue == -1)
+      {
+        return XLColor.FromName(this.color.ToString()).Color;
+      }
+
+      return System.Drawing.Color.FromArgb(this.alpha, this.red, this.green, this.blue);
+    }
+
     private void FromArgb(int a, int r, int g, int b)
     {
-      this.a = a;
-      this.r = r;
-      this.g = g;
-      this.b = b;
+      this.alpha = a;
+      this.red = r;
+      this.green = g;
+      this.blue = b;
     }
 
     private void FromArgb(int r, int g, int b)

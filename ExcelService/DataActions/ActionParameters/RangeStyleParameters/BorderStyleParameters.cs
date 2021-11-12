@@ -12,6 +12,8 @@ namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
     private Border diagonalDown = new Border();
     private Border allBorders = new Border();
 
+    public override ActionCategory Category => ActionCategory.BorderStyle;
+
     public Border Left
     {
       get => this.left;

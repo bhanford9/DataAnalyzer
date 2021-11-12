@@ -19,6 +19,11 @@ namespace ExcelService.DataActions.ClusterActions
       return "Merges the Cluster's header across the full width and centers the text";
     }
 
+    public override IActionParameters GetDefaultParameters()
+    {
+      return new HeaderMergeCenterFullParameters();
+    }
+
     public override bool IsApplicable(IActionParameters parameters)
     {
       return this.IsCorrectType(parameters, typeof(HeaderMergeCenterFullParameters)) &&

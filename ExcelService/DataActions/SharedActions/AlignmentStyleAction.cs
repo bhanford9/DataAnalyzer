@@ -16,6 +16,11 @@ namespace ExcelService.DataActions.SharedActions
       return "Applies the horizontal and vertical alignments for a Cell, Row or DataCluster";
     }
 
+    public override IActionParameters GetDefaultParameters()
+    {
+      return new AlignmentStyleParameters();
+    }
+
     public override bool IsApplicable(IActionParameters parameters)
     {
       return this.IsCorrectType(parameters, typeof(AlignmentStyleParameters)) &&

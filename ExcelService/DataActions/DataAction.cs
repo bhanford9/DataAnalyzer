@@ -10,6 +10,8 @@ namespace ExcelService.DataActions
 
     public abstract string GetDescription();
 
+    public abstract IActionParameters GetDefaultParameters();
+
     public abstract bool IsApplicable(IActionParameters parameters);
 
     public abstract bool CanExecute(IExcelEntity excelEntity, IActionParameters parameters, out string message);
@@ -22,6 +24,5 @@ namespace ExcelService.DataActions
     {
       return parameters.GetType().Equals(type);
     }
-
   }
 }

@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 
 namespace DataAnalyzer.Models.ExcelSetupModels
 {
@@ -7,6 +8,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
     private string name = string.Empty;
     private string description = string.Empty;
     private bool isBuiltIn = true;
+    private IActionParameters actionParameters;
 
     public string Name
     {
@@ -24,6 +26,12 @@ namespace DataAnalyzer.Models.ExcelSetupModels
     {
       get => this.isBuiltIn;
       set => this.NotifyPropertyChanged(nameof(this.IsBuiltIn), ref this.isBuiltIn, value);
+    }
+
+    public IActionParameters ActionParameters
+    {
+      get => this.actionParameters;
+      set => this.NotifyPropertyChanged(nameof(this.ActionParameters), ref this.actionParameters, value);
     }
   }
 }

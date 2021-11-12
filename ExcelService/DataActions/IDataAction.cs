@@ -11,5 +11,6 @@ namespace ExcelService.DataActions
     bool CanExecute(IExcelEntity excelEntity, IActionParameters parameters, out string message);
     bool Execute(IXLWorkbook workbook, IExcelEntity excelEntity, IActionParameters parameters, out string message);
     bool PostExecution(IXLWorkbook workbook, IExcelEntity excelEntity, IActionParameters parameters, out string message);
+    IActionParameters GetDefaultParameters();
   }
 }

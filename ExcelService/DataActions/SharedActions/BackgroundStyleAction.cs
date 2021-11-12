@@ -17,6 +17,11 @@ namespace ExcelService.DataActions.SharedActions
       return "Sets the color and style of the background fill for a Cell, Row or Data Cluster";
     }
 
+    public override IActionParameters GetDefaultParameters()
+    {
+      return new BackgroundStyleParameters();
+    }
+
     public override bool IsApplicable(IActionParameters parameters)
     {
       return this.IsCorrectType(parameters, typeof(BackgroundStyleParameters)) &&

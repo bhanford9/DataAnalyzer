@@ -19,6 +19,11 @@ namespace ExcelService.DataActions.SharedActions
       return "Styles the column border BETWEEN cells for each column of a Row or Data Cluster";
     }
 
+    public override IActionParameters GetDefaultParameters()
+    {
+      return new ColumnBorderStyleParameters();
+    }
+
     public override bool IsApplicable(IActionParameters parameters)
     {
       return this.IsCorrectType(parameters, typeof(ColumnBorderStyleParameters)) &&

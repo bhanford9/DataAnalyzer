@@ -7,5 +7,7 @@ namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
     public override string Name => "Alignments";
 
     public AlignmentValues Alignments { get; set; } = new AlignmentValues();
+
+    public override ActionCategory Category => ActionCategory.AlignmentStyle;
   }
 }

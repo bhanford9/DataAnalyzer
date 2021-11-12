@@ -18,6 +18,11 @@ namespace ExcelService.DataActions.ClusterActions
       return "Sets the color and style of the Border(s) for a Data Cluster's Header";
     }
 
+    public override IActionParameters GetDefaultParameters()
+    {
+      return new HeaderBorderStyleParameters();
+    }
+
     public override bool IsApplicable(IActionParameters parameters)
     {
       return this.IsCorrectType(parameters, typeof(HeaderBorderStyleParameters)) &&

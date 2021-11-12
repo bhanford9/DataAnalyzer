@@ -29,6 +29,14 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     public ExcelSetupViewModel()
     {
       this.loadDataIntoStructure = new BaseCommand((obj) => this.DoLoadDataIntoStructure());
+
+      this.excelSetupModel.WorkbookActions.ToList().ForEach(x => this.WorkbookActions.Add(x));
+      this.excelSetupModel.WorksheetActions.ToList().ForEach(x => this.WorksheetActions.Add(x));
+      this.excelSetupModel.DataClusterActions.ToList().ForEach(x => this.DataClusterActions.Add(x));
+      this.excelSetupModel.RowActions.ToList().ForEach(x => this.RowActions.Add(x));
+      this.excelSetupModel.CellActions.ToList().ForEach(x => this.CellActions.Add(x));
+
+      // TODO --> add custom saved configuration actions
     }
 
     public ObservableCollection<ExcelAction> WorkbookActions { get; }

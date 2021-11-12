@@ -5,5 +5,6 @@
     string Name { get; }
     string WorksheetName { get; set; }
     ActionPerformer Performer { get; set; }
+    ActionCategory Category { get; }
   }
 }

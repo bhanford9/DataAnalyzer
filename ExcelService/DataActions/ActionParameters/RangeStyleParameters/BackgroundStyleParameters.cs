@@ -12,6 +12,8 @@ namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
 
     public bool DoApplyColor { get; set; } = false;
 
+    public override ActionCategory Category => ActionCategory.BackgroundStyle;
+
     public ColorValue Color
     {
       get => this.color;

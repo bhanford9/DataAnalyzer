@@ -8,7 +8,6 @@ namespace ExcelService.DataActions.WorkbookActions
 {
   public class DisplayWorkbookAction : DataAction
   {
-
     public override string GetName()
     {
       return "Display Workbook";
@@ -17,6 +16,11 @@ namespace ExcelService.DataActions.WorkbookActions
     public override string GetDescription()
     {
       return "Opens the workbook after all other actions are complete";
+    }
+
+    public override IActionParameters GetDefaultParameters()
+    {
+      return new DisplayWorkbookParameters();
     }
 
     public override bool IsApplicable(IActionParameters parameters)

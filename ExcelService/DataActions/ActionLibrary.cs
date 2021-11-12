@@ -230,7 +230,14 @@ namespace ExcelService.DataActions
 
     private ICollection<ActionInfo> GetActionInfo(ICollection<IDataAction> subLibrary)
     {
-      return subLibrary.Select(x => new ActionInfo() { Name = x.GetName(), Description = x.GetDescription() }).ToList();
+      return subLibrary
+        .Select(x => new ActionInfo()
+        {
+          Name = x.GetName(),
+          Description = x.GetDescription(),
+          DeaultParameters = x.GetDefaultParameters()
+        })
+        .ToList();
     }
 
     private IDataAction GetAction(ICollection<IDataAction> subLibrary, string name)

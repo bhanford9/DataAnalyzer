@@ -17,5 +17,7 @@ namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
         this.border.DoApply = true;
       }
     }
+
+    public override ActionCategory Category => ActionCategory.BorderStyle;
   }
 }

@@ -18,6 +18,11 @@ namespace ExcelService.DataActions.ClusterActions
       return "Sets the color and style of the background fill for a Data Cluster Header";
     }
 
+    public override IActionParameters GetDefaultParameters()
+    {
+      return new HeaderBackgroundStyleParameters();
+    }
+
     public override bool IsApplicable(IActionParameters parameters)
     {
       return this.IsCorrectType(parameters, typeof(HeaderBackgroundStyleParameters)) &&
