@@ -49,9 +49,9 @@
     </Grid>
 
     <TabControl Grid.Row="1"
-                Style="{StaticResource LightTabControlStyle}">
+                Style="{StaticResource BaseVerticalTabControlStyle}">
       <TabControl.Resources>
-        <Style TargetType="TabItem" BasedOn="{StaticResource LightTabItemStyle}">          
+        <Style TargetType="TabItem" BasedOn="{StaticResource BaseVerticalTabItemStyle}">          
         </Style>
       </TabControl.Resources>
       <TabItem Header="Workbooks">

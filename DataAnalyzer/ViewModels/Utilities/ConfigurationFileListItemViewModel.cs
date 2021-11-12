@@ -17,7 +17,7 @@ namespace DataAnalyzer.ViewModels.Utilities
       this.configurationCreationModel.LoadConfiguration(this.Value);
     }
 
-    protected override void DoRemove()
+    protected override void InternalDoRemove()
     {
       // TODO --> prompt user with confirmation
       throw new NotImplementedException();

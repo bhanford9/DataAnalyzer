@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DataScraper\DataScraper.csproj" />
     <ProjectReference Include="..\DataSerialization\DataSerialization.csproj" />
+    <ProjectReference Include="..\ExcelService\ExcelService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

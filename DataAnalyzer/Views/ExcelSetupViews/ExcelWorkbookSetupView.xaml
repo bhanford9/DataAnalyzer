@@ -7,7 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
   <Grid>
-    <TabControl>
+    <TabControl Style="{StaticResource BaseTabControlStyle}">
+      <TabControl.Resources>
+        <Style TargetType="TabItem" BasedOn="{StaticResource BaseTabItemStyle}">          
+        </Style>
+      </TabControl.Resources>
       
       <TabItem Header="Create Actions">
         

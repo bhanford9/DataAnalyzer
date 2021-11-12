@@ -52,15 +52,15 @@ namespace DataAnalyzer.ViewModels
     public ICommand CancelChanges => this.cancelChanges;
     public ICommand SaveConfiguration => this.saveConfiguration;
 
-    public ObservableCollection<string> DataTypes { get; set; }
+    public ObservableCollection<string> DataTypes { get; }
       = new ObservableCollection<string>();
-    public ObservableCollection<string> ExportTypes { get; set; }
+    public ObservableCollection<string> ExportTypes { get; }
       = new ObservableCollection<string>();
 
-    public ObservableCollection<ConfigurationGroupingViewModel> ConfigurationGroupings { get; set; }
+    public ObservableCollection<ConfigurationGroupingViewModel> ConfigurationGroupings { get; }
       = new ObservableCollection<ConfigurationGroupingViewModel>();
 
-    public ObservableCollection<LoadableRemovableRowViewModel> Configurations { get; set; }
+    public ObservableCollection<LoadableRemovableRowViewModel> Configurations { get; }
       = new ObservableCollection<LoadableRemovableRowViewModel>();
 
     public bool IsCreating

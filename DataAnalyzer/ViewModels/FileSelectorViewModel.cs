@@ -9,9 +9,6 @@ using System;
 using DataAnalyzer.Common.DataConverters;
 using System.Collections.Generic;
 using DataAnalyzer.Services;
-using DataAnalyzer.Common.DataConfigurations.ExcelConfiguration;
-using DataAnalyzer.Common.DataObjects.TimeStats.QueryableTimeStats;
-using DataAnalyzer.Common.DataOrganizers;
 
 namespace DataAnalyzer.ViewModels
 {

@@ -30,7 +30,7 @@ namespace DataAnalyzer.ViewModels
       this.mainModel.LoadedDataContent.PropertyChanged += this.LoadedDataContentPropertyChanged;
     }
 
-    public ObservableCollection<LoadedConfigurationItemViewModel> LoadedConfigs { get; set; }
+    public ObservableCollection<LoadedConfigurationItemViewModel> LoadedConfigs { get; }
       = new ObservableCollection<LoadedConfigurationItemViewModel>();
 
     private void UpdateLoadedConfigs(string name, string key, string keyValue)

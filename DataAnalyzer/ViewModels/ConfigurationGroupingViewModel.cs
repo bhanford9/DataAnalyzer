@@ -34,7 +34,7 @@ namespace DataAnalyzer.ViewModels
       this.LoadParameters();
     }
 
-    public ObservableCollection<ConfigurationGroupingViewModel> Children { get; set; }
+    public ObservableCollection<ConfigurationGroupingViewModel> Children { get; }
       = new ObservableCollection<ConfigurationGroupingViewModel>();
 
     public ConfigurationGroupingViewModel Parent { get; private set; } = null;

@@ -1,14 +1,15 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.Common.DataConfigurations.ExcelConfiguration;
 using DataAnalyzer.Common.DataObjects;
-using DataAnalyzer.Common.DataObjects.TimeStats.QueryableTimeStats;
 using DataAnalyzer.Common.DataOrganizers;
 using DataAnalyzer.Common.DataParameters;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
+using DataAnalyzer.Models.ExcelSetupModels;
 using DataAnalyzer.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
 
@@ -17,6 +18,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
   public class ExcelSetupViewModel : BasePropertyChanged
   {
     private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+    private readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
     private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
 
     private readonly BaseCommand loadDataIntoStructure;
@@ -28,6 +30,21 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     {
       this.loadDataIntoStructure = new BaseCommand((obj) => this.DoLoadDataIntoStructure());
     }
+
+    public ObservableCollection<ExcelAction> WorkbookActions { get; }
+      = new ObservableCollection<ExcelAction>();
+
+    public ObservableCollection<ExcelAction> WorksheetActions { get; }
+      = new ObservableCollection<ExcelAction>();
+
+    public ObservableCollection<ExcelAction> DataClusterActions { get; }
+      = new ObservableCollection<ExcelAction>();
+
+    public ObservableCollection<ExcelAction> RowActions { get; }
+      = new ObservableCollection<ExcelAction>();
+
+    public ObservableCollection<ExcelAction> CellActions { get; }
+      = new ObservableCollection<ExcelAction>();
 
     public ICommand LoadDataIntoStructure => this.loadDataIntoStructure;
 
@@ -54,6 +71,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     {
       this.CurrentState = DataLoadingState.LoadingData.ToString();
 
+      // TODO --> move this down to the stats model
       ExcelConfiguration configuration = new ExcelConfiguration();
       IDataParameterCollection parameters = this.configurationModel.DataParameterCollection;
       ICollection<GroupingConfiguration> groupings = this.configurationModel.DataConfiguration.GroupingConfiguration;

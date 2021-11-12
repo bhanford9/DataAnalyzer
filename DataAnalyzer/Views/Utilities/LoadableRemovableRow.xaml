@@ -3,10 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:DataAnalyzer.Common.Mvvm.ValueConverters"
              mc:Ignorable="d" 
              Height="38"
              d:DesignHeight="50" 
              d:DesignWidth="300">
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+  </UserControl.Resources>
+  
   <Grid ToolTip="{Binding ToolTipText}">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="*"/>
@@ -26,6 +31,7 @@
     <Button Grid.Column="2"
             Command="{Binding Remove}"
             ToolTip="Delete Configuration"
+            Visibility="{Binding IsRemovable, Converter={StaticResource BooleanToVisibility}}"
             Style="{StaticResource IconDeleteButton}"/>
   </Grid>
 </UserControl>

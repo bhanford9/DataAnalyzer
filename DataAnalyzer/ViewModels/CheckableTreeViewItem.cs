@@ -13,7 +13,7 @@ namespace DataAnalyzer.ViewModels
     {
     }
 
-    public ObservableCollection<CheckableTreeViewItem> Children { get; set; }
+    public ObservableCollection<CheckableTreeViewItem> Children { get; }
       = new ObservableCollection<CheckableTreeViewItem>();
 
     public bool IsChecked
