@@ -9,7 +9,7 @@ namespace DataAnalyzer.Common.DataOrganizers
 {
   public class DataOrganizer : IDataOrganizer
   {
-    public void Organize(IDataConfiguration configuration, ICollection<IStats> data)
+    public HeirarchalStats Organize(IDataConfiguration configuration, ICollection<IStats> data)
     {
       HeirarchalStats heirarchalStats = new HeirarchalStats();
 
@@ -24,6 +24,8 @@ namespace DataAnalyzer.Common.DataOrganizers
       }
 
       this.ApplyNestedGrouping(heirarchalStats, data, groupingConfigurations);
+
+      return heirarchalStats;
     }
 
     private void ApplyNestedGrouping(

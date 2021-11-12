@@ -7,7 +7,7 @@ using System;
 
 namespace DataAnalyzer.Models
 {
-  public class ConfigurationCreationModel : BasePropertyChanged
+  public class ConfigurationModel : BasePropertyChanged
   {
     private readonly SerializationService serializationService = new SerializationService();
     private readonly DataParameterLibrary dataParameterLibrary = new DataParameterLibrary();
@@ -16,6 +16,7 @@ namespace DataAnalyzer.Models
     private string configurationName = string.Empty;
 
     private StatType selectedStatType = StatType.NotApplicable;
+    private ExportType selectedExportType = ExportType.NotApplicable;
 
     public int RemoveLevel { get; private set; } = -1;
     public DataConfiguration DataConfiguration { get; private set; } = new DataConfiguration();
@@ -28,6 +29,12 @@ namespace DataAnalyzer.Models
         this.NotifyPropertyChanged(nameof(this.SelectedDataType), ref this.selectedStatType, value);
         this.DataParameterCollection = this.dataParameterLibrary.GetParameters(value);
       }
+    }
+
+    public ExportType SelectedExportType
+    {
+      get => this.selectedExportType;
+      set => this.NotifyPropertyChanged(nameof(this.SelectedExportType), ref this.selectedExportType, value);
     }
 
     public IDataParameterCollection DataParameterCollection
@@ -99,6 +106,7 @@ namespace DataAnalyzer.Models
       this.DataConfiguration.DateTime = saveTime;
       this.DataConfiguration.VersionUid = saveUid;
       this.DataConfiguration.StatType = this.selectedStatType;
+      this.DataConfiguration.ExportType = this.selectedExportType;
 
       string fullFilePath = this.ConfigurationDirectory + "\\" + this.ConfigurationName + FileProperties.CONFIGURATION_FILE_EXTENSION;
       this.serializationService.JsonSerializeToFile(this.DataConfiguration, fullFilePath);

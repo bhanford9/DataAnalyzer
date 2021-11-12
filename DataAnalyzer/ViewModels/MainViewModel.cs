@@ -12,21 +12,22 @@ namespace DataAnalyzer.ViewModels
 
     public MainViewModel()
     {
-      this.LoadedConfigs.Add(new LoadedConfigurationItemViewModel() { Title = this.mainModel.LoadedDataStructure.Name });
-      this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.DirectoryPathKeyValue);
-      this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.StructureNameKeyValue);
-      this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.DataTypeKeyValue);
-      this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.GroupingsKeyValue);
-
-      this.LoadedConfigs.Add(new LoadedConfigurationItemViewModel() { Title = this.mainModel.LoadedDataContent.Name });
-
       this.LoadedConfigs.Add(new LoadedConfigurationItemViewModel() { Title = this.mainModel.LoadedInputFiles.Name });
       this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedInputFiles.DirectoryPathKeyValue);
       this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedInputFiles.DataTypeKeyValue);
 
+      this.LoadedConfigs.Add(new LoadedConfigurationItemViewModel() { Title = this.mainModel.LoadedDataStructure.Name });
+      this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.DirectoryPathKeyValue);
+      this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.StructureNameKeyValue);
+      this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.DataTypeKeyValue);
+      this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.ExportTypeKeyValue);
+      this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.GroupingsKeyValue);
+
+      this.LoadedConfigs.Add(new LoadedConfigurationItemViewModel() { Title = this.mainModel.LoadedDataContent.Name });
+
+      this.mainModel.LoadedInputFiles.PropertyChanged += this.LoadedInputFilesPropertyChanged;
       this.mainModel.LoadedDataStructure.PropertyChanged += this.LoadedDataStructurePropertyChanged;
       this.mainModel.LoadedDataContent.PropertyChanged += this.LoadedDataContentPropertyChanged;
-      this.mainModel.LoadedInputFiles.PropertyChanged += this.LoadedInputFilesPropertyChanged;
     }
 
     public ObservableCollection<LoadedConfigurationItemViewModel> LoadedConfigs { get; set; }
@@ -46,6 +47,25 @@ namespace DataAnalyzer.ViewModels
             }
           }
         }
+      }
+    }
+
+    private void LoadedInputFilesPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      switch (e.PropertyName)
+      {
+        case nameof(this.mainModel.LoadedInputFiles.DirectoryPathKeyValue):
+          this.UpdateLoadedConfigs(
+            this.mainModel.LoadedInputFiles.Name,
+            this.mainModel.LoadedInputFiles.DirectoryPathKey,
+            this.mainModel.LoadedInputFiles.DirectoryPathKeyValue);
+          break;
+        case nameof(this.mainModel.LoadedInputFiles.DataTypeKeyValue):
+          this.UpdateLoadedConfigs(
+            this.mainModel.LoadedInputFiles.Name,
+            this.mainModel.LoadedInputFiles.DataTypeKey,
+            this.mainModel.LoadedInputFiles.DataTypeKeyValue);
+          break;
       }
     }
 
@@ -71,6 +91,12 @@ namespace DataAnalyzer.ViewModels
             this.mainModel.LoadedDataStructure.DataTypeKey,
             this.mainModel.LoadedDataStructure.DataTypeKeyValue);
           break;
+        case nameof(this.mainModel.LoadedDataStructure.ExportTypeKeyValue):
+          this.UpdateLoadedConfigs(
+            this.mainModel.LoadedDataStructure.Name,
+            this.mainModel.LoadedDataStructure.ExportTypeKey,
+            this.mainModel.LoadedDataStructure.ExportTypeKeyValue);
+          break;
         case nameof(this.mainModel.LoadedDataStructure.GroupingsKeyValue):
           this.UpdateLoadedConfigs(
             this.mainModel.LoadedDataStructure.Name,
@@ -84,25 +110,6 @@ namespace DataAnalyzer.ViewModels
     {
       switch (e.PropertyName)
       {
-      }
-    }
-
-    private void LoadedInputFilesPropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-      switch (e.PropertyName)
-      {
-        case nameof(this.mainModel.LoadedInputFiles.DirectoryPathKeyValue):
-          this.UpdateLoadedConfigs(
-            this.mainModel.LoadedInputFiles.Name,
-            this.mainModel.LoadedInputFiles.DirectoryPathKey,
-            this.mainModel.LoadedInputFiles.DirectoryPathKeyValue);
-          break;
-        case nameof(this.mainModel.LoadedInputFiles.DataTypeKeyValue):
-          this.UpdateLoadedConfigs(
-            this.mainModel.LoadedInputFiles.Name,
-            this.mainModel.LoadedInputFiles.DataTypeKey,
-            this.mainModel.LoadedInputFiles.DataTypeKeyValue);
-          break;
       }
     }
   }

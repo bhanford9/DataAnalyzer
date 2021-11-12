@@ -11,7 +11,7 @@ namespace DataAnalyzer.ViewModels
 {
   public class ConfigurationGroupingViewModel : BasePropertyChanged
   {
-    private readonly ConfigurationCreationModel configurationCreationModel = BaseSingleton<ConfigurationCreationModel>.Instance;
+    private readonly ConfigurationModel configurationCreationModel = BaseSingleton<ConfigurationModel>.Instance;
 
     private readonly int level = 0;
     private string name = string.Empty;

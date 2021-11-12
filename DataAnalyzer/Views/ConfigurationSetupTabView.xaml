@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DataAnalyzer.Views"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             Name="MainSetupTab"
              d:DesignHeight="450" d:DesignWidth="800">
 
   <Border>
@@ -13,5 +14,18 @@
       </Style>
     </Border.Resources>
 
+    <local:ExcelConfigurationSetupView>
+      <local:ExcelConfigurationSetupView.Style>
+        <Style TargetType="local:ExcelConfigurationSetupView">
+          <Setter Property="Visibility" Value="Hidden"/>
+          <Style.Triggers>
+            <DataTrigger Binding="{Binding DataContext.SelectedExportType, ElementName=MainSetupTab}" Value="Excel">
+              <Setter Property="Visibility" Value="Visible"/>
+            </DataTrigger>
+          </Style.Triggers>
+        </Style>
+      </local:ExcelConfigurationSetupView.Style>
+    </local:ExcelConfigurationSetupView>
+    
   </Border>
 </UserControl>

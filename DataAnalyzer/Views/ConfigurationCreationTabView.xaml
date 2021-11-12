@@ -88,7 +88,7 @@
             Grid.RowSpan="2"
             Visibility="{Binding IsCreating, Converter={StaticResource BooleanToVisibility}}">
         <Grid.RowDefinitions>
-          <RowDefinition Height="38"/>
+          <RowDefinition Height="40"/>
           <RowDefinition Height="*"/>
           <RowDefinition Height="*"/>
           <RowDefinition Height="30"/>
@@ -97,9 +97,11 @@
         <Grid Margin="0 2 0 6">
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="6*"/>
+            <ColumnDefinition Width="46*"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="27*" MinWidth="158"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="27*" MinWidth="158"/>
           </Grid.ColumnDefinitions>
 
           <Grid.Resources>
@@ -117,11 +119,18 @@
           </TextBox>
 
           <TextBlock Grid.Column="2"
-                     Text="Type:"/>
+                     Text="Data:"/>
 
           <ComboBox Grid.Column="3"
                     ItemsSource="{Binding DataTypes}"
                     SelectedItem="{Binding SelectedDataType}"/>
+
+          <TextBlock Grid.Column="4"
+                     Text="Export:"/>
+
+          <ComboBox Grid.Column="5"
+                    ItemsSource="{Binding ExportTypes}"
+                    SelectedItem="{Binding SelectedExportType}"/>
         </Grid>
 
         <GroupBox Grid.Row="1"

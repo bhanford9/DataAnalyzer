@@ -146,8 +146,7 @@
                                               VerticalAlignment="Center">
                                 <ContentPresenter.Resources>
                                     <Style TargetType="{x:Type TextBlock}" 
-                                           BasedOn="{StaticResource BoldTextBlockStyle}">
-                                        <Setter Property="Foreground" Value="{DynamicResource DarkText}"/>
+                                           BasedOn="{StaticResource BaseTextBlockStyle}">
                                         <Setter Property="Margin" Value="3,2,3,2"/>
                                         <Setter Property="TextAlignment" Value="Center"/>
                                     </Style>

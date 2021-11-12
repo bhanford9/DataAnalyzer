@@ -6,7 +6,7 @@ namespace DataAnalyzer.ViewModels.Utilities
 {
   class ConfigurationFileListItemViewModel : LoadableRemovableRowViewModel
   {
-    private readonly ConfigurationCreationModel configurationCreationModel = BaseSingleton<ConfigurationCreationModel>.Instance;
+    private readonly ConfigurationModel configurationCreationModel = BaseSingleton<ConfigurationModel>.Instance;
 
     public ConfigurationFileListItemViewModel()
     {

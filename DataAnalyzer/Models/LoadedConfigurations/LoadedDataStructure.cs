@@ -4,16 +4,19 @@ namespace DataAnalyzer.Models.LoadedConfigurations
 {
   public class LoadedDataStructure : BasePropertyChanged
   {
-    private readonly string directoryPathKey = "Directory: ";
+    private readonly string directoryPathKey = "Directory:   ";
     private string directoryPath = "Not set";
 
-    private readonly string structureNameKey = "Name:      ";
+    private readonly string structureNameKey = "Name:        ";
     private string structureName = "Not set";
 
-    private readonly string dataTypeKey = "Data Type: ";
+    private readonly string dataTypeKey =      "Data Type:   ";
     private string dataType = "Not set";
 
-    private readonly string groupingsKey = "Groupings: ";
+    private readonly string exportTypeKey =    "Export Type: ";
+    private string exportType = "Not set";
+
+    private readonly string groupingsKey =     "Groupings:   ";
     private int groupingsCount = 0;
 
     public string Name => "Data Structure";
@@ -59,6 +62,21 @@ namespace DataAnalyzer.Models.LoadedConfigurations
         {
           this.dataType = value;
           this.NotifyPropertyChanged(nameof(this.DataTypeKeyValue));
+        }
+      }
+    }
+
+    public string ExportTypeKey => this.exportTypeKey;
+    public string ExportTypeKeyValue => this.exportTypeKey + this.exportType;
+    public string ExportType
+    {
+      get => this.exportType;
+      set
+      {
+        if (this.exportType != value)
+        {
+          this.exportType = value;
+          this.NotifyPropertyChanged(nameof(this.ExportTypeKeyValue));
         }
       }
     }

@@ -11,6 +11,8 @@ namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
 
     public StatType StatType { get; set; } = StatType.NotApplicable;
 
+    public ExportType ExportType { get; set; } = ExportType.NotApplicable;
+
     public ICollection<GroupingConfiguration> GroupingConfiguration { get; set; } = new List<GroupingConfiguration>();
   }
 }

@@ -16,13 +16,14 @@ namespace DataAnalyzer.ViewModels
 {
   public class ConfigurationCreationViewModel : BasePropertyChanged
   {
-    private readonly ConfigurationCreationModel configurationCreationModel = BaseSingleton<ConfigurationCreationModel>.Instance;
+    private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
     private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
 
     private bool isCreating = false;
     private string configurationDirectory = string.Empty;
     private string configurationName = string.Empty;
     private string selectedDataType = string.Empty;
+    private string selectedExportType = string.Empty;
     private int groupingLayersCount = 0;
 
     private readonly BaseCommand browseDirectory;
@@ -41,8 +42,9 @@ namespace DataAnalyzer.ViewModels
       this.ApplyConfigurationDirectory(this.ConfigurationDirectory);
 
       Enum.GetNames(typeof(StatType)).ToList().ForEach(x => this.DataTypes.Add(x));
+      Enum.GetNames(typeof(ExportType)).ToList().ForEach(x => this.ExportTypes.Add(x));
 
-      this.configurationCreationModel.PropertyChanged += this.ConfigurationCreationModelPropertyChanged;
+      this.configurationModel.PropertyChanged += this.ConfigurationCreationModelPropertyChanged;
     }
 
     public ICommand BrowseDirectory => this.browseDirectory;
@@ -51,6 +53,8 @@ namespace DataAnalyzer.ViewModels
     public ICommand SaveConfiguration => this.saveConfiguration;
 
     public ObservableCollection<string> DataTypes { get; set; }
+      = new ObservableCollection<string>();
+    public ObservableCollection<string> ExportTypes { get; set; }
       = new ObservableCollection<string>();
 
     public ObservableCollection<ConfigurationGroupingViewModel> ConfigurationGroupings { get; set; }
@@ -71,7 +75,7 @@ namespace DataAnalyzer.ViewModels
       set
       {
         this.NotifyPropertyChanged(nameof(this.ConfigurationDirectory), ref this.configurationDirectory, value);
-        this.configurationCreationModel.ConfigurationDirectory = value;
+        this.configurationModel.ConfigurationDirectory = value;
         this.mainModel.LoadedDataStructure.DirectoryPath = value;
       }
     }
@@ -82,7 +86,7 @@ namespace DataAnalyzer.ViewModels
       set
       {
         this.NotifyPropertyChanged(nameof(this.ConfigurationName), ref this.configurationName, value);
-        this.configurationCreationModel.ConfigurationName = value;
+        this.configurationModel.ConfigurationName = value;
         this.mainModel.LoadedDataStructure.StructureName = value;
       }
     }
@@ -93,8 +97,19 @@ namespace DataAnalyzer.ViewModels
       set
       {
         this.NotifyPropertyChanged(nameof(this.SelectedDataType), ref this.selectedDataType, value);
-        this.configurationCreationModel.SelectedDataType = Enum.Parse<StatType>(value);
+        this.configurationModel.SelectedDataType = Enum.Parse<StatType>(value);
         this.mainModel.LoadedDataStructure.DataType = value;
+      }
+    }
+
+    public string SelectedExportType
+    {
+      get => this.selectedExportType;
+      set
+      {
+        this.NotifyPropertyChanged(nameof(this.SelectedExportType), ref this.selectedExportType, value);
+        this.configurationModel.SelectedExportType = Enum.Parse<ExportType>(value);
+        this.mainModel.LoadedDataStructure.ExportType = value;
       }
     }
 
@@ -132,7 +147,7 @@ namespace DataAnalyzer.ViewModels
     {
       this.IsCreating = true;
       this.ClearConfigurationData();
-      this.configurationCreationModel.CreateNewDataConfiguration();
+      this.configurationModel.CreateNewDataConfiguration();
     }
 
     private void DoCancelChanges()
@@ -163,12 +178,12 @@ namespace DataAnalyzer.ViewModels
         return;
       }
 
-      this.configurationCreationModel.ClearGroupingConfigurations();
+      this.configurationModel.ClearGroupingConfigurations();
 
       int level = 0;
       this.ConfigurationGroupings.ToList().ForEach(configGroupingViewModel =>
       {
-        this.configurationCreationModel.AddGroupingConfiguration(new GroupingConfiguration()
+        this.configurationModel.AddGroupingConfiguration(new GroupingConfiguration()
         {
           GroupLevel = level++,
           GroupName = configGroupingViewModel.Name,
@@ -176,7 +191,7 @@ namespace DataAnalyzer.ViewModels
         });
       });
 
-      this.configurationCreationModel.SaveConfiguration();
+      this.configurationModel.SaveConfiguration();
     }
 
     private void ApplyConfigurationDirectory(string file)
@@ -203,12 +218,12 @@ namespace DataAnalyzer.ViewModels
 
     private void LoadViewModelFromConfiguration()
     {
-      this.ConfigurationName = this.configurationCreationModel.DataConfiguration.Name;
-      this.GroupingLayersCount = this.configurationCreationModel.DataConfiguration.GroupingConfiguration.Count;
+      this.ConfigurationName = this.configurationModel.DataConfiguration.Name;
+      this.GroupingLayersCount = this.configurationModel.DataConfiguration.GroupingConfiguration.Count;
       this.ConfigurationGroupings.Clear();
 
       int level = 0;
-      foreach (GroupingConfiguration groupingConfig in this.configurationCreationModel.DataConfiguration.GroupingConfiguration)
+      foreach (GroupingConfiguration groupingConfig in this.configurationModel.DataConfiguration.GroupingConfiguration)
       {
         this.ConfigurationGroupings.Add(new ConfigurationGroupingViewModel(level++)
         {
@@ -218,7 +233,8 @@ namespace DataAnalyzer.ViewModels
       }
 
       // This will update the model which will cause a propogation up to the grouping view models to populate their combo boxes
-      this.SelectedDataType = this.configurationCreationModel.DataConfiguration.StatType.ToString();
+      this.SelectedDataType = this.configurationModel.DataConfiguration.StatType.ToString();
+      this.SelectedExportType = this.configurationModel.DataConfiguration.ExportType.ToString();
       this.IsCreating = true;
     }
 
@@ -226,14 +242,17 @@ namespace DataAnalyzer.ViewModels
     {
       switch (e.PropertyName)
       {
-        case nameof(this.configurationCreationModel.SelectedDataType):
-          this.SelectedDataType = Enum.GetName(typeof(StatType), this.configurationCreationModel.SelectedDataType);
+        case nameof(this.configurationModel.SelectedDataType):
+          this.SelectedDataType = Enum.GetName(typeof(StatType), this.configurationModel.SelectedDataType);
           break;
-        case nameof(this.configurationCreationModel.DataConfiguration):
+        case nameof(this.configurationModel.SelectedExportType):
+          this.SelectedExportType = Enum.GetName(typeof(ExportType), this.configurationModel.SelectedExportType);
+          break;
+        case nameof(this.configurationModel.DataConfiguration):
           this.LoadViewModelFromConfiguration();
           break;
-        case nameof(this.configurationCreationModel.RemoveLevel):
-          this.ConfigurationGroupings.RemoveAt(this.configurationCreationModel.RemoveLevel);
+        case nameof(this.configurationModel.RemoveLevel):
+          this.ConfigurationGroupings.RemoveAt(this.configurationModel.RemoveLevel);
 
           this.groupingLayersCount--;
           this.NotifyPropertyChanged(nameof(this.GroupingLayersCount));

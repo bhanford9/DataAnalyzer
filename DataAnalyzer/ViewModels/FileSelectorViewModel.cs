@@ -9,9 +9,9 @@ using System;
 using DataAnalyzer.Common.DataConverters;
 using System.Collections.Generic;
 using DataAnalyzer.Services;
-using DataAnalyzer.Common.DataOrganizers;
 using DataAnalyzer.Common.DataConfigurations.ExcelConfiguration;
 using DataAnalyzer.Common.DataObjects.TimeStats.QueryableTimeStats;
+using DataAnalyzer.Common.DataOrganizers;
 
 namespace DataAnalyzer.ViewModels
 {
@@ -23,7 +23,7 @@ namespace DataAnalyzer.ViewModels
     private readonly BaseCommand browseDirectory;
     private readonly BaseCommand loadStats;
 
-    private readonly StatsModel statsModel = new StatsModel();
+    private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
     private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
     private readonly DataConverterLibrary dataConverterLibrary = new DataConverterLibrary();
 
@@ -99,14 +99,6 @@ namespace DataAnalyzer.ViewModels
         IDataConverter converter = this.dataConverterLibrary.GetConverter(currentType);
         this.statsModel.LoadStatsForFile(file.Path, converter);
       });
-
-      ExcelConfiguration configuration = new ExcelConfiguration();
-      configuration.AddGroupingRule(0, (stats) => (stats as QueryableTimeStats).MethodName);
-      configuration.AddGroupingRule(1, (stats) => (stats as QueryableTimeStats).ContainerType);
-      configuration.AddGroupingRule(2, (stats) => (stats as QueryableTimeStats).CategoryType);
-
-      DataOrganizer organizer = new DataOrganizer();
-      organizer.Organize(configuration, this.statsModel.Stats);
     }
 
     private ICollection<CheckableTreeViewItem> FlattenFiles()
