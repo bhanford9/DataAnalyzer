@@ -5,6 +5,9 @@
     AlignmentStyle,
     BorderStyle,
     BackgroundStyle,
-    BooleanOperation
+    BooleanOperation,
+
+    // Difficult to place:
+    ColumnBorderStyle
   }
 }

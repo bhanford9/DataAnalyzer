@@ -24,6 +24,7 @@
                Text="{Binding Value}"/>
 
     <Button Grid.Column="1"
+            Margin="5 0 2 0"
             Command="{Binding Load}"
             ToolTip="Load Configuration"
             Style="{StaticResource IconDownloadButton}"/>

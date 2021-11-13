@@ -18,6 +18,6 @@ namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
       }
     }
 
-    public override ActionCategory Category => ActionCategory.BorderStyle;
+    public override ActionCategory Category => ActionCategory.ColumnBorderStyle;
   }
 }

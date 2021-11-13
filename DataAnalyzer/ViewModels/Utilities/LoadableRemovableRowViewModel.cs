@@ -26,10 +26,10 @@ namespace DataAnalyzer.ViewModels.Utilities
       set => this.NotifyPropertyChanged(nameof(this.ToolTipText), ref this.toolTipText, value);
     }
 
-    public bool IsRemoveable
+    public bool IsRemovable
     {
       get => this.isRemovable;
-      set => this.NotifyPropertyChanged(nameof(this.IsRemoveable), ref this.isRemovable, value);
+      set => this.NotifyPropertyChanged(nameof(this.IsRemovable), ref this.isRemovable, value);
     }
 
     protected void DoRemove()

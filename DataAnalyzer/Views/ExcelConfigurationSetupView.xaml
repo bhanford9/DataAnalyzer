@@ -61,7 +61,7 @@
 
       </TabItem>
       <TabItem Header="Data Clusters">
-
+        <excelsetupviews:ExcelDataClusterSetupView/>
       </TabItem>
       <TabItem Header="Rows">
 

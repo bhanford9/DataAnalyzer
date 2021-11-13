@@ -72,6 +72,8 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters
             Name = excelBorderParams.Name
           };
           break;
+        case ActionCategory.ColumnBorderStyle:
+          break;
         default:
           throw new System.Exception($"Unknown Action Category {actionInfo.DeaultParameters.Category}.");
       }
