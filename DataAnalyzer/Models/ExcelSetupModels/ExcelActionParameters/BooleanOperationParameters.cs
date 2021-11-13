@@ -9,5 +9,14 @@
       get => this.doPerform;
       set => this.NotifyPropertyChanged(nameof(this.DoPerform), ref this.doPerform, value);
     }
+
+    public override string SerializedParameters => this.Serialize(this.doPerform);
+
+    public override void Deserialize()
+    {
+      string[] parameters = this.SerializedParameters.Split(this.Delimiter);
+
+      this.DoPerform = bool.Parse(parameters[0]);
+    }
   }
 }

@@ -16,7 +16,7 @@ namespace DataSerialization.Serializers
 
     public override string Serialize(T data)
     {
-      return JsonSerializer.Serialize(data, this.options);
+      return JsonSerializer.Serialize(data, data.GetType(), this.options);
     }
   }
 }

@@ -1,15 +1,28 @@
 ﻿using DataAnalyzer.Common.Mvvm;
+using System.Linq;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
-  public class ActionParameters : BasePropertyChanged, IActionParameters
+  public abstract class ActionParameters : BasePropertyChanged, IActionParameters
   {
     private string name = string.Empty;
+
+    // Hoperfully gauranteed unique
+    protected string Delimiter => " |~| ";
+
+    protected string Serialize(params object[] items)
+    {
+      return items.Select(x => x.ToString()).Aggregate((a, b) => a + this.Delimiter + b);
+    }
 
     public string Name
     {
       get => this.name;
       set => this.NotifyPropertyChanged(nameof(this.Name), ref this.name, value);
     }
+
+    public abstract string SerializedParameters { get; }
+
+    public abstract void Deserialize();
   }
 }

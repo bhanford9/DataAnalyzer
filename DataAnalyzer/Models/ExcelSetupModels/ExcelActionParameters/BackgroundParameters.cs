@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Services;
+using System;
 using System.Drawing;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
@@ -25,6 +26,17 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
     {
       get => this.fillPattern;
       set => this.NotifyPropertyChanged(nameof(this.FillPattern), ref this.fillPattern, value);
+    }
+
+    public override string SerializedParameters => this.Serialize(this.backgroundColor, this.patternColor, this.fillPattern);
+
+    public override void Deserialize()
+    {
+      string[] parameters = this.SerializedParameters.Split(this.Delimiter);
+
+      this.BackgroundColor = ColorParser.Parse(parameters[0]);
+      this.PatternColor = ColorParser.Parse(parameters[1]);
+      this.FillPattern = Enum.Parse<FillPattern>(parameters[2]);
     }
   }
 }

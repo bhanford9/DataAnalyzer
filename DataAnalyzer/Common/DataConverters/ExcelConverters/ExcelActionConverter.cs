@@ -48,7 +48,28 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters
           BorderStyleParameters excelBorderParams = actionInfo.DeaultParameters as BorderStyleParameters;
           excelAction.ActionParameters = new BorderParameters()
           {
-            LeftColor = excelBorderParams.
+            LeftColor = excelBorderParams.Left.Color.ToSystemColor(),
+            LeftStyle = BorderStyleConverter.ToLocalBorderStyle(excelBorderParams.Left.Style),
+
+            TopColor = excelBorderParams.Top.Color.ToSystemColor(),
+            TopStyle = BorderStyleConverter.ToLocalBorderStyle(excelBorderParams.Top.Style),
+
+            RightColor = excelBorderParams.Right.Color.ToSystemColor(),
+            RightStyle = BorderStyleConverter.ToLocalBorderStyle(excelBorderParams.Right.Style),
+
+            BottomColor = excelBorderParams.Bottom.Color.ToSystemColor(),
+            BottomStyle = BorderStyleConverter.ToLocalBorderStyle(excelBorderParams.Bottom.Style),
+
+            AllColor = excelBorderParams.AllBorders.Color.ToSystemColor(),
+            AllStyle = BorderStyleConverter.ToLocalBorderStyle(excelBorderParams.AllBorders.Style),
+
+            DiagonalUpColor = excelBorderParams.DiagonalUp.Color.ToSystemColor(),
+            DiagonalUpStyle = BorderStyleConverter.ToLocalBorderStyle(excelBorderParams.DiagonalUp.Style),
+
+            DiagonalDownColor = excelBorderParams.DiagonalDown.Color.ToSystemColor(),
+            DiagonalDownStyle = BorderStyleConverter.ToLocalBorderStyle(excelBorderParams.DiagonalDown.Style),
+
+            Name = excelBorderParams.Name
           };
           break;
         default:

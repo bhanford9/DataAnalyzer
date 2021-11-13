@@ -16,6 +16,7 @@ using ExcelService.Styles.Borders;
 using ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters;
 using ExcelService.DataActions.ActionParameters.ClusterStyleParameters;
 using ExcelService.Styles.Alignments;
+using System.Linq;
 
 namespace ExcelServiceTest
 {

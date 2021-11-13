@@ -29,30 +29,17 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     public ExcelSetupViewModel()
     {
       this.loadDataIntoStructure = new BaseCommand((obj) => this.DoLoadDataIntoStructure());
-
-      this.excelSetupModel.WorkbookActions.ToList().ForEach(x => this.WorkbookActions.Add(x));
-      this.excelSetupModel.WorksheetActions.ToList().ForEach(x => this.WorksheetActions.Add(x));
-      this.excelSetupModel.DataClusterActions.ToList().ForEach(x => this.DataClusterActions.Add(x));
-      this.excelSetupModel.RowActions.ToList().ForEach(x => this.RowActions.Add(x));
-      this.excelSetupModel.CellActions.ToList().ForEach(x => this.CellActions.Add(x));
-
-      // TODO --> add custom saved configuration actions
     }
 
-    public ObservableCollection<ExcelAction> WorkbookActions { get; }
-      = new ObservableCollection<ExcelAction>();
+    public ObservableCollection<ExcelAction> WorkbookActions => this.excelSetupModel.WorkbookActions;
 
-    public ObservableCollection<ExcelAction> WorksheetActions { get; }
-      = new ObservableCollection<ExcelAction>();
+    public ObservableCollection<ExcelAction> WorksheetActions => this.excelSetupModel.WorksheetActions;
 
-    public ObservableCollection<ExcelAction> DataClusterActions { get; }
-      = new ObservableCollection<ExcelAction>();
+    public ObservableCollection<ExcelAction> DataClusterActions => this.excelSetupModel.DataClusterActions;
 
-    public ObservableCollection<ExcelAction> RowActions { get; }
-      = new ObservableCollection<ExcelAction>();
+    public ObservableCollection<ExcelAction> RowActions => this.excelSetupModel.RowActions;
 
-    public ObservableCollection<ExcelAction> CellActions { get; }
-      = new ObservableCollection<ExcelAction>();
+    public ObservableCollection<ExcelAction> CellActions => this.excelSetupModel.CellActions;
 
     public ICommand LoadDataIntoStructure => this.loadDataIntoStructure;
 

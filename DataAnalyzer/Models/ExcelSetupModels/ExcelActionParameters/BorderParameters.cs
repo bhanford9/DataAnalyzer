@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Services;
+using System;
 using System.Drawing;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
@@ -103,6 +104,42 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
     {
       get => this.diagonalDownStyle;
       set => this.NotifyPropertyChanged(nameof(this.DiagonalDownStyle), ref this.diagonalDownStyle, value);
+    }
+
+    public override string SerializedParameters => this.Serialize(
+      this.leftColor,
+      this.leftStyle,
+      this.topColor,
+      this.topStyle,
+      this.rightColor,
+      this.rightStyle,
+      this.bottomColor,
+      this.bottomStyle,
+      this.allColor,
+      this.allStyle,
+      this.diagonalUpColor,
+      this.diagonalUpStyle,
+      this.diagonalDownColor,
+      this.diagonalDownStyle);
+
+    public override void Deserialize()
+    {
+      string[] parameters = this.SerializedParameters.Split(this.Delimiter);
+
+      this.LeftColor = ColorParser.Parse(parameters[0]);
+      this.LeftStyle = Enum.Parse<BorderStyle>(parameters[1]);
+      this.TopColor = ColorParser.Parse(parameters[2]);
+      this.TopStyle = Enum.Parse<BorderStyle>(parameters[3]);
+      this.RightColor = ColorParser.Parse(parameters[4]);
+      this.RightStyle = Enum.Parse<BorderStyle>(parameters[5]);
+      this.BottomColor = ColorParser.Parse(parameters[6]);
+      this.BottomStyle = Enum.Parse<BorderStyle>(parameters[7]);
+      this.AllColor = ColorParser.Parse(parameters[8]);
+      this.AllStyle = Enum.Parse<BorderStyle>(parameters[9]);
+      this.DiagonalUpColor = ColorParser.Parse(parameters[10]);
+      this.DiagonalUpStyle = Enum.Parse<BorderStyle>(parameters[11]);
+      this.DiagonalDownColor = ColorParser.Parse(parameters[12]);
+      this.DiagonalDownStyle = Enum.Parse<BorderStyle>(parameters[13]);
     }
   }
 }

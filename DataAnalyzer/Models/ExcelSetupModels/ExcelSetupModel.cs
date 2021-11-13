@@ -2,45 +2,60 @@
 using DataAnalyzer.Common.Mvvm;
 using ExcelService.DataActions;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace DataAnalyzer.Models.ExcelSetupModels
 {
   public class ExcelSetupModel : BasePropertyChanged
   {
+    private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+
     public ExcelSetupModel()
     {
       ActionLibrary actionLibrary = new ActionLibrary();
 
-      this.WorkbookActions = actionLibrary.GetWorkbookActionInfo()
+      actionLibrary.GetWorkbookActionInfo()
         .Select(x => ExcelActionConverter.FromExcelActionInfo(x))
-        .ToList();
+        .ToList()
+        .ForEach(x => this.WorkbookActions.Add(x));
 
-      this.WorksheetActions = actionLibrary.GetWorksheetActionInfo()
+      actionLibrary.GetWorksheetActionInfo()
         .Select(x => ExcelActionConverter.FromExcelActionInfo(x))
-        .ToList();
+        .ToList()
+        .ForEach(x => this.WorksheetActions.Add(x));
 
-      this.DataClusterActions = actionLibrary.GetDataClusterActionInfo()
+      actionLibrary.GetDataClusterActionInfo()
         .Select(x => ExcelActionConverter.FromExcelActionInfo(x))
-        .ToList();
+        .ToList()
+        .ForEach(x => this.DataClusterActions.Add(x));
 
-      this.RowActions = actionLibrary.GetRowActionInfo()
+      actionLibrary.GetRowActionInfo()
         .Select(x => ExcelActionConverter.FromExcelActionInfo(x))
-        .ToList();
+        .ToList()
+        .ForEach(x => this.RowActions.Add(x));
 
-      this.CellActions = actionLibrary.GetCellActionInfo()
+      actionLibrary.GetCellActionInfo()
         .Select(x => ExcelActionConverter.FromExcelActionInfo(x))
-        .ToList();
+        .ToList()
+        .ForEach(x => this.CellActions.Add(x));
+
+      // TODO --> add custom saved configuration actions
     }
 
-    public ICollection<ExcelAction> WorkbookActions { get; }
+    public ObservableCollection<ExcelAction> WorkbookActions { get; }
+      = new ObservableCollection<ExcelAction>();
 
-    public ICollection<ExcelAction> WorksheetActions { get; }
+    public ObservableCollection<ExcelAction> WorksheetActions { get; }
+      = new ObservableCollection<ExcelAction>();
 
-    public ICollection<ExcelAction> DataClusterActions { get; }
+    public ObservableCollection<ExcelAction> DataClusterActions { get; }
+      = new ObservableCollection<ExcelAction>();
 
-    public ICollection<ExcelAction> RowActions { get; }
+    public ObservableCollection<ExcelAction> RowActions { get; }
+      = new ObservableCollection<ExcelAction>();
 
-    public ICollection<ExcelAction> CellActions { get; }
+    public ObservableCollection<ExcelAction> CellActions { get; }
+      = new ObservableCollection<ExcelAction>();
   }
 }

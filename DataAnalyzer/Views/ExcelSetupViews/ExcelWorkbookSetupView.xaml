@@ -14,7 +14,7 @@
       </TabControl.Resources>
       
       <TabItem Header="Create Actions">
-        
+        <local:ActionCreationView/>
       </TabItem>
 
       <TabItem Header="Apply Actions">
