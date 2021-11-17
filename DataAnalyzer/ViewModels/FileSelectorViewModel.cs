@@ -9,6 +9,7 @@ using System;
 using DataAnalyzer.Common.DataConverters;
 using System.Collections.Generic;
 using DataAnalyzer.Services;
+using DataAnalyzer.ViewModels.Utilities;
 
 namespace DataAnalyzer.ViewModels
 {

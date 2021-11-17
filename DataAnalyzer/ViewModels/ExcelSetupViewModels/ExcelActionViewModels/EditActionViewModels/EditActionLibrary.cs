@@ -6,7 +6,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 {
   public class EditActionLibrary
   {
-    private ICollection<IEditActionViewModel> editActionViewModels = new List<IEditActionViewModel>();
+    private readonly ICollection<IEditActionViewModel> editActionViewModels = new List<IEditActionViewModel>();
 
     public EditActionLibrary()
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using DataAnalyzer.Common.Mvvm;
 
-namespace DataAnalyzer.ViewModels
+namespace DataAnalyzer.ViewModels.Utilities
 {
   public class CheckableTreeViewItem : BasePropertyChanged
   {

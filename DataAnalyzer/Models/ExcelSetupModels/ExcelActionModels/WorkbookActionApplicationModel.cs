@@ -1,8 +1,10 @@
-﻿using System.Collections.ObjectModel;
+﻿using DataAnalyzer.Common.Mvvm;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
 {
-  public class WorkbookActionModel : ActionCreationModel
+  public class WorkbookActionApplicationModel : ActionApplicationModel
   {
     protected override ObservableCollection<ExcelAction> GetActionCollection()
     {

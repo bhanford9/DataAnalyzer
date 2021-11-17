@@ -31,7 +31,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
 
       actions.ToList().ForEach(action =>
       {
-        this.Actions.Add(new ActionListItemViewModel(actionCreationModel)
+        this.Actions.Add(new ActionCreationListItemViewModel(actionCreationModel)
         {
           IsRemovable = !action.IsBuiltIn,
           Value = action.Name,

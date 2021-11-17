@@ -1,6 +1,6 @@
 ﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
 {
-  public interface IActionCreationModel : IExcelActionModel
+  public interface IActionApplicationModel : IExcelActionModel
   {
   }
 }

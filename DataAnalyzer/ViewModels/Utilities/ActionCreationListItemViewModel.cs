@@ -3,11 +3,11 @@ using System;
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-  public class ActionListItemViewModel : LoadableRemovableRowViewModel
+  public class ActionCreationListItemViewModel : LoadableRemovableRowViewModel
   {
     private readonly IActionCreationModel actionCreationModel;
 
-    public ActionListItemViewModel(IActionCreationModel model)
+    public ActionCreationListItemViewModel(IActionCreationModel model)
     {
       this.actionCreationModel = model;
     }

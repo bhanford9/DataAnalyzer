@@ -1,18 +1,11 @@
-﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
-using DataAnalyzer.Common.DataConfigurations.ExcelConfiguration;
-using DataAnalyzer.Common.DataObjects;
-using DataAnalyzer.Common.DataOrganizers;
-using DataAnalyzer.Common.DataParameters;
-using DataAnalyzer.Common.Mvvm;
+﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.ExcelSetupModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels;
 using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
@@ -22,8 +15,20 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
     private readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
     private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-    private readonly IActionCreationModel workbookActionCreationModel = new WorkbookActionModel();
-    private readonly IActionCreationModel dataClusterActionCreationModel = new DataClusterActionModel();
+
+
+    // If these never get used in this class, then they can be removed as private members
+    //
+    // If the only way these all differ is by the way they extract their action collections,
+    //   then it may be better to have a single class and set a function parameter to the means 
+    //   by which it can extract the action collection
+    // 
+    // For now... going with this route in case each model instance needs further independent
+    //   implementations or data structures, understanding that this will mean 15 different models
+    private readonly IActionCreationModel workbookActionCreationModel = new WorkbookActionCreationModel();
+    private readonly IActionCreationModel dataClusterActionCreationModel = new DataClusterActionCreationModel();
+    private readonly IActionApplicationModel workbookActionApplicationModel = new WorkbookActionApplicationModel();
+    private readonly IActionApplicationModel dataClusterActionApplicationModel = new DataClusterActionApplicationModel();
 
     private readonly BaseCommand loadDataIntoStructure;
 
@@ -36,11 +41,13 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 
       this.WorkbookActionViewModel = new ExcelActionViewModel(
         this.WorkbookActions,
-        this.workbookActionCreationModel);
+        this.workbookActionCreationModel,
+        this.workbookActionApplicationModel);
 
       this.DataClusterActionViewModel = new ExcelActionViewModel(
         this.DataClusterActions,
-        this.dataClusterActionCreationModel);
+        this.dataClusterActionCreationModel,
+        this.dataClusterActionApplicationModel);
     }
 
     public ExcelActionViewModel WorkbookActionViewModel { get; set; }
@@ -82,20 +89,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     {
       this.CurrentState = DataLoadingState.LoadingData.ToString();
 
-      // TODO --> move this down to the stats model
-      ExcelConfiguration configuration = new ExcelConfiguration();
-      IDataParameterCollection parameters = this.configurationModel.DataParameterCollection;
-      ICollection<GroupingConfiguration> groupings = this.configurationModel.DataConfiguration.GroupingConfiguration;
-
-      for (int i = 0; i < groupings.Count; i++)
-      {
-        configuration.AddGroupingRule(i, parameters.GetStatAccessor(groupings.ElementAt(i).SelectedParameter));
-      }
-
-      DataOrganizer organizer = new DataOrganizer();
-      HeirarchalStats heirarchalStats = organizer.Organize(configuration, this.statsModel.Stats);
-
-      // might want to organzieinto other structures, not sure what will be desireable yet
+      this.statsModel.StructureStats();
 
       this.CurrentState = DataLoadingState.DataLoaded.ToString();
     }

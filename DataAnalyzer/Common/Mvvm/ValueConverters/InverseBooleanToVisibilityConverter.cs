@@ -14,7 +14,7 @@ namespace DataAnalyzer.Common.Mvvm.ValueConverters
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-      return value is Visibility visibility ? visibility != Visibility.Visible ? true : false : true;
+      return !(value is Visibility visibility) || visibility != Visibility.Visible;
     }
   }
 }

@@ -19,7 +19,7 @@
       </TabItem>
 
       <TabItem Header="Apply Actions">
-
+        <local:ActionApplicationView DataContext="{Binding DataContext.ActionApplicationViewModel, ElementName=ExcelDataClusterSetup}"/>
       </TabItem>
 
       <TabItem Header="Summary">

@@ -56,8 +56,7 @@
       </Trigger>
     </Style.Triggers>
   </Style>
-  
-  
+
   <SolidColorBrush x:Key="ListBorder" Color="#828790"/>
   <SolidColorBrush x:Key="TreeViewItem.TreeArrow.Static.Stroke" Color="#086C82"/>
   <SolidColorBrush x:Key="TreeViewItem.TreeArrow.Static.Fill" Color="#FFFFFFFF"/>
