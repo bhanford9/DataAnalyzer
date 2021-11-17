@@ -13,14 +13,14 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
     private string description = string.Empty;
     private IActionParameters actionParameters;
 
-    private readonly BaseCommand saveAs;
+    private readonly BaseCommand act;
 
     public EditActionViewModel(
       IActionCreationModel actionCreationModel)
     {
       this.actionCreationModel = actionCreationModel;
 
-      this.saveAs = new BaseCommand((obj) => this.DoSaveAs());
+      this.act = new BaseCommand((obj) => this.DoAct());
     }
 
     public EditActionViewModel(
@@ -39,7 +39,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 
     protected EditActionViewModel() { }
 
-    public ICommand SaveAs => this.saveAs;
+    public ICommand Act => this.act;
 
     public string ActionName
     {
@@ -65,9 +65,6 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 
     protected abstract void InternalInit(IEditActionViewModel toCopy);
 
-    private void DoSaveAs()
-    {
-
-    }
+    protected abstract void DoAct();
   }
 }

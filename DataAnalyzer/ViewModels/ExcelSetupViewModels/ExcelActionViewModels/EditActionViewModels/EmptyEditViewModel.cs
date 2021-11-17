@@ -14,6 +14,10 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
       return parameters is EmptyParameters;
     }
 
+    protected override void DoAct()
+    {
+    }
+
     protected override void InternalInit(IEditActionViewModel toCopy)
     {
     }

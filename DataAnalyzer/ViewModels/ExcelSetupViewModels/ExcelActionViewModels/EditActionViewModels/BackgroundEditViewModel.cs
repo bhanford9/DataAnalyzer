@@ -40,8 +40,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
     {
       BackgroundEditViewModel viewModel = new BackgroundEditViewModel(this.actionCreationModel, this);
       BackgroundParameters backgroundParameters = parameters as BackgroundParameters;
-      //viewModel.BackgroundColors.SelectedColor.InternalColor = backgroundParameters.BackgroundColor.Name;
-      //viewModel.PatternColors.SelectedColor.InternalColor = backgroundParameters.PatternColor.Name;
+      viewModel.BackgroundColors.SelectedColor = backgroundParameters.BackgroundColor.Name;
+      viewModel.PatternColors.SelectedColor = backgroundParameters.PatternColor.Name;
       viewModel.selectedPattern = backgroundParameters.FillPattern.ToString();
       return viewModel;
     }
@@ -49,6 +49,11 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
     public override bool IsApplicable(IActionParameters parameters)
     {
       return parameters is BackgroundParameters;
+    }
+
+    protected override void DoAct()
+    {
+      throw new NotImplementedException();
     }
 
     protected override void InternalInit(IEditActionViewModel toCopy)

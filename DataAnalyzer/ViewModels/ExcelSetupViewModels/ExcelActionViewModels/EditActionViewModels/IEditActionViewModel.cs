@@ -8,7 +8,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
     string ActionName { get; set; }
     IActionParameters ActionParameters { get; set; }
     string Description { get; set; }
-    ICommand SaveAs { get; }
+    ICommand Act { get; }
 
     IEditActionViewModel GetNewInstance(IActionParameters parameters);
     bool IsApplicable(IActionParameters parameters);

@@ -60,6 +60,11 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
       return parameters is AlignmentParameters;
     }
 
+    protected override void DoAct()
+    {
+      throw new NotImplementedException();
+    }
+
     protected override void InternalInit(IEditActionViewModel toCopy)
     {
       foreach (string name in Enum.GetNames(typeof(HorizontalAlignment)))

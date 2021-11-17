@@ -9,6 +9,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
     private string loadedActionName = string.Empty;
 
     protected readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
+    protected readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
 
     public string LoadedActionName
     {
