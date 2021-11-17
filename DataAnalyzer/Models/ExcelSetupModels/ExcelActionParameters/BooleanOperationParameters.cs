@@ -1,4 +1,6 @@
-﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
+﻿using DataAnalyzer.Services;
+
+namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
   public class BooleanOperationParameters : ActionParameters
   {
@@ -11,6 +13,8 @@
     }
 
     public override string SerializedParameters => this.Serialize(this.doPerform);
+
+    public override ActionCategory ActionCategory => ActionCategory.BooleanOperation;
 
     public override void Deserialize()
     {

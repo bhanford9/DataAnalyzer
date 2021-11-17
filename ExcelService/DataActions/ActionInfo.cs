@@ -8,6 +8,6 @@ namespace ExcelService.DataActions
 
     public string Description { get; internal set; } = string.Empty;
 
-    public IActionParameters DeaultParameters { get; internal set; }
+    public IActionParameters DefaultParameters { get; internal set; }
   }
 }

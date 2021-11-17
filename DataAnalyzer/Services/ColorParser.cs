@@ -15,7 +15,7 @@ namespace DataAnalyzer.Services
 
       if (result.StartsWith("A="))
       {
-        string[] argb = result.Split(", ").Select(x => x.Substring(2)).ToArray();
+        string[] argb = result.Split(", ").Select(x => x[2..]).ToArray();
         int alpha = int.Parse(argb[0]);
         int red = int.Parse(argb[1]);
         int green = int.Parse(argb[2]);

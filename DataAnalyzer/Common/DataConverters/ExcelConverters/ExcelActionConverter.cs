@@ -1,6 +1,7 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using ExcelService.DataActions;
+using ExcelService.DataActions.ActionParameters.ClusterStyleParameters;
 using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
 
 namespace DataAnalyzer.Common.DataConverters.ExcelConverters
@@ -13,23 +14,28 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters
       {
         Description = actionInfo.Description,
         IsBuiltIn = true,
-        Name = actionInfo.Name
+        Name = actionInfo.Name,
       };
 
       // grabbing the defaults from the excel service may be overkill or even undesirable
-      switch (actionInfo.DeaultParameters.Category)
+      switch (actionInfo.DefaultParameters.Category)
       {
         case ActionCategory.AlignmentStyle:
-          AlignmentStyleParameters excelAlignmentParams = actionInfo.DeaultParameters as AlignmentStyleParameters;
+          AlignmentStyleParameters excelAlignmentParams = actionInfo.DefaultParameters as AlignmentStyleParameters;
           excelAction.ActionParameters = new AlignmentParameters()
           {
             HorizontalAlignment = AlignmentConverters.ToLocalHorizontalAlignment(excelAlignmentParams.Alignments.HorizontalAlignment),
             VerticalAlignment = AlignmentConverters.ToLocalVerticalAlignment(excelAlignmentParams.Alignments.VerticalAlignment),
             Name = excelAlignmentParams.Name
           };
+
+          if (actionInfo.DefaultParameters is NthRowAlignmentStyleParameters nthAlignmentParams)
+          {
+            (excelAction.ActionParameters as AlignmentParameters).Nth = nthAlignmentParams.NthRow;
+          }
           break;
         case ActionCategory.BackgroundStyle:
-          BackgroundStyleParameters excelBackgroundParams = actionInfo.DeaultParameters as BackgroundStyleParameters;
+          BackgroundStyleParameters excelBackgroundParams = actionInfo.DefaultParameters as BackgroundStyleParameters;
           excelAction.ActionParameters = new BackgroundParameters()
           {
             BackgroundColor = excelBackgroundParams.Color.ToSystemColor(),
@@ -45,7 +51,7 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters
           };
           break;
         case ActionCategory.BorderStyle:
-          BorderStyleParameters excelBorderParams = actionInfo.DeaultParameters as BorderStyleParameters;
+          BorderStyleParameters excelBorderParams = actionInfo.DefaultParameters as BorderStyleParameters;
           excelAction.ActionParameters = new BorderParameters()
           {
             LeftColor = excelBorderParams.Left.Color.ToSystemColor(),
@@ -71,11 +77,16 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters
 
             Name = excelBorderParams.Name
           };
+
+          if (actionInfo.DefaultParameters is NthRowBorderStyleParameters nthBorderParams)
+          {
+            (excelAction.ActionParameters as BorderParameters).Nth = nthBorderParams.NthRow;
+          }
           break;
         case ActionCategory.ColumnBorderStyle:
           break;
         default:
-          throw new System.Exception($"Unknown Action Category {actionInfo.DeaultParameters.Category}.");
+          throw new System.Exception($"Unknown Action Category {actionInfo.DefaultParameters.Category}.");
       }
 
       return excelAction;

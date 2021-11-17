@@ -22,6 +22,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
     private BorderStyle diagonalUpStyle = BorderStyle.None;
     private BorderStyle diagonalDownStyle = BorderStyle.None;
 
+    private int nth = -1;
+
     public Color LeftColor
     {
       get => this.leftColor;
@@ -85,7 +87,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
     public Color DiagonalUpColor
     {
       get => this.diagonalUpColor;
-      set => this.NotifyPropertyChanged(nameof(this.DiagonalUpColor), ref this.allColor, value);
+      set => this.NotifyPropertyChanged(nameof(this.DiagonalUpColor), ref this.diagonalUpColor, value);
     }
 
     public BorderStyle DiagonalUpStyle
@@ -106,6 +108,12 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
       set => this.NotifyPropertyChanged(nameof(this.DiagonalDownStyle), ref this.diagonalDownStyle, value);
     }
 
+    public int Nth
+    {
+      get => this.nth;
+      set => this.NotifyPropertyChanged(nameof(this.Nth), ref this.nth, value);
+    }
+
     public override string SerializedParameters => this.Serialize(
       this.leftColor,
       this.leftStyle,
@@ -121,6 +129,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
       this.diagonalUpStyle,
       this.diagonalDownColor,
       this.diagonalDownStyle);
+
+    public override ActionCategory ActionCategory => ActionCategory.BorderStyle;
 
     public override void Deserialize()
     {

@@ -5,8 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DataAnalyzer.Views.ExcelSetupViews"
              xmlns:utils="clr-namespace:DataAnalyzer.Views.Utilities"
+             xmlns:services="clr-namespace:DataAnalyzer.Services"
+             xmlns:converters="clr-namespace:DataAnalyzer.Common.Mvvm.ValueConverters"
+             xmlns:actioncreationviews="clr-namespace:DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews"
              mc:Ignorable="d" 
+             Name="ActionCreation"
              d:DesignHeight="450" d:DesignWidth="800">
+  <UserControl.Resources>
+    <converters:ActionCategoryToVisibilityConverter x:Key="CategoryToVisibility"/>
+  </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" MinWidth="150"/>
@@ -15,34 +22,96 @@
 
     <GroupBox Grid.Column="0"
               Header="Available Actions">
-      <Grid>
+      
+      <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ItemsControl ItemsSource="{Binding Actions}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <Border BorderBrush="{StaticResource LightTextOpacity20}"
+                      BorderThickness="0 1"
+                      Background="Transparent">
+                <utils:LoadableRemovableRow DataContext="{Binding}"/>
+              </Border>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+    </GroupBox>
+
+    <Grid Grid.Column="1"
+          Margin="4">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="60"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="30"/>
+      </Grid.RowDefinitions>
+
+      <Grid Grid.Row="0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="5"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-          <RowDefinition Height="30"/>
+          <RowDefinition/>
           <RowDefinition/>
         </Grid.RowDefinitions>
-        
-        <Button Grid.Row="0"
-                Content="Create New Action"
-                Command="{Binding CreateAction}"/>
-        
-        <Border Grid.Row="1"
-                Margin="2 5"
-                BorderBrush="{StaticResource LightTextOpacity60}"
-                BorderThickness="0 1"
-                Background="Transparent">
-          <ItemsControl ItemsSource="{Binding Actions}">
-            <ItemsControl.ItemTemplate>
-              <DataTemplate>
-                <Border BorderBrush="{StaticResource LightTextOpacity20}"
-                        BorderThickness="0 1"
-                        Background="Transparent">
-                  <utils:LoadableRemovableRow DataContext="{Binding}"/>
-                </Border>
-              </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
-        </Border>
+
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Text="Name:"/>
+
+        <TextBox Grid.Row="0"
+                 Grid.Column="2"
+                 Width="240"
+                 HorizontalAlignment="Left"
+                 Text="{Binding CurrentAction.ActionName}"/>
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="0"
+                   Text="Description:"/>
+
+        <TextBlock Grid.Row="1"
+                   Grid.Column="2"
+                   Text="{Binding CurrentAction.Description}"/>
+
       </Grid>
-    </GroupBox>
+
+      <GroupBox Header="Configuration"
+                Grid.Row="1">
+        <Grid>
+          <actioncreationviews:AlignmentCreationView 
+            Grid.Row="1"
+            Visibility="{Binding 
+              DataContext.CurrentAction.ActionParameters.ActionCategory,
+              ElementName=ActionCreation,
+              Converter={StaticResource CategoryToVisibility}, 
+              ConverterParameter={x:Static services:ActionCategory.AlignmentStyle}}"
+            DataContext="{Binding DataContext.CurrentAction, ElementName=ActionCreation}"/>
+          
+          <actioncreationviews:BackgroundCreationView 
+            Grid.Row="1"
+            Visibility="{Binding 
+              DataContext.CurrentAction.ActionParameters.ActionCategory,
+              ElementName=ActionCreation,
+              Converter={StaticResource CategoryToVisibility}, 
+              ConverterParameter={x:Static services:ActionCategory.BackgroundStyle}}"
+            DataContext="{Binding DataContext.CurrentAction, ElementName=ActionCreation}"/>
+        </Grid>
+      </GroupBox>
+      
+      <Grid Grid.Row="2"
+            Margin="0 0 0 4">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="140"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Column="1"
+                Content="Save As"
+                Command="{Binding SaveAs}"/>
+      </Grid>
+    </Grid>
   </Grid>
 </UserControl>

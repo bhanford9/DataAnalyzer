@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.Services;
 using System.Linq;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
@@ -9,6 +10,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 
     // Hoperfully gauranteed unique
     protected string Delimiter => " |~| ";
+
+    public abstract ActionCategory ActionCategory { get; }
 
     protected string Serialize(params object[] items)
     {

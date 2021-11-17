@@ -1,7 +1,6 @@
 ﻿using DataAnalyzer.Common.DataConverters.ExcelConverters;
 using DataAnalyzer.Common.Mvvm;
 using ExcelService.DataActions;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 

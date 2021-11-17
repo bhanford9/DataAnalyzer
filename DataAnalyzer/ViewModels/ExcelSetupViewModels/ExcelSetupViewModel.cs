@@ -6,7 +6,9 @@ using DataAnalyzer.Common.DataParameters;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.ExcelSetupModels;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels;
 using DataAnalyzer.Services;
+using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,7 +22,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
     private readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
     private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-    
+    private readonly IActionCreationModel workbookActionCreationModel = new WorkbookActionModel();
+    private readonly IActionCreationModel dataClusterActionCreationModel = new DataClusterActionModel();
+
     private readonly BaseCommand loadDataIntoStructure;
 
     private DataLoadingState dataLoadingState = DataLoadingState.NoDataLoaded;
@@ -30,23 +34,18 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     {
       this.loadDataIntoStructure = new BaseCommand((obj) => this.DoLoadDataIntoStructure());
 
-      this.WorkbookActionCreationViewModel = new ActionCreationViewModel(this.WorkbookActions);
-      this.DataClusterActionCreationViewModel = new ActionCreationViewModel(this.DataClusterActions);
+      this.WorkbookActionViewModel = new ExcelActionViewModel(
+        this.WorkbookActions,
+        this.workbookActionCreationModel);
+
+      this.DataClusterActionViewModel = new ExcelActionViewModel(
+        this.DataClusterActions,
+        this.dataClusterActionCreationModel);
     }
 
-    /// <summary>
-    /// Design Decisions:
-    ///   1. Make this view model a singleton so the data is not copied everywhere
-    ///   2. Split out the view models to indiviudal views instead of having them use this viewmodel
-    ///   
-    /// Pretty sure I want option (2). I was probably trying to move to quickly and overlooked the fact
-    ///   that I was using this view model within the child views and therefore have some weird dependencies
-    ///   and copied data structures
-    /// </summary>
+    public ExcelActionViewModel WorkbookActionViewModel { get; set; }
 
-    public ActionCreationViewModel WorkbookActionCreationViewModel { get; set; }
-
-    public ActionCreationViewModel DataClusterActionCreationViewModel { get; set; }
+    public ExcelActionViewModel DataClusterActionViewModel { get; set; }
 
     public ObservableCollection<ExcelAction> WorkbookActions => this.excelSetupModel.WorkbookActions;
 

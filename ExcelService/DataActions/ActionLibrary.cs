@@ -235,7 +235,7 @@ namespace ExcelService.DataActions
         {
           Name = x.GetName(),
           Description = x.GetDescription(),
-          DeaultParameters = x.GetDefaultParameters()
+          DefaultParameters = x.GetDefaultParameters()
         })
         .ToList();
     }

@@ -30,6 +30,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 
     public override string SerializedParameters => this.Serialize(this.backgroundColor, this.patternColor, this.fillPattern);
 
+    public override ActionCategory ActionCategory => ActionCategory.BackgroundStyle;
+
     public override void Deserialize()
     {
       string[] parameters = this.SerializedParameters.Split(this.Delimiter);

@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DataAnalyzer.Views" 
              xmlns:excelsetupviews="clr-namespace:DataAnalyzer.Views.ExcelSetupViews"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
+             Name="ExcelConigSetup"
              d:DesignHeight="450" d:DesignWidth="800">
   <Grid>
     <Grid.RowDefinitions>
@@ -48,20 +49,31 @@
 
     </Grid>
 
+    <!-- Currently, each tab's view is exactly the same. I am predicting they will need 
+         some differences in the future and am therefore creating individual views or each.
+         If later I find that they are exactly the same, I will consolidate -->
+    <Border BorderBrush="{StaticResource DarkBackground}"
+            BorderThickness="3"
+            Grid.Row="1"
+            Margin="0"
+            Padding="0">
     <TabControl Grid.Row="1"
+                Margin="0 -6 -1 -1"
                 Style="{StaticResource BaseVerticalTabControlStyle}">
       <TabControl.Resources>
         <Style TargetType="TabItem" BasedOn="{StaticResource BaseVerticalTabItemStyle}">          
         </Style>
       </TabControl.Resources>
       <TabItem Header="Workbooks">
-        <excelsetupviews:ExcelWorkbookSetupView/>
+        <excelsetupviews:ExcelWorkbookSetupView
+          DataContext="{Binding DataContext.WorkbookActionViewModel, ElementName=ExcelConigSetup}"/>
       </TabItem>
       <TabItem Header="Worksheets">
 
       </TabItem>
       <TabItem Header="Data Clusters">
-        <excelsetupviews:ExcelDataClusterSetupView/>
+        <excelsetupviews:ExcelDataClusterSetupView
+          DataContext="{Binding DataContext.DataClusterActionViewModel, ElementName=ExcelConigSetup}"/>
       </TabItem>
       <TabItem Header="Rows">
 
@@ -70,5 +82,6 @@
 
       </TabItem>
     </TabControl>
+    </Border>
   </Grid>
 </UserControl>

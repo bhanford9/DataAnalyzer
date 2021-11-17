@@ -5,7 +5,7 @@ namespace DataAnalyzer.Views
 {
   public partial class ConfigurationSetupTabView : UserControl
   {
-    private ConfigurationSetupViewModel viewModel = new ConfigurationSetupViewModel();
+    private readonly ConfigurationSetupViewModel viewModel = new ConfigurationSetupViewModel();
     public ConfigurationSetupTabView()
     {
       this.InitializeComponent();
