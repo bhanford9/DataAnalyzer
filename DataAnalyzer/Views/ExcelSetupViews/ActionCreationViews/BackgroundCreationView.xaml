@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews" xmlns:utilities="clr-namespace:DataAnalyzer.Views.Utilities"
+             xmlns:local="clr-namespace:DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews"
+             xmlns:utilities="clr-namespace:DataAnalyzer.Views.Utilities"
              mc:Ignorable="d" 
              Name="BackgroundCreation"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -20,7 +21,6 @@
 
     <Grid.Resources>
       <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
-        <Setter Property="Margin" Value="2 6 8 6"/>
         <Setter Property="Margin" Value="2 6 8 6"/>
       </Style>
     </Grid.Resources>

@@ -24,7 +24,6 @@
     <Grid.Resources>
       <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
         <Setter Property="Margin" Value="2 6 8 6"/>
-        <Setter Property="Margin" Value="2 6 8 6"/>
       </Style>
     </Grid.Resources>
     

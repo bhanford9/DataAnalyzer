@@ -1,9 +1,7 @@
 ﻿using DataAnalyzer.Common.DataObjects;
-using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.ViewModels.Utilities;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
 {

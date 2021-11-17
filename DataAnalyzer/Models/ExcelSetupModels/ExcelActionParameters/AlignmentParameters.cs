@@ -27,26 +27,16 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
       set => this.NotifyPropertyChanged(nameof(this.Nth), ref this.nth, value);
     }
 
-    public override string SerializedParameters
-    {
-      get
-      {
-        if (this.nth != -1)
-        {
-          return this.Serialize(this.horizontalAlignment, this.VerticalAlignment);
-        }
-        else
-        {
-          return this.Serialize(this.horizontalAlignment, this.VerticalAlignment, this.nth);
-        }
-      }
-    }
+    public override string SerializedParameters => this.Serialize(
+      this.horizontalAlignment,
+      this.VerticalAlignment,
+      this.nth != -1 ? this.nth.ToString() : string.Empty);
 
     public override ActionCategory ActionCategory => ActionCategory.AlignmentStyle;
 
     public override void Deserialize()
     {
-      string[] parameters = this.SerializedParameters.Split(this.Delimiter);
+      string[] parameters = this.SerializedParameters.Split(this.Delimiter, StringSplitOptions.RemoveEmptyEntries);
       this.HorizontalAlignment = Enum.Parse<HorizontalAlignment>(parameters[0]);
       this.VerticalAlignment = Enum.Parse<VerticalAlignment>(parameters[1]);
 

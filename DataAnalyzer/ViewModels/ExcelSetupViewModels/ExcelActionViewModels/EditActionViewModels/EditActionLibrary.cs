@@ -26,6 +26,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 
       this.editActionViewModels.Add(new AlignmentEditViewModel());
       this.editActionViewModels.Add(new BackgroundEditViewModel());
+      this.editActionViewModels.Add(new BorderEditViewModel());
+      this.editActionViewModels.Add(new BooleanActionViewModel());
     }
   }
 }

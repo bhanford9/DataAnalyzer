@@ -4,13 +4,13 @@ using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels.Utilities;
 using System;
 using System.Collections.ObjectModel;
-using System.Drawing;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
   public class BackgroundEditViewModel : EditActionViewModel
   {
     private string selectedPattern = string.Empty;
+    private int nth = 0;
 
     public BackgroundEditViewModel()
     {
@@ -36,13 +36,20 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
       set => this.NotifyPropertyChanged(nameof(this.SelectedPattern), ref this.selectedPattern, value);
     }
 
+    public int Nth
+    {
+      get => this.nth;
+      set => this.NotifyPropertyChanged(nameof(this.Nth), ref this.nth, value);
+    }
+
     public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
     {
       BackgroundEditViewModel viewModel = new BackgroundEditViewModel(this.actionCreationModel, this);
       BackgroundParameters backgroundParameters = parameters as BackgroundParameters;
       viewModel.BackgroundColors.SelectedColor = backgroundParameters.BackgroundColor.Name;
       viewModel.PatternColors.SelectedColor = backgroundParameters.PatternColor.Name;
-      viewModel.selectedPattern = backgroundParameters.FillPattern.ToString();
+      viewModel.SelectedPattern = backgroundParameters.FillPattern.ToString();
+      viewModel.Nth = backgroundParameters.Nth;
       return viewModel;
     }
 

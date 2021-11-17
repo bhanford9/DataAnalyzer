@@ -128,13 +128,14 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
       this.diagonalUpColor,
       this.diagonalUpStyle,
       this.diagonalDownColor,
-      this.diagonalDownStyle);
+      this.diagonalDownStyle,
+      this.nth != -1 ? this.nth.ToString() : string.Empty);
 
     public override ActionCategory ActionCategory => ActionCategory.BorderStyle;
 
     public override void Deserialize()
     {
-      string[] parameters = this.SerializedParameters.Split(this.Delimiter);
+      string[] parameters = this.SerializedParameters.Split(this.Delimiter, StringSplitOptions.RemoveEmptyEntries);
 
       this.LeftColor = ColorParser.Parse(parameters[0]);
       this.LeftStyle = Enum.Parse<BorderStyle>(parameters[1]);
@@ -150,6 +151,11 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
       this.DiagonalUpStyle = Enum.Parse<BorderStyle>(parameters[11]);
       this.DiagonalDownColor = ColorParser.Parse(parameters[12]);
       this.DiagonalDownStyle = Enum.Parse<BorderStyle>(parameters[13]);
+
+      if (parameters.Length > 14)
+      {
+        this.nth = int.Parse(parameters[14]);
+      }
     }
   }
 }

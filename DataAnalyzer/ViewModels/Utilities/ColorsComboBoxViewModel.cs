@@ -1,5 +1,4 @@
 ﻿using DataAnalyzer.Common.Mvvm;
-using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Reflection;

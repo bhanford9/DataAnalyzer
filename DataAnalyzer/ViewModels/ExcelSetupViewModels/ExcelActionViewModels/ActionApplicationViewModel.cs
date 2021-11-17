@@ -2,6 +2,7 @@
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.ExcelSetupModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels;
 using DataAnalyzer.ViewModels.Utilities;
 using System.Collections.Generic;
@@ -25,6 +26,10 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
       IActionApplicationModel actionApplicationModel)
     {
       this.actionApplicationModel = actionApplicationModel;
+
+      EmptyParameters empty = new EmptyParameters();
+      this.currentAction = this.editActionLibrary.GetEditAction(new EmptyParameters());
+      this.currentAction.ActionParameters = empty;
 
       actions.ToList().ForEach(action =>
       {

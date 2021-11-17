@@ -29,6 +29,7 @@
               Command="{Binding LoadDataIntoStructure}"/>
 
       <TextBlock Grid.Column="1"
+                 Margin="10 0"
                  Text="{Binding CurrentState}"/>
 
       <!--TODO: Custom Progress Bar Style-->

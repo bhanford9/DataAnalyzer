@@ -97,6 +97,24 @@
               Converter={StaticResource CategoryToVisibility}, 
               ConverterParameter={x:Static services:ActionCategory.BackgroundStyle}}"
             DataContext="{Binding DataContext.CurrentAction, ElementName=ActionCreation}"/>
+
+          <actioncreationviews:BorderCreationView 
+            Grid.Row="1"
+            Visibility="{Binding 
+              DataContext.CurrentAction.ActionParameters.ActionCategory,
+              ElementName=ActionCreation,
+              Converter={StaticResource CategoryToVisibility}, 
+              ConverterParameter={x:Static services:ActionCategory.BorderStyle}}"
+            DataContext="{Binding DataContext.CurrentAction, ElementName=ActionCreation}"/>
+
+          <actioncreationviews:BooleanOperationCreationView 
+            Grid.Row="1"
+            Visibility="{Binding 
+              DataContext.CurrentAction.ActionParameters.ActionCategory,
+              ElementName=ActionCreation,
+              Converter={StaticResource CategoryToVisibility}, 
+              ConverterParameter={x:Static services:ActionCategory.BooleanOperation}}"
+            DataContext="{Binding DataContext.CurrentAction, ElementName=ActionCreation}"/>
         </Grid>
       </GroupBox>
       

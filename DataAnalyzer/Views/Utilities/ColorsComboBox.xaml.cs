@@ -1,5 +1,4 @@
-﻿using DataAnalyzer.ViewModels.Utilities;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace DataAnalyzer.Views.Utilities
 {
