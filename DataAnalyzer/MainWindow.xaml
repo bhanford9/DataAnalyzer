@@ -36,6 +36,8 @@
       </Style>
       <Style TargetType="RadioButton" BasedOn="{StaticResource BaseRadioButtonStyle}">
       </Style>
+      <Style TargetType="CheckBox" BasedOn="{StaticResource BaseCheckBoxStyle}">
+      </Style>
     </Grid.Resources>
 
     <Grid.ColumnDefinitions>

@@ -15,7 +15,9 @@
     </Grid.ColumnDefinitions>
 
     <!-- TODO: custom checkbox style -->
-    <CheckBox Content="Do Perform"
+    <CheckBox Style="{DynamicResource BaseCheckBoxStyle}" 
+              Content="Do Perform"
+              Margin="16"
               IsChecked="{Binding DoPerform}"/>
   </Grid>
 </UserControl>

@@ -26,8 +26,10 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     // For now... going with this route in case each model instance needs further independent
     //   implementations or data structures, understanding that this will mean 15 different models
     private readonly IActionCreationModel workbookActionCreationModel = new WorkbookActionCreationModel();
+    private readonly IActionCreationModel worksheetActionCreationModel = new WorksheetActionCreationModel();
     private readonly IActionCreationModel dataClusterActionCreationModel = new DataClusterActionCreationModel();
     private readonly IActionApplicationModel workbookActionApplicationModel = new WorkbookActionApplicationModel();
+    private readonly IActionApplicationModel worksheetActionApplicationModel = new WorksheetActionApplicationModel();
     private readonly IActionApplicationModel dataClusterActionApplicationModel = new DataClusterActionApplicationModel();
 
     private readonly BaseCommand loadDataIntoStructure;
@@ -44,6 +46,11 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         this.workbookActionCreationModel,
         this.workbookActionApplicationModel);
 
+      this.WorksheetActionViewModel = new ExcelActionViewModel(
+        this.WorksheetActions,
+        this.worksheetActionCreationModel,
+        this.worksheetActionApplicationModel);
+
       this.DataClusterActionViewModel = new ExcelActionViewModel(
         this.DataClusterActions,
         this.dataClusterActionCreationModel,
@@ -51,6 +58,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     }
 
     public ExcelActionViewModel WorkbookActionViewModel { get; set; }
+
+    public ExcelActionViewModel WorksheetActionViewModel { get; set; }
 
     public ExcelActionViewModel DataClusterActionViewModel { get; set; }
 

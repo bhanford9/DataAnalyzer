@@ -18,7 +18,11 @@
         <local:ConfigurationCreationTabView/>
       </TabItem>
 
-      <TabItem Header="3. Setup">
+      <TabItem Header="3. Data Types">
+        <local:ConfigurationDataTypesView/>
+      </TabItem>
+
+      <TabItem Header="4. Setup">
         <local:ConfigurationSetupTabView/>
       </TabItem>
 

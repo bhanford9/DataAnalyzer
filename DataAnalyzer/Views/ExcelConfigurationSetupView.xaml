@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:DataAnalyzer.Views" 
              xmlns:excelsetupviews="clr-namespace:DataAnalyzer.Views.ExcelSetupViews"
              mc:Ignorable="d"
-             Name="ExcelConigSetup"
+             Name="ExcelConfigSetup"
              d:DesignHeight="450" d:DesignWidth="800">
   <Grid>
     <Grid.RowDefinitions>
@@ -67,14 +67,15 @@
       </TabControl.Resources>
       <TabItem Header="Workbooks">
         <excelsetupviews:ExcelWorkbookSetupView
-          DataContext="{Binding DataContext.WorkbookActionViewModel, ElementName=ExcelConigSetup}"/>
+          DataContext="{Binding DataContext.WorkbookActionViewModel, ElementName=ExcelConfigSetup}"/>
       </TabItem>
-      <TabItem Header="Worksheets">
-
-      </TabItem>
+        <TabItem Header="Worksheets">
+          <excelsetupviews:ExcelWorksheetSetupView
+          DataContext="{Binding DataContext.WorksheetActionViewModel, ElementName=ExcelConfigSetup}"/>
+        </TabItem>
       <TabItem Header="Data Clusters">
         <excelsetupviews:ExcelDataClusterSetupView
-          DataContext="{Binding DataContext.DataClusterActionViewModel, ElementName=ExcelConigSetup}"/>
+          DataContext="{Binding DataContext.DataClusterActionViewModel, ElementName=ExcelConfigSetup}"/>
       </TabItem>
       <TabItem Header="Rows">
 

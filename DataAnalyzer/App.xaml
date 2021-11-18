@@ -20,6 +20,7 @@
         <ResourceDictionary Source="Styles/BaseLabelStyle.xaml"/>
         <ResourceDictionary Source="Styles/BaseItemsControlStyle.xaml"/>
         <ResourceDictionary Source="Styles/BaseRadioButtonStyle.xaml"/>
+        <ResourceDictionary Source="Styles/BaseCheckBoxStyle.xaml"/>
         <ResourceDictionary Source="Styles/BaseTreeViewStyle.xaml"/>
 
       </ResourceDictionary.MergedDictionaries>
