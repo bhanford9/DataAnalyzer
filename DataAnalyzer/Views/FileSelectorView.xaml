@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:DataAnalyzer.Views"
              xmlns:utilities="clr-namespace:DataAnalyzer.ViewModels.Utilities"
              mc:Ignorable="d" 
+             Name="FileSelectionView"
              d:DesignHeight="300" d:DesignWidth="200">
 
   <Border>
@@ -71,39 +72,44 @@
         </GroupBox>
         
       </Grid>
+
+      <Grid Grid.Row="1">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
       
-      <GroupBox Header="3. File Selection"
-                Grid.Row="1">
-        <Border>
+        <GroupBox Header="3. File Selection"
+                  Grid.Column="0">
           <TreeView Style="{StaticResource BaseTreeViewStyle}" 
                     ItemsSource="{Binding Files}"
                     Margin="1 3 1 1">
-            
+
             <TreeView.ItemContainerStyle>
               <Style TargetType="TreeViewItem" BasedOn="{StaticResource BaseTreeViewItemStyle}">
-                <Setter Property="IsExpanded" Value="True"/>  
+                <Setter Property="IsExpanded" Value="True"/>
               </Style>
             </TreeView.ItemContainerStyle>
-            
+
             <TreeView.Resources>
               <HierarchicalDataTemplate
                 DataType="{x:Type utilities:CheckableTreeViewItem}"              
                 ItemsSource="{Binding Children}">
-                
-                
+
+
                 <StackPanel Orientation="Horizontal"
                             Margin="1 3">
                   <CheckBox IsChecked="{Binding IsChecked}"/>
                   <TextBlock Style="{StaticResource BaseTextBlockStyle}" 
-                             Text="{Binding Name}"
-                             Margin="5 -2 0 0"/>
+                              Text="{Binding Name}"
+                              Margin="5 -2 0 0"/>
                 </StackPanel>
-                
+
               </HierarchicalDataTemplate>
             </TreeView.Resources>
           </TreeView>
-        </Border>
-      </GroupBox>
+        </GroupBox>        
+      </Grid>
     </Grid>
   </Border>
 </UserControl>

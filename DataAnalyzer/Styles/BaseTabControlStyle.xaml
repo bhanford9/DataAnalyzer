@@ -290,9 +290,13 @@
               <ColumnDefinition Width="Auto"/>
               <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
-            <TabPanel IsItemsHost="True"/>
-              
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          Margin="0 8"
+                          Style="{StaticResource NoBorderScrollViewerStyle}">
+              <TabPanel IsItemsHost="True"/>
+            </ScrollViewer>
+
             <Border Background="{TemplateBinding Background}"
                     Grid.Column="1"
                     Margin="0 5 0 0"

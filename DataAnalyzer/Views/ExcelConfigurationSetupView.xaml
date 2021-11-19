@@ -58,32 +58,58 @@
             Grid.Row="1"
             Margin="0"
             Padding="0">
-    <TabControl Grid.Row="1"
-                Margin="0 -6 -1 -1"
-                Style="{StaticResource BaseVerticalTabControlStyle}">
-      <TabControl.Resources>
-        <Style TargetType="TabItem" BasedOn="{StaticResource BaseVerticalTabItemStyle}">          
-        </Style>
-      </TabControl.Resources>
-      <TabItem Header="Workbooks">
-        <excelsetupviews:ExcelWorkbookSetupView
-          DataContext="{Binding DataContext.WorkbookActionViewModel, ElementName=ExcelConfigSetup}"/>
-      </TabItem>
+      <TabControl Grid.Row="1"
+                  Margin="0 -6 -1 -1"
+                  Style="{StaticResource BaseVerticalTabControlStyle}">
+        <TabControl.Resources>
+          <Style TargetType="TabItem" BasedOn="{StaticResource BaseVerticalTabItemStyle}">
+            
+          </Style>
+        </TabControl.Resources>
+        <TabItem Header="Workbooks">
+          <excelsetupviews:ExcelWorkbookSetupView
+            DataContext="{Binding DataContext.WorkbookActionViewModel, ElementName=ExcelConfigSetup}"/>
+        </TabItem>
         <TabItem Header="Worksheets">
           <excelsetupviews:ExcelWorksheetSetupView
-          DataContext="{Binding DataContext.WorksheetActionViewModel, ElementName=ExcelConfigSetup}"/>
+            DataContext="{Binding DataContext.WorksheetActionViewModel, ElementName=ExcelConfigSetup}"/>
         </TabItem>
-      <TabItem Header="Data Clusters">
-        <excelsetupviews:ExcelDataClusterSetupView
-          DataContext="{Binding DataContext.DataClusterActionViewModel, ElementName=ExcelConfigSetup}"/>
-      </TabItem>
-      <TabItem Header="Rows">
+        <TabItem Header="Data Clusters">
+          <excelsetupviews:ExcelDataClusterSetupView
+            DataContext="{Binding DataContext.DataClusterActionViewModel, ElementName=ExcelConfigSetup}"/>
+        </TabItem>
+        <TabItem Header="Rows">
+          
+        </TabItem>
+        <TabItem Header="Cells">
+          
+        </TabItem>
+        <TabItem Header="Data Types">
+          <GroupBox Header="Type Selection"
+                  Grid.Column="2">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+              <ItemsControl ItemsSource="{Binding DataTypes}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Grid>
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                      </Grid.ColumnDefinitions>
 
-      </TabItem>
-      <TabItem Header="Cells">
+                      <TextBlock Text="{Binding Parameter}"
+                               Grid.Column="0"/>
 
-      </TabItem>
-    </TabControl>
+                      <ComboBox ItemsSource="{Binding DataContext.DataTypeNames, ElementName=ExcelConfigSetup}"
+                              SelectedItem="{Binding SelectedType}"/>
+                    </Grid>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </ScrollViewer>
+          </GroupBox>
+        </TabItem>
+      </TabControl>
     </Border>
   </Grid>
 </UserControl>
