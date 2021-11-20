@@ -5,13 +5,46 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 {
   public class IntegerIntegerTypeParameter : TypeParameter
   {
-    public IntegerIntegerTypeParameter(ICellDataFormat cellDataFormat, Func<ITypeParameter, ICellDataFormat> createCellDataFormat)
+    private int integer1Value = 1;
+    private int integer2Value = 1;
+
+    public IntegerIntegerTypeParameter(
+      string integer1Name,
+      string integer2Name,
+      ICellDataFormat cellDataFormat, 
+      Func<ITypeParameter, ICellDataFormat> createCellDataFormat)
       : base(cellDataFormat, createCellDataFormat)
     {
+      this.Integer1Name = integer1Name;
+      this.Integer2Name = integer2Name;
     }
 
-    public int Integer1Value { get; set; }
+    public int Integer1Value
+    {
+      get => this.integer1Value;
+      set
+      {
+        this.NotifyPropertyChanged(nameof(this.Integer1Value), ref this.integer1Value, value);
+        this.cellDataFormat = this.createCellDataFormat(this);
+        this.NotifyPropertyChanged(nameof(this.Example));
+      }
+    }
 
-    public int Integer2Value { get; set; }
+    public int Integer2Value
+    {
+      get => this.integer2Value;
+      set
+      {
+        this.NotifyPropertyChanged(nameof(this.Integer2Value), ref this.integer2Value, value);
+        this.cellDataFormat = this.createCellDataFormat(this);
+        this.NotifyPropertyChanged(nameof(this.Example));
+      }
+    }
+
+    public string Integer1Name { get; set; }
+
+    public string Integer2Name { get; set; }
+
+    public override ParameterType Type => ParameterType.IntegerInteger;
   }
 }

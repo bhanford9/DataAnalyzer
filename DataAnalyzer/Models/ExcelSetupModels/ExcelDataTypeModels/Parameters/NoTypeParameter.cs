@@ -9,5 +9,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
       : base(cellDataFormat, createCellDataFormat)
     {
     }
+
+    public override ParameterType Type => ParameterType.None;
   }
 }

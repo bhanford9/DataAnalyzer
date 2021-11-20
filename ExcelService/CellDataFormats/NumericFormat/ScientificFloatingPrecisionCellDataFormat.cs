@@ -4,7 +4,7 @@
   {
     private readonly int precisionCount = 1;
 
-    public string Name => "Scientific Notation Floating Precision";
+    public string Name => "Scientific with Decimals";
 
     public string Example
     {
@@ -19,7 +19,9 @@
           return "6.30E+04";
         }
 
-        return "6.39" + new string(new string('0', this.precisionCount - 2)) + "E+04";
+        int zeroCount = this.precisionCount - 2;
+
+        return "6.39" + new string(new string('0', zeroCount < 0 ? 0 : zeroCount)) + "E+04";
       }
     }
 

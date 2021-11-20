@@ -24,6 +24,7 @@ namespace DataAnalyzer.ViewModels
     private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
     private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
     private readonly DataConverterLibrary dataConverterLibrary = new DataConverterLibrary();
+    private EnumUtilities EnumUtilities = new EnumUtilities();
 
     public FileSelectorViewModel()
     {
@@ -38,7 +39,7 @@ namespace DataAnalyzer.ViewModels
         this.ApplyActiveDirectory(this.ActiveDirectory);
       }
 
-      Enum.GetNames(typeof(ScraperType)).ToList().ForEach(x => this.ScraperTypes.Add(x));
+      this.EnumUtilities.LoadNames(typeof(ScraperType), this.ScraperTypes);
     }
 
     public ObservableCollection<CheckableTreeViewItem> Files { get; }

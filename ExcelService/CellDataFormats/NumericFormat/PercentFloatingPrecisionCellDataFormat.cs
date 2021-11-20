@@ -4,7 +4,7 @@
   {
     private readonly int precisionCount = 1;
 
-    public string Name => "Percent Floating Precision";
+    public string Name => "Percent with Decimals";
 
     public string Example
     {

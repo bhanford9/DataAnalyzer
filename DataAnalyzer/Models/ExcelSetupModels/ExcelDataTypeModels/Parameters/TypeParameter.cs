@@ -6,8 +6,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 {
   public abstract class TypeParameter : BasePropertyChanged, ITypeParameter
   {
-    private ICellDataFormat cellDataFormat;
-    private Func<ITypeParameter, ICellDataFormat> createCellDataFormat;
+    protected readonly Func<ITypeParameter, ICellDataFormat> createCellDataFormat;
+    protected ICellDataFormat cellDataFormat;
 
     public TypeParameter(ICellDataFormat cellDataFormat, Func<ITypeParameter, ICellDataFormat> createCellDataFormat)
     {
@@ -18,6 +18,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
     public string Name => this.cellDataFormat.Name;
 
     public string Example => this.cellDataFormat.Example;
+
+    public abstract ParameterType Type { get; }
 
     public ICellDataFormat CreateCellDataFormat()
     {

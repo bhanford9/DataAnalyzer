@@ -25,6 +25,7 @@ namespace DataAnalyzer.ViewModels
     private string selectedDataType = string.Empty;
     private string selectedExportType = string.Empty;
     private int groupingLayersCount = 0;
+    private EnumUtilities EnumUtilities = new EnumUtilities();
 
     private readonly BaseCommand browseDirectory;
     private readonly BaseCommand createConfiguration;
@@ -41,8 +42,8 @@ namespace DataAnalyzer.ViewModels
       this.ConfigurationDirectory = Properties.Settings.Default.LastUsedConfigurationDirectory;
       this.ApplyConfigurationDirectory(this.ConfigurationDirectory);
 
-      Enum.GetNames(typeof(StatType)).ToList().ForEach(x => this.DataTypes.Add(x));
-      Enum.GetNames(typeof(ExportType)).ToList().ForEach(x => this.ExportTypes.Add(x));
+      this.EnumUtilities.LoadNames(typeof(StatType), this.DataTypes);
+      this.EnumUtilities.LoadNames(typeof(ExportType), this.ExportTypes);
 
       this.configurationModel.PropertyChanged += this.ConfigurationCreationModelPropertyChanged;
     }

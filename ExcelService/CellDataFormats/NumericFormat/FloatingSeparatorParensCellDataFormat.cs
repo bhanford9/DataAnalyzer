@@ -4,7 +4,7 @@
   {
     private readonly bool colorRed = false;
     private readonly int precisionCount = 1;
-    public string Name => "Floating Precision with Separator and Negation Parenthesis";
+    public string Name => "Separated with Decimals and Negation";
 
     public string Example => "12,345.02 or (-1,234.02)";
 

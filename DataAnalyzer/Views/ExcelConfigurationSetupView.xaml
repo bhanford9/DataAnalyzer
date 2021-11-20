@@ -85,29 +85,7 @@
           
         </TabItem>
         <TabItem Header="Data Types">
-          <GroupBox Header="Type Selection"
-                  Grid.Column="2">
-            <ScrollViewer VerticalScrollBarVisibility="Auto">
-              <ItemsControl ItemsSource="{Binding DataTypes}">
-                <ItemsControl.ItemTemplate>
-                  <DataTemplate>
-                    <Grid>
-                      <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                      </Grid.ColumnDefinitions>
-
-                      <TextBlock Text="{Binding Parameter}"
-                               Grid.Column="0"/>
-
-                      <ComboBox ItemsSource="{Binding DataContext.DataTypeNames, ElementName=ExcelConfigSetup}"
-                              SelectedItem="{Binding SelectedType}"/>
-                    </Grid>
-                  </DataTemplate>
-                </ItemsControl.ItemTemplate>
-              </ItemsControl>
-            </ScrollViewer>
-          </GroupBox>
+          <excelsetupviews:ExcelDataTypeSetupView/>
         </TabItem>
       </TabControl>
     </Border>

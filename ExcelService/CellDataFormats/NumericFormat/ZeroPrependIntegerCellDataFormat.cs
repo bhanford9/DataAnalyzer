@@ -21,7 +21,7 @@
       }
     }
 
-    public string Name => "Zero Prepended Integer";
+    public string Name => "Leading Zeros";
 
     public ZeroPrependIntegerCellDataFormat(int zerosPrependedCount)
     {

@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews.BorderSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews"
+             xmlns:utilities="clr-namespace:DataAnalyzer.Views.Utilities"
+             mc:Ignorable="d" 
+             Name="BorderSettings"
+             d:DesignHeight="450" d:DesignWidth="800">
+  <Grid Margin="4 8">
+    <Grid.RowDefinitions>
+      <RowDefinition/>
+      <RowDefinition/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="Auto"/>
+    </Grid.ColumnDefinitions>
+    <Grid.Resources>
+      <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+        <Setter Property="Margin" Value="16 0 8 0"/>
+        <Setter Property="Grid.Column" Value="0"/>
+      </Style>
+    </Grid.Resources>
+
+    <Border Grid.ColumnSpan="2"
+            BorderBrush="{StaticResource MainAccent}"
+            CornerRadius="0"
+            Background="Transparent"
+            BorderThickness="0 0 0 2"/>
+    <TextBlock Grid.Row="0"
+               Margin="6 8"
+               Grid.ColumnSpan="2"
+               Text="{Binding BorderName}"/>
+    
+    <TextBlock Text="Color:"
+               Grid.Row="1"/>
+    <utilities:ColorsComboBox
+      DataContext="{Binding DataContext.ComboBoxColors, ElementName=BorderSettings}"
+      Grid.Row="1"
+      Grid.Column="1"/>
+    
+    <TextBlock Text="Style:"
+               Grid.Row="2"/>
+    <ComboBox Grid.Row="2"
+              Grid.Column="1"
+              ItemsSource="{Binding BorderStyles}"
+              SelectedItem="{Binding SelectedStyle}"/>
+  </Grid>
+</UserControl>

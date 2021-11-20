@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.Common.DataConfigurations.ExcelConfiguration;
@@ -24,6 +25,9 @@ namespace DataAnalyzer.Models
     }
 
     public ICollection<IStats> Stats => this.stats;
+
+    public ObservableCollection<string> StatNames { get; }
+      = new ObservableCollection<string>();
 
     public HeirarchalStats HeirarchalStats
     {
@@ -61,16 +65,19 @@ namespace DataAnalyzer.Models
       DataOrganizer organizer = new DataOrganizer();
       this.HeirarchalStats = organizer.Organize(configuration, this.stats);
 
-      // might want to organzie into other structures, not sure what will be desireable yet
+      this.LoadStatNames(this.HeirarchalStats);
+    }
 
-      // Workbook UI
-      //   Display each workbook in a treeview with checkboxes
+    private void LoadStatNames(HeirarchalStats stats)
+    {
+      if (stats.Children.Count == 0)
+      {
+        stats.ParameterNames.ToList().ForEach(x => this.StatNames.Add(x));
+        this.NotifyPropertyChanged(nameof(this.StatNames));
+        return;
+      }
 
-      // Worksheet UI
-      //   Display each worksheet an a treeview nested within workbooks with checkboxes
-
-      // Datacluster UI
-      //   Display each data cluster in a treeview nested within worksheets nested within workbooks with checkboxes
+      this.LoadStatNames(stats.Children.First());
     }
   }
 }

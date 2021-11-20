@@ -6,11 +6,16 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels
 {
   public class ExcelDataTypeLibrary
   {
-    private ICollection<ITypeParameter> typeParameters = new List<ITypeParameter>();
+    private readonly ICollection<ITypeParameter> typeParameters = new List<ITypeParameter>();
 
     public ExcelDataTypeLibrary()
     {
       this.LoadParameters();
+    }
+
+    public ICollection<ITypeParameter> GetParameterTypes()
+    {
+      return this.typeParameters;
     }
 
     private void LoadParameters()
@@ -20,18 +25,23 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels
       //   - may need to do a serialization trick to save this 
 
       this.typeParameters.Add(new IntegerTypeParameter(
+        "Decimal Count:",
         new FloatingPrecisionCellDataFormat(0),
         (param) => new FloatingPrecisionCellDataFormat((param as IntegerTypeParameter).IntegerValue)));
 
       this.typeParameters.Add(new IntegerTypeParameter(
+        "Decimal Count:",
         new FloatingPrecisionWithSeparatorCellDataFormat(0),
         (param) => new FloatingPrecisionWithSeparatorCellDataFormat((param as IntegerTypeParameter).IntegerValue)));
 
       this.typeParameters.Add(new IntegerBooleanTypeParameter(
-        new FloatingSeparatorParensCellDataFormat(0, false), 
+        "Decimal Count:",
+        "Red when Negative:",
+        new FloatingSeparatorParensCellDataFormat(0, false),
         (param) => new FloatingSeparatorParensCellDataFormat((param as IntegerBooleanTypeParameter).IntegerValue, (param as IntegerBooleanTypeParameter).BooleanValue)));
 
       this.typeParameters.Add(new IntegerTypeParameter(
+        "Digit Count:",
         new FractionCellDataFormat(0),
         (param) => new FractionCellDataFormat((param as IntegerTypeParameter).IntegerValue)));
 
@@ -56,6 +66,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels
         (param) => new NumericAsStringCellDataFormat()));
 
       this.typeParameters.Add(new IntegerTypeParameter(
+        "Decimal Count:",
         new PercentFloatingPrecisionCellDataFormat(0),
         (param) => new PercentFloatingPrecisionCellDataFormat((param as IntegerTypeParameter).IntegerValue)));
 
@@ -64,14 +75,18 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels
         (param) => new PercentIntegerCellDataFormat()));
 
       this.typeParameters.Add(new IntegerTypeParameter(
+        "Decimal Count:",
         new ScientificFloatingPrecisionCellDataFormat(0),
         (param) => new ScientificFloatingPrecisionCellDataFormat((param as IntegerTypeParameter).IntegerValue)));
 
       this.typeParameters.Add(new IntegerIntegerTypeParameter(
+        "Whole Number Digits:",
+        "Decimal Count:",
         new ZeroPrependFloatingPrecisionCellDataFormat(0, 0),
         (param) => new ZeroPrependFloatingPrecisionCellDataFormat((param as IntegerIntegerTypeParameter).Integer1Value, (param as IntegerIntegerTypeParameter).Integer2Value)));
 
       this.typeParameters.Add(new IntegerTypeParameter(
+        "Whole Number Digits:",
         new ZeroPrependIntegerCellDataFormat(0),
         (param) => new ZeroPrependIntegerCellDataFormat((param as IntegerTypeParameter).IntegerValue)));
     }

@@ -4,7 +4,7 @@
   {
     private readonly bool colorRed = false;
 
-    public string Name => "Integer with Separator Negation Parenthesis";
+    public string Name => "Separated with Negation";
 
     public string Example => "12,345 or (-1,234)";
 

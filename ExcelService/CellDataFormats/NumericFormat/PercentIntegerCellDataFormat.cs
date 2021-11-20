@@ -4,7 +4,7 @@
   {
     public string Example => "23%";
 
-    public string Name => "Integer Percentage";
+    public string Name => "Percentage";
 
     public string GetFormatString()
     {

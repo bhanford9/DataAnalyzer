@@ -7,7 +7,7 @@
 
     public string Example => "0023.100";
 
-    public string Name => "Zero Prepended Floating Point Precision";
+    public string Name => "Leading Zeros with Decimals";
 
     public ZeroPrependFloatingPrecisionCellDataFormat(int zerosPrependedCount, int precisionCount)
     {

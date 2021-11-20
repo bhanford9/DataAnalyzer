@@ -21,7 +21,7 @@
       }
     }
 
-    public string Name => "Floating Point Precision";
+    public string Name => "Decimal Precision";
 
     public FloatingPrecisionCellDataFormat(int precisionCount)
     {

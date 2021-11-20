@@ -21,7 +21,7 @@
       }
     }
 
-    public string Name => "Floating Point Precision with Separator";
+    public string Name => "Separated With Decimals";
 
     public FloatingPrecisionWithSeparatorCellDataFormat(int precisionCount)
     {

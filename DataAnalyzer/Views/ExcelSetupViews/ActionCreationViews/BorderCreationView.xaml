@@ -12,316 +12,42 @@
   <UserControl.Resources>
     <converters:NegativeIsHiddenConverter x:Key="NegativeIsHidden"/>
   </UserControl.Resources>
-  <ScrollViewer>
+  <ScrollViewer HorizontalScrollBarVisibility="Disabled">
     <Grid>
       <Grid.RowDefinitions>
         <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
-        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
       </Grid.RowDefinitions>
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto"/>
-        <ColumnDefinition Width="Auto" MinWidth="200"/>
-      </Grid.ColumnDefinitions>
 
-      <Grid.Resources>
-        <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
-          <Setter Property="Margin" Value="20 0 8 0"/>
-          <Setter Property="Grid.Column" Value="0"/>
-        </Style>
-      </Grid.Resources>
+      <Grid Grid.Row="0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-      <TextBlock Text="Nth:"
-                 Grid.Row="0"
-                 Grid.Column="0"
+        <TextBlock Text="Nth:"
+                   Grid.Column="0"
+                   Visibility="{Binding Nth, Converter={StaticResource NegativeIsHidden}}"/>
+        <TextBox Grid.Column="1"
+                 Text="{Binding Nth}"
                  Visibility="{Binding Nth, Converter={StaticResource NegativeIsHidden}}"/>
-      <TextBox Grid.Row="0"
-               Grid.Column="1"
-               Text="{Binding Nth}"
-               Visibility="{Binding Nth, Converter={StaticResource NegativeIsHidden}}"/>
-
-      <Grid Grid.Row="1"
-            Grid.ColumnSpan="2"
-            Margin="0 8">
-        <Grid.RowDefinitions>
-          <RowDefinition/><RowDefinition/><RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <Border Grid.ColumnSpan="2"
-                BorderBrush="{StaticResource MainAccent}"
-                CornerRadius="0"
-                Background="Transparent"
-                BorderThickness="0 0 0 2"/>
-        <TextBlock Grid.Row="0"
-                   Margin="6 8"
-                   Grid.ColumnSpan="2"
-                   Text="Perimeter Border"/>
-
-        <TextBlock Text="Color:"
-                   Grid.Row="1"/>
-        <utilities:ColorsComboBox
-          DataContext="{Binding DataContext.AllColors, ElementName=BorderCreation}"
-          Grid.Row="1"
-          Grid.Column="1"/>
-
-        <TextBlock Text="Style:"
-                   Grid.Row="2"/>
-        <ComboBox Grid.Row="2"
-                  Grid.Column="1"
-                  ItemsSource="{Binding BorderStyles}"
-                  SelectedItem="{Binding SelectedAllStyle}"/>
       </Grid>
-
-      <Grid Grid.Row="2"
-            Grid.ColumnSpan="2"
-            Margin="0 8">
-        <Grid.RowDefinitions>
-          <RowDefinition/>
-          <RowDefinition/>
-          <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <Border Grid.ColumnSpan="2"
-                BorderBrush="{StaticResource MainAccent}"
-                CornerRadius="0"
-                Background="Transparent"
-                BorderThickness="0 0 0 2"/>
-        <TextBlock Grid.Row="0"
-                   Margin="6 8"
-                   Grid.ColumnSpan="2"
-                   Text="Left Border"/>
-
-        <TextBlock Text="Color:"
-                   Grid.Row="1"/>
-        <utilities:ColorsComboBox
-          DataContext="{Binding DataContext.LeftColors, ElementName=BorderCreation}"
-          Grid.Row="1"
-          Grid.Column="1"/>
-
-        <TextBlock Text="Style:"
-                   Grid.Row="2"/>
-        <ComboBox Grid.Row="2"
-                  Grid.Column="1"
-                  ItemsSource="{Binding BorderStyles}"
-                  SelectedItem="{Binding SelectedLeftStyle}"/>
-      </Grid>
-
-      <Grid Grid.Row="3"
-            Grid.ColumnSpan="2"
-            Margin="0 8">
-        <Grid.RowDefinitions>
-          <RowDefinition/>
-          <RowDefinition/>
-          <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <Border Grid.ColumnSpan="2"
-                BorderBrush="{StaticResource MainAccent}"
-                CornerRadius="0"
-                Background="Transparent"
-                BorderThickness="0 0 0 2"/>
-        <TextBlock Grid.Row="0"
-                   Margin="6 8"
-                   Grid.ColumnSpan="2"
-                   Text="Top Border"/>
-
-        <TextBlock Text="Color:"
-                   Grid.Row="1"/>
-        <utilities:ColorsComboBox
-          DataContext="{Binding DataContext.TopColors, ElementName=BorderCreation}"
-          Grid.Row="1"
-          Grid.Column="1"/>
-
-        <TextBlock Text="Style:"
-                   Grid.Row="2"/>
-        <ComboBox Grid.Row="2"
-                  Grid.Column="1"
-                  ItemsSource="{Binding BorderStyles}"
-                  SelectedItem="{Binding SelectedTopStyle}"/>
-      </Grid>
-
-      <Grid Grid.Row="4"
-            Grid.ColumnSpan="2"
-            Margin="0 8">
-        <Grid.RowDefinitions>
-          <RowDefinition/>
-          <RowDefinition/>
-          <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <Border Grid.ColumnSpan="2"
-                BorderBrush="{StaticResource MainAccent}"
-                CornerRadius="0"
-                Background="Transparent"
-                BorderThickness="0 0 0 2"/>
-        <TextBlock Grid.Row="0"
-                   Margin="6 8"
-                   Grid.ColumnSpan="2"
-                   Text="Right Border"/>
-
-        <TextBlock Text="Color:"
-                   Grid.Row="1"/>
-        <utilities:ColorsComboBox
-          DataContext="{Binding DataContext.RightColors, ElementName=BorderCreation}"
-          Grid.Row="1"
-          Grid.Column="1"/>
-
-        <TextBlock Text="Style:"
-                   Grid.Row="2"/>
-        <ComboBox Grid.Row="2"
-                  Grid.Column="1"
-                  ItemsSource="{Binding BorderStyles}"
-                  SelectedItem="{Binding SelectedRightStyle}"/>
-      </Grid>
-
-      <Grid Grid.Row="5"
-            Grid.ColumnSpan="2"
-            Margin="0 8">
-        <Grid.RowDefinitions>
-          <RowDefinition/>
-          <RowDefinition/>
-          <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <Border Grid.ColumnSpan="2"
-                BorderBrush="{StaticResource MainAccent}"
-                CornerRadius="0"
-                Background="Transparent"
-                BorderThickness="0 0 0 2"/>
-        <TextBlock Grid.Row="0"
-                   Margin="6 8"
-                   Grid.ColumnSpan="2"
-                   Text="Bottom Border"/>
-
-        <TextBlock Text="Color:"
-                   Grid.Row="1"/>
-        <utilities:ColorsComboBox
-          DataContext="{Binding DataContext.BottomColors, ElementName=BorderCreation}"
-          Grid.Row="1"
-          Grid.Column="1"/>
-
-        <TextBlock Text="Style:"
-                   Grid.Row="2"/>
-        <ComboBox Grid.Row="2"
-                  Grid.Column="1"
-                  ItemsSource="{Binding BorderStyles}"
-                  SelectedItem="{Binding SelectedBottomStyle}"/>
-      </Grid>
-
-      <Grid Grid.Row="6"
-            Grid.ColumnSpan="2"
-            Margin="0 8">
-        <Grid.RowDefinitions>
-          <RowDefinition/>
-          <RowDefinition/>
-          <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <Border Grid.ColumnSpan="2"
-                BorderBrush="{StaticResource MainAccent}"
-                CornerRadius="0"
-                Background="Transparent"
-                BorderThickness="0 0 0 2"/>
-        <TextBlock Grid.Row="0"
-                   Margin="6 8"
-                   Grid.ColumnSpan="2"
-                   Text="Diagonal Up Border"/>
-
-        <TextBlock Text="Color:"
-                   Grid.Row="1"/>
-        <utilities:ColorsComboBox
-          DataContext="{Binding DataContext.DiagonalUpColors, ElementName=BorderCreation}"
-          Grid.Row="1"
-          Grid.Column="1"/>
-
-        <TextBlock Text="Style:"
-                   Grid.Row="2"/>
-        <ComboBox Grid.Row="2"
-                  Grid.Column="1"
-                  ItemsSource="{Binding BorderStyles}"
-                  SelectedItem="{Binding SelectedDiagonalUpStyle}"/>
-      </Grid>
-
-      <Grid Grid.Row="7"
-            Grid.ColumnSpan="2"
-            Margin="0 8">
-        <Grid.RowDefinitions>
-          <RowDefinition/>
-          <RowDefinition/>
-          <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="Auto"/>
-          <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-
-        <Border Grid.ColumnSpan="2"
-                BorderBrush="{StaticResource MainAccent}"
-                CornerRadius="0"
-                Background="Transparent"
-                BorderThickness="0 0 0 2"/>
-        <TextBlock Grid.Row="0"
-                   Margin="6 8"
-                   Grid.ColumnSpan="2"
-                   Text="Diagonal Down Border"/>
-
-        <TextBlock Text="Color:"
-                   Grid.Row="1"/>
-        <utilities:ColorsComboBox
-          DataContext="{Binding DataContext.DiagonalDownColors, ElementName=BorderCreation}"
-          Grid.Row="1"
-          Grid.Column="1"/>
-
-        <TextBlock Text="Style:"
-                   Grid.Row="2"/>
-        <ComboBox Grid.Row="2"
-                  Grid.Column="1"
-                  ItemsSource="{Binding BorderStyles}"
-                  SelectedItem="{Binding SelectedDiagonalDownStyle}"/>
-      </Grid>
+      
+      <ItemsControl ItemsSource="{Binding BorderSettings}"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2">
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <WrapPanel IsItemsHost="True" Orientation="Horizontal"/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <local:BorderSettingsView DataContext="{Binding}"/>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
     </Grid>
   </ScrollViewer>
 </UserControl>

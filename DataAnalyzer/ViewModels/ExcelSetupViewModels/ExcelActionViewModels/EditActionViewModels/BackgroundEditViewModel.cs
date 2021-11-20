@@ -11,6 +11,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
   {
     private string selectedPattern = string.Empty;
     private int nth = 0;
+    private EnumUtilities EnumUtilities = new EnumUtilities();
 
     public BackgroundEditViewModel()
     {
@@ -65,10 +66,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 
     protected override void InternalInit(IEditActionViewModel toCopy)
     {
-      foreach (string pattern in Enum.GetNames(typeof(FillPattern)))
-      {
-        this.Patterns.Add(pattern);
-      }
+      this.EnumUtilities.LoadNames(typeof(FillPattern), this.Patterns);
     }
   }
 }

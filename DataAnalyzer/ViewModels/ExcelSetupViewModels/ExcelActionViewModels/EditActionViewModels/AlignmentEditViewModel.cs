@@ -11,6 +11,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
     private string selectedHorizontalAlignment = string.Empty;
     private string selectedVerticalAlignment = string.Empty;
     private int nth = 0;
+    private EnumUtilities EnumUtilities = new EnumUtilities();
 
     public AlignmentEditViewModel()
     {
@@ -67,15 +68,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 
     protected override void InternalInit(IEditActionViewModel toCopy)
     {
-      foreach (string name in Enum.GetNames(typeof(HorizontalAlignment)))
-      {
-        this.HorizontalAlignments.Add(name);
-      }
-
-      foreach (string name in Enum.GetNames(typeof(VerticalAlignment)))
-      {
-        this.VerticalAlignments.Add(name);
-      }
+      this.EnumUtilities.LoadNames(typeof(HorizontalAlignment), this.HorizontalAlignments);
+      this.EnumUtilities.LoadNames(typeof(VerticalAlignment), this.VerticalAlignments);
     }
   }
 }
