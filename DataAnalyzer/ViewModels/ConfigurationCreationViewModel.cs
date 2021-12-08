@@ -2,7 +2,7 @@
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Services;
-using DataAnalyzer.ViewModels.Utilities;
+using DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

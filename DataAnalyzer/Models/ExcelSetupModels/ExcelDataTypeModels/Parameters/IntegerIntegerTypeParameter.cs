@@ -1,4 +1,7 @@
-﻿using ExcelService.CellDataFormats;
+﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes;
+using DataSerialization.Utilities;
+using ExcelService.CellDataFormats;
 using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
@@ -46,5 +49,38 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
     public string Integer2Name { get; set; }
 
     public override ParameterType Type => ParameterType.IntegerInteger;
+
+    public override void FromSerializable(ISerializable serializable)
+    {
+      IntegerIntegerTypeParameterSerialization serialization = serializable as IntegerIntegerTypeParameterSerialization;
+      ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
+      IntegerIntegerTypeParameter typeParameter = excelDataTypeLibrary.GetByName(serialization.Name) as IntegerIntegerTypeParameter;
+      this.cellDataFormat = typeParameter.cellDataFormat;
+      this.createCellDataFormat = typeParameter.createCellDataFormat;
+      this.Integer1Name = serialization.Integer1Name;
+      this.Integer1Value = serialization.Integer1Value;
+      this.Integer2Name = serialization.Integer2Name;
+      this.Integer2Value = serialization.Integer2Value;
+    }
+
+    public override bool IsValidSerializable(ISerializable serializable)
+    {
+      return serializable is IntegerIntegerTypeParameterSerialization;
+    }
+
+    public override ISerializable ToSerializable()
+    {
+      return new IntegerIntegerTypeParameterSerialization()
+      {
+        DataName = this.DataName,
+        Example = this.Example,
+        Integer1Name = this.Integer1Name,
+        Integer1Value = this.Integer1Value,
+        Integer2Name = this.Integer2Name,
+        Integer2Value = this.Integer2Value,
+        Name = this.Name,
+        Type = this.Type
+      };
+    }
   }
 }

@@ -1,6 +1,6 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels;
 
-namespace DataAnalyzer.ViewModels.Utilities
+namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {
   public class ActionApplicationListItemViewModel : LoadableRemovableRowViewModel
   {

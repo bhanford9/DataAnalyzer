@@ -2,7 +2,7 @@
 using DataAnalyzer.Models;
 using System;
 
-namespace DataAnalyzer.ViewModels.Utilities
+namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {
   class ConfigurationFileListItemViewModel : LoadableRemovableRowViewModel
   {

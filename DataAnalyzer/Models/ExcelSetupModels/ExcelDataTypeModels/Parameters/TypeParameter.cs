@@ -4,20 +4,23 @@ using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 {
-  public abstract class TypeParameter : BasePropertyChanged, ITypeParameter
+  public abstract class TypeParameter : SerializablePropertyChanged, ITypeParameter
   {
-    protected readonly Func<ITypeParameter, ICellDataFormat> createCellDataFormat;
+    protected Func<ITypeParameter, ICellDataFormat> createCellDataFormat;
     protected ICellDataFormat cellDataFormat;
 
     public TypeParameter(ICellDataFormat cellDataFormat, Func<ITypeParameter, ICellDataFormat> createCellDataFormat)
     {
       this.cellDataFormat = cellDataFormat;
       this.createCellDataFormat = createCellDataFormat;
+      this.NotifyPropertyChanged(nameof(this.Name));
     }
 
     public string Name => this.cellDataFormat.Name;
 
     public string Example => this.cellDataFormat.Example;
+
+    public string DataName { get; set; } = string.Empty;
 
     public abstract ParameterType Type { get; }
 

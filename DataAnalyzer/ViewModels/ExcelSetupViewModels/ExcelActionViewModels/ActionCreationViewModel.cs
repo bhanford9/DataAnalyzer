@@ -3,7 +3,7 @@ using DataAnalyzer.Models.ExcelSetupModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels;
-using DataAnalyzer.ViewModels.Utilities;
+using DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;

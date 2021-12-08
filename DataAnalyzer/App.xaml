@@ -22,6 +22,7 @@
         <ResourceDictionary Source="Styles/BaseRadioButtonStyle.xaml"/>
         <ResourceDictionary Source="Styles/BaseCheckBoxStyle.xaml"/>
         <ResourceDictionary Source="Styles/BaseTreeViewStyle.xaml"/>
+        <ResourceDictionary Source="Styles/BaseGridSplitterStyle.xaml"/>
 
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>

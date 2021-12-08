@@ -7,6 +7,8 @@
         xmlns:views="clr-namespace:DataAnalyzer.Views"
         xmlns:viewmodels="clr-namespace:DataAnalyzer.ViewModels"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
         Title="Time Performance Analyzer" Height="780" Width="1400">
   <Grid Background="{StaticResource LightBackground}">
     <Grid.Resources>
@@ -42,6 +44,7 @@
 
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="350"/>
+      <ColumnDefinition Width="Auto"/>
       <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
 
@@ -52,14 +55,23 @@
             <DataTemplate>
               <views:LoadedConfigurationItemView 
                 DataContext="{Binding}"
-                Margin="2 5"/>
+                Margin="2 5 0 5"/>
             </DataTemplate>
           </ItemsControl.ItemTemplate>
-        </ItemsControl>       
+        </ItemsControl>
       </GroupBox>
     </Border>
-    
-    <Border Grid.Column="1" Style="{StaticResource DarkBackgroundBorderStyle}">
+
+    <GridSplitter Style="{DynamicResource BaseVerticalGridSplitterStyle}" Grid.Column="1" 
+                  Margin="-2 0"
+                  ResizeBehavior="PreviousAndNext"
+                  VerticalAlignment="Stretch"
+                  Width="6"
+                  BorderBrush="{StaticResource MainAccent}"
+                  BorderThickness="1"
+                  Background="Transparent"/>
+
+    <Border Grid.Column="2" Style="{StaticResource DarkBackgroundBorderStyle}">
       <views:StatOrganizerView  Margin="0 5 2 2">
       </views:StatOrganizerView>
     </Border>

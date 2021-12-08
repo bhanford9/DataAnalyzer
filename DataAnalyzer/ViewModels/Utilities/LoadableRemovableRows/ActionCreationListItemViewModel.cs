@@ -1,7 +1,7 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels;
 using System;
 
-namespace DataAnalyzer.ViewModels.Utilities
+namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {
   public class ActionCreationListItemViewModel : LoadableRemovableRowViewModel
   {

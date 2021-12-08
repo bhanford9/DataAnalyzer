@@ -1,5 +1,6 @@
 ﻿using DataAnalyzer.Services;
-using System;
+using DataAnalyzer.Services.Serializations.ExcelSerializations.Actions;
+using DataSerialization.Utilities;
 using System.Drawing;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
@@ -36,26 +37,33 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
       set => this.NotifyPropertyChanged(nameof(this.Nth), ref this.nth, value);
     }
 
-    public override string SerializedParameters => this.Serialize(
-      this.backgroundColor,
-      this.patternColor,
-      this.fillPattern,
-      this.nth != -1 ? this.nth.ToString() : string.Empty);
-
     public override ActionCategory ActionCategory => ActionCategory.BackgroundStyle;
 
-    public override void Deserialize()
+    public override void FromSerializable(ISerializable serializable)
     {
-      string[] parameters = this.SerializedParameters.Split(this.Delimiter, StringSplitOptions.RemoveEmptyEntries);
+      BackgroundParametersSerialization serialization = serializable as BackgroundParametersSerialization;
+      this.Name = serialization.Name;
+      this.BackgroundColor = serialization.BackgroundColor;
+      this.PatternColor = serialization.PatternColor;
+      this.FillPattern = serialization.FillPattern;
+      this.Nth = serialization.Nth;
+    }
 
-      this.BackgroundColor = ColorParser.Parse(parameters[0]);
-      this.PatternColor = ColorParser.Parse(parameters[1]);
-      this.FillPattern = Enum.Parse<FillPattern>(parameters[2]);
+    public override bool IsValidSerializable(ISerializable serializable)
+    {
+      return serializable is BackgroundParametersSerialization;
+    }
 
-      if (parameters.Length > 3)
+    public override ISerializable ToSerializable()
+    {
+      return new BackgroundParametersSerialization()
       {
-        this.nth = int.Parse(parameters[3]);
-      }
+        Nth = this.Nth,
+        Name = this.Name,
+        BackgroundColor = this.BackgroundColor,
+        PatternColor = this.PatternColor,
+        FillPattern = this.FillPattern
+      };
     }
   }
 }

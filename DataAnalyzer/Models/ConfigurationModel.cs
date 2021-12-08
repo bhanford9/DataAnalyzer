@@ -87,7 +87,7 @@ namespace DataAnalyzer.Models
 
     public void LoadConfiguration(string configName)
     {
-      string filePath = this.ConfigurationDirectory + "/" + configName + FileProperties.CONFIGURATION_FILE_EXTENSION;
+      string filePath = this.ConfigurationDirectory + "/" + configName + FileProperties.CONFIGN_FILE_EXTENSION;
       this.DataConfiguration = this.serializationService.JsonDeserializeFromFile<DataConfiguration>(filePath);
       this.NotifyPropertyChanged(nameof(this.DataConfiguration));
     }
@@ -108,7 +108,7 @@ namespace DataAnalyzer.Models
       this.DataConfiguration.StatType = this.selectedStatType;
       this.DataConfiguration.ExportType = this.selectedExportType;
 
-      string fullFilePath = this.ConfigurationDirectory + "\\" + this.ConfigurationName + FileProperties.CONFIGURATION_FILE_EXTENSION;
+      string fullFilePath = this.ConfigurationDirectory + "\\" + this.ConfigurationName + FileProperties.CONFIGN_FILE_EXTENSION;
       this.serializationService.JsonSerializeToFile(this.DataConfiguration, fullFilePath);
     }
   }

@@ -1,7 +1,5 @@
 ﻿using DataAnalyzer.Common.Mvvm;
-using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
-using ExcelService.CellDataFormats.NumericFormat;
 using System;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
@@ -10,6 +8,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
   {
     private string dataName = string.Empty;
     private ITypeParameter selectedParameterType;
+    private int startingSelectedIndex = 0;
 
     private string parameter1Name = string.Empty;
     private string parameter2Name = string.Empty;
@@ -22,9 +21,29 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 
     public DataTypeSelectionViewModel()
     {
-      this.SelectedParameterType = new NoTypeParameter(
-        new GeneralNumericCellDataFormat(),
-        (param) => new GeneralNumericCellDataFormat());
+    }
+
+    // This is getting ugly.
+    // Might want to look into handling through inheritance instead
+    public DataTypeSelectionViewModel(
+      string name,
+      ITypeParameter typeParameter,
+      params object[] nameValuePairs)
+    {
+      this.DataName = name;
+      this.SelectedParameterType = typeParameter;
+
+      if (nameValuePairs.Length > 1)
+      {
+        this.Parameter1Name = nameValuePairs[0].ToString();
+        this.Parameter1Value = nameValuePairs[1].ToString();
+
+        if (nameValuePairs.Length > 3)
+        {
+          this.Parameter2Name = nameValuePairs[2].ToString();
+          this.Parameter2Value = nameValuePairs[3].ToString();
+        }
+      }
     }
 
     public string DataName
@@ -33,12 +52,20 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
       set => this.NotifyPropertyChanged(nameof(this.DataName), ref this.dataName, value);
     }
 
+    public int StartingSelectedIndex
+    {
+      get => this.startingSelectedIndex;
+      set => this.NotifyPropertyChanged(nameof(this.StartingSelectedIndex), ref this.startingSelectedIndex, value);
+    }
+
     public ITypeParameter SelectedParameterType
     {
       get => this.selectedParameterType;
       set
       {
         this.NotifyPropertyChanged(nameof(this.SelectedParameterType), ref this.selectedParameterType, value);
+
+        this.SelectedParameterType.DataName = this.DataName;
 
         switch (this.selectedParameterType.Type)
         {

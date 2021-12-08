@@ -1,5 +1,6 @@
 ﻿using DataAnalyzer.Services;
-using System;
+using DataAnalyzer.Services.Serializations.ExcelSerializations.Actions;
+using DataSerialization.Utilities;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
@@ -27,23 +28,31 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
       set => this.NotifyPropertyChanged(nameof(this.Nth), ref this.nth, value);
     }
 
-    public override string SerializedParameters => this.Serialize(
-      this.horizontalAlignment,
-      this.VerticalAlignment,
-      this.nth != -1 ? this.nth.ToString() : string.Empty);
-
     public override ActionCategory ActionCategory => ActionCategory.AlignmentStyle;
 
-    public override void Deserialize()
+    public override void FromSerializable(ISerializable serializable)
     {
-      string[] parameters = this.SerializedParameters.Split(this.Delimiter, StringSplitOptions.RemoveEmptyEntries);
-      this.HorizontalAlignment = Enum.Parse<HorizontalAlignment>(parameters[0]);
-      this.VerticalAlignment = Enum.Parse<VerticalAlignment>(parameters[1]);
+      AlignmentParametersSerialization serialization = serializable as AlignmentParametersSerialization;
+      this.Name = serialization.Name;
+      this.HorizontalAlignment = serialization.HorizontalAlignment;
+      this.VerticalAlignment = serialization.VerticalAlignment;
+      this.Nth = serialization.Nth;
+    }
 
-      if (parameters.Length > 2)
+    public override bool IsValidSerializable(ISerializable serializable)
+    {
+      return serializable is AlignmentParametersSerialization;
+    }
+
+    public override ISerializable ToSerializable()
+    {
+      return new AlignmentParametersSerialization()
       {
-        this.nth = int.Parse(parameters[2]);
-      }
+        Nth = this.Nth,
+        Name = this.Name,
+        HorizontalAlignment = this.HorizontalAlignment,
+        VerticalAlignment = this.VerticalAlignment
+      };
     }
   }
 }

@@ -13,6 +13,15 @@
         <Style TargetType="TabItem" BasedOn="{StaticResource BaseTabItemStyle}">          
         </Style>
       </TabControl.Resources>
+
+      <TabItem Header="Saved Configurations">
+        <StackPanel Orientation="Vertical">
+          <TextBlock Text="1. List of all past saved configurations for Workbooks"/>
+          <TextBlock Text="2. Ability to pre-load them for a Workbook"/>
+          <TextBlock Text="3. Ability to delete them"/>
+          <TextBlock Text="4. Ability to start fresh"/>
+        </StackPanel>
+      </TabItem>
       
       <TabItem Header="Create Actions">
         <local:ActionCreationView DataContext="{Binding DataContext.ActionCreationViewModel, ElementName=ExcelWorkbookSetup}"/>
@@ -23,6 +32,11 @@
       </TabItem>
 
       <TabItem Header="Summary">
+        <StackPanel Orientation="Vertical">
+          <TextBlock Text="1. Ability to Name Configuration for Workbook"/>
+          <TextBlock Text="2. Ability to Save Configuration for Workbook"/>
+          <TextBlock Text="3. For each provided action, a view containing a summary outline"/>
+        </StackPanel>
         
       </TabItem>
       

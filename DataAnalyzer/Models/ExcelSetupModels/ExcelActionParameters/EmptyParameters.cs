@@ -1,4 +1,6 @@
 ﻿using DataAnalyzer.Services;
+using DataAnalyzer.Services.Serializations.ExcelSerializations.Actions;
+using DataSerialization.Utilities;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
@@ -6,10 +8,19 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
   {
     public override ActionCategory ActionCategory => ActionCategory.Unknown;
 
-    public override string SerializedParameters => string.Empty;
-
-    public override void Deserialize()
+    public override void FromSerializable(ISerializable serializable)
     {
+      this.Name = (serializable as EmptyParametersSerialization).Name;
+    }
+
+    public override bool IsValidSerializable(ISerializable serializable)
+    {
+      return serializable is EmptyParametersSerialization;
+    }
+
+    public override ISerializable ToSerializable()
+    {
+      return new EmptyParametersSerialization() { Name = this.Name };
     }
   }
 }

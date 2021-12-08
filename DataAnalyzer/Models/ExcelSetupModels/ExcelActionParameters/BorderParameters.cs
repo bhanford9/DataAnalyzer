@@ -1,5 +1,6 @@
 ﻿using DataAnalyzer.Services;
-using System;
+using DataAnalyzer.Services.Serializations.ExcelSerializations.Actions;
+using DataSerialization.Utilities;
 using System.Drawing;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
@@ -114,48 +115,55 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
       set => this.NotifyPropertyChanged(nameof(this.Nth), ref this.nth, value);
     }
 
-    public override string SerializedParameters => this.Serialize(
-      this.leftColor,
-      this.leftStyle,
-      this.topColor,
-      this.topStyle,
-      this.rightColor,
-      this.rightStyle,
-      this.bottomColor,
-      this.bottomStyle,
-      this.allColor,
-      this.allStyle,
-      this.diagonalUpColor,
-      this.diagonalUpStyle,
-      this.diagonalDownColor,
-      this.diagonalDownStyle,
-      this.nth != -1 ? this.nth.ToString() : string.Empty);
-
     public override ActionCategory ActionCategory => ActionCategory.BorderStyle;
 
-    public override void Deserialize()
+    public override void FromSerializable(ISerializable serializable)
     {
-      string[] parameters = this.SerializedParameters.Split(this.Delimiter, StringSplitOptions.RemoveEmptyEntries);
+      BorderParametersSerialization serialization = serializable as BorderParametersSerialization;
+      this.Name = serialization.Name;
+      this.LeftColor = serialization.LeftColor;
+      this.LeftStyle = serialization.LeftStyle;
+      this.TopColor = serialization.TopColor;
+      this.TopStyle = serialization.TopStyle;
+      this.RightColor = serialization.RightColor;
+      this.RightStyle = serialization.RightStyle;
+      this.BottomColor = serialization.BottomColor;
+      this.BottomStyle = serialization.BottomStyle;
+      this.AllColor = serialization.AllColor;
+      this.AllStyle = serialization.AllStyle;
+      this.DiagonalUpColor = serialization.DiagonalUpColor;
+      this.DiagonalUpStyle = serialization.DiagonalUpStyle;
+      this.DiagonalDownColor = serialization.DiagonalDownColor;
+      this.DiagonalDownStyle = serialization.DiagonalDownStyle;
+      this.Nth = serialization.Nth;
+    }
 
-      this.LeftColor = ColorParser.Parse(parameters[0]);
-      this.LeftStyle = Enum.Parse<BorderStyle>(parameters[1]);
-      this.TopColor = ColorParser.Parse(parameters[2]);
-      this.TopStyle = Enum.Parse<BorderStyle>(parameters[3]);
-      this.RightColor = ColorParser.Parse(parameters[4]);
-      this.RightStyle = Enum.Parse<BorderStyle>(parameters[5]);
-      this.BottomColor = ColorParser.Parse(parameters[6]);
-      this.BottomStyle = Enum.Parse<BorderStyle>(parameters[7]);
-      this.AllColor = ColorParser.Parse(parameters[8]);
-      this.AllStyle = Enum.Parse<BorderStyle>(parameters[9]);
-      this.DiagonalUpColor = ColorParser.Parse(parameters[10]);
-      this.DiagonalUpStyle = Enum.Parse<BorderStyle>(parameters[11]);
-      this.DiagonalDownColor = ColorParser.Parse(parameters[12]);
-      this.DiagonalDownStyle = Enum.Parse<BorderStyle>(parameters[13]);
+    public override bool IsValidSerializable(ISerializable serializable)
+    {
+      return serializable is BorderParametersSerialization;
+    }
 
-      if (parameters.Length > 14)
+    public override ISerializable ToSerializable()
+    {
+      return new BorderParametersSerialization()
       {
-        this.nth = int.Parse(parameters[14]);
-      }
+        Name = this.Name,
+        LeftColor = this.LeftColor,
+        LeftStyle = this.LeftStyle,
+        TopColor = this.TopColor,
+        TopStyle = this.TopStyle,
+        RightColor = this.RightColor,
+        RightStyle = this.RightStyle,
+        BottomColor = this.BottomColor,
+        BottomStyle = this.BottomStyle,
+        AllColor = this.AllColor,
+        AllStyle = this.AllStyle,
+        DiagonalUpColor = this.DiagonalUpColor,
+        DiagonalUpStyle = this.DiagonalUpStyle,
+        DiagonalDownColor = this.DiagonalDownColor,
+        DiagonalDownStyle = this.DiagonalDownStyle,
+        Nth = this.Nth
+      };
     }
   }
 }

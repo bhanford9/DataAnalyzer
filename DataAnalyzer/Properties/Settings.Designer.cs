@@ -58,5 +58,17 @@ namespace DataAnalyzer.Properties {
                 this["LastUsedConfigurationDirectory"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastUsedExcelConfigurationDirectory {
+            get {
+                return ((string)(this["LastUsedExcelConfigurationDirectory"]));
+            }
+            set {
+                this["LastUsedExcelConfigurationDirectory"] = value;
+            }
+        }
     }
 }

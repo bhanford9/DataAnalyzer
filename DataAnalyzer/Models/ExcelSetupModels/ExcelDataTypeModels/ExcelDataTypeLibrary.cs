@@ -1,6 +1,7 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using ExcelService.CellDataFormats.NumericFormat;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels
 {
@@ -16,6 +17,11 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels
     public ICollection<ITypeParameter> GetParameterTypes()
     {
       return this.typeParameters;
+    }
+
+    public ITypeParameter GetByName(string name)
+    {
+      return this.typeParameters.First(x => x.Name.Equals(name));
     }
 
     private void LoadParameters()
@@ -38,7 +44,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels
         "Decimal Count:",
         "Red when Negative:",
         new FloatingSeparatorParensCellDataFormat(0, false),
-        (param) => new FloatingSeparatorParensCellDataFormat((param as IntegerBooleanTypeParameter).IntegerValue, (param as IntegerBooleanTypeParameter).BooleanValue)));
+        (param) => new FloatingSeparatorParensCellDataFormat(
+          (param as IntegerBooleanTypeParameter).IntegerValue,
+          (param as IntegerBooleanTypeParameter).BooleanValue)));
 
       this.typeParameters.Add(new IntegerTypeParameter(
         "Digit Count:",
@@ -83,7 +91,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels
         "Whole Number Digits:",
         "Decimal Count:",
         new ZeroPrependFloatingPrecisionCellDataFormat(0, 0),
-        (param) => new ZeroPrependFloatingPrecisionCellDataFormat((param as IntegerIntegerTypeParameter).Integer1Value, (param as IntegerIntegerTypeParameter).Integer2Value)));
+        (param) => new ZeroPrependFloatingPrecisionCellDataFormat(
+          (param as IntegerIntegerTypeParameter).Integer1Value,
+          (param as IntegerIntegerTypeParameter).Integer2Value)));
 
       this.typeParameters.Add(new IntegerTypeParameter(
         "Whole Number Digits:",

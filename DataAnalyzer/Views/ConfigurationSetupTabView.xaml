@@ -17,7 +17,7 @@
     <local:ExcelConfigurationSetupView>
       <local:ExcelConfigurationSetupView.Style>
         <Style TargetType="local:ExcelConfigurationSetupView">
-          <Setter Property="Visibility" Value="Hidden"/>
+          <Setter Property="Visibility" Value="Collapsed"/>
           <Style.Triggers>
             <DataTrigger Binding="{Binding DataContext.SelectedExportType, ElementName=MainSetupTab}" Value="Excel">
               <Setter Property="Visibility" Value="Visible"/>

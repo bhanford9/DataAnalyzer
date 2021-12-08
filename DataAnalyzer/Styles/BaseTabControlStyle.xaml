@@ -248,6 +248,7 @@
             <Trigger Property="IsSelected" Value="True">
               <Setter Property="Background" Value="{StaticResource DarkBackground}"/>
               <Setter Property="Margin" Value="-1 1 -5 0"/>
+              <Setter Property="Panel.ZIndex" Value="9"/>
             </Trigger>
 
             <Trigger Property="IsMouseOver" Value="True">

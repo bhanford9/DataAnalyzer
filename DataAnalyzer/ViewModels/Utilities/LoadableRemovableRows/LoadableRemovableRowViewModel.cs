@@ -1,7 +1,7 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using System.Windows.Input;
 
-namespace DataAnalyzer.ViewModels.Utilities
+namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {
   public abstract class LoadableRemovableRowViewModel : RowViewModel
   {
