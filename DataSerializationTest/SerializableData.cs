@@ -4,7 +4,7 @@ using System;
 
 namespace DataSerializationTest
 {
-  public class SerializableData : DefaultSerializable
+  public abstract class SerializableData : DefaultSerializable
   {
     public int Age { get; set; } = 0;
 

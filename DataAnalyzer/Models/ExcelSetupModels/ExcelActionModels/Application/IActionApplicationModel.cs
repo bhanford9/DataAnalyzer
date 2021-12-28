@@ -1,6 +1,6 @@
 ﻿using DataAnalyzer.ViewModels.Utilities;
 
-namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
+namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 {
   public interface IActionApplicationModel : IExcelActionModel
   {

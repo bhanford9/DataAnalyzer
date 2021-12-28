@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
-        Title="Time Performance Analyzer" Height="780" Width="1400">
+        Title="Configurable Data Analyzer" Height="780" Width="1400">
   <Grid Background="{StaticResource LightBackground}">
     <Grid.Resources>
       <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">

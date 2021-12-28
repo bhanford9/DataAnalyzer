@@ -29,7 +29,10 @@ namespace ExcelService.DataClusters
         this.ActionDefinitions = clusterActions;
       }
 
-      this.Rows.Prepend(titles);
+      if (titles != null)
+      {
+        this.Rows.Prepend(titles);
+      }
     }
 
     public DataCluster(

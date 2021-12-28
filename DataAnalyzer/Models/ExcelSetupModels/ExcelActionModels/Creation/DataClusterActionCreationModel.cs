@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
+namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation
 {
   public class DataClusterActionCreationModel : ActionCreationModel
   {

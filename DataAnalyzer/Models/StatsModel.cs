@@ -16,15 +16,13 @@ namespace DataAnalyzer.Models
   {
     private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
     private readonly ScraperService scraperService = new ScraperService();
-    private readonly ICollection<IStats> stats = new List<IStats>();
-
     private HeirarchalStats heirarchalStats;
 
     public StatsModel()
     {
     }
 
-    public ICollection<IStats> Stats => this.stats;
+    public ICollection<IStats> Stats { get; } = new List<IStats>();
 
     public ObservableCollection<string> StatNames { get; }
       = new ObservableCollection<string>();
@@ -37,7 +35,7 @@ namespace DataAnalyzer.Models
 
     public void ClearLoadedStats()
     {
-      this.stats.Clear();
+      this.Stats.Clear();
 
       this.NotifyPropertyChanged(nameof(this.Stats));
     }
@@ -46,7 +44,7 @@ namespace DataAnalyzer.Models
     {
       this.scraperService.ScrapeFromFile(filePath, converter)
         .ToList()
-        .ForEach(this.stats.Add);
+        .ForEach(this.Stats.Add);
 
       this.NotifyPropertyChanged(nameof(this.Stats));
     }
@@ -63,7 +61,7 @@ namespace DataAnalyzer.Models
       }
 
       DataOrganizer organizer = new DataOrganizer();
-      this.HeirarchalStats = organizer.Organize(configuration, this.stats);
+      this.HeirarchalStats = organizer.Organize(configuration, this.Stats);
 
       this.LoadStatNames(this.HeirarchalStats);
     }

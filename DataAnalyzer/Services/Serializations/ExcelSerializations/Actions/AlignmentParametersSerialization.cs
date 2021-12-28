@@ -1,12 +1,14 @@
-﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
-using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
+﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+using DataSerialization.CustomSerializations;
+using DataSerialization.CustomSerializations.BuiltInSerializations;
 using DataSerialization.Utilities;
 using DataSerialization.Utilities.BuiltInSerializers;
 using System;
+using System.Collections.Generic;
 
 namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
 {
-  public class AlignmentParametersSerialization : DefaultSerializable
+  public class AlignmentParametersSerialization : SerializationAggregate<AlignmentParameters>
   {
     public string Name { get; set; } = string.Empty;
 
@@ -16,36 +18,30 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
 
     public int Nth { get; set; } = -1;
 
-    protected override bool IsCorrectType(Type type)
+    public override void ApplyToValue()
     {
-      return type.IsAssignableFrom(this.GetType());
+      this.DiscreteValue.Name = this.GetParameter<string>(nameof(this.DiscreteValue.Name));
+      this.DiscreteValue.HorizontalAlignment = this.GetParameter<HorizontalAlignment>(nameof(this.DiscreteValue.HorizontalAlignment));
+      this.DiscreteValue.VerticalAlignment = this.GetParameter<VerticalAlignment>(nameof(this.DiscreteValue.VerticalAlignment));
+      this.DiscreteValue.Nth = this.GetParameter<int>(nameof(this.DiscreteValue.Nth));
     }
 
-    protected override void RegisterSerializations()
+    protected override ICollection<ISerializationData> InitializeSelf(AlignmentParameters value)
     {
-      this.RegisterSerializableParameter(
-        0,
-        (obj) => (obj as AlignmentParametersSerialization).Name,
-        (obj, name) => (obj as AlignmentParametersSerialization).Name = name,
-        new StringSerializer());
+      StringSerialization name = new StringSerialization(value.Name, nameof(value.Name));
+      CustomSerialization<HorizontalAlignment> horizontal = new CustomSerialization<HorizontalAlignment>(
+        value.HorizontalAlignment,
+        nameof(value.HorizontalAlignment),
+        (alignment) => alignment.ToString(),
+        (str) => Enum.Parse<HorizontalAlignment>(str));
+      CustomSerialization<VerticalAlignment> vertical = new CustomSerialization<VerticalAlignment>(
+        value.VerticalAlignment,
+        nameof(value.HorizontalAlignment),
+        (alignment) => alignment.ToString(),
+        (str) => Enum.Parse<VerticalAlignment>(str));
+      IntegerSerialization nth = new IntegerSerialization(value.Nth, nameof(value.Nth));
 
-      this.RegisterSerializableParameter(
-        3,
-        (obj) => (obj as AlignmentParametersSerialization).HorizontalAlignment,
-        (obj, style) => (obj as AlignmentParametersSerialization).HorizontalAlignment = style,
-        Enum.Parse<HorizontalAlignment>);
-
-      this.RegisterSerializableParameter(
-        3,
-        (obj) => (obj as AlignmentParametersSerialization).VerticalAlignment,
-        (obj, style) => (obj as AlignmentParametersSerialization).VerticalAlignment = style,
-        Enum.Parse<VerticalAlignment>);
-
-      this.RegisterSerializableParameter(
-        4,
-        (obj) => (obj as AlignmentParametersSerialization).Nth,
-        (obj, nth) => (obj as AlignmentParametersSerialization).Nth = nth,
-        new IntegerSerializer());
+      return new List<ISerializationData>() { name, horizontal, vertical, nth };
     }
   }
 }

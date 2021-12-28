@@ -33,9 +33,7 @@
 
       <TabItem Header="Summary">
         <StackPanel Orientation="Vertical">
-          <TextBlock Text="1. Ability to Name Configuration for Workbook"/>
-          <TextBlock Text="2. Ability to Save Configuration for Workbook"/>
-          <TextBlock Text="3. For each provided action, a view containing a summary outline"/>
+          <local:ActionsSummaryView DataContext="{Binding DataContext.ActionsSummaryViewModel, ElementName=ExcelWorkbookSetup}"/>
         </StackPanel>
         
       </TabItem>

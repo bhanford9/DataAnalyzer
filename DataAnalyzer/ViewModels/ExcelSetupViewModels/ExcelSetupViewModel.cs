@@ -1,7 +1,9 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.ExcelSetupModels;
-using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary;
 using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels;
 using System;
@@ -24,13 +26,18 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     //   by which it can extract the action collection
     // 
     // For now... going with this route in case each model instance needs further independent
-    //   implementations or data structures, understanding that this will mean 15 different models
+    //   implementations or data structures, understanding that this will mean 15+ different models
     private readonly IActionCreationModel workbookActionCreationModel = new WorkbookActionCreationModel();
     private readonly IActionCreationModel worksheetActionCreationModel = new WorksheetActionCreationModel();
     private readonly IActionCreationModel dataClusterActionCreationModel = new DataClusterActionCreationModel();
+
     private readonly IActionApplicationModel workbookActionApplicationModel = new WorkbookActionApplicationModel();
     private readonly IActionApplicationModel worksheetActionApplicationModel = new WorksheetActionApplicationModel();
     private readonly IActionApplicationModel dataClusterActionApplicationModel = new DataClusterActionApplicationModel();
+
+    private readonly IActionsSummaryModel workbookActionsSummaryModel = new WorkbookActionsSummaryModel();
+    private readonly IActionsSummaryModel worksheetActionsSummaryModel = new WorksheetActionsSummaryModel();
+    private readonly IActionsSummaryModel dataClusterActionsSummaryModel = new DataClusterActionsSummaryModel();
 
     private readonly BaseCommand loadDataIntoStructure;
 
@@ -44,17 +51,20 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
       this.WorkbookActionViewModel = new ExcelActionViewModel(
         this.WorkbookActions,
         this.workbookActionCreationModel,
-        this.workbookActionApplicationModel);
+        this.workbookActionApplicationModel,
+        this.workbookActionsSummaryModel);
 
       this.WorksheetActionViewModel = new ExcelActionViewModel(
         this.WorksheetActions,
         this.worksheetActionCreationModel,
-        this.worksheetActionApplicationModel);
+        this.worksheetActionApplicationModel,
+        this.worksheetActionsSummaryModel);
 
       this.DataClusterActionViewModel = new ExcelActionViewModel(
         this.DataClusterActions,
         this.dataClusterActionCreationModel,
-        this.dataClusterActionApplicationModel);
+        this.dataClusterActionApplicationModel,
+        this.dataClusterActionsSummaryModel);
     }
 
     public ExcelActionViewModel WorkbookActionViewModel { get; set; }

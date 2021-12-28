@@ -1,4 +1,4 @@
-﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels;
+﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using System;
 
 namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows

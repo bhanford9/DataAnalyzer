@@ -13,6 +13,8 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes
     public string Integer2Name { get; set; } = string.Empty;
     public object BooleanName { get; internal set; }
 
+    public override string DelimiterKey => "IntegerIntegerTypeParameter";
+
     public override object[] GetParameterNameValuePairs()
     {
       return new object[]

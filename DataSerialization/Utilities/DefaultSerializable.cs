@@ -5,17 +5,18 @@ using System.Linq;
 
 namespace DataSerialization.Utilities
 {
-  public abstract class DefaultSerializable : ISerializable
+  public abstract class DefaultSerializable //: ISerializable
   {
+    private string DELIMITER => $"_{this.DelimiterKey}_";
     protected IDictionary<int, ISerializerProxy> parameterSerializers = new Dictionary<int, ISerializerProxy>();
-
-    protected const string DELIMITER = "|~|";
 
     public DefaultSerializable()
     {
       this.RegisterSerializations();
+      DelimiterDictionary.Instance.RegisterDelimiter(this.GetType().AssemblyQualifiedName, this.DelimiterKey);
     }
 
+    public abstract string DelimiterKey { get; }
     public string FullyQualifiedClassName { get; set; } = string.Empty;
     public string Serialization { get; set; } = string.Empty;
 
@@ -30,19 +31,19 @@ namespace DataSerialization.Utilities
 
     public void Deserialize()
     {
-      string[] stringParams = this.Serialization.Split(DELIMITER);
+      //string[] stringParams = this.Serialization.Split(this.DELIMITER);
 
-      for (int i = 0; i < stringParams.Length; i++)
-      {
-        this.parameterSerializers[i].Deserialize(this, stringParams[i]);
-      }
+      //for (int i = 0; i < stringParams.Length; i++)
+      //{
+      //  this.parameterSerializers[i].Deserialize(this, stringParams[i]);
+      //}
     }
 
     public string Serialize()
     {
-      this.Serialization = this.parameterSerializers
-        .Select((keyValuePair) => keyValuePair.Value.Serialize(this))
-        .Aggregate((a, b) => a + DELIMITER + b);
+      //this.Serialization = this.parameterSerializers
+      //  .Select((keyValuePair) => keyValuePair.Value.Serialize(this))
+      //  .Aggregate((a, b) => a + this.DELIMITER + b);
 
       return this.FullyQualifiedClassName + Environment.NewLine + this.Serialization;
     }

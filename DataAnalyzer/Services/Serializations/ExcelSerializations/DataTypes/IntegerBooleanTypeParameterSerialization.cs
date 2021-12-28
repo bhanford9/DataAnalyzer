@@ -12,6 +12,8 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes
 
     public bool BooleanValue { get; set; }
 
+    public override string DelimiterKey => "IntegerBooleanTypeParameter";
+
     public override object[] GetParameterNameValuePairs()
     {
       return new object[]

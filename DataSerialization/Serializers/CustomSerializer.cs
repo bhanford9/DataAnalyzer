@@ -11,7 +11,7 @@ namespace DataSerialization.Serializers
       using StringReader reader = new StringReader(content);
       string classInfo = reader.ReadLine();
       string fullyQualifiedClassName = classInfo.Trim();
-      string serialization = content.Substring(classInfo.Length);
+      string serialization = content[classInfo.Length..];
 
       object obj = Activator.CreateInstance(Type.GetType(fullyQualifiedClassName));
       ISerializable result = obj as ISerializable;

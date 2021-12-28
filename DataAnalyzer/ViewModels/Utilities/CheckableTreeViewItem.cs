@@ -6,6 +6,7 @@ namespace DataAnalyzer.ViewModels.Utilities
   public class CheckableTreeViewItem : BasePropertyChanged
   {
     private bool isChecked = true;
+    private bool isLeaf = true;
     private string name = string.Empty;
     private string path = string.Empty;
 
@@ -28,6 +29,12 @@ namespace DataAnalyzer.ViewModels.Utilities
           this.Children[i].IsChecked = value;
         }
       }
+    }
+
+    public bool IsLeaf
+    {
+      get => this.isLeaf;
+      set => this.NotifyPropertyChanged(nameof(this.IsLeaf), ref this.isLeaf, value);
     }
 
     public string Name

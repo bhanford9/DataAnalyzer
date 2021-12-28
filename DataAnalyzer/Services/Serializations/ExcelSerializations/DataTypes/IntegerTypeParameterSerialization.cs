@@ -8,6 +8,8 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes
 
     public int IntegerValue { get; set; }
 
+    public override string DelimiterKey => "SingleIntegerTypeParameter";
+
     public override object[] GetParameterNameValuePairs()
     {
       return new object[]

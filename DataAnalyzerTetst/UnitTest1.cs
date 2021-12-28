@@ -4,6 +4,9 @@ using Xunit;
 using DataSerialization;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using ExcelService.CellDataFormats.NumericFormat;
+using DataAnalyzer.Services.Serializations.ExcelSerializations;
+using DataAnalyzer.Services.Serializations;
+using DataAnalyzer.Services.Serializations.ExcelSerializations.Actions;
 
 namespace DataAnalyzerTetst
 {
@@ -33,9 +36,34 @@ namespace DataAnalyzerTetst
         new FloatingSeparatorParensCellDataFormat(4, true),
         (param) => new FloatingSeparatorParensCellDataFormat((param as IntegerBooleanTypeParameter).IntegerValue, (param as IntegerBooleanTypeParameter).BooleanValue));
 
-      string result2 = serializationExecutive.JsonSerialize(testParameter);
 
-      IntegerBooleanTypeParameter deserializedParameter = serializationExecutive.JsonDeserialize<IntegerBooleanTypeParameter>(result2);
+
+      AlignmentParametersSerialization alignmentParametersSerialization = new AlignmentParametersSerialization()
+      {
+        HorizontalAlignment = DataAnalyzer.Services.HorizontalAlignment.Justify,
+        VerticalAlignment = DataAnalyzer.Services.VerticalAlignment.Bottom,
+        Name = "My Alignment",
+      };
+
+      BackgroundParametersSerialization backgroundParametersSerialization = new BackgroundParametersSerialization()
+      {
+        BackgroundColor = System.Drawing.Color.Green,
+        FillPattern = DataAnalyzer.Services.FillPattern.DarkTrellis,
+        Name = "My Background",
+        PatternColor = System.Drawing.Color.Magenta
+      };
+
+
+      WorkbookSerialization workbookSerialization = new WorkbookSerialization();
+      workbookSerialization.Name = "Hello World";
+      workbookSerialization.WorkbookActions = new SerializationCollection();
+      workbookSerialization.WorkbookActions.Serializations.Add(alignmentParametersSerialization);
+      workbookSerialization.WorkbookActions.Serializations.Add(backgroundParametersSerialization);
+      string serializedWorkbook = workbookSerialization.Serialize();
+
+      WorkbookSerialization deserialziedWorkbook = new WorkbookSerialization();
+      deserialziedWorkbook.Serialization = serializedWorkbook;
+      deserialziedWorkbook.Deserialize();
     }
   }
 }

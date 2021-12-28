@@ -10,6 +10,8 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
 
     public bool DoPerform { get; set; }
 
+    public override string DelimiterKey => "BooleanOperationParameters";
+
     protected override bool IsCorrectType(Type type)
     {
       return type.IsAssignableFrom(this.GetType());

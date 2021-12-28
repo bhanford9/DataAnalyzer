@@ -4,23 +4,19 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
+namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 {
   public class DataClusterActionApplicationModel : ActionApplicationModel
   {
+    private const string PATH_DELIMITER = "_";
+
     protected override ObservableCollection<ExcelAction> GetActionCollection()
     {
       return this.excelSetupModel.DataClusterActions;
     }
 
-    protected override void InternalLoadWhereToApply(
-      CheckableTreeViewItem baseItem,
-      ICollection<HeirarchalStats> heirarchalStats)
+    protected override void InternalLoadWhereToApply(CheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
     {
-
-      // Could do a recursive approach to this in the parent if there is an abstract method 
-      //   for deciding when to stop going down in depth
-
       foreach (HeirarchalStats workbookStats in heirarchalStats)
       {
         string path = workbookStats.Key.ToString();
@@ -28,6 +24,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
         baseItem.Children.Add(new CheckableTreeViewItem()
         {
           IsChecked = true,
+          IsLeaf = false,
           Name = workbookStats.Key.ToString(),
           Path = path,
         });
@@ -39,6 +36,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
           baseItem.Children.Last().Children.Add(new CheckableTreeViewItem()
           {
             IsChecked = true,
+            IsLeaf = false,
             Name = worksheetStats.Key.ToString(),
             Path = path
           });
@@ -50,6 +48,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
             baseItem.Children.Last().Children.Last().Children.Add(new CheckableTreeViewItem()
             {
               IsChecked = true,
+              IsLeaf = true,
               Name = dataClusters.Key.ToString(),
               Path = path,
             });

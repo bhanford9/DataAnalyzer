@@ -1,23 +1,20 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.ExcelSetupModels;
-using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary;
 using System.Collections.Generic;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
 {
   public class ExcelActionViewModel : BasePropertyChanged
   {
-    private readonly IActionCreationModel actionCreationModel;
-    private readonly IActionApplicationModel actionApplicationModel;
-
     public ExcelActionViewModel(
       ICollection<ExcelAction> actions,
       IActionCreationModel actionCreationModel,
-      IActionApplicationModel actionApplicationModel)
+      IActionApplicationModel actionApplicationModel,
+      IActionsSummaryModel actionsSummaryModel)
     {
-      this.actionCreationModel = actionCreationModel;
-      this.actionApplicationModel = actionApplicationModel;
-
       this.ActionCreationViewModel = new ActionCreationViewModel(
         actions,
         actionCreationModel);
@@ -25,10 +22,15 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
       this.ActionApplicationViewModel = new ActionApplicationViewModel(
         actions,
         actionApplicationModel);
+
+      this.ActionsSummaryViewModel = new ActionsSummaryViewModel(
+        actionsSummaryModel);
     }
 
     public ActionCreationViewModel ActionCreationViewModel { get; set; }
 
     public ActionApplicationViewModel ActionApplicationViewModel { get; set; }
+
+    public ActionsSummaryViewModel ActionsSummaryViewModel { get; set; }
   }
 }

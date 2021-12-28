@@ -24,17 +24,6 @@ namespace DataAnalyzer.ViewModels
       set => this.NotifyPropertyChanged(nameof(this.SelectedExportType), ref this.selectedExportType, value);
     }
 
-    private void HeirarchyData()
-    {
-      //ExcelConfiguration configuration = new ExcelConfiguration();
-      //configuration.AddGroupingRule(0, (stats) => (stats as QueryableTimeStats).MethodName);
-      //configuration.AddGroupingRule(1, (stats) => (stats as QueryableTimeStats).ContainerType);
-      //configuration.AddGroupingRule(2, (stats) => (stats as QueryableTimeStats).CategoryType);
-
-      //DataOrganizer organizer = new DataOrganizer();
-      //organizer.Organize(configuration, this.statsModel.Stats);
-    }
-
     private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       switch (e.PropertyName)

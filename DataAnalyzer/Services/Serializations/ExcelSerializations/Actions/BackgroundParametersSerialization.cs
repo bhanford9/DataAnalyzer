@@ -17,6 +17,8 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
 
     public int Nth { get; set; } = -1;
 
+    public override string DelimiterKey => "BackgroundParameters";
+
     protected override bool IsCorrectType(Type type)
     {
       return type.IsAssignableFrom(this.GetType());

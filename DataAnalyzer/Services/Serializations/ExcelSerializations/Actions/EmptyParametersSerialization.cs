@@ -8,6 +8,8 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
   {
     public string Name { get; set; } = string.Empty;
 
+    public override string DelimiterKey => "EmptyParameters";
+
     protected override bool IsCorrectType(Type type)
     {
       return type.IsAssignableFrom(this.GetType());

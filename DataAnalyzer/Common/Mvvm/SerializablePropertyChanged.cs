@@ -1,13 +1,14 @@
-﻿using DataSerialization.Utilities;
+﻿using DataSerialization.CustomSerializations;
+using DataSerialization.Utilities;
 
 namespace DataAnalyzer.Common.Mvvm
 {
   public abstract class SerializablePropertyChanged : BasePropertyChanged, ISerializablePropertyChanged
   {
-    public abstract ISerializable ToSerializable();
+    public abstract ISerializationData ToSerializable();
 
-    public abstract bool IsValidSerializable(ISerializable serializable);
+    public abstract bool IsValidSerializable(ISerializationData serializable);
 
-    public abstract void FromSerializable(ISerializable serializable);
+    public abstract void FromSerializable(ISerializationData serializable);
   }
 }

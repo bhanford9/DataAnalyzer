@@ -12,6 +12,8 @@ namespace DataAnalyzer.ViewModels.Utilities
 
     public ColorsComboBoxViewModel()
     {
+      // ordering is an attempt to get like-colors next to each other in the combo box.
+      // its not perfect, but its better for people who are trying to pick a specific shade without knowing its name
       typeof(Color)
         .GetProperties(BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.Public)
         .OrderBy(info => Color.FromName(info.Name).GetHue())
