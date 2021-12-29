@@ -1,5 +1,6 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using ExcelService.CellDataFormats.NumericFormat;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,12 +17,13 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels
 
     public ICollection<ITypeParameter> GetParameterTypes()
     {
-      return this.typeParameters;
+      return this.typeParameters.ToList();
     }
 
     public ITypeParameter GetByName(string name)
     {
-      return this.typeParameters.First(x => x.Name.Equals(name));
+      ITypeParameter parameter = this.GetParameterTypes().First(x => x.Name.Equals(name));
+      return (ITypeParameter)Activator.CreateInstance(parameter.GetType(), parameter);
     }
 
     private void LoadParameters()

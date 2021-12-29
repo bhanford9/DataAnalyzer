@@ -1,27 +1,31 @@
-﻿using DataSerialization.Utilities;
-using DataSerialization.Utilities.BuiltInSerializers;
-using System;
+﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+using DataSerialization.CustomSerializations;
+using DataSerialization.CustomSerializations.BuiltInSerializations;
+using System.Collections.Generic;
 
 namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
 {
-  public class EmptyParametersSerialization : DefaultSerializable
+  public class EmptyParametersSerialization : SerializationAggregate<EmptyParameters>, IExcelActionSerialization
   {
-    public string Name { get; set; } = string.Empty;
+    public EmptyParametersSerialization() : base() { }
 
-    public override string DelimiterKey => "EmptyParameters";
-
-    protected override bool IsCorrectType(Type type)
+    public EmptyParametersSerialization(EmptyParameters value, string parameterName)
+      : base(value, parameterName)
     {
-      return type.IsAssignableFrom(this.GetType());
     }
 
-    protected override void RegisterSerializations()
+    public string Name { get; set; } = string.Empty;
+
+    public override void ApplyToValue()
     {
-      this.RegisterSerializableParameter(
-        0,
-        (obj) => (obj as EmptyParametersSerialization).Name,
-        (obj, name) => (obj as EmptyParametersSerialization).Name = name,
-        new StringSerializer());
+      this.DiscreteValue.Name = this.GetParameter<string>(nameof(this.DiscreteValue.Name));
+    }
+
+    protected override ICollection<ISerializationData> InitializeSelf(EmptyParameters value)
+    {
+      StringSerialization name = new StringSerialization(value.Name, nameof(value.Name));
+
+      return new List<ISerializationData>() { name };
     }
   }
 }

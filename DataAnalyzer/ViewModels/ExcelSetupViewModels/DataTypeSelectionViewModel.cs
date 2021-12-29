@@ -63,9 +63,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
       get => this.selectedParameterType;
       set
       {
-        this.NotifyPropertyChanged(nameof(this.SelectedParameterType), ref this.selectedParameterType, value);
-
-        this.SelectedParameterType.DataName = this.DataName;
+        this.selectedParameterType = (ITypeParameter)Activator.CreateInstance(value.GetType(), value);
+        this.selectedParameterType.DataName = this.DataName;
 
         switch (this.selectedParameterType.Type)
         {
@@ -86,6 +85,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
             this.setParam2 = (typeParam, value) => (typeParam as IntegerBooleanTypeParameter).BooleanValue = bool.Parse(value);
             break;
         }
+
+        this.NotifyPropertyChanged(nameof(this.SelectedParameterType));
       }
     }
 

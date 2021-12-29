@@ -31,7 +31,11 @@ namespace DataSerialization.CustomSerializations
 
     public void InitializeItems(ICollection<T> dataItems)
     {
-      this.Items = dataItems.Select(x => this.GetInitializedSerializationData(x)).ToList();
+      foreach (T item in dataItems)
+      {
+        this.AddItem(item);
+      }  
+      //this.Items = dataItems.Select(x => this.GetInitializedSerializationData(x)).ToList();
     }
 
     public void AddItem(T dataItem)

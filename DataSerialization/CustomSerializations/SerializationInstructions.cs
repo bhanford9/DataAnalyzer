@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DataSerialization.CustomSerializations
 {
-  public class SerializationInstructions : ISerializationInstructions
+  public class SerializationInstructions
   {
     private const string CLASS_KEY = "HELPER_ID";
     private const string VALUE_KEY = "VALUE_ID";
@@ -34,7 +34,12 @@ namespace DataSerialization.CustomSerializations
           serialization += this.Serialize(item, level + 2) + this.COMMA_END[1..];
         }
 
-        serialization = serialization.TrimEnd()[..^1] + this.GetTabbedCurlyEnd(childTabs);
+        if (serialization.EndsWith(','))
+        {
+          serialization = serialization.TrimEnd()[..^1];
+        }
+
+        serialization += this.GetTabbedCurlyEnd(childTabs);
         serialization += this.GetTabbedCurlyEnd(baseTabs);
       }
       else if (data is ISerializationCollection collectionData)
@@ -110,8 +115,10 @@ namespace DataSerialization.CustomSerializations
       int aggregateLineCount = this.LinesUntilAggregateClose(serializationSplit[VALUE_LINE_INDEX..]);
       int aggregateEndLineIndex = VALUE_LINE_INDEX + aggregateLineCount;
       string serializedAggregateData = this.JoinOnNewLines(serializationSplit[VALUE_LINE_INDEX..aggregateEndLineIndex]).TrimStart();
+
+      int aggregateStartIndex = aggregateData.ParameterName.Length + 3;
       int trimEnd = serializedAggregateData.EndsWith(',') ? 2 : 1;
-      string trimmedData = serializedAggregateData[(aggregateData.ParameterName.Length + 3)..^trimEnd].Trim();
+      string trimmedData = serializedAggregateData.Length > aggregateStartIndex ? serializedAggregateData[aggregateStartIndex..^trimEnd].Trim() : string.Empty;
 
       string[] aggregateDataLines = this.SplitNewLines(trimmedData);
       if (aggregateDataLines.Length >= VALUE_BLOCK_LINE_COUNT)
@@ -241,9 +248,11 @@ namespace DataSerialization.CustomSerializations
     {
       int separatorIndex = line.IndexOf(':');
       string key = line[..separatorIndex].Trim();
-      string value = line[(separatorIndex + 3)..].Trim();
 
-      if (value.Length > 2)
+      int valueStartIndex = separatorIndex + 3;
+      string value = line.Length > valueStartIndex ? line[(separatorIndex + 3)..].Trim() : string.Empty;
+
+      if (value.Length > 1)
       {
         value = value.EndsWith(',') ? value[..^2] : value[..^1];
       }

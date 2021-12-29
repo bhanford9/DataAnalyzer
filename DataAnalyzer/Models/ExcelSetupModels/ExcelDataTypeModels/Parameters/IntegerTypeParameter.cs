@@ -1,6 +1,6 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes;
-using DataSerialization.Utilities;
+using DataSerialization.CustomSerializations;
 using ExcelService.CellDataFormats;
 using System;
 
@@ -9,6 +9,10 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
   public class IntegerTypeParameter : TypeParameter
   {
     private int integerValue = 1;
+
+    public IntegerTypeParameter() : base() { }
+
+    public IntegerTypeParameter(ITypeParameter typeParameter) : base(typeParameter) { }
 
     public IntegerTypeParameter(
       string integerName,
@@ -34,33 +38,41 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
     public override ParameterType Type => ParameterType.Integer;
 
-    public override void FromSerializable(ISerializable serializable)
+    public override void FromSerializable(ISerializationData serializable)
     {
-      IntegerTypeParameterSerialization serialization = serializable as IntegerTypeParameterSerialization;
+      IntegerTypeParameter parameters = (serializable as IntegerTypeParameterSerialization).DiscreteValue;
       ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
-      IntegerTypeParameter typeParameter = excelDataTypeLibrary.GetByName(serialization.Name) as IntegerTypeParameter;
+      IntegerTypeParameter typeParameter = excelDataTypeLibrary.GetByName(parameters.Name) as IntegerTypeParameter;
       this.cellDataFormat = typeParameter.cellDataFormat;
       this.createCellDataFormat = typeParameter.createCellDataFormat;
-      this.IntegerName = serialization.IntegerName;
-      this.IntegerValue = serialization.IntegerValue;
+      this.IntegerName = parameters.IntegerName;
+      this.IntegerValue = parameters.IntegerValue;
     }
 
-    public override bool IsValidSerializable(ISerializable serializable)
+    public override bool IsValidSerializable(ISerializationData serializable)
     {
       return serializable is IntegerTypeParameterSerialization;
     }
 
-    public override ISerializable ToSerializable()
+    public override ISerializationData GetSerialization()
     {
-      return new IntegerTypeParameterSerialization()
+      return new IntegerTypeParameterSerialization();
+    }
+
+    public override object[] GetParameterNameValuePairs()
+    {
+      return new object[]
       {
-        DataName = this.DataName,
-        Example = this.Example,
-        IntegerName = this.IntegerName,
-        IntegerValue = this.IntegerValue,
-        Name = this.Name,
-        Type = this.Type
+        this.IntegerName,
+        this.IntegerValue
       };
+    }
+
+    protected override void CloneParameters(ITypeParameter other)
+    {
+      IntegerTypeParameter local = other as IntegerTypeParameter;
+      this.IntegerName = local.IntegerName;
+      this.IntegerValue = local.IntegerValue;
     }
   }
 }

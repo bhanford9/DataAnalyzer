@@ -1,5 +1,4 @@
 ﻿using DataSerialization.CustomSerializations;
-using DataSerialization.Utilities;
 
 namespace DataAnalyzer.Common.Mvvm
 {
@@ -7,6 +6,6 @@ namespace DataAnalyzer.Common.Mvvm
   {
     void FromSerializable(ISerializationData serializable);
     bool IsValidSerializable(ISerializationData serializable);
-    ISerializationData ToSerializable();
+    ISerializationData GetSerialization();
   }
 }

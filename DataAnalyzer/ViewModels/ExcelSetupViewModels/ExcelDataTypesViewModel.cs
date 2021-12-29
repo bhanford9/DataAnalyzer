@@ -3,7 +3,6 @@ using DataAnalyzer.Models;
 using DataAnalyzer.Models.ExcelSetupModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
-using DataAnalyzer.Services.Serializations;
 using DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes;
 using DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;
 using ExcelService.CellDataFormats.NumericFormat;
@@ -95,12 +94,11 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         // TODO --> verify overwrite existing configuration
       }
 
-      SerializationCollection serializationCollection = new SerializationCollection()
-      {
-        Serializations = this.ParameterSelections.Select(x => x.SelectedParameterType.ToSerializable()).ToList()
-      };
+      ExcelDataTypesSerialization excelDataTypesSerialization = new ExcelDataTypesSerialization(
+        this.ParameterSelections.Select(x => x.SelectedParameterType).ToList(),
+        "TODO");
 
-      this.excelConfigurationModel.SaveDataTypeConfiguration(serializationCollection, this.DataTypeConfigName);
+      this.excelConfigurationModel.SaveDataTypeConfiguration(excelDataTypesSerialization, this.DataTypeConfigName);
     }
 
     private void ApplyConfigurationDirectory(string file)
@@ -138,16 +136,15 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 
           foreach (string name in this.statsModel.StatNames)
           {
-            TypeParameterSerialization typeParamSerialization = this.excelConfigurationModel.LoadedParameterTypes
-              .Select(x => x.As<TypeParameterSerialization>())
+            ITypeParameter typeParameter = this.excelConfigurationModel.LoadedParameterTypes.DiscreteValue?
               .FirstOrDefault(x => x.DataName.Equals(name));
 
-            if (typeParamSerialization != default)
+            if (typeParameter != default)
             {
               this.ParameterSelections.Add(new DataTypeSelectionViewModel(
-                typeParamSerialization.DataName,
-                this.excelDataTypeLibrary.GetByName(typeParamSerialization.Name),
-                typeParamSerialization.GetParameterNameValuePairs()));
+                typeParameter.DataName,
+                this.excelDataTypeLibrary.GetByName(typeParameter.Name),
+                typeParameter.GetParameterNameValuePairs()));
             }
             else
             {
@@ -161,9 +158,10 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
             }
 
             this.ParameterSelections.Last().StartingSelectedIndex = this.ParameterTypes
-              .IndexOf(this.ParameterTypes
-                .First(x => x.Name.Equals(this.ParameterSelections.Last().SelectedParameterType.Name)));
+                .IndexOf(this.ParameterTypes
+                  .First(x => x.Name.Equals(this.ParameterSelections.Last().SelectedParameterType.Name)));
           }
+
           break;
       }
     }
@@ -178,9 +176,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         case nameof(this.excelConfigurationModel.LoadedParameterTypes):
           this.ParameterSelections.Clear();
 
-          this.excelConfigurationModel.LoadedParameterTypes
-            .Select(x => x.As<TypeParameterSerialization>())
-            .ToList()
+          this.excelConfigurationModel.LoadedParameterTypes.DiscreteValue
             .ForEach(typeParameters => this.ParameterSelections.Add(
               new DataTypeSelectionViewModel(
                 typeParameters.DataName,

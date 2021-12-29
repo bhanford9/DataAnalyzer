@@ -1,55 +1,43 @@
-﻿using DataSerialization.Utilities.BuiltInSerializers;
+﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
+using DataSerialization.CustomSerializations;
+using DataSerialization.CustomSerializations.BuiltInSerializations;
+using System.Collections.Generic;
 
 namespace DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes
 {
-  public class IntegerBooleanTypeParameterSerialization : TypeParameterSerialization
+  public class IntegerBooleanTypeParameterSerialization : SerializationAggregate<IntegerBooleanTypeParameter>
   {
-    public string IntegerName { get; set; } = string.Empty;
+    public IntegerBooleanTypeParameterSerialization() : base() { }
 
-    public int IntegerValue { get; set; }
-
-    public string BooleanName { get; set; } = string.Empty;
-
-    public bool BooleanValue { get; set; }
-
-    public override string DelimiterKey => "IntegerBooleanTypeParameter";
-
-    public override object[] GetParameterNameValuePairs()
+    public IntegerBooleanTypeParameterSerialization(IntegerBooleanTypeParameter value, string parameterName)
+      : base(value, parameterName)
     {
-      return new object[]
-      {
-        this.IntegerName,
-        this.IntegerValue,
-        this.BooleanName,
-        this.BooleanValue
-      };
     }
 
-    protected override void InternalRegisterSerializations()
+    public override void ApplyToValue()
     {
-      this.RegisterSerializableParameter(
-        4,
-        (obj) => (obj as IntegerBooleanTypeParameterSerialization).IntegerValue,
-        (obj, value) => (obj as IntegerBooleanTypeParameterSerialization).IntegerValue = value,
-        new IntegerSerializer());
+      string name = this.GetParameter<string>(nameof(this.DiscreteValue.Name));
+      ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
+      this.DiscreteValue = excelDataTypeLibrary.GetByName(name) as IntegerBooleanTypeParameter;
+      this.DiscreteValue.IntegerName = this.GetParameter<string>(nameof(this.DiscreteValue.IntegerName));
+      this.DiscreteValue.IntegerValue = this.GetParameter<int>(nameof(this.DiscreteValue.IntegerValue));
+      this.DiscreteValue.BooleanName = this.GetParameter<string>(nameof(this.DiscreteValue.BooleanName));
+      this.DiscreteValue.BooleanValue = this.GetParameter<bool>(nameof(this.DiscreteValue.BooleanValue));
+      this.DiscreteValue.DataName = this.GetParameter<string>(nameof(this.DiscreteValue.DataName));
+    }
 
-      this.RegisterSerializableParameter(
-        5,
-        (obj) => (obj as IntegerBooleanTypeParameterSerialization).IntegerName,
-        (obj, name) => (obj as IntegerBooleanTypeParameterSerialization).IntegerName = name,
-        new StringSerializer());
+    protected override ICollection<ISerializationData> InitializeSelf(IntegerBooleanTypeParameter value)
+    {
+      StringSerialization name = new StringSerialization(value.Initialized ? value.Name : string.Empty, nameof(value.Name));
+      StringSerialization integerName = new StringSerialization(value.IntegerName, nameof(value.IntegerName));
+      IntegerSerialization integerValue = new IntegerSerialization(value.IntegerValue, nameof(value.IntegerValue));
+      StringSerialization booleanName = new StringSerialization(value.BooleanName, nameof(value.BooleanName));
+      BooleanSerialization booleanValue = new BooleanSerialization(value.BooleanValue, nameof(value.BooleanValue));
+      StringSerialization dataName = new StringSerialization(value.DataName, nameof(value.DataName));
 
-      this.RegisterSerializableParameter(
-        6,
-        (obj) => (obj as IntegerBooleanTypeParameterSerialization).BooleanValue,
-        (obj, value) => (obj as IntegerBooleanTypeParameterSerialization).BooleanValue = value,
-        new BoolSerializer());
-
-      this.RegisterSerializableParameter(
-        7,
-        (obj) => (obj as IntegerBooleanTypeParameterSerialization).BooleanName,
-        (obj, name) => (obj as IntegerBooleanTypeParameterSerialization).BooleanName = name,
-        new StringSerializer());
+      return new List<ISerializationData>() { name, integerName, integerValue, booleanName, booleanValue, dataName };
     }
   }
 }

@@ -9,12 +9,27 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
     protected Func<ITypeParameter, ICellDataFormat> createCellDataFormat;
     protected ICellDataFormat cellDataFormat;
 
+    public TypeParameter() : base() { }
+
+    public TypeParameter(ITypeParameter other)
+    {
+      TypeParameter local = other as TypeParameter;
+      this.createCellDataFormat = local.createCellDataFormat;
+      this.cellDataFormat = local.cellDataFormat;
+      this.Initialized = local.Initialized;
+      this.DataName = local.DataName;
+      this.CloneParameters(other);
+    }
+
     public TypeParameter(ICellDataFormat cellDataFormat, Func<ITypeParameter, ICellDataFormat> createCellDataFormat)
     {
       this.cellDataFormat = cellDataFormat;
       this.createCellDataFormat = createCellDataFormat;
+      this.Initialized = true;
       this.NotifyPropertyChanged(nameof(this.Name));
     }
+
+    public bool Initialized { get; } = false;
 
     public string Name => this.cellDataFormat.Name;
 
@@ -24,9 +39,13 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
     public abstract ParameterType Type { get; }
 
+    public abstract object[] GetParameterNameValuePairs();
+
     public ICellDataFormat CreateCellDataFormat()
     {
       return this.createCellDataFormat(this);
     }
+
+    protected abstract void CloneParameters(ITypeParameter other);
   }
 }

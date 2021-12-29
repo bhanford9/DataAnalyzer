@@ -2,8 +2,8 @@
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.Serializations;
+using DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes;
 using DataAnalyzer.ViewModels.Utilities;
-using DataSerialization.Utilities;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -23,7 +23,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
     private string configurationName = string.Empty;
     private string dataTypeConfigurationPath = string.Empty;
 
-    private ICollection<ISerializable> loadedParameterTypes = new List<ISerializable>();
+    private ExcelDataTypesSerialization loadedParameterTypes = new ExcelDataTypesSerialization();
     private ICollection<LastSavedConfiguration> lastSavedDataTypeConfigs = new List<LastSavedConfiguration>();
 
     public ExcelConfigurationModel()
@@ -72,7 +72,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
       set => this.NotifyPropertyChanged(nameof(this.DataTypeConfigurationPath), ref this.dataTypeConfigurationPath, value);
     }
 
-    public ICollection<ISerializable> LoadedParameterTypes
+    public ExcelDataTypesSerialization LoadedParameterTypes
     {
       get => this.loadedParameterTypes;
       set => this.NotifyPropertyChanged(nameof(this.LoadedParameterTypes), ref this.loadedParameterTypes, value);
@@ -88,19 +88,19 @@ namespace DataAnalyzer.Models.ExcelSetupModels
     {
       if (File.Exists(configPath))
       {
-        this.LoadedParameterTypes = this.GetDataTypesFromConfig(configPath).Serializations;
+        this.LoadedParameterTypes = this.serializationService.CustomDeserializeFromFile(configPath) as ExcelDataTypesSerialization;
 
         string fileName = Path.GetFileName(configPath);
         this.ConfigurationName = fileName.Substring(0, fileName.IndexOf('.'));
       }
     }
 
-    public void SaveDataTypeConfiguration(SerializationCollection serializationCollection, string configName)
+    public void SaveDataTypeConfiguration(ExcelDataTypesSerialization serializationCollection, string configName)
     {
       string directoryPath = this.GetCurrentDataTypeConfigDirectoryPath();
       string filePath = directoryPath + "\\" + configName + FileProperties.EXCEL_DATA_TYPE_CONFIG_FILE_EXTENSION;
 
-      serializationCollection.Serialize(filePath);
+      this.serializationService.CustomSerializeToFile(serializationCollection, filePath);
 
       bool found = false;
       foreach (LastSavedConfiguration config in this.lastSavedDataTypeConfigs)
@@ -137,13 +137,6 @@ namespace DataAnalyzer.Models.ExcelSetupModels
         .ForEach(x => this.SavedConfigurations.Add(new FilePathAndNamePair(x)));
 
       this.NotifyPropertyChanged(nameof(this.SavedConfigurations));
-    }
-
-    private SerializationCollection GetDataTypesFromConfig(string configPath)
-    {
-      SerializationCollection serializationCollection = new SerializationCollection();
-      serializationCollection.DeserializeFromFile(configPath);
-      return serializationCollection;
     }
 
     private string GetDataTypeConfigPath()

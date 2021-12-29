@@ -4,9 +4,9 @@ using Xunit;
 using DataSerialization;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using ExcelService.CellDataFormats.NumericFormat;
-using DataAnalyzer.Services.Serializations.ExcelSerializations;
-using DataAnalyzer.Services.Serializations;
 using DataAnalyzer.Services.Serializations.ExcelSerializations.Actions;
+using System.Collections.Generic;
+using DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes;
 
 namespace DataAnalyzerTetst
 {
@@ -31,39 +31,43 @@ namespace DataAnalyzerTetst
       //deserializedParameters.Deserialize();
 
       IntegerBooleanTypeParameter testParameter = new IntegerBooleanTypeParameter(
-        "Hello World", 
+        "Hello World",
         "Goodbye World",
         new FloatingSeparatorParensCellDataFormat(4, true),
         (param) => new FloatingSeparatorParensCellDataFormat((param as IntegerBooleanTypeParameter).IntegerValue, (param as IntegerBooleanTypeParameter).BooleanValue));
 
+      ExcelActionsSerialization actions = new ExcelActionsSerialization(
+        new List<IActionParameters>()
+        {
+          new AlignmentParameters()
+          {
+            HorizontalAlignment = DataAnalyzer.Services.HorizontalAlignment.Right,
+            VerticalAlignment = DataAnalyzer.Services.VerticalAlignment.Bottom,
+            Name = "My First ALignment Serializaiton Project",
+            Nth = 2
+          },
+          new BackgroundParameters()
+          {
+            BackgroundColor = System.Drawing.Color.Magenta,
+            FillPattern = DataAnalyzer.Services.FillPattern.DarkTrellis,
+            PatternColor = System.Drawing.Color.Turquoise,
+            Name = "MY FIrst Background Serialation Project",
+            Nth = 7
+          }
+        },
+        "My Excel Actions");
+      string customResult = serializationExecutive.CustomSerialize(actions);
+      ExcelActionsSerialization actions2 = serializationExecutive.CustomDeserialize(customResult) as ExcelActionsSerialization;
 
-
-      AlignmentParametersSerialization alignmentParametersSerialization = new AlignmentParametersSerialization()
-      {
-        HorizontalAlignment = DataAnalyzer.Services.HorizontalAlignment.Justify,
-        VerticalAlignment = DataAnalyzer.Services.VerticalAlignment.Bottom,
-        Name = "My Alignment",
-      };
-
-      BackgroundParametersSerialization backgroundParametersSerialization = new BackgroundParametersSerialization()
-      {
-        BackgroundColor = System.Drawing.Color.Green,
-        FillPattern = DataAnalyzer.Services.FillPattern.DarkTrellis,
-        Name = "My Background",
-        PatternColor = System.Drawing.Color.Magenta
-      };
-
-
-      WorkbookSerialization workbookSerialization = new WorkbookSerialization();
-      workbookSerialization.Name = "Hello World";
-      workbookSerialization.WorkbookActions = new SerializationCollection();
-      workbookSerialization.WorkbookActions.Serializations.Add(alignmentParametersSerialization);
-      workbookSerialization.WorkbookActions.Serializations.Add(backgroundParametersSerialization);
-      string serializedWorkbook = workbookSerialization.Serialize();
-
-      WorkbookSerialization deserialziedWorkbook = new WorkbookSerialization();
-      deserialziedWorkbook.Serialization = serializedWorkbook;
-      deserialziedWorkbook.Deserialize();
+      ExcelDataTypesSerialization types = new ExcelDataTypesSerialization(
+        new List<ITypeParameter>()
+        {
+          new IntegerTypeParameter() { DataName = "Hello" },
+          new NoTypeParameter() { DataName  = "World" }
+        },
+        "My Excel Types");
+      string typeResult = serializationExecutive.CustomSerialize(types);
+      //ExcelDataTypesSerialization types2 = serializationExecutive.CustomDeserialize(typeResult) as ExcelDataTypesSerialization;
     }
   }
 }

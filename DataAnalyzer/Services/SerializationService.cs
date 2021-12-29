@@ -1,4 +1,5 @@
 ﻿using DataSerialization;
+using DataSerialization.CustomSerializations;
 
 namespace DataAnalyzer.Services
 {
@@ -24,6 +25,26 @@ namespace DataAnalyzer.Services
     public T JsonDeserializeFromFile<T>(string filePath)
     {
       return this.serializer.JsonDeserializeFromFile<T>(filePath);
+    }
+
+    public string CustomSerialize(ISerializationData data)
+    {
+      return this.serializer.CustomSerialize(data);
+    }
+
+    public ISerializationData CustomDeserialize(string serializedData)
+    {
+      return this.serializer.CustomDeserialize(serializedData);
+    }
+
+    public void CustomSerializeToFile(ISerializationData data, string filePath)
+    {
+      this.serializer.CustomSerializeToFile(data, filePath);
+    }
+
+    public ISerializationData CustomDeserializeFromFile(string filePath)
+    {
+      return this.serializer.CustomDeserializeFromFile(filePath);
     }
   }
 }

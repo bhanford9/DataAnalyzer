@@ -13,7 +13,7 @@
 
     public override string ToString()
     {
-      return this.DiscreteValue.ToString();
+      return this.DiscreteValue?.ToString();
     }
   }
 }

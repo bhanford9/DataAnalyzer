@@ -1,5 +1,5 @@
-﻿using DataSerialization.Serializers;
-using DataSerialization.Utilities;
+﻿using DataSerialization.CustomSerializations;
+using DataSerialization.Serializers;
 using System.IO;
 
 namespace DataSerialization
@@ -27,23 +27,23 @@ namespace DataSerialization
       return this.JsonDeserialize<T>(File.ReadAllText(filePath));
     }
 
-    public string CustomSerialize(ISerializable data)
+    public string CustomSerialize(ISerializationData data)
     {
-      return new CustomSerializer().Serialize(data);
+      return new SerializationInstructions().Serialize(data);
     }
 
-    public ISerializable CustomDeserialize(string serializedData)
+    public ISerializationData CustomDeserialize(string serializedData)
     {
-      return new CustomSerializer().Deserialize(serializedData);
+      return new SerializationInstructions().Deserialize(serializedData);
     }
 
-    public void CustomSerializeToFile(ISerializable data, string filePath)
+    public void CustomSerializeToFile(ISerializationData data, string filePath)
     {
       Directory.CreateDirectory(Path.GetDirectoryName(filePath));
       File.WriteAllText(filePath, this.CustomSerialize(data));
     }
 
-    public ISerializable CustomSerializeFromFile(string filePath)
+    public ISerializationData CustomDeserializeFromFile(string filePath)
     {
       return this.CustomDeserialize(File.ReadAllText(filePath));
     }

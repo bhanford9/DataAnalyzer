@@ -1,56 +1,43 @@
-﻿using DataSerialization.Utilities.BuiltInSerializers;
+﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
+using DataSerialization.CustomSerializations;
+using DataSerialization.CustomSerializations.BuiltInSerializations;
+using System.Collections.Generic;
 
 namespace DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes
 {
-  public class IntegerIntegerTypeParameterSerialization : TypeParameterSerialization
+  public class IntegerIntegerTypeParameterSerialization : SerializationAggregate<IntegerIntegerTypeParameter>
   {
-    public int Integer1Value { get; set; }
+    public IntegerIntegerTypeParameterSerialization() : base() { }
 
-    public string Integer1Name { get; set; } = string.Empty;
-
-    public int Integer2Value { get; set; }
-
-    public string Integer2Name { get; set; } = string.Empty;
-    public object BooleanName { get; internal set; }
-
-    public override string DelimiterKey => "IntegerIntegerTypeParameter";
-
-    public override object[] GetParameterNameValuePairs()
+    public IntegerIntegerTypeParameterSerialization(IntegerIntegerTypeParameter value, string parameterName)
+      : base(value, parameterName)
     {
-      return new object[]
-      {
-        this.Integer1Name,
-        this.Integer1Value,
-        this.Integer2Name,
-        this.Integer2Value
-      };
     }
 
-    protected override void InternalRegisterSerializations()
+    public override void ApplyToValue()
     {
-      this.RegisterSerializableParameter(
-        4,
-        (obj) => (obj as IntegerIntegerTypeParameterSerialization).Integer1Value,
-        (obj, value) => (obj as IntegerIntegerTypeParameterSerialization).Integer1Value = value,
-        new IntegerSerializer());
+      string name = this.GetParameter<string>(nameof(this.DiscreteValue.Name));
+      ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
+      this.DiscreteValue = excelDataTypeLibrary.GetByName(name) as IntegerIntegerTypeParameter;
+      this.DiscreteValue.Integer1Name = this.GetParameter<string>(nameof(this.DiscreteValue.Integer1Name));
+      this.DiscreteValue.Integer1Value = this.GetParameter<int>(nameof(this.DiscreteValue.Integer1Value));
+      this.DiscreteValue.Integer2Name = this.GetParameter<string>(nameof(this.DiscreteValue.Integer2Name));
+      this.DiscreteValue.Integer2Value = this.GetParameter<int>(nameof(this.DiscreteValue.Integer2Value));
+      this.DiscreteValue.DataName = this.GetParameter<string>(nameof(this.DiscreteValue.DataName));
+    }
 
-      this.RegisterSerializableParameter(
-        5,
-        (obj) => (obj as IntegerIntegerTypeParameterSerialization).Integer1Name,
-        (obj, name) => (obj as IntegerIntegerTypeParameterSerialization).Integer1Name = name,
-        new StringSerializer());
+    protected override ICollection<ISerializationData> InitializeSelf(IntegerIntegerTypeParameter value)
+    {
+      StringSerialization name = new StringSerialization(value.Initialized ? value.Name : string.Empty, nameof(value.Name));
+      StringSerialization integer1Name = new StringSerialization(value.Integer1Name, nameof(value.Integer1Name));
+      IntegerSerialization integer1Value = new IntegerSerialization(value.Integer1Value, nameof(value.Integer1Value));
+      StringSerialization integer2Name = new StringSerialization(value.Integer2Name, nameof(value.Integer2Name));
+      IntegerSerialization integer2Value = new IntegerSerialization(value.Integer2Value, nameof(value.Integer2Value));
+      StringSerialization dataName = new StringSerialization(value.DataName, nameof(value.DataName));
 
-      this.RegisterSerializableParameter(
-        6,
-        (obj) => (obj as IntegerIntegerTypeParameterSerialization).Integer2Value,
-        (obj, value) => (obj as IntegerIntegerTypeParameterSerialization).Integer2Value = value,
-        new IntegerSerializer());
-
-      this.RegisterSerializableParameter(
-        7,
-        (obj) => (obj as IntegerIntegerTypeParameterSerialization).Integer2Name,
-        (obj, name) => (obj as IntegerIntegerTypeParameterSerialization).Integer2Name = name,
-        new StringSerializer());
+      return new List<ISerializationData>() { name, integer1Name, integer1Value, integer2Name, integer2Value, dataName };
     }
   }
 }

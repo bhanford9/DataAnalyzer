@@ -1,6 +1,6 @@
 ﻿using DataAnalyzer.Services;
 using DataAnalyzer.Services.Serializations.ExcelSerializations.Actions;
-using DataSerialization.Utilities;
+using DataSerialization.CustomSerializations;
 using System.Drawing;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
@@ -39,31 +39,24 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 
     public override ActionCategory ActionCategory => ActionCategory.BackgroundStyle;
 
-    public override void FromSerializable(ISerializable serializable)
+    public override void FromSerializable(ISerializationData serializable)
     {
-      BackgroundParametersSerialization serialization = serializable as BackgroundParametersSerialization;
-      this.Name = serialization.Name;
-      this.BackgroundColor = serialization.BackgroundColor;
-      this.PatternColor = serialization.PatternColor;
-      this.FillPattern = serialization.FillPattern;
-      this.Nth = serialization.Nth;
+      BackgroundParameters parameters = (serializable as BackgroundParametersSerialization).DiscreteValue;
+      this.Name = parameters.Name;
+      this.BackgroundColor = parameters.BackgroundColor;
+      this.PatternColor = parameters.PatternColor;
+      this.FillPattern = parameters.FillPattern;
+      this.Nth = parameters.Nth;
     }
 
-    public override bool IsValidSerializable(ISerializable serializable)
+    public override bool IsValidSerializable(ISerializationData serializable)
     {
       return serializable is BackgroundParametersSerialization;
     }
 
-    public override ISerializable ToSerializable()
+    public override ISerializationData GetSerialization()
     {
-      return new BackgroundParametersSerialization()
-      {
-        Nth = this.Nth,
-        Name = this.Name,
-        BackgroundColor = this.BackgroundColor,
-        PatternColor = this.PatternColor,
-        FillPattern = this.FillPattern
-      };
+      return new BackgroundParametersSerialization();
     }
   }
 }

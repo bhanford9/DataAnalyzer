@@ -134,7 +134,7 @@
                              Text="{Binding DataName}"/>
 
                   <ComboBox ItemsSource="{Binding DataContext.ParameterTypes, ElementName=ExcelDataTypeSetup}"
-                            SelectedItem="{Binding SelectedParameterType}"
+                            SelectedItem="{Binding Path=SelectedParameterType, Mode=TwoWay}"
                             SelectedIndex="{Binding StartingSelectedIndex, Mode=OneWay}"
                             DisplayMemberPath="Name"
                             Margin="4 5 2 1"

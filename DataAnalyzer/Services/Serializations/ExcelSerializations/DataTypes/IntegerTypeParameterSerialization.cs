@@ -1,37 +1,39 @@
-﻿using DataSerialization.Utilities.BuiltInSerializers;
+﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
+using DataSerialization.CustomSerializations;
+using DataSerialization.CustomSerializations.BuiltInSerializations;
+using System.Collections.Generic;
 
 namespace DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes
 {
-  public class IntegerTypeParameterSerialization : TypeParameterSerialization
+  public class IntegerTypeParameterSerialization : SerializationAggregate<IntegerTypeParameter>
   {
-    public string IntegerName { get; set; } = string.Empty;
+    public IntegerTypeParameterSerialization() : base() { }
 
-    public int IntegerValue { get; set; }
-
-    public override string DelimiterKey => "SingleIntegerTypeParameter";
-
-    public override object[] GetParameterNameValuePairs()
+    public IntegerTypeParameterSerialization(IntegerTypeParameter value, string parameterName)
+      : base(value, parameterName)
     {
-      return new object[]
-      {
-        this.IntegerName,
-        this.IntegerValue
-      };
     }
 
-    protected override void InternalRegisterSerializations()
+    public override void ApplyToValue()
     {
-      this.RegisterSerializableParameter(
-        4,
-        (obj) => (obj as IntegerTypeParameterSerialization).IntegerValue,
-        (obj, value) => (obj as IntegerTypeParameterSerialization).IntegerValue = value,
-        new IntegerSerializer());
+      string name = this.GetParameter<string>(nameof(this.DiscreteValue.Name));
+      ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
+      this.DiscreteValue = excelDataTypeLibrary.GetByName(name) as IntegerTypeParameter;
+      this.DiscreteValue.IntegerName = this.GetParameter<string>(nameof(this.DiscreteValue.IntegerName));
+      this.DiscreteValue.IntegerValue = this.GetParameter<int>(nameof(this.DiscreteValue.IntegerValue));
+      this.DiscreteValue.DataName = this.GetParameter<string>(nameof(this.DiscreteValue.DataName));
+    }
 
-      this.RegisterSerializableParameter(
-        5,
-        (obj) => (obj as IntegerTypeParameterSerialization).IntegerName,
-        (obj, name) => (obj as IntegerTypeParameterSerialization).IntegerName = name,
-        new StringSerializer());
+    protected override ICollection<ISerializationData> InitializeSelf(IntegerTypeParameter value)
+    {
+      StringSerialization name = new StringSerialization(value.Initialized ? value.Name : string.Empty, nameof(value.Name));
+      StringSerialization integerName = new StringSerialization(value.IntegerName, nameof(value.IntegerName));
+      IntegerSerialization integerValue = new IntegerSerialization(value.IntegerValue, nameof(value.IntegerValue));
+      StringSerialization dataName = new StringSerialization(value.DataName, nameof(value.DataName));
+
+      return new List<ISerializationData>() { name, integerName, integerValue, dataName };
     }
   }
 }

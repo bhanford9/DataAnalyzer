@@ -1,6 +1,6 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes;
-using DataSerialization.Utilities;
+using DataSerialization.CustomSerializations;
 using ExcelService.CellDataFormats;
 using System;
 
@@ -10,6 +10,10 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
   {
     private int integer1Value = 1;
     private int integer2Value = 1;
+
+    public IntegerIntegerTypeParameter() : base() { }
+
+    public IntegerIntegerTypeParameter(ITypeParameter typeParameter) : base(typeParameter) { }
 
     public IntegerIntegerTypeParameter(
       string integer1Name,
@@ -50,37 +54,45 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
     public override ParameterType Type => ParameterType.IntegerInteger;
 
-    public override void FromSerializable(ISerializable serializable)
+    public override void FromSerializable(ISerializationData serializable)
     {
-      IntegerIntegerTypeParameterSerialization serialization = serializable as IntegerIntegerTypeParameterSerialization;
+      IntegerIntegerTypeParameter parameters = (serializable as IntegerIntegerTypeParameterSerialization).DiscreteValue;
       ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
-      IntegerIntegerTypeParameter typeParameter = excelDataTypeLibrary.GetByName(serialization.Name) as IntegerIntegerTypeParameter;
+      IntegerIntegerTypeParameter typeParameter = excelDataTypeLibrary.GetByName(parameters.Name) as IntegerIntegerTypeParameter;
       this.cellDataFormat = typeParameter.cellDataFormat;
       this.createCellDataFormat = typeParameter.createCellDataFormat;
-      this.Integer1Name = serialization.Integer1Name;
-      this.Integer1Value = serialization.Integer1Value;
-      this.Integer2Name = serialization.Integer2Name;
-      this.Integer2Value = serialization.Integer2Value;
+      this.Integer1Name = parameters.Integer1Name;
+      this.Integer1Value = parameters.Integer1Value;
+      this.Integer2Name = parameters.Integer2Name;
+      this.Integer2Value = parameters.Integer2Value;
     }
 
-    public override bool IsValidSerializable(ISerializable serializable)
+    public override bool IsValidSerializable(ISerializationData serializable)
     {
       return serializable is IntegerIntegerTypeParameterSerialization;
     }
 
-    public override ISerializable ToSerializable()
+    public override ISerializationData GetSerialization()
     {
-      return new IntegerIntegerTypeParameterSerialization()
+      return new IntegerIntegerTypeParameterSerialization();
+    }
+
+    public override object[] GetParameterNameValuePairs()
+    {
+      return new object[]
       {
-        DataName = this.DataName,
-        Example = this.Example,
-        Integer1Name = this.Integer1Name,
-        Integer1Value = this.Integer1Value,
-        Integer2Name = this.Integer2Name,
-        Integer2Value = this.Integer2Value,
-        Name = this.Name,
-        Type = this.Type
+        this.Integer1Name,
+        this.Integer1Value,
+        this.Integer2Name,
+        this.Integer2Value
       };
+    }
+
+    protected override void CloneParameters(ITypeParameter other)
+    {
+      IntegerIntegerTypeParameter local = other as IntegerIntegerTypeParameter;
+      this.Integer1Name = local.Integer1Name;
+      this.Integer1Value = local.Integer1Value;
     }
   }
 }

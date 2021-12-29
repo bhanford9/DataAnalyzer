@@ -1,6 +1,6 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes;
-using DataSerialization.Utilities;
+using DataSerialization.CustomSerializations;
 using ExcelService.CellDataFormats;
 using System;
 
@@ -8,6 +8,10 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 {
   public class NoTypeParameter : TypeParameter
   {
+    public NoTypeParameter() : base() { }
+
+    public NoTypeParameter(ITypeParameter typeParameter) : base(typeParameter) { }
+
     public NoTypeParameter(ICellDataFormat cellDataFormat, Func<ITypeParameter, ICellDataFormat> createCellDataFormat)
       : base(cellDataFormat, createCellDataFormat)
     {
@@ -15,31 +19,32 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
     public override ParameterType Type => ParameterType.None;
 
-    public override void FromSerializable(ISerializable serializable)
+    public override void FromSerializable(ISerializationData serializable)
     {
-      // TODO --> this should be the base of all From Serializable Type Parameters and then
-      //   an abstract internal one should be done for the extra parameters
-      NoTypeParameterSerialization serialization = serializable as NoTypeParameterSerialization;
+      NoTypeParameter parameters = (serializable as NoTypeParameterSerialization).DiscreteValue;
       ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
-      NoTypeParameter typeParameter = excelDataTypeLibrary.GetByName(serialization.Name) as NoTypeParameter;
+      NoTypeParameter typeParameter = excelDataTypeLibrary.GetByName(parameters.Name) as NoTypeParameter;
       this.cellDataFormat = typeParameter.cellDataFormat;
       this.createCellDataFormat = typeParameter.createCellDataFormat;
     }
 
-    public override bool IsValidSerializable(ISerializable serializable)
+    public override bool IsValidSerializable(ISerializationData serializable)
     {
       return serializable is NoTypeParameterSerialization;
     }
 
-    public override ISerializable ToSerializable()
+    public override ISerializationData GetSerialization()
     {
-      return new NoTypeParameterSerialization()
-      {
-        DataName = this.DataName,
-        Example = this.Example,
-        Name = this.Name,
-        Type = this.Type
-      };
+      return new NoTypeParameterSerialization();
+    }
+
+    public override object[] GetParameterNameValuePairs()
+    {
+      return new object[] { };
+    }
+
+    protected override void CloneParameters(ITypeParameter other)
+    {
     }
   }
 }

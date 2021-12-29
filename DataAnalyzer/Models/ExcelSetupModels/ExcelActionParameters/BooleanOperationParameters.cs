@@ -1,6 +1,6 @@
 ﻿using DataAnalyzer.Services;
 using DataAnalyzer.Services.Serializations.ExcelSerializations.Actions;
-using DataSerialization.Utilities;
+using DataSerialization.CustomSerializations;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
@@ -16,25 +16,21 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 
     public override ActionCategory ActionCategory => ActionCategory.BooleanOperation;
 
-    public override void FromSerializable(ISerializable serializable)
+    public override void FromSerializable(ISerializationData serializable)
     {
-      BooleanOperationParametersSerialization serialization = serializable as BooleanOperationParametersSerialization;
-      this.Name = serialization.Name;
-      this.DoPerform = serialization.DoPerform;
+      BooleanOperationParameters parameters = (serializable as BooleanOperationParametersSerialization).DiscreteValue;
+      this.Name = parameters.Name;
+      this.DoPerform = parameters.DoPerform;
     }
 
-    public override bool IsValidSerializable(ISerializable serializable)
+    public override bool IsValidSerializable(ISerializationData serializable)
     {
       return serializable is BooleanOperationParametersSerialization;
     }
 
-    public override ISerializable ToSerializable()
+    public override ISerializationData GetSerialization()
     {
-      return new BooleanOperationParametersSerialization()
-      {
-        Name = this.Name,
-        DoPerform = this.DoPerform
-      };
+      return new BooleanOperationParametersSerialization();
     }
   }
 }

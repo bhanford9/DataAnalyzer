@@ -1,22 +1,18 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using DataSerialization.CustomSerializations;
 using DataSerialization.CustomSerializations.BuiltInSerializations;
-using DataSerialization.Utilities;
-using DataSerialization.Utilities.BuiltInSerializers;
-using System;
 using System.Collections.Generic;
 
 namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
 {
-  public class AlignmentParametersSerialization : SerializationAggregate<AlignmentParameters>
+  public class AlignmentParametersSerialization : SerializationAggregate<AlignmentParameters>, IExcelActionSerialization
   {
-    public string Name { get; set; } = string.Empty;
+    public AlignmentParametersSerialization() : base() { }
 
-    public HorizontalAlignment HorizontalAlignment { get; set; }
-
-    public VerticalAlignment VerticalAlignment { get; set; }
-
-    public int Nth { get; set; } = -1;
+    public AlignmentParametersSerialization(AlignmentParameters value, string parameterName)
+      : base(value, parameterName)
+    {
+    }
 
     public override void ApplyToValue()
     {
@@ -29,16 +25,10 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
     protected override ICollection<ISerializationData> InitializeSelf(AlignmentParameters value)
     {
       StringSerialization name = new StringSerialization(value.Name, nameof(value.Name));
-      CustomSerialization<HorizontalAlignment> horizontal = new CustomSerialization<HorizontalAlignment>(
-        value.HorizontalAlignment,
-        nameof(value.HorizontalAlignment),
-        (alignment) => alignment.ToString(),
-        (str) => Enum.Parse<HorizontalAlignment>(str));
-      CustomSerialization<VerticalAlignment> vertical = new CustomSerialization<VerticalAlignment>(
-        value.VerticalAlignment,
-        nameof(value.HorizontalAlignment),
-        (alignment) => alignment.ToString(),
-        (str) => Enum.Parse<VerticalAlignment>(str));
+      EnumSerialization<HorizontalAlignment> horizontal = 
+        new EnumSerialization<HorizontalAlignment>(value.HorizontalAlignment, nameof(value.HorizontalAlignment));
+      EnumSerialization<VerticalAlignment> vertical =
+        new EnumSerialization<VerticalAlignment>(value.VerticalAlignment, nameof(value.VerticalAlignment));
       IntegerSerialization nth = new IntegerSerialization(value.Nth, nameof(value.Nth));
 
       return new List<ISerializationData>() { name, horizontal, vertical, nth };

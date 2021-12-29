@@ -42,6 +42,8 @@ namespace DataSerialization.CustomSerializations
       this.InitializeItems(this.InitializeSelf((T)value));
     }
 
+    protected abstract ICollection<ISerializationData> InitializeSelf(T value);
+
     protected TParam GetParameter<TParam>(string parameterName)
     {
       return (this.items[parameterName] as SerializationData<TParam>).DiscreteValue;
@@ -51,8 +53,6 @@ namespace DataSerialization.CustomSerializations
     {
       this.items.Add(serializationData.ParameterName, serializationData);
     }
-
-    protected abstract ICollection<ISerializationData> InitializeSelf(T value);
 
     private void InitializeItems(ICollection<ISerializationData> items)
     {
