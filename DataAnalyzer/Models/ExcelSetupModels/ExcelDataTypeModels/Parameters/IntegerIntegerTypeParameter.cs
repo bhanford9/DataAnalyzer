@@ -1,7 +1,4 @@
-﻿using DataAnalyzer.Common.Mvvm;
-using DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes;
-using DataSerialization.CustomSerializations;
-using ExcelService.CellDataFormats;
+﻿using ExcelService.CellDataFormats;
 using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
@@ -53,29 +50,6 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
     public string Integer2Name { get; set; }
 
     public override ParameterType Type => ParameterType.IntegerInteger;
-
-    public override void FromSerializable(ISerializationData serializable)
-    {
-      IntegerIntegerTypeParameter parameters = (serializable as IntegerIntegerTypeParameterSerialization).DiscreteValue;
-      ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
-      IntegerIntegerTypeParameter typeParameter = excelDataTypeLibrary.GetByName(parameters.Name) as IntegerIntegerTypeParameter;
-      this.cellDataFormat = typeParameter.cellDataFormat;
-      this.createCellDataFormat = typeParameter.createCellDataFormat;
-      this.Integer1Name = parameters.Integer1Name;
-      this.Integer1Value = parameters.Integer1Value;
-      this.Integer2Name = parameters.Integer2Name;
-      this.Integer2Value = parameters.Integer2Value;
-    }
-
-    public override bool IsValidSerializable(ISerializationData serializable)
-    {
-      return serializable is IntegerIntegerTypeParameterSerialization;
-    }
-
-    public override ISerializationData GetSerialization()
-    {
-      return new IntegerIntegerTypeParameterSerialization();
-    }
 
     public override object[] GetParameterNameValuePairs()
     {

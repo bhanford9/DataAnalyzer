@@ -32,7 +32,6 @@
   <ItemGroup>
     <Folder Include="Common\DataConfigurations\FilteringConfigurations\" />
     <Folder Include="Common\DataConfigurations\SortingConfigurations\" />
-    <Folder Include="Services\Serializations\SerializationData\ExcelSerializations\Actions\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,4 @@
 ﻿using DataAnalyzer.Services;
-using DataAnalyzer.Services.Serializations.ExcelSerializations.Actions;
-using DataSerialization.CustomSerializations;
 using System.Drawing;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
@@ -116,36 +114,5 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
     }
 
     public override ActionCategory ActionCategory => ActionCategory.BorderStyle;
-
-    public override void FromSerializable(ISerializationData serializable)
-    {
-      BorderParameters parameters = (serializable as BorderParametersSerialization).DiscreteValue;
-      this.Name = parameters.Name;
-      this.LeftColor = parameters.LeftColor;
-      this.LeftStyle = parameters.LeftStyle;
-      this.TopColor = parameters.TopColor;
-      this.TopStyle = parameters.TopStyle;
-      this.RightColor = parameters.RightColor;
-      this.RightStyle = parameters.RightStyle;
-      this.BottomColor = parameters.BottomColor;
-      this.BottomStyle = parameters.BottomStyle;
-      this.AllColor = parameters.AllColor;
-      this.AllStyle = parameters.AllStyle;
-      this.DiagonalUpColor = parameters.DiagonalUpColor;
-      this.DiagonalUpStyle = parameters.DiagonalUpStyle;
-      this.DiagonalDownColor = parameters.DiagonalDownColor;
-      this.DiagonalDownStyle = parameters.DiagonalDownStyle;
-      this.Nth = parameters.Nth;
-    }
-
-    public override bool IsValidSerializable(ISerializationData serializable)
-    {
-      return serializable is BorderParametersSerialization;
-    }
-
-    public override ISerializationData GetSerialization()
-    {
-      return new BorderParametersSerialization();
-    }
   }
 }

@@ -26,5 +26,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Act
       get => this.name;
       set => this.NotifyPropertyChanged(nameof(this.Name), ref this.name, value);
     }
+
+    public string Description => "DUMMY DESCRIPTION\r\nHello World!!\r\n\tBullet Point Information\r\nHelloWorld 2.0";
   }
 }

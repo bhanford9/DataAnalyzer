@@ -1,9 +1,9 @@
-﻿using DataAnalyzer.Common.Mvvm;
-using DataAnalyzer.Services;
+﻿using DataAnalyzer.Services;
+using System.ComponentModel;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
-  public interface IActionParameters : ISerializablePropertyChanged
+  public interface IActionParameters : INotifyPropertyChanged
   {
     string Name { get; set; }
 

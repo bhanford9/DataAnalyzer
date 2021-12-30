@@ -1,7 +1,4 @@
-﻿using DataAnalyzer.Common.Mvvm;
-using DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes;
-using DataSerialization.CustomSerializations;
-using ExcelService.CellDataFormats;
+﻿using ExcelService.CellDataFormats;
 using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
@@ -37,27 +34,6 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
     public string IntegerName { get; set; }
 
     public override ParameterType Type => ParameterType.Integer;
-
-    public override void FromSerializable(ISerializationData serializable)
-    {
-      IntegerTypeParameter parameters = (serializable as IntegerTypeParameterSerialization).DiscreteValue;
-      ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
-      IntegerTypeParameter typeParameter = excelDataTypeLibrary.GetByName(parameters.Name) as IntegerTypeParameter;
-      this.cellDataFormat = typeParameter.cellDataFormat;
-      this.createCellDataFormat = typeParameter.createCellDataFormat;
-      this.IntegerName = parameters.IntegerName;
-      this.IntegerValue = parameters.IntegerValue;
-    }
-
-    public override bool IsValidSerializable(ISerializationData serializable)
-    {
-      return serializable is IntegerTypeParameterSerialization;
-    }
-
-    public override ISerializationData GetSerialization()
-    {
-      return new IntegerTypeParameterSerialization();
-    }
 
     public override object[] GetParameterNameValuePairs()
     {

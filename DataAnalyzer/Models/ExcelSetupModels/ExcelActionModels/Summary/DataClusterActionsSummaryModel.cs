@@ -8,7 +8,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
 {
   public class DataClusterActionsSummaryModel : ActionsSummaryModel
   {
-    private const string PATH_DELIMITER = "_";
+    private const string PATH_DELIMITER = "~~";
     protected override ObservableCollection<ExcelAction> GetActionCollection()
     {
       return this.excelSetupModel.DataClusterActions;

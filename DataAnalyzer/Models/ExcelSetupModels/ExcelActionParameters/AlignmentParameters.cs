@@ -1,6 +1,4 @@
 ﻿using DataAnalyzer.Services;
-using DataAnalyzer.Services.Serializations.ExcelSerializations.Actions;
-using DataSerialization.CustomSerializations;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
@@ -29,24 +27,5 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
     }
 
     public override ActionCategory ActionCategory => ActionCategory.AlignmentStyle;
-
-    public override void FromSerializable(ISerializationData serializable)
-    {
-      AlignmentParameters paramters = (serializable as AlignmentParametersSerialization).DiscreteValue;
-      this.Name = paramters.Name;
-      this.HorizontalAlignment = paramters.HorizontalAlignment;
-      this.VerticalAlignment = paramters.VerticalAlignment;
-      this.Nth = paramters.Nth;
-    }
-
-    public override bool IsValidSerializable(ISerializationData serializable)
-    {
-      return serializable is AlignmentParametersSerialization;
-    }
-
-    public override ISerializationData GetSerialization()
-    {
-      return new AlignmentParametersSerialization();
-    }
   }
 }

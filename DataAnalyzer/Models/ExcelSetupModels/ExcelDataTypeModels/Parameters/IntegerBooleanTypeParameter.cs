@@ -1,7 +1,4 @@
-﻿using DataAnalyzer.Common.Mvvm;
-using DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes;
-using DataSerialization.CustomSerializations;
-using ExcelService.CellDataFormats;
+﻿using ExcelService.CellDataFormats;
 using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
@@ -37,29 +34,6 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
     public string BooleanName { get; set; }
 
     public override ParameterType Type => ParameterType.IntegerBoolean;
-
-    public override void FromSerializable(ISerializationData serializable)
-    {
-      IntegerBooleanTypeParameter parameters = (serializable as IntegerBooleanTypeParameterSerialization).DiscreteValue;
-      ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
-      IntegerBooleanTypeParameter typeParameter = excelDataTypeLibrary.GetByName(parameters.Name) as IntegerBooleanTypeParameter;
-      this.cellDataFormat = typeParameter.cellDataFormat;
-      this.createCellDataFormat = typeParameter.createCellDataFormat;
-      this.IntegerName = parameters.IntegerName;
-      this.IntegerValue = parameters.IntegerValue;
-      this.BooleanName = parameters.BooleanName;
-      this.BooleanValue = parameters.BooleanValue;
-    }
-
-    public override bool IsValidSerializable(ISerializationData serializable)
-    {
-      return serializable is IntegerBooleanTypeParameterSerialization;
-    }
-
-    public override ISerializationData GetSerialization()
-    {
-      return new IntegerBooleanTypeParameterSerialization();
-    }
 
     public override object[] GetParameterNameValuePairs()
     {

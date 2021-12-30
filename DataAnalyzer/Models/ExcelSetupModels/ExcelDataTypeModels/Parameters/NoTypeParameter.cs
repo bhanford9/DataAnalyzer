@@ -1,7 +1,4 @@
-﻿using DataAnalyzer.Common.Mvvm;
-using DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes;
-using DataSerialization.CustomSerializations;
-using ExcelService.CellDataFormats;
+﻿using ExcelService.CellDataFormats;
 using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
@@ -18,25 +15,6 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
     }
 
     public override ParameterType Type => ParameterType.None;
-
-    public override void FromSerializable(ISerializationData serializable)
-    {
-      NoTypeParameter parameters = (serializable as NoTypeParameterSerialization).DiscreteValue;
-      ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
-      NoTypeParameter typeParameter = excelDataTypeLibrary.GetByName(parameters.Name) as NoTypeParameter;
-      this.cellDataFormat = typeParameter.cellDataFormat;
-      this.createCellDataFormat = typeParameter.createCellDataFormat;
-    }
-
-    public override bool IsValidSerializable(ISerializationData serializable)
-    {
-      return serializable is NoTypeParameterSerialization;
-    }
-
-    public override ISerializationData GetSerialization()
-    {
-      return new NoTypeParameterSerialization();
-    }
 
     public override object[] GetParameterNameValuePairs()
     {

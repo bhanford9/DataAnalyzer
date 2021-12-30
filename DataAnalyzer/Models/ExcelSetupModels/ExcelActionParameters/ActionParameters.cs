@@ -3,7 +3,7 @@ using DataAnalyzer.Services;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
-  public abstract class ActionParameters : SerializablePropertyChanged, IActionParameters
+  public abstract class ActionParameters : BasePropertyChanged, IActionParameters
   {
     private string name = string.Empty;
 

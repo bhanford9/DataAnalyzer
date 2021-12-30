@@ -1,9 +1,9 @@
-﻿using DataAnalyzer.Common.Mvvm;
-using ExcelService.CellDataFormats;
+﻿using ExcelService.CellDataFormats;
+using System.ComponentModel;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 {
-  public interface ITypeParameter : ISerializablePropertyChanged
+  public interface ITypeParameter : INotifyPropertyChanged
   {
     string Name { get; }
     string Example { get; }

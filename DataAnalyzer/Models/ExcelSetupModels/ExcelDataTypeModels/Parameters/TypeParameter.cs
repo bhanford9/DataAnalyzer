@@ -4,7 +4,7 @@ using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 {
-  public abstract class TypeParameter : SerializablePropertyChanged, ITypeParameter
+  public abstract class TypeParameter : BasePropertyChanged, ITypeParameter
   {
     protected Func<ITypeParameter, ICellDataFormat> createCellDataFormat;
     protected ICellDataFormat cellDataFormat;
