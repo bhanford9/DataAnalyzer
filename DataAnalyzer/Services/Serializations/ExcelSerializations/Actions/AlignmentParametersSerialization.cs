@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
 {
-  public class AlignmentParametersSerialization : SerializationAggregate<AlignmentParameters>, IExcelActionSerialization
+  public class AlignmentParametersSerialization : SerializationAggregate<AlignmentParameters>, IExcelActionParameterSerialization
   {
     public AlignmentParametersSerialization() : base() { }
 

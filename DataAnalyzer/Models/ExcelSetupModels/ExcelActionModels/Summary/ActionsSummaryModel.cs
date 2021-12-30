@@ -16,7 +16,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
       this.InternalLoadWhereToApply(baseItem, this.statsModel.HeirarchalStats.Children);
     }
 
-    protected abstract ObservableCollection<ExcelAction> GetActionCollection();
+    public abstract ObservableCollection<ExcelAction> GetActionCollection();
 
     protected abstract void InternalLoadWhereToApply(ActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats);
   }

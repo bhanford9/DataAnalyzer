@@ -6,7 +6,7 @@ namespace DataSerialization.CustomSerializations
 {
   public abstract class SerializationCollection<T> : SerializationData<List<T>>, ISerializationCollection
   {
-    private IDictionary<Type, ISerializationData> serializers = new Dictionary<Type, ISerializationData>();
+    private readonly IDictionary<Type, ISerializationData> serializers = new Dictionary<Type, ISerializationData>();
 
     public SerializationCollection() : base()
     {
@@ -31,11 +31,12 @@ namespace DataSerialization.CustomSerializations
 
     public void InitializeItems(ICollection<T> dataItems)
     {
+      this.Items.Clear();
+
       foreach (T item in dataItems)
       {
         this.AddItem(item);
-      }  
-      //this.Items = dataItems.Select(x => this.GetInitializedSerializationData(x)).ToList();
+      }
     }
 
     public void AddItem(T dataItem)

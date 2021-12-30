@@ -1,11 +1,18 @@
-﻿namespace DataSerialization.CustomSerializations
+﻿using System.Collections.Generic;
+
+namespace DataSerialization.CustomSerializations
 {
   public class SingleSerializationCollection<TData, TSerialization> : SerializationCollection<TData>
     where TSerialization : ISerializationData
   {
-    private TSerialization serialization;
+    private readonly TSerialization serialization;
 
     public SingleSerializationCollection() : base() { }
+
+    public SingleSerializationCollection(ICollection<TData> dataItems, string parameterName)
+      : base(dataItems, parameterName)
+    {
+    }
 
     public SingleSerializationCollection(TSerialization serialization)
       : this()

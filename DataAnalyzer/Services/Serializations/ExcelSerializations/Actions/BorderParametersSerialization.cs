@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
 {
-  public class BorderParametersSerialization : SerializationAggregate<BorderParameters>, IExcelActionSerialization
+  public class BorderParametersSerialization : SerializationAggregate<BorderParameters>, IExcelActionParameterSerialization
   {
     public BorderParametersSerialization() : base() { }
 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
 {
-  public class EmptyParametersSerialization : SerializationAggregate<EmptyParameters>, IExcelActionSerialization
+  public class EmptyParametersSerialization : SerializationAggregate<EmptyParameters>, IExcelActionParameterSerialization
   {
     public EmptyParametersSerialization() : base() { }
 
@@ -13,8 +13,6 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
       : base(value, parameterName)
     {
     }
-
-    public string Name { get; set; } = string.Empty;
 
     public override void ApplyToValue()
     {

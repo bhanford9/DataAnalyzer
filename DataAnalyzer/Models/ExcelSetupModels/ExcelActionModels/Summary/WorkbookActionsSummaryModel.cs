@@ -7,7 +7,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
 {
   public class WorkbookActionsSummaryModel : ActionsSummaryModel
   {
-    protected override ObservableCollection<ExcelAction> GetActionCollection()
+    public override ObservableCollection<ExcelAction> GetActionCollection()
     {
       return this.excelSetupModel.WorkbookActions;
     }

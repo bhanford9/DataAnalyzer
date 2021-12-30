@@ -36,7 +36,7 @@ namespace DataAnalyzerTetst
         new FloatingSeparatorParensCellDataFormat(4, true),
         (param) => new FloatingSeparatorParensCellDataFormat((param as IntegerBooleanTypeParameter).IntegerValue, (param as IntegerBooleanTypeParameter).BooleanValue));
 
-      ExcelActionsSerialization actions = new ExcelActionsSerialization(
+      ExcelActionParametersSerialization actions = new ExcelActionParametersSerialization(
         new List<IActionParameters>()
         {
           new AlignmentParameters()
@@ -57,7 +57,7 @@ namespace DataAnalyzerTetst
         },
         "My Excel Actions");
       string customResult = serializationExecutive.CustomSerialize(actions);
-      ExcelActionsSerialization actions2 = serializationExecutive.CustomDeserialize(customResult) as ExcelActionsSerialization;
+      ExcelActionParametersSerialization actions2 = serializationExecutive.CustomDeserialize(customResult) as ExcelActionParametersSerialization;
 
       ExcelDataTypesSerialization types = new ExcelDataTypesSerialization(
         new List<ITypeParameter>()

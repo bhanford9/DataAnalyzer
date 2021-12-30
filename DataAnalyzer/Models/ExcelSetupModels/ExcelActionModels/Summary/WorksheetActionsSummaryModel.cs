@@ -10,7 +10,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
   {
     private const string PATH_DELIMITER = "~~";
 
-    protected override ObservableCollection<ExcelAction> GetActionCollection()
+    public override ObservableCollection<ExcelAction> GetActionCollection()
     {
       return this.excelSetupModel.WorksheetActions;
     }

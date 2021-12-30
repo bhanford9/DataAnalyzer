@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
 {
-  public class BooleanOperationParametersSerialization : SerializationAggregate<BooleanOperationParameters>, IExcelActionSerialization
+  public class BooleanOperationParametersSerialization : SerializationAggregate<BooleanOperationParameters>, IExcelActionParameterSerialization
   {
     public BooleanOperationParametersSerialization() : base() { }
 

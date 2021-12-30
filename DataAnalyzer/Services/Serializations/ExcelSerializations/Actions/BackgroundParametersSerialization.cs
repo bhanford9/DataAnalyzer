@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
 {
-  public class BackgroundParametersSerialization : SerializationAggregate<BackgroundParameters>, IExcelActionSerialization
+  public class BackgroundParametersSerialization : SerializationAggregate<BackgroundParameters>, IExcelActionParameterSerialization
   {
     public BackgroundParametersSerialization() : base() { }
 
