@@ -22,8 +22,10 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations
 
     protected override ICollection<ISerializationData> InitializeSelf(RowModel value)
     {
-      CellsSerialization cells = new CellsSerialization(value.Cells, nameof(value.Cells));
-      ExcelActionsSerialization excelActions = new ExcelActionsSerialization(value.RowActions, nameof(value.RowActions));
+      SingleSerializationCollection<CellModel, CellSerialization> cells =
+        new SingleSerializationCollection<CellModel, CellSerialization>(value.Cells, nameof(value.Cells));
+      SingleSerializationCollection<ExcelAction, ExcelActionSerialization> excelActions = 
+        new SingleSerializationCollection<ExcelAction, ExcelActionSerialization>(value.RowActions, nameof(value.RowActions));
 
       return new List<ISerializationData>() { cells, excelActions };
     }

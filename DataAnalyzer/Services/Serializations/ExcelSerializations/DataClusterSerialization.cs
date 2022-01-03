@@ -27,9 +27,11 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations
 
     protected override ICollection<ISerializationData> InitializeSelf(DataClusterModel value)
     {
-      RowsSerialization rows = new RowsSerialization(value.Rows, nameof(value.Rows));
+      SingleSerializationCollection<RowModel, RowSerialization> rows = 
+        new SingleSerializationCollection<RowModel, RowSerialization>(value.Rows, nameof(value.Rows));
       RowSerialization titleRow = new RowSerialization(value.TitleRow, nameof(value.TitleRow));
-      ExcelActionsSerialization excelActions = new ExcelActionsSerialization(value.DataClusterActions, nameof(value.DataClusterActions));
+      SingleSerializationCollection<ExcelAction, ExcelActionSerialization> excelActions =
+        new SingleSerializationCollection<ExcelAction, ExcelActionSerialization>(value.DataClusterActions, nameof(value.DataClusterActions));
       IntegerSerialization startRow = new IntegerSerialization(value.StartRowIndex, nameof(value.StartRowIndex));
       IntegerSerialization startCol = new IntegerSerialization(value.StartColIndex, nameof(value.StartColIndex));
       BooleanSerialization useClusterId = new BooleanSerialization(value.UseClusterId, nameof(value.UseClusterId));

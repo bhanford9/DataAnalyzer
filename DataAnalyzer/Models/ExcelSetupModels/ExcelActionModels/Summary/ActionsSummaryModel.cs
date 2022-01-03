@@ -11,10 +11,12 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
     protected readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
     protected readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
 
-    public void LoadHeirarchicalSummaries(ActionSummaryTreeViewItem baseItem)
+    public void LoadHeirarchicalSummariesFromStats(ActionSummaryTreeViewItem baseItem)
     {
       this.InternalLoadWhereToApply(baseItem, this.statsModel.HeirarchalStats.Children);
     }
+
+    public abstract void LoadHeirarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem);
 
     public abstract ObservableCollection<ExcelAction> GetActionCollection();
 

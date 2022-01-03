@@ -4,6 +4,10 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 {
   public class EmptyEditViewModel : EditActionViewModel
   {
+    public override void ApplyParameterSettings()
+    {
+    }
+
     public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
     {
       return new EmptyEditViewModel();

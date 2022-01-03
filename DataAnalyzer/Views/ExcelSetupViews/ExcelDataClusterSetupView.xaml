@@ -32,10 +32,7 @@
       </TabItem>
 
       <TabItem Header="Summary">
-        <StackPanel Orientation="Vertical">
-          <local:ActionsSummaryView DataContext="{Binding DataContext.ActionsSummaryViewModel, ElementName=ExcelDataClusterSetup}"/>
-        </StackPanel>
-
+        <local:ActionsSummaryView DataContext="{Binding DataContext.ActionsSummaryViewModel, ElementName=ExcelDataClusterSetup}"/>
       </TabItem>
 
     </TabControl>

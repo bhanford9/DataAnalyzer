@@ -1,5 +1,7 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
+using DataAnalyzer.Models.ExcelSetupModels;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ActionSummaryViewModels;
 using System.Collections.ObjectModel;
@@ -16,11 +18,11 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
     //   2. The Summary side Model should react to those changes and update itself
     //   3. The Summary side View Model should react to its Model's changes
     private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-    private IActionsSummaryModel actionsSummaryModel;
+    private readonly IActionsSummaryModel actionsSummaryModel;
 
     private string configName = string.Empty;
 
-    private BaseCommand saveConfiguration;
+    private readonly BaseCommand saveConfiguration;
 
     public ActionsSummaryViewModel(IActionsSummaryModel actionsSummaryModel)
     {
@@ -29,6 +31,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
       this.saveConfiguration = new BaseCommand((obj) => this.DoSaveConfiguration());
 
       this.statsModel.PropertyChanged += this.StatsModelPropertyChanged;
+      this.actionsSummaryModel.PropertyChanged += this.ActionsSummaryModelPropertyChanged;
     }
 
     public ObservableCollection<ActionSummaryTreeViewItem> HeirarchicalSummaries { get; }
@@ -40,6 +43,11 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
     {
       get => this.configName;
       set => this.NotifyPropertyChanged(nameof(this.ConfigName), ref this.configName, value);
+    }
+
+    public void LoadActionsFromModel()
+    {
+      this.actionsSummaryModel.LoadHeirarchicalSummariesFromModel(this.HeirarchicalSummaries.First());
     }
 
     private void DoSaveConfiguration()
@@ -55,7 +63,17 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
           this.HeirarchicalSummaries.Clear();
           this.HeirarchicalSummaries.Add(new ActionSummaryTreeViewItem() { Name = "All Workbooks" });
 
-          this.actionsSummaryModel.LoadHeirarchicalSummaries(this.HeirarchicalSummaries.First());
+          this.actionsSummaryModel.LoadHeirarchicalSummariesFromStats(this.HeirarchicalSummaries.First());
+          break;
+      }
+    }
+
+    private void ActionsSummaryModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      switch (e.PropertyName)
+      {
+        case WorkbookActionApplicationModel.ACTION_APPLIED_KEY:
+          //this.actionsSummaryModel.LoadHeirarchicalSummariesFromModel(this.HeirarchicalSummaries.First());
           break;
       }
     }

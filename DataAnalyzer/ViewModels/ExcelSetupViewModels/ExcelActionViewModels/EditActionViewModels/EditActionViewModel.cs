@@ -63,6 +63,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 
     public abstract IEditActionViewModel GetNewInstance(IActionParameters parameters);
 
+    public abstract void ApplyParameterSettings();
+
     protected abstract void InternalInit(IEditActionViewModel toCopy);
 
     protected abstract void DoAct();

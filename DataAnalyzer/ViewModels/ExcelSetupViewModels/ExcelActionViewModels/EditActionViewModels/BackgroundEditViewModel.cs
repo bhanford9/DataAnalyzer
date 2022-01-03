@@ -4,6 +4,7 @@ using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels.Utilities;
 using System;
 using System.Collections.ObjectModel;
+using System.Drawing;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
@@ -11,7 +12,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
   {
     private string selectedPattern = string.Empty;
     private int nth = 0;
-    private EnumUtilities EnumUtilities = new EnumUtilities();
+    private readonly EnumUtilities EnumUtilities = new EnumUtilities();
 
     public BackgroundEditViewModel()
     {
@@ -41,6 +42,15 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
     {
       get => this.nth;
       set => this.NotifyPropertyChanged(nameof(this.Nth), ref this.nth, value);
+    }
+
+    public override void ApplyParameterSettings()
+    {
+      BackgroundParameters backgroundParameters = this.ActionParameters as BackgroundParameters;
+      backgroundParameters.BackgroundColor = Color.FromName(this.BackgroundColors.SelectedColor);
+      backgroundParameters.PatternColor = Color.FromName(this.PatternColors.SelectedColor);
+      backgroundParameters.FillPattern = Enum.Parse<FillPattern>(this.SelectedPattern);
+      backgroundParameters.Nth = this.Nth;
     }
 
     public override IEditActionViewModel GetNewInstance(IActionParameters parameters)

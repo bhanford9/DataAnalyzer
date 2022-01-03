@@ -23,6 +23,12 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
       set => this.NotifyPropertyChanged(nameof(this.DoPerform), ref this.doPerform, value);
     }
 
+    public override void ApplyParameterSettings()
+    {
+      BooleanOperationParameters booleanParameters = this.ActionParameters as BooleanOperationParameters;
+      booleanParameters.DoPerform = this.DoPerform;
+    }
+
     public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
     {
       BooleanActionViewModel viewModel = new BooleanActionViewModel(this.actionCreationModel, this);

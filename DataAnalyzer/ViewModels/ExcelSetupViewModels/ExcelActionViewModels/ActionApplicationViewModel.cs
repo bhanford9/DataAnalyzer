@@ -94,76 +94,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
         .ToList()
         .ForEach(treeViewItem =>
         {
-          // tell Model to apply "CurrentAction" to "treeViewItem"
-          CheckableTreeViewItem blah = new CheckableTreeViewItem()
-          {
-            //Children = new ObservableCollection<CheckableTreeViewItem>(),
-            IsChecked = false,
-            IsLeaf = false,
-            Name = string.Empty,
-            Path = string.Empty
-          };
-
-          IEditActionViewModel viewModel = new AlignmentEditViewModel();
-
-          // model side may benefit from something like IDictionary<string, object>
-          //   where the key is the path (always unique)
-          //   where the value is a converted data object associated with it (not simply IEditActionViewModel, maybe the serializable equivalent)
-
-
-
-
-
-
-          // summary side:
-          //   1. create tree heirarchy based on saved items (Will be a small subset of all possibilities)
-          //   2. make this into a serializable data structure for saving
-
-          // execution side:
-          //   1. convert into excel service action execution heirarchy
-
-          // startup side:
-          //   2. convert out of serialization into model data and model data into view model data
-
-
-          // View Model <--> Serializable (Model) <--> Excel
-
-          // Excel takes heirarchy of 
-          //   Workbook
-          //     Name
-          //     Actions
-          //     Worksheets
-          //       [0]Name
-          //       [0]Actions
-          //       [0]DataClusters
-
-          // Application View Model contains separate entities for each of
-          //   Workbook
-          //   Worksheet
-          //   Data Cluster
-
-          // Easiest thing to do might be to just have an overarching Summary Model that contains
-          //   the serialized version of the entire thing that can easily be polled & converted
-          //   up to the View Model or down to the Excel Service
-          //
-          // The Aciton Parameters are already setup as Custom Serializables
-          //
-          // Excel workbook is created with:
-          //   File Path
-          //   List<Worksheets>
-          //   Acitons
-          // Excel Worksheet is created with:
-          //   Name
-          //   List<DataClusters>
-          //   Actions
-          // Excel Data Cluster is created with:
-          //   ICollection<IRow>
-          //   string clusterHeader
-          //   int startRowIndex
-          //   int startColIndex
-          //   IRow titles
-          //   IActionDefinitions clusterActions = null
-          //   bool useClusterId = true
+          this.CurrentAction.ApplyParameterSettings();
+          this.actionApplicationModel.ApplyAction(treeViewItem, this.CurrentAction);
         });
     }
 

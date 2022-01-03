@@ -11,6 +11,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations
 
     public ICollection<ExcelAction> DataClusterActions { get; set; } = new List<ExcelAction>();
 
+    public string Name { get; set; } = string.Empty;
+
     public int StartRowIndex { get; set; }
 
     public int StartColIndex { get; set; }

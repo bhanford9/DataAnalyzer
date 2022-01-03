@@ -8,6 +8,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations
   {
     public string FilePath { get; set; } = string.Empty;
 
+    public string Name { get; set; } = string.Empty;
+
     public ICollection<ExcelAction> WorkbookActions { get; set; } = new List<ExcelAction>();
 
     public ICollection<WorksheetModel> Worksheets { get; set; } = new List<WorksheetModel>();

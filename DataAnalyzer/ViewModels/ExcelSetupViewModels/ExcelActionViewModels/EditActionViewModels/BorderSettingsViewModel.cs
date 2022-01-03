@@ -10,7 +10,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
     private string selectedStyle = string.Empty;
     private string borderName = string.Empty;
 
-    private EnumUtilities EnumUtilities = new EnumUtilities();
+    private readonly EnumUtilities EnumUtilities = new EnumUtilities();
 
     public BorderSettingsViewModel()
     {

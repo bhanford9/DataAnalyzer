@@ -1,5 +1,6 @@
 ﻿using DataAnalyzer.ApplicationConfigurations;
 using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.Serializations;
 using DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes;
@@ -18,13 +19,14 @@ namespace DataAnalyzer.Models.ExcelSetupModels
 
     private readonly SerializationService serializationService = new SerializationService();
     private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+    private ICollection<WorkbookModel> workbookModels = new List<WorkbookModel>();
 
     private string configurationDirectory = string.Empty;
     private string configurationName = string.Empty;
     private string dataTypeConfigurationPath = string.Empty;
 
     private ExcelDataTypesSerialization loadedParameterTypes = new ExcelDataTypesSerialization();
-    private ICollection<LastSavedConfiguration> lastSavedDataTypeConfigs = new List<LastSavedConfiguration>();
+    private readonly ICollection<LastSavedConfiguration> lastSavedDataTypeConfigs = new List<LastSavedConfiguration>();
 
     public ExcelConfigurationModel()
     {
@@ -58,6 +60,12 @@ namespace DataAnalyzer.Models.ExcelSetupModels
         Properties.Settings.Default.LastUsedExcelConfigurationDirectory = value;
         Properties.Settings.Default.Save();
       }
+    }
+
+    public ICollection<WorkbookModel> WorkbookModels
+    {
+      get => this.workbookModels;
+      set => this.NotifyPropertyChanged(nameof(this.WorkbookModels), ref this.workbookModels, value);
     }
 
     public string ConfigurationName

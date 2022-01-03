@@ -7,6 +7,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Act
   {
     private bool isLeaf = true;
     private string name = string.Empty;
+    private string description = string.Empty;
 
     public ActionSummaryTreeViewItem()
     {
@@ -27,6 +28,10 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Act
       set => this.NotifyPropertyChanged(nameof(this.Name), ref this.name, value);
     }
 
-    public string Description => "DUMMY DESCRIPTION\r\nHello World!!\r\n\tBullet Point Information\r\nHelloWorld 2.0";
+    public string Description
+    {
+      get => this.description;
+      set => this.NotifyPropertyChanged(nameof(this.Description), ref this.description, value);
+    }
   }
 }

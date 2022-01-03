@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Services;
+using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
@@ -27,5 +28,14 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
     }
 
     public override ActionCategory ActionCategory => ActionCategory.AlignmentStyle;
+
+    public override string ToString()
+    {
+      string str =
+        $"Horizontal Alignment: {this.HorizontalAlignment}{Environment.NewLine}" +
+        $"Vertical Alignment: {this.VerticalAlignment}{Environment.NewLine}";
+
+      return str + (this.Nth >= 0 ? $"Nth: {this.Nth}{Environment.NewLine}" : "");
+    }
   }
 }

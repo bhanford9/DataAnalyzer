@@ -8,6 +8,7 @@ using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
@@ -65,6 +66,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         this.dataClusterActionCreationModel,
         this.dataClusterActionApplicationModel,
         this.dataClusterActionsSummaryModel);
+
+      this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
+      this.excelSetupModel.PropertyChanged += this.ExcelSetupModelPropertyChanged;
     }
 
     public ExcelActionViewModel WorkbookActionViewModel { get; set; }
@@ -73,15 +77,15 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 
     public ExcelActionViewModel DataClusterActionViewModel { get; set; }
 
-    public ObservableCollection<ExcelAction> WorkbookActions => this.excelSetupModel.WorkbookActions;
+    public ObservableCollection<ExcelAction> WorkbookActions => this.excelSetupModel.AvailableWorkbookActions;
 
-    public ObservableCollection<ExcelAction> WorksheetActions => this.excelSetupModel.WorksheetActions;
+    public ObservableCollection<ExcelAction> WorksheetActions => this.excelSetupModel.AvailableWorksheetActions;
 
-    public ObservableCollection<ExcelAction> DataClusterActions => this.excelSetupModel.DataClusterActions;
+    public ObservableCollection<ExcelAction> DataClusterActions => this.excelSetupModel.AvailableDataClusterActions;
 
-    public ObservableCollection<ExcelAction> RowActions => this.excelSetupModel.RowActions;
+    public ObservableCollection<ExcelAction> RowActions => this.excelSetupModel.AvailableRowActions;
 
-    public ObservableCollection<ExcelAction> CellActions => this.excelSetupModel.CellActions;
+    public ObservableCollection<ExcelAction> CellActions => this.excelSetupModel.AvailableCellActions;
 
     public ICommand LoadDataIntoStructure => this.loadDataIntoStructure;
 
@@ -109,8 +113,37 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
       this.CurrentState = DataLoadingState.LoadingData.ToString();
 
       this.statsModel.StructureStats();
+      this.excelSetupModel.LoadWorkbookConfiguration();
 
       this.CurrentState = DataLoadingState.DataLoaded.ToString();
+    }
+
+    private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      switch (e.PropertyName)
+      {
+        case nameof(this.configurationModel.DataConfiguration):
+          if (this.configurationModel.SelectedExportType.Equals(ExportType.Excel))
+          {
+          }
+          break;
+      }
+    }
+
+    private void ExcelSetupModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      switch (e.PropertyName)
+      {
+        case WorkbookActionApplicationModel.ACTION_APPLIED_KEY:
+          this.WorkbookActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel();
+          break;
+        case WorksheetActionApplicationModel.ACTION_APPLIED_KEY:
+          this.WorksheetActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel();
+          break;
+        case DataClusterActionApplicationModel.ACTION_APPLIED_KEY:
+          this.DataClusterActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel();
+          break;
+      }
     }
   }
 }

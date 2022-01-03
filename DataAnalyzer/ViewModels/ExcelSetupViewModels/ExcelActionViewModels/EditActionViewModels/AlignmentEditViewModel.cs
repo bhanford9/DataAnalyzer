@@ -71,5 +71,13 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
       this.enumUtilities.LoadNames(typeof(HorizontalAlignment), this.HorizontalAlignments);
       this.enumUtilities.LoadNames(typeof(VerticalAlignment), this.VerticalAlignments);
     }
+
+    public override void ApplyParameterSettings()
+    {
+      AlignmentParameters alignmentParameters = this.ActionParameters as AlignmentParameters;
+      alignmentParameters.HorizontalAlignment = Enum.Parse<HorizontalAlignment>(this.SelectedHorizontalAlignment);
+      alignmentParameters.VerticalAlignment = Enum.Parse<VerticalAlignment>(this.SelectedVerticalAlignment);
+      alignmentParameters.Nth = this.Nth;
+    }
   }
 }

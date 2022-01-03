@@ -8,5 +8,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
     string Name { get; set; }
 
     ActionCategory ActionCategory { get; }
+
+    string ToString();
   }
 }

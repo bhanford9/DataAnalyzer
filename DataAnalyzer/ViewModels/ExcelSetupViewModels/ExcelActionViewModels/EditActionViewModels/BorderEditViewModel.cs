@@ -1,19 +1,14 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+using DataAnalyzer.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Drawing;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
-  class BorderEditViewModel : EditActionViewModel
+  public class BorderEditViewModel : EditActionViewModel
   {
-    //private string selectedLeftStyle = string.Empty;
-    //private string selectedTopStyle = string.Empty;
-    //private string selectedRightStyle = string.Empty;
-    //private string selectedBottomStyle = string.Empty;
-    //private string selectedAllStyle = string.Empty;
-    //private string selectedDiagonalUpStyle = string.Empty;
-    //private string selectedDiagonalDownStyle = string.Empty;
     private int nth = 0;
 
 
@@ -44,73 +39,33 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
     public BorderSettingsViewModel DiagonalDownBorderSettings { get; }
       = new BorderSettingsViewModel();
 
-    //public ColorsComboBoxViewModel LeftColors { get; }
-    //  = new ColorsComboBoxViewModel();
-
-    //public ColorsComboBoxViewModel TopColors { get; }
-    //  = new ColorsComboBoxViewModel();
-
-    //public ColorsComboBoxViewModel RightColors { get; }
-    //  = new ColorsComboBoxViewModel();
-
-    //public ColorsComboBoxViewModel BottomColors { get; }
-    //  = new ColorsComboBoxViewModel();
-
-    //public ColorsComboBoxViewModel AllColors { get; }
-    //  = new ColorsComboBoxViewModel();
-
-    //public ColorsComboBoxViewModel DiagonalUpColors { get; }
-    //  = new ColorsComboBoxViewModel();
-
-    //public ColorsComboBoxViewModel DiagonalDownColors { get; }
-    //  = new ColorsComboBoxViewModel();
-
-    //public string SelectedLeftStyle
-    //{
-    //  get => this.selectedLeftStyle;
-    //  set => this.NotifyPropertyChanged(nameof(this.SelectedLeftStyle), ref this.selectedLeftStyle, value);
-    //}
-
-    //public string SelectedTopStyle
-    //{
-    //  get => this.selectedTopStyle;
-    //  set => this.NotifyPropertyChanged(nameof(this.SelectedTopStyle), ref this.selectedTopStyle, value);
-    //}
-
-    //public string SelectedRightStyle
-    //{
-    //  get => this.selectedRightStyle;
-    //  set => this.NotifyPropertyChanged(nameof(this.SelectedRightStyle), ref this.selectedRightStyle, value);
-    //}
-
-    //public string SelectedBottomStyle
-    //{
-    //  get => this.selectedBottomStyle;
-    //  set => this.NotifyPropertyChanged(nameof(this.SelectedBottomStyle), ref this.selectedBottomStyle, value);
-    //}
-
-    //public string SelectedAllStyle
-    //{
-    //  get => this.selectedAllStyle;
-    //  set => this.NotifyPropertyChanged(nameof(this.SelectedAllStyle), ref this.selectedAllStyle, value);
-    //}
-
-    //public string SelectedDiagonalUpStyle
-    //{
-    //  get => this.selectedDiagonalUpStyle;
-    //  set => this.NotifyPropertyChanged(nameof(this.SelectedDiagonalUpStyle), ref this.selectedDiagonalUpStyle, value);
-    //}
-
-    //public string SelectedDiagonalDownStyle
-    //{
-    //  get => this.selectedDiagonalDownStyle;
-    //  set => this.NotifyPropertyChanged(nameof(this.SelectedDiagonalDownStyle), ref this.selectedDiagonalDownStyle, value);
-    //}
-
     public int Nth
     {
       get => this.nth;
       set => this.NotifyPropertyChanged(nameof(this.Nth), ref this.nth, value);
+    }
+
+    public override void ApplyParameterSettings()
+    {
+      BorderParameters borderParameters = this.ActionParameters as BorderParameters;
+
+      borderParameters.LeftColor = Color.FromName(this.LeftBorderSettings.ComboBoxColors.SelectedColor);
+      borderParameters.TopColor = Color.FromName(this.TopBorderSettings.ComboBoxColors.SelectedColor);
+      borderParameters.RightColor = Color.FromName(this.RightBorderSettings.ComboBoxColors.SelectedColor);
+      borderParameters.BottomColor = Color.FromName(this.BottomBorderSettings.ComboBoxColors.SelectedColor);
+      borderParameters.AllColor = Color.FromName(this.AllBorderSettings.ComboBoxColors.SelectedColor);
+      borderParameters.DiagonalUpColor = Color.FromName(this.DiagonalUpBorderSettings.ComboBoxColors.SelectedColor);
+      borderParameters.DiagonalDownColor = Color.FromName(this.DiagonalDownBorderSettings.ComboBoxColors.SelectedColor);
+
+      borderParameters.LeftStyle = Enum.Parse<BorderStyle>(this.LeftBorderSettings.SelectedStyle);
+      borderParameters.TopStyle = Enum.Parse<BorderStyle>(this.TopBorderSettings.SelectedStyle);
+      borderParameters.RightStyle = Enum.Parse<BorderStyle>(this.RightBorderSettings.SelectedStyle);
+      borderParameters.BottomStyle = Enum.Parse<BorderStyle>(this.BottomBorderSettings.SelectedStyle);
+      borderParameters.AllStyle = Enum.Parse<BorderStyle>(this.AllBorderSettings.SelectedStyle);
+      borderParameters.DiagonalUpStyle = Enum.Parse<BorderStyle>(this.DiagonalUpBorderSettings.SelectedStyle);
+      borderParameters.DiagonalDownStyle = Enum.Parse<BorderStyle>(this.DiagonalDownBorderSettings.SelectedStyle);
+
+      borderParameters.Nth = this.Nth;
     }
 
     public override IEditActionViewModel GetNewInstance(IActionParameters parameters)

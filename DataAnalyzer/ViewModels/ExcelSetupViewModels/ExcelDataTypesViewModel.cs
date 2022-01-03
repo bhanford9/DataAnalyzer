@@ -19,9 +19,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
   public class ExcelDataTypesViewModel : BasePropertyChanged
   {
     private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-    private readonly ExcelConfigurationModel excelConfigurationModel = BaseSingleton<ExcelConfigurationModel>.Instance;
     private readonly ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
     private readonly ConfigurationModel configurationCreationModel = BaseSingleton<ConfigurationModel>.Instance;
+    private readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
 
     private string configurationDirectory = string.Empty;
     private string dataTypeConfigName = string.Empty;
@@ -36,10 +36,10 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
       this.browseDirectory = new BaseCommand((obj) => this.DoBrowseDirectory());
       this.saveDataTypes = new BaseCommand((obj) => this.DoSaveDataTypes());
 
-      this.ConfigurationDirectory = this.excelConfigurationModel.ConfigurationDirectory;
+      this.ConfigurationDirectory = this.excelSetupModel.ExcelConfiguration.ConfigurationDirectory;
 
       this.statsModel.PropertyChanged += this.StatsModelPropertyChanged;
-      this.excelConfigurationModel.PropertyChanged += this.ExcelConfigurationModelPropertyChanged;
+      this.excelSetupModel.ExcelConfiguration.PropertyChanged += this.ExcelConfigurationPropertyChanged;
       this.configurationCreationModel.PropertyChanged += this.ConfigurationCreationModelPropertyChanged;
     }
 
@@ -61,7 +61,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
       set
       {
         this.NotifyPropertyChanged(nameof(this.ConfigurationDirectory), ref this.configurationDirectory, value);
-        this.excelConfigurationModel.ConfigurationDirectory = value;
+        this.excelSetupModel.ExcelConfiguration.ConfigurationDirectory = value;
       }
     }
 
@@ -98,7 +98,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         this.ParameterSelections.Select(x => x.SelectedParameterType).ToList(),
         "TODO");
 
-      this.excelConfigurationModel.SaveDataTypeConfiguration(excelDataTypesSerialization, this.DataTypeConfigName);
+      this.excelSetupModel.ExcelConfiguration.SaveDataTypeConfiguration(excelDataTypesSerialization, this.DataTypeConfigName);
     }
 
     private void ApplyConfigurationDirectory(string file)
@@ -136,7 +136,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 
           foreach (string name in this.statsModel.StatNames)
           {
-            ITypeParameter typeParameter = this.excelConfigurationModel.LoadedParameterTypes.DiscreteValue?
+            ITypeParameter typeParameter = this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes.DiscreteValue?
               .FirstOrDefault(x => x.DataName.Equals(name));
 
             if (typeParameter != default)
@@ -166,17 +166,17 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
       }
     }
 
-    private void ExcelConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void ExcelConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
       switch (e.PropertyName)
       {
-        case nameof(this.excelConfigurationModel.ConfigurationName):
-          this.DataTypeConfigName = this.excelConfigurationModel.ConfigurationName;
+        case nameof(this.excelSetupModel.ExcelConfiguration.ConfigurationName):
+          this.DataTypeConfigName = this.excelSetupModel.ExcelConfiguration.ConfigurationName;
           break;
-        case nameof(this.excelConfigurationModel.LoadedParameterTypes):
+        case nameof(this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes):
           this.ParameterSelections.Clear();
 
-          this.excelConfigurationModel.LoadedParameterTypes.DiscreteValue
+          this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes.DiscreteValue
             .ForEach(typeParameters => this.ParameterSelections.Add(
               new DataTypeSelectionViewModel(
                 typeParameters.DataName,
@@ -184,11 +184,11 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
                 typeParameters.GetParameterNameValuePairs()
             )));
           break;
-        case nameof(this.excelConfigurationModel.DataTypeConfigurationPath):
+        case nameof(this.excelSetupModel.ExcelConfiguration.DataTypeConfigurationPath):
           break;
-        case nameof(this.excelConfigurationModel.SavedConfigurations):
+        case nameof(this.excelSetupModel.ExcelConfiguration.SavedConfigurations):
           this.SavedConfigurations.Clear();
-          this.excelConfigurationModel.SavedConfigurations.ToList().ForEach(savedConfig =>
+          this.excelSetupModel.ExcelConfiguration.SavedConfigurations.ToList().ForEach(savedConfig =>
           {
             this.SavedConfigurations.Add(new ExcelDataTypeListItemViewModel()
             {

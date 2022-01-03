@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Services;
+using System;
 using System.Drawing;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
@@ -36,5 +37,15 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
     }
 
     public override ActionCategory ActionCategory => ActionCategory.BackgroundStyle;
+
+    public override string ToString()
+    {
+      string str =
+        $"Background Color: {this.BackgroundColor.Name}{Environment.NewLine}" +
+        $"Pattern Color: {this.PatternColor.Name}{Environment.NewLine}" +
+        $"Fill Pattern: {this.FillPattern}{Environment.NewLine}";
+
+      return str + (this.Nth >= 0 ? $"Nth: {this.Nth}{Environment.NewLine}" : "");
+    }
   }
 }

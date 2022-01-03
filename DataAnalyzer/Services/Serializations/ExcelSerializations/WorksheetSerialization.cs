@@ -27,9 +27,12 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations
     protected override ICollection<ISerializationData> InitializeSelf(WorksheetModel value)
     {
       StringSerialization filePath = new StringSerialization(value.WorksheetName, nameof(value.WorksheetName));
-      ExcelActionsSerialization excelActions = new ExcelActionsSerialization(value.WorksheetActions, nameof(value.WorksheetActions));
+      SingleSerializationCollection<ExcelAction, ExcelActionSerialization> excelActions = 
+        new SingleSerializationCollection<ExcelAction, ExcelActionSerialization>(value.WorksheetActions, nameof(value.WorksheetActions));
+      SingleSerializationCollection<DataClusterModel, DataClusterSerialization> dataClusters = 
+        new SingleSerializationCollection<DataClusterModel, DataClusterSerialization>(value.DataClusters, nameof(value.DataClusters));
 
-      return new List<ISerializationData>() { filePath, excelActions };
+      return new List<ISerializationData>() { filePath, excelActions, dataClusters };
     }
   }
 }

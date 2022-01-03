@@ -10,6 +10,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
     string Description { get; set; }
     ICommand Act { get; }
 
+    void ApplyParameterSettings();
     IEditActionViewModel GetNewInstance(IActionParameters parameters);
     bool IsApplicable(IActionParameters parameters);
   }

@@ -1,5 +1,7 @@
 ﻿using DataAnalyzer.Common.DataObjects;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ActionSummaryViewModels;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,7 +14,29 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
 
     public override ObservableCollection<ExcelAction> GetActionCollection()
     {
-      return this.excelSetupModel.WorksheetActions;
+      return this.excelSetupModel.AvailableWorksheetActions;
+    }
+
+    public override void LoadHeirarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem)
+    {
+      foreach (ActionSummaryTreeViewItem workbookItem in baseItem.Children)
+      {
+        WorkbookModel workbook = this.excelSetupModel.ExcelConfiguration.WorkbookModels.FirstOrDefault(x => x.Name.Equals(workbookItem.Name));
+
+        if (workbook != default)
+        {
+          foreach (ActionSummaryTreeViewItem worksheetItem in workbookItem.Children)
+          {
+            WorksheetModel worksheet = workbook.Worksheets.FirstOrDefault(x => x.WorksheetName.Equals(worksheetItem.Name));
+
+
+            if (worksheet != default && worksheet.WorksheetActions.Count > 0)
+            {
+              worksheetItem.Description = worksheet.WorksheetActions.Select(x => x.ActionParameters.ToString()).Aggregate((a, b) => a + Environment.NewLine + b);
+            }
+          }
+        }
+      }
     }
 
     protected override void InternalLoadWhereToApply(ActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)

@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Services;
+using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
@@ -13,5 +14,10 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
     }
 
     public override ActionCategory ActionCategory => ActionCategory.BooleanOperation;
+
+    public override string ToString()
+    {
+      return $"Do Perform: {this.DoPerform}{Environment.NewLine}";
+    }
   }
 }

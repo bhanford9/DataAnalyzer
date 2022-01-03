@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Services;
+using System;
 using System.Drawing;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
@@ -114,5 +115,26 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
     }
 
     public override ActionCategory ActionCategory => ActionCategory.BorderStyle;
+
+    public override string ToString()
+    {
+      string str =
+        $"Left Color: {this.LeftColor.Name}{Environment.NewLine}" +
+        $"Left Style: {this.LeftStyle}{Environment.NewLine}" +
+        $"Top Color: {this.TopColor.Name}{Environment.NewLine}" +
+        $"Top Style: {this.TopStyle}{Environment.NewLine}" +
+        $"Right Color: {this.RightColor.Name}{Environment.NewLine}" +
+        $"Right Style: {this.RightStyle}{Environment.NewLine}" +
+        $"Bottom Color: {this.BottomColor.Name}{Environment.NewLine}" +
+        $"Bottom Style: {this.BottomStyle}{Environment.NewLine}" +
+        $"All Color: {this.AllColor.Name}{Environment.NewLine}" +
+        $"All Style: {this.AllStyle}{Environment.NewLine}" +
+        $"Diagonal Up Color: {this.DiagonalUpColor.Name}{Environment.NewLine}" +
+        $"Diagonal Up Style: {this.DiagonalUpStyle}{Environment.NewLine}" +
+        $"Diagonal Down Color: {this.DiagonalDownColor.Name}{Environment.NewLine}" +
+        $"Diagonal Down Style: {this.DiagonalDownStyle}{Environment.NewLine}";
+
+      return str + (this.Nth >= 0 ? $"Nth: {this.Nth}{Environment.NewLine}" : "");
+    }
   }
 }

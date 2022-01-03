@@ -25,7 +25,7 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations.Actions
     protected override ICollection<ISerializationData> InitializeSelf(AlignmentParameters value)
     {
       StringSerialization name = new StringSerialization(value.Name, nameof(value.Name));
-      EnumSerialization<HorizontalAlignment> horizontal = 
+      EnumSerialization<HorizontalAlignment> horizontal =
         new EnumSerialization<HorizontalAlignment>(value.HorizontalAlignment, nameof(value.HorizontalAlignment));
       EnumSerialization<VerticalAlignment> vertical =
         new EnumSerialization<VerticalAlignment>(value.VerticalAlignment, nameof(value.VerticalAlignment));

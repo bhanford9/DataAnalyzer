@@ -6,7 +6,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation
   {
     protected override ObservableCollection<ExcelAction> GetActionCollection()
     {
-      return this.excelSetupModel.DataClusterActions;
+      return this.excelSetupModel.AvailableDataClusterActions;
     }
   }
 }

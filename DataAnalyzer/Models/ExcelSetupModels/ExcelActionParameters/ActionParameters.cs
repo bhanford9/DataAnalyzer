@@ -14,5 +14,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
       get => this.name;
       set => this.NotifyPropertyChanged(nameof(this.Name), ref this.name, value);
     }
+
+    public abstract override string ToString();
   }
 }

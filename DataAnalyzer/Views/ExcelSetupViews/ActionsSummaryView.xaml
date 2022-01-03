@@ -12,7 +12,7 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
     <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibility"/>
   </UserControl.Resources>
-  
+
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
@@ -43,9 +43,8 @@
               Margin="10 0"/>
     </Grid>
 
-    <GroupBox Grid.Row="1"
-              Header="Summaries"
-              MinHeight="100">
+    <GroupBox Header="Summaries" 
+              Grid.Row="1">
       <TreeView Style="{StaticResource BaseTreeViewStyle}" 
                 ItemsSource="{Binding HeirarchicalSummaries}"
                 Margin="1 3 1 1">
@@ -53,28 +52,26 @@
         <TreeView.ItemContainerStyle>
           <Style TargetType="TreeViewItem" BasedOn="{StaticResource BaseTreeViewItemStyle}">
             <Setter Property="IsExpanded" Value="True"/>
+            <Setter Property="Foreground" Value="{StaticResource LightText}"/>
           </Style>
         </TreeView.ItemContainerStyle>
 
         <TreeView.Resources>
-<!-- Data Type will probably need to change -->
           <HierarchicalDataTemplate
             DataType="{x:Type actionSummaryViewModels:ActionSummaryTreeViewItem}"
             ItemsSource="{Binding Children}">
 
-<!-- Easiest way to handle this might be to have a boolean flag within the template data type that indicates whether it is a leaf node -->
-<!-- Then need a way to distinguish which type of Summary to display (i.e. border vs background etc.) -->
-<!-- ActionApplictionView used a CategoryToVisibility converter to have all of them present but only the correct one visible -->
+            <!-- Easiest way to handle this might be to have a boolean flag within the template data type that indicates whether it is a leaf node -->
+            <!-- Then need a way to distinguish which type of Summary to display (i.e. border vs background etc.) -->
+            <!-- ActionApplictionView used a CategoryToVisibility converter to have all of them present but only the correct one visible -->
             <Grid>
-              <StackPanel Orientation="Horizontal"
-                          Visibility="{Binding IsLeaf, Converter={StaticResource BooleanToVisibility}}"
-                          Margin="1 3">
+              <StackPanel Orientation="Vertical"
+                          Visibility="{Binding IsLeaf, Converter={StaticResource BooleanToVisibility}}">
                 <TextBlock Style="{StaticResource SmallTextBlockStyle}" 
-                           Text="{Binding Name}"/>
+                            Text="{Binding Name}"/>
                 <TextBlock Style="{StaticResource SmallTextBlockStyle}"
-                           Text=":"/>
-                <TextBlock Style="{StaticResource SmallTextBlockStyle}" 
-                           Text="{Binding Description}"/>
+                            Margin="24 4 0 0"
+                            Text="{Binding Description}"/>
               </StackPanel>
 
               <StackPanel Orientation="Horizontal"
