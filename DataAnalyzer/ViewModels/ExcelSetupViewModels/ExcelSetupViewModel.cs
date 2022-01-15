@@ -110,12 +110,15 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 
     private void DoLoadDataIntoStructure()
     {
-      this.CurrentState = DataLoadingState.LoadingData.ToString();
+      if (this.dataLoadingState == DataLoadingState.NoDataLoaded)
+      {
+        this.CurrentState = DataLoadingState.LoadingData.ToString();
 
-      this.statsModel.StructureStats();
-      this.excelSetupModel.LoadWorkbookConfiguration();
+        this.statsModel.StructureStats();
+        this.excelSetupModel.LoadWorkbookConfiguration();
 
-      this.CurrentState = DataLoadingState.DataLoaded.ToString();
+        this.CurrentState = DataLoadingState.DataLoaded.ToString();
+      }
     }
 
     private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -142,6 +145,13 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
           break;
         case DataClusterActionApplicationModel.ACTION_APPLIED_KEY:
           this.DataClusterActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel();
+          break;
+        case nameof(this.excelSetupModel.ExcelConfiguration):
+          this.WorkbookActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel();
+          this.WorksheetActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel();
+          this.DataClusterActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel();
+
+          this.CurrentState = DataLoadingState.DataLoaded.ToString();
           break;
       }
     }

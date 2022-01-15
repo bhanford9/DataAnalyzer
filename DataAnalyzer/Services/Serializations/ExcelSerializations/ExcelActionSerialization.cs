@@ -10,6 +10,7 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations
 {
   public class ExcelActionSerialization : SerializationAggregate<ExcelAction>
   {
+
     public ExcelActionSerialization() : base() { }
 
     public ExcelActionSerialization(ExcelAction value, string parameterName)
@@ -22,7 +23,8 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations
       this.DiscreteValue.Name = this.GetParameter<string>(nameof(this.DiscreteValue.Name));
       this.DiscreteValue.Description = this.GetParameter<string>(nameof(this.DiscreteValue.Description));
       this.DiscreteValue.IsBuiltIn = this.GetParameter<bool>(nameof(this.DiscreteValue.IsBuiltIn));
-      this.DiscreteValue.ActionParameters = this.GetParameter<IActionParameters>(nameof(this.DiscreteValue.ActionParameters));
+      this.DiscreteValue.ActionParameters = this.GetParameter<IActionParameters>(this.DiscreteValue.Name);
+      this.DiscreteValue.ActionParameterType = this.GetParameter<string>(nameof(this.DiscreteValue.ActionParameterType));
     }
 
     protected override ICollection<ISerializationData> InitializeSelf(ExcelAction value)
@@ -30,12 +32,20 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations
       StringSerialization name = new StringSerialization(value.Name, nameof(value.Name));
       StringSerialization description = new StringSerialization(value.Description, nameof(value.Description));
       BooleanSerialization isBuiltIn = new BooleanSerialization(value.IsBuiltIn, nameof(value.IsBuiltIn));
-      IExcelActionParameterSerialization excelActionSerialization = (IExcelActionParameterSerialization)Activator.CreateInstance(
-        value.ActionParameters.GetType(),
-        value.ActionParameters,
-        nameof(value.ActionParameters));
 
-      return new List<ISerializationData>() { name, description, isBuiltIn, excelActionSerialization };
+      StringSerialization actionTypeSerialization = new StringSerialization(value.ActionParameterType, nameof(value.ActionParameterType));
+
+      List<ISerializationData> items = new List<ISerializationData>() { name, description, isBuiltIn, actionTypeSerialization };
+
+      if (value.ActionParameters != null)
+      {
+        IExcelActionParameterSerialization excelActionSerialization =
+          new ExcelActionParametersSerialization().GetSerializationData(value.ActionParameters.GetType()) as IExcelActionParameterSerialization;
+        excelActionSerialization.Initialize(value.ActionParameters.Name, value.ActionParameters);
+        items.Add(excelActionSerialization);
+      }
+
+      return items;
     }
   }
 }

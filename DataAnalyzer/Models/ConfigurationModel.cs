@@ -111,5 +111,11 @@ namespace DataAnalyzer.Models
       string fullFilePath = this.ConfigurationDirectory + "\\" + this.ConfigurationName + FileProperties.CONFIGN_FILE_EXTENSION;
       this.serializationService.JsonSerializeToFile(this.DataConfiguration, fullFilePath);
     }
+
+    public void ApplyDataPath(string filePath)
+    {
+      this.DataConfiguration.SavedDataFilePath = filePath;
+      this.SaveConfiguration();
+    }
   }
 }

@@ -7,5 +7,6 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
   {
     void LoadHeirarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem);
     void LoadHeirarchicalSummariesFromStats(ActionSummaryTreeViewItem baseItem);
+    void SaveConfiguration(string configName);
   }
 }

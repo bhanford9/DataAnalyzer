@@ -14,5 +14,7 @@ namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
     public ExportType ExportType { get; set; } = ExportType.NotApplicable;
 
     public ICollection<GroupingConfiguration> GroupingConfiguration { get; set; } = new List<GroupingConfiguration>();
+
+    public string SavedDataFilePath { get; set; } = string.Empty;
   }
 }

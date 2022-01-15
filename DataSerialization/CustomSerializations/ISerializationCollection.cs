@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DataSerialization.CustomSerializations
 {
@@ -7,5 +8,6 @@ namespace DataSerialization.CustomSerializations
     ICollection<ISerializationData> Items { get; set; }
 
     void ApplyToValue();
+    ISerializationData GetSerializationData(Type modelType);
   }
 }

@@ -6,6 +6,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Act
   public class ActionSummaryTreeViewItem : BasePropertyChanged
   {
     private bool isLeaf = true;
+    private string id = string.Empty;
     private string name = string.Empty;
     private string description = string.Empty;
 
@@ -20,6 +21,12 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Act
     {
       get => this.isLeaf;
       set => this.NotifyPropertyChanged(nameof(this.IsLeaf), ref this.isLeaf, value);
+    }
+
+    public string Id
+    {
+      get => this.id;
+      set => this.NotifyPropertyChanged(nameof(this.Id), ref this.id, value);
     }
 
     public string Name

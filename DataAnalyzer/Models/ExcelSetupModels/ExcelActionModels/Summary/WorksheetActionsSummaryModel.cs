@@ -48,7 +48,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
         baseItem.Children.Add(new ActionSummaryTreeViewItem()
         {
           IsLeaf = false,
-          Name = workbookStats.Key.ToString()
+          Name = workbookStats.Key.ToString(),
+          Id = "Workbook"
         });
 
         foreach (HeirarchalStats worksheetStats in workbookStats.Children)
@@ -58,7 +59,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
           baseItem.Children.Last().Children.Add(new ActionSummaryTreeViewItem()
           {
             IsLeaf = true,
-            Name = worksheetStats.Key.ToString()
+            Name = worksheetStats.Key.ToString(),
+            Id = "Worksheet"
           });
         }
       }

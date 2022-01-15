@@ -3,8 +3,10 @@ using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.Serializations;
+using DataAnalyzer.Services.Serializations.ExcelSerializations;
 using DataAnalyzer.Services.Serializations.ExcelSerializations.DataTypes;
 using DataAnalyzer.ViewModels.Utilities;
+using DataSerialization.CustomSerializations;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,6 +18,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels
   public class ExcelConfigurationModel : BasePropertyChanged
   {
     private const string DATA_TYPE_CONFIG_FILE_NAME = "DataTypesConfiguration.cfg.json";
+    private const string WORKBOOK_CONFIG_PATH_KEY = "WorkbookConfigs";
+    private const string DATA_TYPES_CONFIG_PATH_KEY = "DataTypeConfigs";
 
     private readonly SerializationService serializationService = new SerializationService();
     private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
@@ -100,6 +104,11 @@ namespace DataAnalyzer.Models.ExcelSetupModels
 
         string fileName = Path.GetFileName(configPath);
         this.ConfigurationName = fileName.Substring(0, fileName.IndexOf('.'));
+
+        if (!string.IsNullOrEmpty(this.configurationModel.DataConfiguration.SavedDataFilePath))
+        {
+          this.LoadWorkbookConfiguration(this.configurationModel.DataConfiguration.SavedDataFilePath);
+        }
       }
     }
 
@@ -134,6 +143,20 @@ namespace DataAnalyzer.Models.ExcelSetupModels
       this.LoadDataTypesFromConfig();
     }
 
+    public void SaveWorkbookConfiguration(string configName)
+    {
+      string directoryPath = this.GetCurrentWorkbookConfigDirectoryPath();
+      string filePath = directoryPath + "\\" + configName + FileProperties.EXCEL_CONFIG_FILE_EXTENSION;
+
+
+      SingleSerializationCollection<WorkbookModel, WorkbookSerialization> workbookSerializations =
+        new SingleSerializationCollection<WorkbookModel, WorkbookSerialization>(this.workbookModels, "Workbooks");
+
+      this.serializationService.CustomSerializeToFile(workbookSerializations, filePath);
+
+      this.configurationModel.ApplyDataPath(filePath);
+    }
+
     public void LoadDataTypesFromConfig()
     {
       this.SavedConfigurations.Clear();
@@ -154,7 +177,24 @@ namespace DataAnalyzer.Models.ExcelSetupModels
 
     private string GetCurrentDataTypeConfigDirectoryPath()
     {
-      return this.configurationDirectory + "\\" + this.configurationModel.SelectedDataType.ToString();
+      return this.configurationDirectory + "\\" + this.configurationModel.SelectedDataType.ToString() + "\\" + DATA_TYPES_CONFIG_PATH_KEY;
+    }
+
+    private string GetCurrentWorkbookConfigDirectoryPath()
+    {
+      return this.configurationDirectory + "\\" + this.configurationModel.SelectedDataType.ToString() + "\\" + WORKBOOK_CONFIG_PATH_KEY;
+    }
+
+    private void LoadWorkbookConfiguration(string filePath)
+    {
+      if (File.Exists(filePath))
+      {
+        SingleSerializationCollection<WorkbookModel, WorkbookSerialization> workbookSerializations =
+          (SingleSerializationCollection<WorkbookModel, WorkbookSerialization>)this.serializationService.CustomDeserializeFromFile(filePath);
+
+        workbookSerializations.ApplyToValue();
+        this.WorkbookModels = workbookSerializations.Items.Select(x => x.Value as WorkbookModel).ToList();
+      }
     }
 
     private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)

@@ -21,6 +21,11 @@ namespace DataSerialization.CustomSerializations
 
     public ICollection<ISerializationData> Items { get; set; } = new List<ISerializationData>();
 
+    public ISerializationData GetSerializationData(Type modelType)
+    {
+      return this.serializers[modelType];
+    }
+
     public abstract void RegisterTypes();
 
     public override void Initialize(string name, object value)
@@ -46,7 +51,19 @@ namespace DataSerialization.CustomSerializations
 
     public void ApplyToValue()
     {
-      this.DiscreteValue = this.Items.Select(x => (T)x.Value).ToList();
+      this.DiscreteValue = this.Items.Select(x =>
+      {
+        if (x is ISerializationCollection serializationCollection)
+        {
+          serializationCollection.ApplyToValue();
+        }
+        else if (x is ISerializationAggregate serializationAggregate)
+        {
+          serializationAggregate.ApplyToValue();
+        }
+
+        return (T)x.Value;
+      }).ToList();
     }
 
     public override void SetValueFromString(string valueAsString)

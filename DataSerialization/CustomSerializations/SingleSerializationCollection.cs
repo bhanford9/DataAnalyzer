@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DataSerialization.CustomSerializations
 {
@@ -22,7 +23,14 @@ namespace DataSerialization.CustomSerializations
 
     public override void RegisterTypes()
     {
-      this.RegisterType(typeof(TData), this.serialization);
+      if (this.serialization == null)
+      {
+        this.RegisterType(typeof(TData), Activator.CreateInstance(typeof(TSerialization)) as ISerializationData);
+      }
+      else
+      {
+        this.RegisterType(typeof(TData), this.serialization);
+      }
     }
   }
 }

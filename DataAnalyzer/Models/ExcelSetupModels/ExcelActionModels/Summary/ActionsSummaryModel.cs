@@ -20,6 +20,11 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
 
     public abstract ObservableCollection<ExcelAction> GetActionCollection();
 
+    public void SaveConfiguration(string configName)
+    {
+      this.excelSetupModel.SaveWorkbookConfiguration(configName);
+    }
+
     protected abstract void InternalLoadWhereToApply(ActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats);
   }
 }

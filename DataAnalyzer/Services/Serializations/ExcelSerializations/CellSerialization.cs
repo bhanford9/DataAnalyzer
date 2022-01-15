@@ -17,7 +17,7 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations
 
     public override void ApplyToValue()
     {
-      this.DiscreteValue.CellActions = this.GetParameter<ICollection<ExcelAction>>(nameof(this.DiscreteValue.CellActions));
+      this.DiscreteValue.CellActions = this.GetParameter<List<ExcelAction>>(nameof(this.DiscreteValue.CellActions));
       this.DiscreteValue.Value = this.GetParameter<object>(nameof(this.DiscreteValue.Value));
     }
 

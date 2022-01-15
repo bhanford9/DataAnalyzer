@@ -35,7 +35,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
         baseItem.Children.Add(new ActionSummaryTreeViewItem()
         {
           IsLeaf = true,
-          Name = workbookStats.Key.ToString()
+          Name = workbookStats.Key.ToString(),
+          Id = "Workbook"
         });
       }
     }

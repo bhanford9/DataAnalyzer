@@ -15,7 +15,7 @@ namespace DataSerialization.CustomSerializations
     {
     }
 
-    public ICollection<ISerializationData> Items => this.items.Select(x => x.Value).ToList();
+    public ICollection<ISerializationData> Items => this.items.Values;
 
     public override void SetValueFromString(string valueAsString)
     {
@@ -46,7 +46,7 @@ namespace DataSerialization.CustomSerializations
 
     protected TParam GetParameter<TParam>(string parameterName)
     {
-      return (this.items[parameterName] as SerializationData<TParam>).DiscreteValue;
+      return (TParam)this.items[parameterName].Value;
     }
 
     protected void RegisterParameter(ISerializationData serializationData)

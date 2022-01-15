@@ -51,7 +51,9 @@ namespace DataSerialization.CustomSerializations
           serialization += this.Serialize(item, level + 2) + this.COMMA_END[1..];
         }
 
-        serialization = serialization.TrimEnd()[..^1] + this.GetTabbedSquareEnd(childTabs);
+        serialization = serialization.TrimEnd();
+        serialization = serialization.EndsWith('[') ? serialization : serialization[..^1];
+        serialization += this.GetTabbedSquareEnd(childTabs);
         serialization += this.GetTabbedCurlyEnd(baseTabs);
       }
       else
@@ -86,21 +88,7 @@ namespace DataSerialization.CustomSerializations
       }
       else if (serialization is ISerializationCollection collectionData)
       {
-        int innerCollectionLineCount = this.LinesUntilCollectionClose(serializationSplit[VALUE_LINE_INDEX..]);
-        int innerCollectionEndLineIndex = VALUE_LINE_INDEX + innerCollectionLineCount;
-        string innerData = this.JoinOnNewLines(serializationSplit[(VALUE_LINE_INDEX + 1)..innerCollectionEndLineIndex]);
-
-        string[] innerDataSplit = this.SplitNewLines(innerData);
-        do
-        {
-          int aggregateLineCount = this.LinesUntilAggregateClose(innerDataSplit[1..]);
-
-          ISerializationData innerDeserialized = this.Deserialize(this.JoinOnNewLines(innerDataSplit[0..aggregateLineCount]));
-          collectionData.Items.Add(innerDeserialized);
-          innerDataSplit = innerDataSplit[(aggregateLineCount + 1)..];
-        } while (innerDataSplit.Length > 1);
-
-        collectionData.ApplyToValue();
+        this.HandleCollection(collectionData, serializationSplit);
       }
       else
       {
@@ -110,9 +98,35 @@ namespace DataSerialization.CustomSerializations
       return serialization;
     }
 
+    private void HandleCollection(ISerializationCollection collectionData, string[] serializationSplit)
+    {
+      int collectionStartOffset = VALUE_LINE_INDEX;
+      int collectionLineCount = this.LinesUntilCollectionClose(serializationSplit[collectionStartOffset..]);
+      int collectionEndLineIndex = VALUE_LINE_INDEX + collectionLineCount;
+      string serializedCollectionData = this.JoinOnNewLines(serializationSplit[VALUE_LINE_INDEX..collectionEndLineIndex]).TrimStart();
+
+      int collectionStartIndex = collectionData.ParameterName.Length + 3;
+      int trimEnd = serializedCollectionData.EndsWith(',') ? 2 : 1;
+      string trimmedData = serializedCollectionData.Length > collectionStartIndex ? serializedCollectionData[collectionStartIndex..^trimEnd].Trim() : string.Empty;
+
+      string[] collectionDataLines = this.SplitNewLines(trimmedData);
+
+      while (collectionDataLines.Length > 1)
+      {
+        int aggregateLineCount = this.LinesUntilAggregateClose(collectionDataLines);
+
+        ISerializationData innerDeserialized = this.Deserialize(this.JoinOnNewLines(collectionDataLines[0..aggregateLineCount]));
+        collectionData.Items.Add(innerDeserialized);
+        collectionDataLines = collectionDataLines[aggregateLineCount..];
+      }
+
+      collectionData.ApplyToValue();
+    }
+
     private void HandleAggregate(ISerializationAggregate aggregateData, string[] serializationSplit)
     {
-      int aggregateLineCount = this.LinesUntilAggregateClose(serializationSplit[VALUE_LINE_INDEX..]);
+      int aggregateStartOffset = VALUE_LINE_INDEX - 1;
+      int aggregateLineCount = this.LinesUntilAggregateClose(serializationSplit[aggregateStartOffset..]);
       int aggregateEndLineIndex = VALUE_LINE_INDEX + aggregateLineCount;
       string serializedAggregateData = this.JoinOnNewLines(serializationSplit[VALUE_LINE_INDEX..aggregateEndLineIndex]).TrimStart();
 
@@ -123,35 +137,45 @@ namespace DataSerialization.CustomSerializations
       string[] aggregateDataLines = this.SplitNewLines(trimmedData);
       if (aggregateDataLines.Length >= VALUE_BLOCK_LINE_COUNT)
       {
-        if (aggregateDataLines[VALUE_LINE_INDEX].TrimEnd().EndsWith("{"))
+        while (aggregateDataLines.Length > VALUE_BLOCK_LINE_COUNT)
         {
-          int startIndex = 0;
-          while (true)
+          if (aggregateDataLines.First().Trim().StartsWith('}'))
           {
-            int innerAggregateLineCount = this.LinesUntilAggregateClose(aggregateDataLines[(startIndex + VALUE_LINE_INDEX)..]);
-            int innerAggregateEndLineIndex = startIndex + VALUE_LINE_INDEX + innerAggregateLineCount;
-            string innerData = this.JoinOnNewLines(aggregateDataLines[startIndex..innerAggregateEndLineIndex]);
-            startIndex = innerAggregateEndLineIndex;
+            // TODO --> Don't like this, should be fixed somewhere else
+            aggregateDataLines = aggregateDataLines[1..];
+          }
+
+          if (aggregateDataLines[VALUE_LINE_INDEX].TrimEnd().EndsWith("{"))
+          {
+            int innerAggregateLineCount = this.LinesUntilAggregateClose(aggregateDataLines);
+            string innerData = this.JoinOnNewLines(aggregateDataLines[..innerAggregateLineCount]);
 
             ISerializationData innerDeserialzied = this.Deserialize(innerData);
             aggregateData.SetParameter(innerDeserialzied);
-
-            if (!innerData.EndsWith(','))
+            aggregateDataLines = aggregateDataLines[innerAggregateLineCount..];
+          }
+          else if (aggregateDataLines[VALUE_LINE_INDEX].TrimEnd().EndsWith("["))
+          {
+            ISerializationData innerDeserialzied = this.Deserialize(this.JoinOnNewLines(aggregateDataLines));
+            if (aggregateData.Items.Any(x => x.ParameterName.Equals(innerDeserialzied.ParameterName)))
             {
-              break;
+              aggregateData.SetParameter(innerDeserialzied);
             }
+
+            int innerCollectionLineCount = this.LinesUntilCollectionClose(aggregateDataLines);
+            int innerCollectionEndLineIndex = VALUE_LINE_INDEX + innerCollectionLineCount;
+            aggregateDataLines = aggregateDataLines[innerCollectionEndLineIndex..];
+          }
+          else
+          {
+            string[] localSplitData = aggregateDataLines[..VALUE_BLOCK_LINE_COUNT];
+            ISerializationData localDeserialzied = this.Deserialize(this.JoinOnNewLines(localSplitData));
+            aggregateData.SetParameter(localDeserialzied);
+            aggregateDataLines = aggregateDataLines[VALUE_BLOCK_LINE_COUNT..];
           }
         }
-        else if (aggregateDataLines[VALUE_LINE_INDEX].TrimEnd().EndsWith("["))
-        {
-          throw new Exception("not sure what to do here yet or if its even possible to hit");
-        }
-        else
-        {
-          this.HandleSimpleAggregate(aggregateData, aggregateDataLines);
-        }
       }
-      else
+      else if (aggregateDataLines.Length > 0)
       {
         this.HandleSimpleAggregate(aggregateData, aggregateDataLines);
       }
@@ -161,21 +185,26 @@ namespace DataSerialization.CustomSerializations
 
     private void HandleSimpleAggregate(ISerializationAggregate aggregateData, string[] aggregateDataLines)
     {
-      int index = 0;
+      int skipFront = 0;
+      int endIndex = VALUE_BLOCK_LINE_COUNT;
 
       while (true)
       {
-        int skipFront = index++ * VALUE_BLOCK_LINE_COUNT;
-        int endIndex = skipFront + VALUE_BLOCK_LINE_COUNT;
-
         if (endIndex > aggregateDataLines.Length)
         {
           break;
+        }
+        else if (aggregateDataLines[endIndex - 1].EndsWith(']'))
+        {
+          endIndex++;
         }
 
         string[] localSplitData = aggregateDataLines[skipFront..endIndex];
         ISerializationData localDeserialzied = this.Deserialize(this.JoinOnNewLines(localSplitData));
         aggregateData.SetParameter(localDeserialzied);
+
+        skipFront = endIndex;
+        endIndex = skipFront + VALUE_BLOCK_LINE_COUNT;
       }
     }
 
@@ -191,35 +220,60 @@ namespace DataSerialization.CustomSerializations
 
     private int LinesUntilAggregateClose(ICollection<string> lines)
     {
-      int opens = 1;
+      return this.LinesUntilBraceClose(lines, '{', '}');
+    }
+
+    private int LinesUntilCollectionClose(ICollection<string> lines)
+    {
+      return this.LinesUntilBraceClose(lines, '[', ']');
+    }
+
+    private int LinesUntilBraceClose(ICollection<string> lines, char openBrace, char closeBrace)
+    {
+      int opens = 0;
       int count = 0;
+      int indexOfFirst = -1;
+
+      if (lines.Count == 14)
+      {
+
+      }
 
       foreach (string line in lines.Select(line => line.Trim()))
       {
-        if (line.StartsWith('{') || line.EndsWith('{'))
+        if (line.StartsWith(openBrace) || line.EndsWith(openBrace))
         {
+          indexOfFirst = indexOfFirst < 0 ? count : indexOfFirst;
           opens++;
         }
-        else if (line.StartsWith('}'))
+        else if (line.StartsWith(closeBrace))
         {
           opens--;
         }
 
+        if (count > 190)
+        {
+
+        }
+
         count++;
 
-        if (opens == 0)
+        if (indexOfFirst >= 0 && opens == 0)
         {
           break;
         }
       }
 
-      return count;
-    }
+      if (indexOfFirst >= 0 && opens > 0)
+      {
+        throw new Exception("Invalid serialized content");
+      }
 
-    private int LinesUntilCollectionClose(ICollection<string> lines)
-    {
-      int count = 0;
-      while (!lines.ElementAt(count++).TrimStart().StartsWith(']')) ;
+      if (indexOfFirst > 1)
+      {
+        count -= indexOfFirst;
+      }
+
       return count;
     }
 

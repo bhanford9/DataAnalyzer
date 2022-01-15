@@ -9,6 +9,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
     private string description = string.Empty;
     private bool isBuiltIn = true;
     private IActionParameters actionParameters;
+    private string actionParameterType = string.Empty;
 
     public string Name
     {
@@ -32,6 +33,12 @@ namespace DataAnalyzer.Models.ExcelSetupModels
     {
       get => this.actionParameters;
       set => this.NotifyPropertyChanged(nameof(this.ActionParameters), ref this.actionParameters, value);
+    }
+
+    public string ActionParameterType
+    {
+      get => this.actionParameterType;
+      set => this.NotifyPropertyChanged(nameof(this.ActionParameterType), ref this.actionParameterType, value);
     }
   }
 }

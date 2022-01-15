@@ -4,6 +4,7 @@ using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;
 using ExcelService.DataActions;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 
 namespace DataAnalyzer.Models.ExcelSetupModels
@@ -43,9 +44,11 @@ namespace DataAnalyzer.Models.ExcelSetupModels
         .ForEach(x => this.AvailableCellActions.Add(x));
 
       // TODO --> add custom saved configuration actions
+
+      this.ExcelConfiguration.PropertyChanged += this.ExcelConfigurationPropertyChanged;
     }
 
-    public ExcelConfigurationModel ExcelConfiguration { get; } = new ExcelConfigurationModel();
+    public ExcelConfigurationModel ExcelConfiguration => BaseSingleton<ExcelConfigurationModel>.Instance;
 
     public ObservableCollection<ExcelAction> AvailableWorkbookActions { get; }
       = new ObservableCollection<ExcelAction>();
@@ -64,29 +67,47 @@ namespace DataAnalyzer.Models.ExcelSetupModels
 
     public void LoadWorkbookConfiguration()
     {
-      this.ExcelConfiguration.WorkbookModels.Clear();
-      foreach (HeirarchalStats workbookStats in this.statsModel.HeirarchalStats.Children)
+      // if its not empty, then the previous configuration was already loaded in
+      if (this.ExcelConfiguration.WorkbookModels.Count == 0)
       {
-        WorkbookModel workbookModel = new WorkbookModel { Name = workbookStats.Key.ToString() };
-        foreach (HeirarchalStats worksheetStats in workbookStats.Children)
+        foreach (HeirarchalStats workbookStats in this.statsModel.HeirarchalStats.Children)
         {
-          WorksheetModel worksheetModel = new WorksheetModel { WorksheetName = worksheetStats.Key.ToString() };
-          foreach (HeirarchalStats dataclusterStats in worksheetStats.Children)
+          WorkbookModel workbookModel = new WorkbookModel { Name = workbookStats.Key.ToString() };
+          foreach (HeirarchalStats worksheetStats in workbookStats.Children)
           {
-            DataClusterModel dataClusterModel = new DataClusterModel { Name = dataclusterStats.Key.ToString() };
-            worksheetModel.DataClusters.Add(dataClusterModel);
+            WorksheetModel worksheetModel = new WorksheetModel { WorksheetName = worksheetStats.Key.ToString() };
+            foreach (HeirarchalStats dataclusterStats in worksheetStats.Children)
+            {
+              DataClusterModel dataClusterModel = new DataClusterModel { Name = dataclusterStats.Key.ToString() };
+              worksheetModel.DataClusters.Add(dataClusterModel);
+            }
+
+            workbookModel.Worksheets.Add(worksheetModel);
           }
 
-          workbookModel.Worksheets.Add(worksheetModel);
+          this.ExcelConfiguration.WorkbookModels.Add(workbookModel);
         }
-
-        this.ExcelConfiguration.WorkbookModels.Add(workbookModel);
       }
+    }
+
+    public void SaveWorkbookConfiguration(string configName)  
+    {
+      this.ExcelConfiguration.SaveWorkbookConfiguration(configName);
     }
 
     public void NotiyExcelActionApplied(string actionAppliedKey)
     {
       this.NotifyPropertyChanged(actionAppliedKey);
+    }
+
+    private void ExcelConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+      switch (e.PropertyName)
+      {
+        case nameof(this.ExcelConfiguration.WorkbookModels):
+          this.NotifyPropertyChanged(nameof(this.ExcelConfiguration));
+          break;
+      }
     }
   }
 }
