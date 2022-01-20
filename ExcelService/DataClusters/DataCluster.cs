@@ -57,13 +57,13 @@ namespace ExcelService.DataClusters
 
       if (generateTitles)
       {
-        if (this.Rows.Count == 0)
+        if (this.Rows.Count > 0)
         {
-          throw new System.Exception("Cannot generate titles for empty rowset");
-        }
+          //throw new System.Exception("Cannot generate titles for empty rowset");
 
-        this.Titles = new Row(this.Rows.ElementAt(0).Select(cell => (ICell)new Cell(cell.ColumnId, cell.ColumnId)).ToList());
-        this.Rows = this.Rows.Prepend(this.Titles).ToList();
+          this.Titles = new Row(this.Rows.ElementAt(0).Select(cell => (ICell)new Cell(cell.ColumnId, cell.ColumnId)).ToList());
+          this.Rows = this.Rows.Prepend(this.Titles).ToList();
+        }
       }
     }
 
@@ -79,7 +79,7 @@ namespace ExcelService.DataClusters
 
     public int EndRowNumber => this.StartRowNumber + this.Rows.Count - 1;
 
-    public int EndColNumber => this.StartColNumber + this.Rows.ElementAt(0).Count - 1;
+    public int EndColNumber => this.Rows.Count == 0 ? this.StartColNumber : this.StartColNumber + this.Rows.ElementAt(0).Count - 1;
 
     public bool UseClusterHeader { get; } = true;
 

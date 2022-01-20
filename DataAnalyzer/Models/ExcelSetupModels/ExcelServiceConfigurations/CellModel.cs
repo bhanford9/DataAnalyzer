@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using System.Collections.Generic;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations
@@ -11,5 +12,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations
     public ICollection<ExcelAction> CellActions { get; set; } = new List<ExcelAction>();
 
     public object Value { get; set; } = new object();
+
+    public TypeParameter DataType { get; set; }
   }
 }

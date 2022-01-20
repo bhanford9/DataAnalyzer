@@ -26,8 +26,10 @@ namespace DataAnalyzer.Models.ExcelSetupModels
     private ICollection<WorkbookModel> workbookModels = new List<WorkbookModel>();
 
     private string configurationDirectory = string.Empty;
-    private string configurationName = string.Empty;
-    private string dataTypeConfigurationPath = string.Empty;
+    private string dataTypeConfigName = string.Empty;
+    private string dataTypeConfigPath = string.Empty;
+    private string workbookConfigName = string.Empty;
+    private string workbookOutputDirectory = string.Empty;
 
     private ExcelDataTypesSerialization loadedParameterTypes = new ExcelDataTypesSerialization();
     private readonly ICollection<LastSavedConfiguration> lastSavedDataTypeConfigs = new List<LastSavedConfiguration>();
@@ -35,6 +37,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
     public ExcelConfigurationModel()
     {
       this.ConfigurationDirectory = Properties.Settings.Default.LastUsedExcelConfigurationDirectory;
+      this.WorkbookOutputDirectory = Properties.Settings.Default.LastUsedExcelOutputDirectory;
 
       string configFilePath = this.GetDataTypeConfigPath();
 
@@ -45,7 +48,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
         if (this.configurationModel.SelectedDataType != StatType.NotApplicable)
         {
           string dataTypeConfigPath = this.GetCurrentDataTypeConfigDirectoryPath();
-          this.LoadConfigurationByPath(dataTypeConfigPath);
+          this.LoadDataTypeConfigByPath(dataTypeConfigPath);
         }
       }
 
@@ -72,16 +75,33 @@ namespace DataAnalyzer.Models.ExcelSetupModels
       set => this.NotifyPropertyChanged(nameof(this.WorkbookModels), ref this.workbookModels, value);
     }
 
-    public string ConfigurationName
+    public string DataTypeConfigName
     {
-      get => this.configurationName;
-      set => this.NotifyPropertyChanged(nameof(this.ConfigurationName), ref this.configurationName, value);
+      get => this.dataTypeConfigName;
+      set => this.NotifyPropertyChanged(nameof(this.DataTypeConfigName), ref this.dataTypeConfigName, value);
     }
 
     public string DataTypeConfigurationPath
     {
-      get => this.dataTypeConfigurationPath;
-      set => this.NotifyPropertyChanged(nameof(this.DataTypeConfigurationPath), ref this.dataTypeConfigurationPath, value);
+      get => this.dataTypeConfigPath;
+      set => this.NotifyPropertyChanged(nameof(this.DataTypeConfigurationPath), ref this.dataTypeConfigPath, value);
+    }
+
+    public string WorkbookConfigName
+    {
+      get => this.workbookConfigName;
+      set => this.NotifyPropertyChanged(nameof(this.WorkbookConfigName), ref this.workbookConfigName, value);
+    }
+
+    public string WorkbookOutputDirectory
+    {
+      get => this.workbookOutputDirectory;
+      set
+      {
+        this.NotifyPropertyChanged(nameof(this.WorkbookOutputDirectory), ref this.workbookOutputDirectory, value);
+        Properties.Settings.Default.LastUsedExcelOutputDirectory = value;
+        Properties.Settings.Default.Save();
+      }
     }
 
     public ExcelDataTypesSerialization LoadedParameterTypes
@@ -90,24 +110,32 @@ namespace DataAnalyzer.Models.ExcelSetupModels
       set => this.NotifyPropertyChanged(nameof(this.LoadedParameterTypes), ref this.loadedParameterTypes, value);
     }
 
-    public void LoadConfigurationByName(string configName)
+    public void ApplyWorkbooksOutputPath(string path)
     {
-      string filePath = this.GetCurrentDataTypeConfigDirectoryPath() + "\\" + configName + FileProperties.EXCEL_CONFIG_FILE_EXTENSION;
-      this.LoadConfigurationByPath(filePath);
+      foreach (WorkbookModel workbookModel in this.workbookModels)
+      {
+        workbookModel.FilePath = path + "\\" + workbookModel.Name + FileProperties.EXCEL_WORKBOOK_FILE_EXTENSION;
+      }
     }
 
-    public void LoadConfigurationByPath(string configPath)
+    public void LoadDataTypeConfigByName(string configName)
+    {
+      string filePath = this.GetCurrentDataTypeConfigDirectoryPath() + "\\" + configName + FileProperties.EXCEL_CONFIG_FILE_EXTENSION;
+      this.LoadDataTypeConfigByPath(filePath);
+    }
+
+    public void LoadDataTypeConfigByPath(string configPath)
     {
       if (File.Exists(configPath))
       {
         this.LoadedParameterTypes = this.serializationService.CustomDeserializeFromFile(configPath) as ExcelDataTypesSerialization;
 
         string fileName = Path.GetFileName(configPath);
-        this.ConfigurationName = fileName.Substring(0, fileName.IndexOf('.'));
+        this.DataTypeConfigName = fileName.Substring(0, fileName.IndexOf('.'));
 
         if (!string.IsNullOrEmpty(this.configurationModel.DataConfiguration.SavedDataFilePath))
         {
-          this.LoadWorkbookConfiguration(this.configurationModel.DataConfiguration.SavedDataFilePath);
+          this.LoadWorkbookConfigByPath(this.configurationModel.DataConfiguration.SavedDataFilePath);
         }
       }
     }
@@ -143,11 +171,35 @@ namespace DataAnalyzer.Models.ExcelSetupModels
       this.LoadDataTypesFromConfig();
     }
 
+    public void LoadWorkbookConfigByName(string configName)
+    {
+      string filePath = this.GetCurrentWorkbookConfigDirectoryPath() + "\\" + configName + FileProperties.EXCEL_CONFIG_FILE_EXTENSION;
+      this.LoadWorkbookConfigByPath(filePath);
+    }
+
+    public void LoadWorkbookConfigByPath(string filePath)
+    {
+      if (File.Exists(filePath))
+      {
+        SingleSerializationCollection<WorkbookModel, WorkbookSerialization> workbookSerializations =
+          (SingleSerializationCollection<WorkbookModel, WorkbookSerialization>)this.serializationService.CustomDeserializeFromFile(filePath);
+
+        // this line may not be necessary
+        workbookSerializations.ApplyToValue();
+
+        this.WorkbookModels = workbookSerializations.Items.Select(x => x.Value as WorkbookModel).ToList();
+        this.WorkbookConfigName = Path.GetFileNameWithoutExtension(filePath);
+        while (this.WorkbookConfigName.Contains("."))
+        {
+          this.WorkbookConfigName = Path.GetFileNameWithoutExtension(this.WorkbookConfigName);
+        }
+      }
+    }
+
     public void SaveWorkbookConfiguration(string configName)
     {
       string directoryPath = this.GetCurrentWorkbookConfigDirectoryPath();
       string filePath = directoryPath + "\\" + configName + FileProperties.EXCEL_CONFIG_FILE_EXTENSION;
-
 
       SingleSerializationCollection<WorkbookModel, WorkbookSerialization> workbookSerializations =
         new SingleSerializationCollection<WorkbookModel, WorkbookSerialization>(this.workbookModels, "Workbooks");
@@ -170,31 +222,19 @@ namespace DataAnalyzer.Models.ExcelSetupModels
       this.NotifyPropertyChanged(nameof(this.SavedConfigurations));
     }
 
-    private string GetDataTypeConfigPath()
+    public string GetDataTypeConfigPath()
     {
       return this.configurationDirectory + "\\" + DATA_TYPE_CONFIG_FILE_NAME;
     }
 
-    private string GetCurrentDataTypeConfigDirectoryPath()
+    public string GetCurrentDataTypeConfigDirectoryPath()
     {
       return this.configurationDirectory + "\\" + this.configurationModel.SelectedDataType.ToString() + "\\" + DATA_TYPES_CONFIG_PATH_KEY;
     }
 
-    private string GetCurrentWorkbookConfigDirectoryPath()
+    public string GetCurrentWorkbookConfigDirectoryPath()
     {
       return this.configurationDirectory + "\\" + this.configurationModel.SelectedDataType.ToString() + "\\" + WORKBOOK_CONFIG_PATH_KEY;
-    }
-
-    private void LoadWorkbookConfiguration(string filePath)
-    {
-      if (File.Exists(filePath))
-      {
-        SingleSerializationCollection<WorkbookModel, WorkbookSerialization> workbookSerializations =
-          (SingleSerializationCollection<WorkbookModel, WorkbookSerialization>)this.serializationService.CustomDeserializeFromFile(filePath);
-
-        workbookSerializations.ApplyToValue();
-        this.WorkbookModels = workbookSerializations.Items.Select(x => x.Value as WorkbookModel).ToList();
-      }
     }
 
     private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -207,7 +247,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
           if (lastSavedConfiguration != default)
           {
             this.LoadDataTypesFromConfig();
-            this.LoadConfigurationByPath(lastSavedConfiguration.FilePath);
+            this.LoadDataTypeConfigByPath(lastSavedConfiguration.FilePath);
           }
           break;
       }

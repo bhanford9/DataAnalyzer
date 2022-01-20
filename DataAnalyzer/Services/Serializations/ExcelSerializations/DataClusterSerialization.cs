@@ -29,7 +29,7 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations
     protected override ICollection<ISerializationData> InitializeSelf(DataClusterModel value)
     {
       StringSerialization name = new StringSerialization(value.Name, nameof(value.Name));
-      SingleSerializationCollection<RowModel, RowSerialization> rows = 
+      SingleSerializationCollection<RowModel, RowSerialization> rows =
         new SingleSerializationCollection<RowModel, RowSerialization>(value.Rows, nameof(value.Rows));
       RowSerialization titleRow = new RowSerialization(value.TitleRow, nameof(value.TitleRow));
       SingleSerializationCollection<ExcelAction, ExcelActionSerialization> excelActions =

@@ -1,11 +1,21 @@
 ﻿using ExcelService.CellDataFormats;
 using ExcelService.CellDataFormats.NumericFormat;
 using ExcelService.DataActions.ActionParameters;
+using ExcelService.Utilities;
 
 namespace ExcelService.Cells
 {
   public class Cell : ExcelEntity, ICell
   {
+    public Cell(
+      object value,
+      int columnIndex,
+      ICellDataFormat format = null,
+      IActionDefinitions cellActions = null)
+      : this(value, ColumnConversions.NumberToName(columnIndex + 1), format, cellActions)
+    {
+    }
+
     public Cell(
       object value,
       string columnId,

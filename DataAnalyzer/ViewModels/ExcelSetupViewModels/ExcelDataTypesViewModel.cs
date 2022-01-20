@@ -170,8 +170,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     {
       switch (e.PropertyName)
       {
-        case nameof(this.excelSetupModel.ExcelConfiguration.ConfigurationName):
-          this.DataTypeConfigName = this.excelSetupModel.ExcelConfiguration.ConfigurationName;
+        case nameof(this.excelSetupModel.ExcelConfiguration.DataTypeConfigName):
+          this.DataTypeConfigName = this.excelSetupModel.ExcelConfiguration.DataTypeConfigName;
           break;
         case nameof(this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes):
           this.ParameterSelections.Clear();

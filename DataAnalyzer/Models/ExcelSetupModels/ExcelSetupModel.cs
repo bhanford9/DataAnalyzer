@@ -90,7 +90,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
       }
     }
 
-    public void SaveWorkbookConfiguration(string configName)  
+    public void SaveWorkbookConfiguration(string configName)
     {
       this.ExcelConfiguration.SaveWorkbookConfiguration(configName);
     }

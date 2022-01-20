@@ -4,13 +4,13 @@ using System;
 
 namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {
-  public class ExcelDataTypeListItemViewModel : LoadableRemovableRowViewModel
+  public class WorkbookConfigListItemViewModel : LoadableRemovableRowViewModel
   {
     private readonly ExcelConfigurationModel excelConfigurationModel = BaseSingleton<ExcelConfigurationModel>.Instance;
 
     protected override void DoLoad()
     {
-      this.excelConfigurationModel.LoadDataTypeConfigByName(this.Value);
+      this.excelConfigurationModel.LoadWorkbookConfigByName(this.Value);
     }
 
     protected override void InternalDoRemove()

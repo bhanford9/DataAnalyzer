@@ -13,7 +13,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
     public override void SetDescription(IActionParameters actionParameters)
     {
       AlignmentParameters alignmentParameters = actionParameters as AlignmentParameters;
-      this.Description = 
+      this.Description =
         $"Horizontal Alignment: {alignmentParameters.HorizontalAlignment}{Environment.NewLine}" +
         $"Vertical Alignment: {alignmentParameters.VerticalAlignment}{Environment.NewLine}";
 

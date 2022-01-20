@@ -27,9 +27,9 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations
     {
       StringSerialization filePath = new StringSerialization(value.FilePath, nameof(value.FilePath));
       StringSerialization name = new StringSerialization(value.Name, nameof(value.Name));
-      SingleSerializationCollection<ExcelAction, ExcelActionSerialization> excelActions = 
+      SingleSerializationCollection<ExcelAction, ExcelActionSerialization> excelActions =
         new SingleSerializationCollection<ExcelAction, ExcelActionSerialization>(value.WorkbookActions, nameof(value.WorkbookActions));
-      SingleSerializationCollection<WorksheetModel, WorksheetSerialization> worksheets = 
+      SingleSerializationCollection<WorksheetModel, WorksheetSerialization> worksheets =
         new SingleSerializationCollection<WorksheetModel, WorksheetSerialization>(value.Worksheets, nameof(value.Worksheets));
 
       return new List<ISerializationData>() { filePath, name, excelActions, worksheets };

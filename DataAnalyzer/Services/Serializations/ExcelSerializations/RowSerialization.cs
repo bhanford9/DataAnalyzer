@@ -24,7 +24,7 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations
     {
       SingleSerializationCollection<CellModel, CellSerialization> cells =
         new SingleSerializationCollection<CellModel, CellSerialization>(value.Cells, nameof(value.Cells));
-      SingleSerializationCollection<ExcelAction, ExcelActionSerialization> excelActions = 
+      SingleSerializationCollection<ExcelAction, ExcelActionSerialization> excelActions =
         new SingleSerializationCollection<ExcelAction, ExcelActionSerialization>(value.RowActions, nameof(value.RowActions));
 
       return new List<ISerializationData>() { cells, excelActions };

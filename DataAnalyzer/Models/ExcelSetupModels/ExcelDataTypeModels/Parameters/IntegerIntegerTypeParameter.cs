@@ -15,7 +15,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
     public IntegerIntegerTypeParameter(
       string integer1Name,
       string integer2Name,
-      ICellDataFormat cellDataFormat, 
+      ICellDataFormat cellDataFormat,
       Func<ITypeParameter, ICellDataFormat> createCellDataFormat)
       : base(cellDataFormat, createCellDataFormat)
     {

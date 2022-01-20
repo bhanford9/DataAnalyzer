@@ -10,13 +10,13 @@ namespace DataAnalyzer.Models.LoadedConfigurations
     private readonly string structureNameKey = "Name:        ";
     private string structureName = "Not set";
 
-    private readonly string dataTypeKey =      "Data Type:   ";
+    private readonly string dataTypeKey = "Data Type:   ";
     private string dataType = "Not set";
 
-    private readonly string exportTypeKey =    "Export Type: ";
+    private readonly string exportTypeKey = "Export Type: ";
     private string exportType = "Not set";
 
-    private readonly string groupingsKey =     "Groupings:   ";
+    private readonly string groupingsKey = "Groupings:   ";
     private int groupingsCount = 0;
 
     public string Name => "Data Structure";
@@ -24,7 +24,7 @@ namespace DataAnalyzer.Models.LoadedConfigurations
     public string DirectoryPathKey => this.directoryPathKey;
     public string DirectoryPathKeyValue => this.directoryPathKey + this.directoryPath;
     public string DirectoryPath
-    { 
+    {
       get => this.directoryPath;
       set
       {

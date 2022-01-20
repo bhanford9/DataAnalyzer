@@ -12,7 +12,7 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations
     {
     }
 
-    public WorksheetSerialization(WorksheetModel value, string parameterName) 
+    public WorksheetSerialization(WorksheetModel value, string parameterName)
       : base(value, parameterName)
     {
     }
@@ -27,9 +27,9 @@ namespace DataAnalyzer.Services.Serializations.ExcelSerializations
     protected override ICollection<ISerializationData> InitializeSelf(WorksheetModel value)
     {
       StringSerialization name = new StringSerialization(value.WorksheetName, nameof(value.WorksheetName));
-      SingleSerializationCollection<ExcelAction, ExcelActionSerialization> excelActions = 
+      SingleSerializationCollection<ExcelAction, ExcelActionSerialization> excelActions =
         new SingleSerializationCollection<ExcelAction, ExcelActionSerialization>(value.WorksheetActions, nameof(value.WorksheetActions));
-      SingleSerializationCollection<DataClusterModel, DataClusterSerialization> dataClusters = 
+      SingleSerializationCollection<DataClusterModel, DataClusterSerialization> dataClusters =
         new SingleSerializationCollection<DataClusterModel, DataClusterSerialization>(value.DataClusters, nameof(value.DataClusters));
 
       return new List<ISerializationData>() { name, excelActions, dataClusters };

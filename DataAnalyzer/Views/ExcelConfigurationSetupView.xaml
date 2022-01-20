@@ -62,10 +62,16 @@
                   Margin="0 -6 -1 -1"
                   Style="{StaticResource BaseVerticalTabControlStyle}">
         <TabControl.Resources>
-          <Style TargetType="TabItem" BasedOn="{StaticResource BaseVerticalTabItemStyle}">
-            
+          <Style TargetType="TabItem"
+                 BasedOn="{StaticResource BaseVerticalTabItemStyle}">
+            <Setter Property="Height" Value="80"/>
+
           </Style>
         </TabControl.Resources>
+
+        <TabItem Header="Dashboard">
+          <excelsetupviews:ExcelDashboardView/>
+        </TabItem>
         <TabItem Header="Workbooks">
           <excelsetupviews:ExcelWorkbookSetupView
             DataContext="{Binding DataContext.WorkbookActionViewModel, ElementName=ExcelConfigSetup}"/>

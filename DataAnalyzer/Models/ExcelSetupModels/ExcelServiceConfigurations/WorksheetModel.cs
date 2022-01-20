@@ -8,7 +8,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations
     public string WorksheetName { get; set; } = string.Empty;
 
     public ICollection<ExcelAction> WorksheetActions { get; set; } = new List<ExcelAction>();
-    
+
     public ICollection<DataClusterModel> DataClusters { get; set; } = new List<DataClusterModel>();
   }
 }

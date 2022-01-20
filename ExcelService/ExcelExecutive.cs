@@ -100,7 +100,7 @@ namespace ExcelService
 
     public void GenerateWorkbooks(ICollection<IWorkbook> workbooks)
     {
-
+      workbooks.ToList().ForEach(x => this.GenerateWorkbook(x));
     }
 
     private void HandleDataClusterHeader(IDataCluster dataCluster, int clusterIndex, IWorksheet worksheet, IXLWorkbook workbook)
