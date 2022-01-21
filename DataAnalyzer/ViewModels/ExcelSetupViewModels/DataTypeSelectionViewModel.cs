@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.Models.ExcelSetupModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using System;
 
@@ -6,6 +7,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 {
   public class DataTypeSelectionViewModel : BasePropertyChanged
   {
+    private readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
+
     private string dataName = string.Empty;
     private ITypeParameter selectedParameterType;
     private int startingSelectedIndex = 0;
@@ -44,6 +47,28 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
           this.Parameter2Value = nameValuePairs[3].ToString();
         }
       }
+
+      switch (typeParameter.Type)
+      {
+        case ParameterType.Integer:
+          (typeParameter as IntegerTypeParameter).IntegerName = this.Parameter1Name;
+          (typeParameter as IntegerTypeParameter).IntegerValue = int.Parse(this.Parameter1Value);
+          break;
+        case ParameterType.IntegerInteger:
+          (typeParameter as IntegerIntegerTypeParameter).Integer1Name = this.Parameter1Name;
+          (typeParameter as IntegerIntegerTypeParameter).Integer1Value = int.Parse(this.Parameter1Value);
+          (typeParameter as IntegerIntegerTypeParameter).Integer2Name = this.Parameter2Name;
+          (typeParameter as IntegerIntegerTypeParameter).Integer2Value = int.Parse(this.Parameter2Value);
+          break;
+        case ParameterType.IntegerBoolean:
+          (typeParameter as IntegerBooleanTypeParameter).IntegerName = this.Parameter1Name;
+          (typeParameter as IntegerBooleanTypeParameter).IntegerValue = int.Parse(this.Parameter1Value);
+          (typeParameter as IntegerBooleanTypeParameter).BooleanName = this.Parameter2Name;
+          (typeParameter as IntegerBooleanTypeParameter).BooleanValue = bool.Parse(this.Parameter2Value);
+          break;
+      }
+
+      this.SelectedParameterType = typeParameter;
     }
 
     public string DataName
@@ -63,30 +88,40 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
       get => this.selectedParameterType;
       set
       {
-        this.selectedParameterType = (ITypeParameter)Activator.CreateInstance(value.GetType(), value);
-        this.selectedParameterType.DataName = this.DataName;
+        if (this.selectedParameterType == null || string.IsNullOrEmpty(this.selectedParameterType.DataName) || !string.IsNullOrEmpty(value.DataName))
+        {
+          this.selectedParameterType = (ITypeParameter)Activator.CreateInstance(value.GetType(), value);
+          this.selectedParameterType.DataName = this.DataName;
+        }
 
         switch (this.selectedParameterType.Type)
         {
           case ParameterType.Integer:
             this.Parameter1Name = (this.selectedParameterType as IntegerTypeParameter).IntegerName;
             this.setParam1 = (typeParam, value) => (typeParam as IntegerTypeParameter).IntegerValue = int.Parse(value);
+            this.parameter1Value = this.Parameter1Value;
             break;
           case ParameterType.IntegerInteger:
             this.Parameter1Name = (this.selectedParameterType as IntegerIntegerTypeParameter).Integer1Name;
             this.Parameter2Name = (this.selectedParameterType as IntegerIntegerTypeParameter).Integer2Name;
             this.setParam1 = (typeParam, value) => (typeParam as IntegerIntegerTypeParameter).Integer1Value = int.Parse(value);
             this.setParam2 = (typeParam, value) => (typeParam as IntegerIntegerTypeParameter).Integer2Value = int.Parse(value);
+            this.parameter1Value = this.Parameter1Value;
+            this.parameter2Value = this.Parameter2Value;
             break;
           case ParameterType.IntegerBoolean:
             this.Parameter1Name = (this.selectedParameterType as IntegerBooleanTypeParameter).IntegerName;
             this.Parameter2Name = (this.selectedParameterType as IntegerBooleanTypeParameter).BooleanName;
             this.setParam1 = (typeParam, value) => (typeParam as IntegerBooleanTypeParameter).IntegerValue = int.Parse(value);
             this.setParam2 = (typeParam, value) => (typeParam as IntegerBooleanTypeParameter).BooleanValue = bool.Parse(value);
+            this.parameter1Value = this.Parameter1Value;
+            this.parameter2Value = this.Parameter2Value;
             break;
         }
 
         this.NotifyPropertyChanged(nameof(this.SelectedParameterType));
+        this.excelSetupModel.UpdateDataTypeForMember(this.DataName, this.selectedParameterType);
+        //}
       }
     }
 
@@ -108,7 +143,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
       set
       {
         this.NotifyPropertyChanged(nameof(this.Parameter1Value), ref this.parameter1Value, value);
-        this.setParam1(this.SelectedParameterType, value);
+        this.setParam1?.Invoke(this.SelectedParameterType, value);
       }
     }
 
@@ -118,7 +153,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
       set
       {
         this.NotifyPropertyChanged(nameof(this.Parameter2Value), ref this.parameter2Value, value);
-        this.setParam2(this.SelectedParameterType, value);
+        this.setParam2?.Invoke(this.SelectedParameterType, value);
       }
     }
   }

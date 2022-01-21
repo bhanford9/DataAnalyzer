@@ -8,14 +8,17 @@ namespace DataScraper.DataScrapers.TimeDataScrapers
 {
   public class QueryableDataScraper : IDataScraper
   {
+    private const string STD_LIB_NAME = "Standard Library";
+    private const string QUERYABLE_LIB_NAME = "Queryable Library";
+
     public ScraperType ScraperType => ScraperType.Queryable;
 
     public ICollection<IData> ScrapeFromFile(string filePath)
     {
       ICollection<IData> timeData = new List<IData>();
       QueryableTimeDataSetter dataSetter = new QueryableTimeDataSetter();
-      QueryableTimeData standardTimeDatum = new QueryableTimeData();
-      QueryableTimeData queryableTimeDatum = new QueryableTimeData();
+      QueryableTimeData standardTimeDatum = new QueryableTimeData { ExecuterName = STD_LIB_NAME };
+      QueryableTimeData queryableTimeDatum = new QueryableTimeData { ExecuterName = QUERYABLE_LIB_NAME };
 
       string[] lines = File.ReadAllLines(filePath);
 
@@ -25,8 +28,8 @@ namespace DataScraper.DataScrapers.TimeDataScrapers
         {
           timeData.Add(standardTimeDatum);
           timeData.Add(queryableTimeDatum);
-          standardTimeDatum = new QueryableTimeData();
-          queryableTimeDatum = new QueryableTimeData();
+          standardTimeDatum = new QueryableTimeData { ExecuterName = STD_LIB_NAME };
+          queryableTimeDatum = new QueryableTimeData { ExecuterName = QUERYABLE_LIB_NAME };
           continue;
         }
 

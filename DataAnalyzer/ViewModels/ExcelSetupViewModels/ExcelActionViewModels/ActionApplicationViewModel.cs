@@ -68,7 +68,12 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
     private ICollection<CheckableTreeViewItem> GetFlattenedWhereToApply()
     {
       ICollection<CheckableTreeViewItem> flattenedItems = new List<CheckableTreeViewItem>();
-      this.LoadIntoFlattened(this.WhereToApply.First(), flattenedItems);
+
+      if (this.WhereToApply.Count > 0)
+      {
+        this.LoadIntoFlattened(this.WhereToApply.First(), flattenedItems);
+      }
+
       return flattenedItems;
     }
 

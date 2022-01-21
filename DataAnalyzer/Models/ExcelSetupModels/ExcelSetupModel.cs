@@ -1,8 +1,12 @@
 ﻿using DataAnalyzer.Common.DataConverters.ExcelConverters;
 using DataAnalyzer.Common.DataObjects;
+using DataAnalyzer.Common.DataObjects.TimeStats.QueryableTimeStats;
 using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;
 using ExcelService.DataActions;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -79,6 +83,107 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             foreach (HeirarchalStats dataclusterStats in worksheetStats.Children)
             {
               DataClusterModel dataClusterModel = new DataClusterModel { Name = dataclusterStats.Key.ToString() };
+              foreach (IStats rowStats in dataclusterStats.Values)
+              {
+                RowModel rowModel = new RowModel();
+                ITypeParameter defaultType = BaseSingleton<ExcelDataTypeLibrary>.Instance.GetParameterTypes().First();
+
+                // don't like this, should find a better way to handle it
+                switch (this.configurationModel.SelectedDataType)
+                {
+                  case Services.StatType.Queryable:
+                    QueryableTimeStats queryableTimeStats = rowStats as QueryableTimeStats;
+                    rowModel.Cells = new List<CellModel>();
+                    rowModel.Cells.Add(new CellModel()
+                    {
+                      Value = queryableTimeStats.AverageTimeMillis,
+                      DataMemberName = nameof(queryableTimeStats.AverageTimeMillis),
+                      DataType = defaultType,
+                      ColumnIndex = 0
+                    });
+                    rowModel.Cells.Add(new CellModel()
+                    {
+                      Value = queryableTimeStats.CategoryType,
+                      DataMemberName = nameof(queryableTimeStats.CategoryType),
+                      DataType = defaultType,
+                      ColumnIndex = 1
+                    });
+                    rowModel.Cells.Add(new CellModel()
+                    {
+                      Value = queryableTimeStats.ContainerSize,
+                      DataMemberName = nameof(queryableTimeStats.ContainerSize),
+                      DataType = defaultType,
+                      ColumnIndex = 2
+                    });
+                    rowModel.Cells.Add(new CellModel()
+                    {
+                      Value = queryableTimeStats.ContainerType,
+                      DataMemberName = nameof(queryableTimeStats.ContainerType),
+                      DataType = defaultType,
+                      ColumnIndex = 3
+                    });
+                    rowModel.Cells.Add(new CellModel()
+                    {
+                      Value = queryableTimeStats.ExecuterName,
+                      DataMemberName = nameof(queryableTimeStats.ExecuterName),
+                      DataType = defaultType,
+                      ColumnIndex = 4
+                    });
+                    rowModel.Cells.Add(new CellModel()
+                    {
+                      Value = queryableTimeStats.FastestTimeMillis,
+                      DataMemberName = nameof(queryableTimeStats.FastestTimeMillis),
+                      DataType = defaultType,
+                      ColumnIndex = 5
+                    });
+                    rowModel.Cells.Add(new CellModel()
+                    {
+                      Value = queryableTimeStats.Iterations,
+                      DataMemberName = nameof(queryableTimeStats.Iterations),
+                      DataType = defaultType,
+                      ColumnIndex = 6
+                    });
+                    rowModel.Cells.Add(new CellModel()
+                    {
+                      Value = queryableTimeStats.MethodName,
+                      DataMemberName = nameof(queryableTimeStats.MethodName),
+                      DataType = defaultType,
+                      ColumnIndex = 7
+                    });
+                    rowModel.Cells.Add(new CellModel()
+                    {
+                      Value = queryableTimeStats.RangeTimeMillis,
+                      DataMemberName = nameof(queryableTimeStats.RangeTimeMillis),
+                      DataType = defaultType,
+                      ColumnIndex = 8
+                    });
+                    rowModel.Cells.Add(new CellModel()
+                    {
+                      Value = queryableTimeStats.SlowestTimeMillis,
+                      DataMemberName = nameof(queryableTimeStats.SlowestTimeMillis),
+                      DataType = defaultType,
+                      ColumnIndex = 9
+                    });
+                    rowModel.Cells.Add(new CellModel()
+                    {
+                      Value = queryableTimeStats.TotalTimeMillis,
+                      DataMemberName = nameof(queryableTimeStats.TotalTimeMillis),
+                      DataType = defaultType,
+                      ColumnIndex = 10
+                    });
+                    rowModel.Cells.Add(new CellModel()
+                    {
+                      Value = queryableTimeStats.TriggerType,
+                      DataMemberName = nameof(queryableTimeStats.TriggerType),
+                      DataType = defaultType,
+                      ColumnIndex = 11
+                    });
+                    break;
+                }
+
+                dataClusterModel.Rows.Add(rowModel);
+              }
+
               worksheetModel.DataClusters.Add(dataClusterModel);
             }
 
@@ -86,6 +191,23 @@ namespace DataAnalyzer.Models.ExcelSetupModels
           }
 
           this.ExcelConfiguration.WorkbookModels.Add(workbookModel);
+        }
+      }
+    }
+
+    public void UpdateDataTypeForMember(string memberName, ITypeParameter dataType)
+    {
+      foreach (WorkbookModel workbook in this.ExcelConfiguration.WorkbookModels)
+      {
+        foreach (WorksheetModel worksheet in workbook.Worksheets)
+        {
+          foreach (DataClusterModel dataCluster in worksheet.DataClusters)
+          {
+            foreach (RowModel row in dataCluster.Rows)
+            {
+              row.Cells.First(cell => cell.DataMemberName.Equals(memberName)).DataType = dataType;
+            }
+          }
         }
       }
     }

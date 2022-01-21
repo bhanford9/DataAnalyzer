@@ -91,6 +91,9 @@ namespace ExcelService
 
         this.UpdateActionDefinitions(worksheet, worksheet.SheetName, ActionPerformer.Worksheet);
         this.actionExecutive.PerformActions(closedXmlWorkbook, worksheet);
+
+        // TODO --> turn this into an action instead that can be turned on/off
+        closedXmlWorksheet.Columns().ToList().ForEach(col => col.AdjustToContents());
       });
 
       closedXmlWorkbook.SaveAs(workbook.FilePath);

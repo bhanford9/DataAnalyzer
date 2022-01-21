@@ -31,7 +31,7 @@ namespace ExcelService.DataClusters
 
       if (titles != null)
       {
-        this.Rows.Prepend(titles);
+        this.Rows = this.Rows.Prepend(titles).ToList();
       }
     }
 

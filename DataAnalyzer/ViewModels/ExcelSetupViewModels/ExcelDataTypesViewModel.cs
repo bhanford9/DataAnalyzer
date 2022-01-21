@@ -46,7 +46,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     public ObservableCollection<ExcelDataTypeListItemViewModel> SavedConfigurations { get; }
       = new ObservableCollection<ExcelDataTypeListItemViewModel>();
 
-    public ObservableCollection<ITypeParameter> ParameterTypes { get; }
+    public ObservableCollection<ITypeParameter> ParameterTypes { get; set; }
       = new ObservableCollection<ITypeParameter>();
 
     public ObservableCollection<DataTypeSelectionViewModel> ParameterSelections { get; }
@@ -150,10 +150,10 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
             {
               this.ParameterSelections.Add(new DataTypeSelectionViewModel()
               {
-                DataName = name,
                 SelectedParameterType = new NoTypeParameter(
                   new GeneralNumericCellDataFormat(),
                   (param) => new GeneralNumericCellDataFormat()),
+                DataName = name,
               });
             }
 

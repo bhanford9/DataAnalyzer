@@ -33,16 +33,32 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters
 
     public static IDataCluster DataClusterModelToExcelDataCluster(DataClusterModel dataClusterModel)
     {
-      DataCluster dataCluster = new DataCluster(
-        dataClusterModel.Rows.Select(x => RowModelToExcelRow(x)).ToList(),
-        dataClusterModel.Name,
-        dataClusterModel.StartRowIndex,
-        dataClusterModel.StartColIndex,
-        true,  // generates titels
-        ExcelActionConverter.ToExcelDefinitions(dataClusterModel.DataClusterActions.Select(x => x.ActionParameters).ToList()),
-        true); // uses cluster id
+      if (dataClusterModel.Rows.Count == 0)
+      {
+        DataCluster dataCluster = new DataCluster(
+          dataClusterModel.Rows.Select(x => RowModelToExcelRow(x)).ToList(),
+          dataClusterModel.Name,
+          dataClusterModel.StartRowIndex,
+          dataClusterModel.StartColIndex,
+          true,  // generates titles
+          ExcelActionConverter.ToExcelDefinitions(dataClusterModel.DataClusterActions.Select(x => x.ActionParameters).ToList()),
+          true); // uses cluster id
 
-      return dataCluster;
+        return dataCluster;
+      }
+      else
+      {
+        DataCluster dataCluster = new DataCluster(
+          dataClusterModel.Rows.Select(x => RowModelToExcelRow(x)).ToList(),
+          dataClusterModel.Name,
+          dataClusterModel.StartRowIndex,
+          dataClusterModel.StartColIndex,
+          new Row(dataClusterModel.Rows.First().Cells.Select(x => (ICell)new Cell(x.DataMemberName, x.ColumnIndex)).ToList()),
+          ExcelActionConverter.ToExcelDefinitions(dataClusterModel.DataClusterActions.Select(x => x.ActionParameters).ToList()),
+          true); // uses cluster id
+
+        return dataCluster;
+      }
     }
 
     public static IRow RowModelToExcelRow(RowModel rowModel)
