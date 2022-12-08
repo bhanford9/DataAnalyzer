@@ -1,8 +1,8 @@
 ﻿namespace DataAnalyzer.Services
 {
-  public enum StatType
-  {
-    Queryable,
-    NotApplicable
-  }
+    public enum StatType
+    {
+        Queryable,
+        NotApplicable
+    }
 }

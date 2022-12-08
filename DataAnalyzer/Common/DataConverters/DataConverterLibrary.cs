@@ -4,23 +4,23 @@ using DataAnalyzer.Common.DataConverters.TimeStatConverters.QueryableTimeStatCon
 
 namespace DataAnalyzer.Common.DataConverters
 {
-  public class DataConverterLibrary
-  {
-    private readonly ICollection<IDataConverter> converters = new List<IDataConverter>();
-
-    private void LoadConverters()
+    internal class DataConverterLibrary
     {
-      this.converters.Add(new QueryableTimeStatsConverter());
-    }
+        private readonly ICollection<IDataConverter> converters = new List<IDataConverter>();
 
-    public DataConverterLibrary()
-    {
-      this.LoadConverters();
-    }
+        private void LoadConverters()
+        {
+            this.converters.Add(new QueryableTimeStatsConverter());
+        }
 
-    public IDataConverter GetConverter(ConverterType type)
-    {
-      return this.converters.First(x => x.Type == type);
+        public DataConverterLibrary()
+        {
+            this.LoadConverters();
+        }
+
+        public IDataConverter GetConverter(ConverterType type)
+        {
+            return this.converters.First(x => x.Type == type);
+        }
     }
-  }
 }

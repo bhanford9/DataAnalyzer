@@ -5,34 +5,34 @@ using DataScraper.Data;
 
 namespace DataAnalyzer.Common.DataConverters.TimeStatConverters.QueryableTimeStatConverters
 {
-  public class QueryableTimeStatsConverter : TimeStatsConverter
-  {
-    public override ConverterType Type => ConverterType.Queryable;
-
-    protected override void InternalToAnalyzer(IData timeData, IStats timeStats)
+    internal class QueryableTimeStatsConverter : TimeStatsConverter
     {
-      QueryableTimeData inData = timeData as QueryableTimeData;
-      QueryableTimeStats outData = timeStats as QueryableTimeStats;
+        public override ConverterType Type => ConverterType.Queryable;
 
-      outData.CategoryType = CategoryConverter.ToAnalyzerData(inData.CategoryType);
-      outData.ContainerType = ContainerConverter.ToAnalyzerData(inData.ContainerType);
-      outData.TriggerType = TriggerConverter.ToAnalyzerData(inData.TriggerType);
-      outData.MethodName = inData.MethodName;
-    }
+        protected override void InternalToAnalyzer(IData timeData, IStats timeStats)
+        {
+            QueryableTimeData inData = timeData as QueryableTimeData;
+            QueryableTimeStats outData = timeStats as QueryableTimeStats;
 
-    public override bool IsValidData(IData timeData)
-    {
-      return timeData is QueryableTimeData;
-    }
+            outData.CategoryType = CategoryConverter.ToAnalyzerData(inData.CategoryType);
+            outData.ContainerType = ContainerConverter.ToAnalyzerData(inData.ContainerType);
+            outData.TriggerType = TriggerConverter.ToAnalyzerData(inData.TriggerType);
+            outData.MethodName = inData.MethodName;
+        }
 
-    public override IStats InstantiateStats()
-    {
-      return new QueryableTimeStats();
-    }
+        public override bool IsValidData(IData timeData)
+        {
+            return timeData is QueryableTimeData;
+        }
 
-    public override IData InstantiateData()
-    {
-      return new QueryableTimeData();
+        public override IStats InstantiateStats()
+        {
+            return new QueryableTimeStats();
+        }
+
+        public override IData InstantiateData()
+        {
+            return new QueryableTimeData();
+        }
     }
-  }
 }

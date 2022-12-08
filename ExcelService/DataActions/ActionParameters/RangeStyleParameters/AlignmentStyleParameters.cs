@@ -2,12 +2,12 @@
 
 namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
 {
-  public class AlignmentStyleParameters : ActionParameters
-  {
-    public override string Name => "Alignments";
+    public class AlignmentStyleParameters : ActionParameters
+    {
+        public override string Name => "Alignments";
 
-    public AlignmentValues Alignments { get; set; } = new AlignmentValues();
+        public AlignmentValues Alignments { get; set; } = new AlignmentValues();
 
-    public override ActionCategory Category => ActionCategory.AlignmentStyle;
-  }
+        public override ActionCategory Category => ActionCategory.AlignmentStyle;
+    }
 }

@@ -3,9 +3,9 @@ using System;
 
 namespace DataAnalyzer.Common.DataConfigurations.GroupingConfigurations
 {
-  public interface IGroupingConfiguration
-  {
-    void AddCondition(Func<IStats, IComparable> propertyGetter);
-    IComparable GetProperty(IStats stats);
-  }
+    internal interface IGroupingConfiguration
+    {
+        void AddCondition(Func<IStats, IComparable> propertyGetter);
+        IComparable GetProperty(IStats stats);
+    }
 }

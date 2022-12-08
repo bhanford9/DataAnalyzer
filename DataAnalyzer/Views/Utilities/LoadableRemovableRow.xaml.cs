@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Views.Utilities
 {
-  public partial class LoadableRemovableRow : UserControl
-  {
-    public LoadableRemovableRow()
+    public partial class LoadableRemovableRow : UserControl
     {
-      this.InitializeComponent();
+        public LoadableRemovableRow()
+        {
+            this.InitializeComponent();
+        }
     }
-  }
 }

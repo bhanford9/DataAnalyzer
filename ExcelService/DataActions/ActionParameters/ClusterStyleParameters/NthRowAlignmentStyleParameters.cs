@@ -2,12 +2,12 @@
 
 namespace ExcelService.DataActions.ActionParameters.ClusterStyleParameters
 {
-  public class NthRowAlignmentStyleParameters : AlignmentStyleParameters
-  {
-    public override ActionPerformer Performer { get; set; } = ActionPerformer.DataCluster;
+    public class NthRowAlignmentStyleParameters : AlignmentStyleParameters
+    {
+        public override ActionPerformer Performer { get; set; } = ActionPerformer.DataCluster;
 
-    public int NthRow { get; set; }
+        public int NthRow { get; set; }
 
-    public override ActionCategory Category => ActionCategory.AlignmentStyle;
-  }
+        public override ActionCategory Category => ActionCategory.AlignmentStyle;
+    }
 }

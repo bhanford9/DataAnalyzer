@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews
 {
-  public partial class BackgroundCreationView : UserControl
-  {
-    public BackgroundCreationView()
+    public partial class BackgroundCreationView : UserControl
     {
-      this.InitializeComponent();
+        public BackgroundCreationView()
+        {
+            this.InitializeComponent();
+        }
     }
-  }
 }

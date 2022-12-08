@@ -3,10 +3,10 @@ using System.ComponentModel;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
 {
-  public interface IActionsSummaryModel : INotifyPropertyChanged
-  {
-    void LoadHeirarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem);
-    void LoadHeirarchicalSummariesFromStats(ActionSummaryTreeViewItem baseItem);
-    void SaveConfiguration(string configName);
-  }
+    internal interface IActionsSummaryModel : INotifyPropertyChanged
+    {
+        void LoadHeirarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem);
+        void LoadHeirarchicalSummariesFromStats(ActionSummaryTreeViewItem baseItem);
+        void SaveConfiguration(string configName);
+    }
 }

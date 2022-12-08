@@ -2,9 +2,9 @@
 
 namespace ExcelService
 {
-  public interface IExcelEntity
-  {
-    IActionDefinitions ActionDefinitions { get; }
-    string Name { get; }
-  }
+    public interface IExcelEntity
+    {
+        IActionDefinitions ActionDefinitions { get; }
+        string Name { get; }
+    }
 }

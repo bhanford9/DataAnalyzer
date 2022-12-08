@@ -4,23 +4,23 @@ using System;
 
 namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {
-  class ConfigurationFileListItemViewModel : LoadableRemovableRowViewModel
-  {
-    private readonly ConfigurationModel configurationCreationModel = BaseSingleton<ConfigurationModel>.Instance;
-
-    public ConfigurationFileListItemViewModel()
+    class ConfigurationFileListItemViewModel : LoadableRemovableRowViewModel
     {
-    }
+        private readonly ConfigurationModel configurationCreationModel = BaseSingleton<ConfigurationModel>.Instance;
 
-    protected override void DoLoad()
-    {
-      this.configurationCreationModel.LoadConfiguration(this.Value);
-    }
+        public ConfigurationFileListItemViewModel()
+        {
+        }
 
-    protected override void InternalDoRemove()
-    {
-      // TODO --> prompt user with confirmation
-      throw new NotImplementedException();
+        protected override void DoLoad()
+        {
+            this.configurationCreationModel.LoadConfiguration(this.Value);
+        }
+
+        protected override void InternalDoRemove()
+        {
+            // TODO --> prompt user with confirmation
+            throw new NotImplementedException();
+        }
     }
-  }
 }

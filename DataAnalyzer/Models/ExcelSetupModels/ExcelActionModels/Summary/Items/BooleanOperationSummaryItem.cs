@@ -3,19 +3,19 @@ using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
 {
-  public class BooleanOperationSummaryItem : SummaryItem
-  {
-    public override bool IsApplicable(IActionParameters actionParameters)
+    internal class BooleanOperationSummaryItem : SummaryItem
     {
-      return actionParameters is BooleanOperationParameters;
-    }
+        public override bool IsApplicable(IActionParameters actionParameters)
+        {
+            return actionParameters is BooleanOperationParameters;
+        }
 
-    public override void SetDescription(IActionParameters actionParameters)
-    {
-      BooleanOperationParameters booleanOperationParameters = actionParameters as BooleanOperationParameters;
+        public override void SetDescription(IActionParameters actionParameters)
+        {
+            BooleanOperationParameters booleanOperationParameters = actionParameters as BooleanOperationParameters;
 
-      this.Description =
-        $"Background Color: {booleanOperationParameters.DoPerform}{Environment.NewLine}";
+            this.Description =
+              $"Background Color: {booleanOperationParameters.DoPerform}{Environment.NewLine}";
+        }
     }
-  }
 }

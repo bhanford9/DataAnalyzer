@@ -4,24 +4,24 @@ using System.Collections.Generic;
 
 namespace ExcelService.Worksheets
 {
-  public class Worksheet : ExcelEntity, IWorksheet
-  {
-    public Worksheet(
-      string name,
-      ICollection<IDataCluster> dataClusters,
-      IActionDefinitions worksheetActions = null)
+    public class Worksheet : ExcelEntity, IWorksheet
     {
-      this.SheetName = name;
-      this.DataClusters = dataClusters;
+        public Worksheet(
+          string name,
+          ICollection<IDataCluster> dataClusters,
+          IActionDefinitions worksheetActions = null)
+        {
+            this.SheetName = name;
+            this.DataClusters = dataClusters;
 
-      if (worksheetActions != null)
-      {
-        this.ActionDefinitions = worksheetActions;
-      }
+            if (worksheetActions != null)
+            {
+                this.ActionDefinitions = worksheetActions;
+            }
+        }
+
+        public string SheetName { get; } = string.Empty;
+
+        public ICollection<IDataCluster> DataClusters { get; } = new List<IDataCluster>();
     }
-
-    public string SheetName { get; } = string.Empty;
-
-    public ICollection<IDataCluster> DataClusters { get; } = new List<IDataCluster>();
-  }
 }

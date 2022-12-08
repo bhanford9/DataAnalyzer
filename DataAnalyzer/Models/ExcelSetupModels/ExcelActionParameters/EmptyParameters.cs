@@ -3,13 +3,13 @@ using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
-  public class EmptyParameters : ActionParameters
-  {
-    public override ActionCategory ActionCategory => ActionCategory.Unknown;
-
-    public override string ToString()
+    internal class EmptyParameters : ActionParameters
     {
-      return Environment.NewLine;
+        public override ActionCategory ActionCategory => ActionCategory.Unknown;
+
+        public override string ToString()
+        {
+            return Environment.NewLine;
+        }
     }
-  }
 }

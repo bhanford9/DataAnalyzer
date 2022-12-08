@@ -3,21 +3,21 @@ using System.Collections.ObjectModel;
 
 namespace DataAnalyzer.ViewModels
 {
-  public class LoadedConfigurationItemViewModel : BasePropertyChanged
-  {
-    private string title = string.Empty;
-
-    public LoadedConfigurationItemViewModel()
+    internal class LoadedConfigurationItemViewModel : BasePropertyChanged
     {
-    }
+        private string title = string.Empty;
 
-    public ObservableCollection<string> ConfigData { get; }
-      = new ObservableCollection<string>();
+        public LoadedConfigurationItemViewModel()
+        {
+        }
 
-    public string Title
-    {
-      get => this.title;
-      set => this.NotifyPropertyChanged(nameof(this.Title), ref this.title, value);
+        public ObservableCollection<string> ConfigData { get; }
+          = new ObservableCollection<string>();
+
+        public string Title
+        {
+            get => this.title;
+            set => this.NotifyPropertyChanged(ref this.title, value);
+        }
     }
-  }
 }

@@ -1,22 +1,22 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace DataAnalyzer.Common.Mvvm
 {
-  public class BasePropertyChanged : INotifyPropertyChanged
-  {
-    public event PropertyChangedEventHandler PropertyChanged;
+    internal class BasePropertyChanged : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
 
-    protected void NotifyPropertyChanged(string propertyName)
-    {
-      this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = null) =>
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        protected void NotifyPropertyChanged<T>(ref T property, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (property == null || !property.Equals(value))
+            {
+                property = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
-    protected void NotifyPropertyChanged<T>(string propertyName, ref T property, T value)
-    {
-      if (property == null || !property.Equals(value))
-      {
-        property = value;
-        this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-      }
-    }
-  }
 }

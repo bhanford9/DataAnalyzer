@@ -6,24 +6,24 @@ using System.Linq;
 
 namespace DataAnalyzer.Common.DataConfigurations
 {
-  public abstract class DataConfiguration : IDataConfiguration
-  {
-    protected ICollection<IGroupingConfiguration> groupingConfigurations = new List<IGroupingConfiguration>();
-
-    public abstract int GroupingLevels { get; protected set; }
-
-    public ICollection<IGroupingConfiguration> GroupingConfigurations => this.groupingConfigurations;
-
-    public void AddGroupingRule(int level, Func<IStats, IComparable> propertyGetter)
+    internal abstract class DataConfiguration : IDataConfiguration
     {
-      if (level >= this.groupingConfigurations.Count)
-      {
-        this.groupingConfigurations.Add(new GroupingConfiguration(propertyGetter));
-      }
-      else
-      {
-        this.groupingConfigurations.ElementAt(level).AddCondition(propertyGetter);
-      }
+        protected ICollection<IGroupingConfiguration> groupingConfigurations = new List<IGroupingConfiguration>();
+
+        public abstract int GroupingLevels { get; protected set; }
+
+        public ICollection<IGroupingConfiguration> GroupingConfigurations => this.groupingConfigurations;
+
+        public void AddGroupingRule(int level, Func<IStats, IComparable> propertyGetter)
+        {
+            if (level >= this.groupingConfigurations.Count)
+            {
+                this.groupingConfigurations.Add(new GroupingConfiguration(propertyGetter));
+            }
+            else
+            {
+                this.groupingConfigurations.ElementAt(level).AddCondition(propertyGetter);
+            }
+        }
     }
-  }
 }

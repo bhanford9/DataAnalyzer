@@ -2,19 +2,19 @@
 
 namespace DataScraper.DataKeyValues.TimeKeyValues.TimeValues
 {
-  public class QueryableContainerValue : ExtractableValue<ContainerType>
-  {
-    public override ContainerType ExtractValue(string str)
+    public class QueryableContainerValue : ExtractableValue<ContainerType>
     {
-      return str switch
-      {
-        "Array" => ContainerType.Array,
-        "Deque" => ContainerType.Deque,
-        "List" => ContainerType.List,
-        "MultiSet" => ContainerType.MultiSet,
-        "Set" => ContainerType.Set,
-        _ => ContainerType.Vector,
-      };
+        public override ContainerType ExtractValue(string str)
+        {
+            return str switch
+            {
+                "Array" => ContainerType.Array,
+                "Deque" => ContainerType.Deque,
+                "List" => ContainerType.List,
+                "MultiSet" => ContainerType.MultiSet,
+                "Set" => ContainerType.Set,
+                _ => ContainerType.Vector,
+            };
+        }
     }
-  }
 }

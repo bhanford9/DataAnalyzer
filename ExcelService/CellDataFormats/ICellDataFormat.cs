@@ -1,11 +1,11 @@
 ﻿namespace ExcelService.CellDataFormats
 {
-  public interface ICellDataFormat
-  {
-    string Name { get; }
+    public interface ICellDataFormat
+    {
+        string Name { get; }
 
-    string Example { get; }
+        string Example { get; }
 
-    string GetFormatString();
-  }
+        string GetFormatString();
+    }
 }

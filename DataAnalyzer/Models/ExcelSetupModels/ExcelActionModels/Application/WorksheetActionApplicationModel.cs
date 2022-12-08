@@ -8,82 +8,82 @@ using System.Linq;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 {
-  public class WorksheetActionApplicationModel : ActionApplicationModel
-  {
-    private const string PATH_DELIMITER = "~~";
-
-    public const string ACTION_APPLIED_KEY = "Worksheet Action Applied";
-
-    protected override void InternalApplyAction(CheckableTreeViewItem item, IEditActionViewModel action)
+    internal class WorksheetActionApplicationModel : ActionApplicationModel
     {
-      string[] pathSplit = item.Path.Split(PATH_DELIMITER);
-      if (pathSplit.Length != 2)
-      {
-        return;
-      }
+        private const string PATH_DELIMITER = "~~";
 
-      string workbookName = pathSplit[0];
-      WorkbookModel workbook = this.excelSetupModel.ExcelConfiguration.WorkbookModels.FirstOrDefault(x => x.Name.Equals(workbookName));
+        public const string ACTION_APPLIED_KEY = "Worksheet Action Applied";
 
-      if (workbook != default)
-      {
-        string worksheetName = pathSplit[1];
-        WorksheetModel worksheet = workbook.Worksheets.FirstOrDefault(x => x.WorksheetName.Equals(worksheetName));
-
-        if (worksheet != default)
+        protected override void InternalApplyAction(CheckableTreeViewItem item, IEditActionViewModel action)
         {
-          worksheet.WorksheetActions.Add(new ExcelAction()
-          {
-            ActionParameters = action.ActionParameters,
-            Description = action.Description,
-            Name = action.ActionName
-          });
+            string[] pathSplit = item.Path.Split(PATH_DELIMITER);
+            if (pathSplit.Length != 2)
+            {
+                return;
+            }
 
-          this.excelSetupModel.NotiyExcelActionApplied(ACTION_APPLIED_KEY);
+            string workbookName = pathSplit[0];
+            WorkbookModel workbook = this.excelSetupModel.ExcelConfiguration.WorkbookModels.FirstOrDefault(x => x.Name.Equals(workbookName));
+
+            if (workbook != default)
+            {
+                string worksheetName = pathSplit[1];
+                WorksheetModel worksheet = workbook.Worksheets.FirstOrDefault(x => x.WorksheetName.Equals(worksheetName));
+
+                if (worksheet != default)
+                {
+                    worksheet.WorksheetActions.Add(new ExcelAction()
+                    {
+                        ActionParameters = action.ActionParameters,
+                        Description = action.Description,
+                        Name = action.ActionName
+                    });
+
+                    this.excelSetupModel.BroadcastExcelActionApplied(ACTION_APPLIED_KEY);
+                }
+                else
+                {
+                    throw new System.Exception($"Failed to find worksheet model with name: {worksheetName}");
+                }
+            }
+            else
+            {
+                throw new System.Exception($"Failed to find workbook model with name: {workbookName}");
+            }
         }
-        else
+
+        protected override ObservableCollection<ExcelAction> GetActionCollection()
         {
-          throw new System.Exception($"Failed to find worksheet model with name: {worksheetName}");
+            return this.excelSetupModel.AvailableWorksheetActions;
         }
-      }
-      else
-      {
-        throw new System.Exception($"Failed to find workbook model with name: {workbookName}");
-      }
-    }
 
-    protected override ObservableCollection<ExcelAction> GetActionCollection()
-    {
-      return this.excelSetupModel.AvailableWorksheetActions;
-    }
-
-    protected override void InternalLoadWhereToApply(CheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
-    {
-      foreach (HeirarchalStats workbookStats in heirarchalStats)
-      {
-        string workbookPath = workbookStats.Key.ToString();
-
-        baseItem.Children.Add(new CheckableTreeViewItem()
+        protected override void InternalLoadWhereToApply(CheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
         {
-          IsChecked = true,
-          IsLeaf = false,
-          Name = workbookStats.Key.ToString(),
-          Path = workbookPath,
-        });
+            foreach (HeirarchalStats workbookStats in heirarchalStats)
+            {
+                string workbookPath = workbookStats.Key.ToString();
 
-        foreach (HeirarchalStats worksheetStats in workbookStats.Children)
-        {
-          string worksheetPath = workbookPath + PATH_DELIMITER + worksheetStats.Key.ToString();
+                baseItem.Children.Add(new CheckableTreeViewItem()
+                {
+                    IsChecked = true,
+                    IsLeaf = false,
+                    Name = workbookStats.Key.ToString(),
+                    Path = workbookPath,
+                });
 
-          baseItem.Children.Last().Children.Add(new CheckableTreeViewItem()
-          {
-            IsChecked = true,
-            IsLeaf = true,
-            Name = worksheetStats.Key.ToString(),
-            Path = worksheetPath
-          });
+                foreach (HeirarchalStats worksheetStats in workbookStats.Children)
+                {
+                    string worksheetPath = workbookPath + PATH_DELIMITER + worksheetStats.Key.ToString();
+
+                    baseItem.Children.Last().Children.Add(new CheckableTreeViewItem()
+                    {
+                        IsChecked = true,
+                        IsLeaf = true,
+                        Name = worksheetStats.Key.ToString(),
+                        Path = worksheetPath
+                    });
+                }
+            }
         }
-      }
     }
-  }
 }

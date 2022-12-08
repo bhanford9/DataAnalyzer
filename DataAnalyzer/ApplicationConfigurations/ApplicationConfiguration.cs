@@ -2,8 +2,8 @@
 
 namespace DataAnalyzer.ApplicationConfigurations
 {
-  [Serializable]
-  public class ApplicationConfiguration : VersionedConfiguration
-  {
-  }
+    [Serializable]
+    internal class ApplicationConfiguration : VersionedConfiguration
+    {
+    }
 }

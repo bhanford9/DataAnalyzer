@@ -8,37 +8,37 @@ using System.Linq;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
 {
-  public class WorkbookActionsSummaryModel : ActionsSummaryModel
-  {
-    public override ObservableCollection<ExcelAction> GetActionCollection()
+    internal class WorkbookActionsSummaryModel : ActionsSummaryModel
     {
-      return this.excelSetupModel.AvailableWorkbookActions;
-    }
-
-    public override void LoadHeirarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem)
-    {
-      foreach (ActionSummaryTreeViewItem workbookItem in baseItem.Children)
-      {
-        WorkbookModel workbook = this.excelSetupModel.ExcelConfiguration.WorkbookModels.FirstOrDefault(x => x.Name.Equals(workbookItem.Name));
-
-        if (workbook != default && workbook.WorkbookActions.Count > 0)
+        public override ObservableCollection<ExcelAction> GetActionCollection()
         {
-          workbookItem.Description = workbook.WorkbookActions.Select(x => x.ActionParameters.ToString()).Aggregate((a, b) => a + Environment.NewLine + b);
+            return this.excelSetupModel.AvailableWorkbookActions;
         }
-      }
-    }
 
-    protected override void InternalLoadWhereToApply(ActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
-    {
-      foreach (HeirarchalStats workbookStats in heirarchalStats)
-      {
-        baseItem.Children.Add(new ActionSummaryTreeViewItem()
+        public override void LoadHeirarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem)
         {
-          IsLeaf = true,
-          Name = workbookStats.Key.ToString(),
-          Id = "Workbook"
-        });
-      }
+            foreach (ActionSummaryTreeViewItem workbookItem in baseItem.Children)
+            {
+                WorkbookModel workbook = this.excelSetupModel.ExcelConfiguration.WorkbookModels.FirstOrDefault(x => x.Name.Equals(workbookItem.Name));
+
+                if (workbook != default && workbook.WorkbookActions.Count > 0)
+                {
+                    workbookItem.Description = workbook.WorkbookActions.Select(x => x.ActionParameters.ToString()).Aggregate((a, b) => a + Environment.NewLine + b);
+                }
+            }
+        }
+
+        protected override void InternalLoadWhereToApply(ActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
+        {
+            foreach (HeirarchalStats workbookStats in heirarchalStats)
+            {
+                baseItem.Children.Add(new ActionSummaryTreeViewItem()
+                {
+                    IsLeaf = true,
+                    Name = workbookStats.Key.ToString(),
+                    Id = "Workbook"
+                });
+            }
+        }
     }
-  }
 }

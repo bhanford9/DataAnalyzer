@@ -14,121 +14,121 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
 {
-  public class ActionApplicationViewModel : BasePropertyChanged
-  {
-    private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-    private readonly EditActionLibrary editActionLibrary = BaseSingleton<EditActionLibrary>.Instance;
-
-    private readonly IActionApplicationModel actionApplicationModel;
-
-    private IEditActionViewModel currentAction;
-
-    private readonly BaseCommand applyAction;
-
-    public ActionApplicationViewModel(
-      ICollection<ExcelAction> actions,
-      IActionApplicationModel actionApplicationModel)
+    internal class ActionApplicationViewModel : BasePropertyChanged
     {
-      this.actionApplicationModel = actionApplicationModel;
+        private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
+        private readonly EditActionLibrary editActionLibrary = BaseSingleton<EditActionLibrary>.Instance;
 
-      this.applyAction = new BaseCommand((obj) => this.DoApplyAction());
+        private readonly IActionApplicationModel actionApplicationModel;
 
-      EmptyParameters empty = new EmptyParameters();
-      this.currentAction = this.editActionLibrary.GetEditAction(new EmptyParameters());
-      this.currentAction.ActionParameters = empty;
+        private IEditActionViewModel currentAction;
 
-      actions.ToList().ForEach(action =>
-      {
-        this.Actions.Add(new ActionApplicationListItemViewModel(actionApplicationModel)
+        private readonly BaseCommand applyAction;
+
+        public ActionApplicationViewModel(
+          ICollection<ExcelAction> actions,
+          IActionApplicationModel actionApplicationModel)
         {
-          IsRemovable = false,
-          Value = action.Name,
-          ToolTipText = action.Description
-        });
-      });
+            this.actionApplicationModel = actionApplicationModel;
 
-      this.statsModel.PropertyChanged += this.StatsModelPropertyChanged;
-      this.actionApplicationModel.PropertyChanged += this.ActionApplicationModelPropertyChanged;
-    }
+            this.applyAction = new BaseCommand((obj) => this.DoApplyAction());
 
-    public ObservableCollection<CheckableTreeViewItem> WhereToApply { get; }
-      = new ObservableCollection<CheckableTreeViewItem>();
+            EmptyParameters empty = new EmptyParameters();
+            this.currentAction = this.editActionLibrary.GetEditAction(new EmptyParameters());
+            this.currentAction.ActionParameters = empty;
 
-    public ObservableCollection<LoadableRemovableRowViewModel> Actions { get; }
-      = new ObservableCollection<LoadableRemovableRowViewModel>();
+            actions.ToList().ForEach(action =>
+            {
+                this.Actions.Add(new ActionApplicationListItemViewModel(actionApplicationModel)
+                {
+                    IsRemovable = false,
+                    Value = action.Name,
+                    ToolTipText = action.Description
+                });
+            });
 
-    public ICommand ApplyAction => this.applyAction;
-
-    public IEditActionViewModel CurrentAction
-    {
-      get => this.currentAction;
-      set => this.NotifyPropertyChanged(nameof(this.CurrentAction), ref this.currentAction, value);
-    }
-
-    private ICollection<CheckableTreeViewItem> GetFlattenedWhereToApply()
-    {
-      ICollection<CheckableTreeViewItem> flattenedItems = new List<CheckableTreeViewItem>();
-
-      if (this.WhereToApply.Count > 0)
-      {
-        this.LoadIntoFlattened(this.WhereToApply.First(), flattenedItems);
-      }
-
-      return flattenedItems;
-    }
-
-    private void LoadIntoFlattened(CheckableTreeViewItem baseItem, ICollection<CheckableTreeViewItem> flattened)
-    {
-      foreach (CheckableTreeViewItem child in baseItem.Children)
-      {
-        if (child.Children != null && child.Children.Count > 0)
-        {
-          this.LoadIntoFlattened(child, flattened);
+            this.statsModel.PropertyChanged += this.StatsModelPropertyChanged;
+            this.actionApplicationModel.PropertyChanged += this.ActionApplicationModelPropertyChanged;
         }
 
-        flattened.Add(child);
-      }
+        public ObservableCollection<CheckableTreeViewItem> WhereToApply { get; }
+          = new ObservableCollection<CheckableTreeViewItem>();
 
-      flattened.Add(baseItem);
-    }
+        public ObservableCollection<LoadableRemovableRowViewModel> Actions { get; }
+          = new ObservableCollection<LoadableRemovableRowViewModel>();
 
-    private void DoApplyAction()
-    {
-      this.GetFlattenedWhereToApply()
-        .Where(x => x.IsChecked && x.IsLeaf)
-        .ToList()
-        .ForEach(treeViewItem =>
+        public ICommand ApplyAction => this.applyAction;
+
+        public IEditActionViewModel CurrentAction
         {
-          this.CurrentAction.ApplyParameterSettings();
-          this.actionApplicationModel.ApplyAction(treeViewItem, this.CurrentAction);
-        });
-    }
+            get => this.currentAction;
+            set => this.NotifyPropertyChanged(ref this.currentAction, value);
+        }
 
-    private void StatsModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-      switch (e.PropertyName)
-      {
-        case nameof(this.statsModel.HeirarchalStats):
-          this.WhereToApply.Clear();
-          this.WhereToApply.Add(new CheckableTreeViewItem() { Name = "All Workbooks", Path = string.Empty });
+        private ICollection<CheckableTreeViewItem> GetFlattenedWhereToApply()
+        {
+            ICollection<CheckableTreeViewItem> flattenedItems = new List<CheckableTreeViewItem>();
 
-          this.actionApplicationModel.LoadWhereToApply(this.WhereToApply.First());
-          break;
-      }
-    }
+            if (this.WhereToApply.Count > 0)
+            {
+                this.LoadIntoFlattened(this.WhereToApply.First(), flattenedItems);
+            }
 
-    private void ActionApplicationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-    {
-      switch (e.PropertyName)
-      {
-        case nameof(this.actionApplicationModel.LoadedActionName):
-          ExcelAction action = this.actionApplicationModel.GetLoadedAction();
-          this.CurrentAction = this.editActionLibrary.GetEditAction(action.ActionParameters);
-          this.CurrentAction.ActionName = action.Name;
-          this.CurrentAction.Description = action.Description;
-          this.CurrentAction.ActionParameters = action.ActionParameters;
-          break;
-      }
+            return flattenedItems;
+        }
+
+        private void LoadIntoFlattened(CheckableTreeViewItem baseItem, ICollection<CheckableTreeViewItem> flattened)
+        {
+            foreach (CheckableTreeViewItem child in baseItem.Children)
+            {
+                if (child.Children != null && child.Children.Count > 0)
+                {
+                    this.LoadIntoFlattened(child, flattened);
+                }
+
+                flattened.Add(child);
+            }
+
+            flattened.Add(baseItem);
+        }
+
+        private void DoApplyAction()
+        {
+            this.GetFlattenedWhereToApply()
+              .Where(x => x.IsChecked && x.IsLeaf)
+              .ToList()
+              .ForEach(treeViewItem =>
+              {
+                  this.CurrentAction.ApplyParameterSettings();
+                  this.actionApplicationModel.ApplyAction(treeViewItem, this.CurrentAction);
+              });
+        }
+
+        private void StatsModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(this.statsModel.HeirarchalStats):
+                    this.WhereToApply.Clear();
+                    this.WhereToApply.Add(new CheckableTreeViewItem() { Name = "All Workbooks", Path = string.Empty });
+
+                    this.actionApplicationModel.LoadWhereToApply(this.WhereToApply.First());
+                    break;
+            }
+        }
+
+        private void ActionApplicationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(this.actionApplicationModel.LoadedActionName):
+                    ExcelAction action = this.actionApplicationModel.GetLoadedAction();
+                    this.CurrentAction = this.editActionLibrary.GetEditAction(action.ActionParameters);
+                    this.CurrentAction.ActionName = action.Name;
+                    this.CurrentAction.Description = action.Description;
+                    this.CurrentAction.ActionParameters = action.ActionParameters;
+                    break;
+            }
+        }
     }
-  }
 }

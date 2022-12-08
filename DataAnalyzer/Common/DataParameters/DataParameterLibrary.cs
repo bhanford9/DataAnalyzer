@@ -5,24 +5,24 @@ using System.Linq;
 
 namespace DataAnalyzer.Common.DataParameters
 {
-  public class DataParameterLibrary
-  {
-    private readonly ICollection<IDataParameterCollection> parameters = new List<IDataParameterCollection>();
-
-    public DataParameterLibrary()
+    internal class DataParameterLibrary
     {
-      this.LoadParameters();
-    }
+        private readonly ICollection<IDataParameterCollection> parameters = new List<IDataParameterCollection>();
 
-    public IDataParameterCollection GetParameters(StatType statType)
-    {
-      return this.parameters.FirstOrDefault(x => x.StatType == statType);
-    }
+        public DataParameterLibrary()
+        {
+            this.LoadParameters();
+        }
 
-    private void LoadParameters()
-    {
-      this.parameters.Clear();
-      this.parameters.Add(new QueryableParameters());
+        public IDataParameterCollection GetParameters(StatType statType)
+        {
+            return this.parameters.FirstOrDefault(x => x.StatType == statType);
+        }
+
+        private void LoadParameters()
+        {
+            this.parameters.Clear();
+            this.parameters.Add(new QueryableParameters());
+        }
     }
-  }
 }

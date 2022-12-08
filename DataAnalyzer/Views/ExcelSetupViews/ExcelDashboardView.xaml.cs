@@ -3,14 +3,14 @@ using System.Windows.Controls;
 
 namespace DataAnalyzer.Views.ExcelSetupViews
 {
-  public partial class ExcelDashboardView : UserControl
-  {
-    private readonly ExcelDashboardViewModel viewModel = new ExcelDashboardViewModel();
-
-    public ExcelDashboardView()
+    public partial class ExcelDashboardView : UserControl
     {
-      this.InitializeComponent();
-      this.DataContext = this.viewModel;
+        private readonly ExcelDashboardViewModel viewModel = new ExcelDashboardViewModel();
+
+        public ExcelDashboardView()
+        {
+            this.InitializeComponent();
+            this.DataContext = this.viewModel;
+        }
     }
-  }
 }

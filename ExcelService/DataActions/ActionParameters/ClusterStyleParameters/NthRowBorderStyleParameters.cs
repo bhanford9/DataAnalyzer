@@ -2,12 +2,12 @@
 
 namespace ExcelService.DataActions.ActionParameters.ClusterStyleParameters
 {
-  public class NthRowBorderStyleParameters : BorderStyleParameters
-  {
-    public override ActionPerformer Performer { get; set; } = ActionPerformer.DataCluster;
+    public class NthRowBorderStyleParameters : BorderStyleParameters
+    {
+        public override ActionPerformer Performer { get; set; } = ActionPerformer.DataCluster;
 
-    public int NthRow { get; set; }
+        public int NthRow { get; set; }
 
-    public override ActionCategory Category => ActionCategory.BorderStyle;
-  }
+        public override ActionCategory Category => ActionCategory.BorderStyle;
+    }
 }

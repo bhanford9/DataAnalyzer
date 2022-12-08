@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Views.ExcelSetupViews
 {
-  public partial class ActionApplicationView : UserControl
-  {
-    public ActionApplicationView()
+    public partial class ActionApplicationView : UserControl
     {
-      this.InitializeComponent();
+        public ActionApplicationView()
+        {
+            this.InitializeComponent();
+        }
     }
-  }
 }

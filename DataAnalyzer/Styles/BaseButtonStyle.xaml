@@ -185,7 +185,7 @@
     <Setter Property="ContentTemplate">
       <Setter.Value>
         <DataTemplate>
-            <iconPacks:PackIconMaterialDesign
+          <iconPacks:PackIconMaterialDesign
               Kind="Delete"
               HorizontalAlignment="Center"
               VerticalAlignment="Center"/>

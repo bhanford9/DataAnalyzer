@@ -1,7 +1,7 @@
 ﻿namespace DataScraper.DataScrapers
 {
-  public enum ScraperType
-  {
-    Queryable
-  }
+    public enum ScraperType
+    {
+        Queryable
+    }
 }

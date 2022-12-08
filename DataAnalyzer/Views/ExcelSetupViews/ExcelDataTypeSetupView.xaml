@@ -6,11 +6,14 @@
              xmlns:local="clr-namespace:DataAnalyzer.Views.ExcelSetupViews"
              xmlns:utils="clr-namespace:DataAnalyzer.Views.Utilities"
              xmlns:converters="clr-namespace:DataAnalyzer.Common.Mvvm.ValueConverters"
+             xmlns:dataTypeConfigViews="clr-namespace:DataAnalyzer.Views.ExcelSetupViews.DataTypeConfigViews"
              mc:Ignorable="d" 
              Name="ExcelDataTypeSetup"
              d:DesignHeight="450" d:DesignWidth="800">
   <UserControl.Resources>
+    <converters:ExcelDataTypeNoParamToVisibility x:Key="NoParamToVisibility"/>
     <converters:ExcelDataTypeOneParamToVisibility x:Key="OneParamToVisibility"/>
+    <converters:ExcelDataTypeToConcreteIntParam x:Key="IntParamToConcrete"/>
     <converters:ExcelDataTypeTwoParamToVisibility x:Key="TwoParamToVisibility"/>
     <converters:ExcelDataTypeIsBooleanToVisibility x:Key="ParamIsBooleanToVisibility"/>
     <converters:ExcelDataTypeNotBooleanToVisibility x:Key="ParamNotBooleanToVisibility"/>
@@ -41,7 +44,7 @@
                      Text="{Binding ConfigurationDirectory}"/>
         </Grid>
       </GroupBox>
-      
+
       <GroupBox Header="Saved Configurations"
                 Grid.Row="1">
         <ScrollViewer>
@@ -89,119 +92,32 @@
                 <WrapPanel Orientation="Horizontal" IsItemsHost="True"></WrapPanel>
               </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-          
-            <ItemsControl.ItemTemplate>
-              <DataTemplate>              
-                <Grid Margin="4"
-                      MinWidth="270"
-                      MinHeight="160">
-                  <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                  </Grid.ColumnDefinitions>
-                  <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                  </Grid.RowDefinitions>
-                  <Grid.Resources>
-                    <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
-                      <Setter Property="Margin" Value="10 0 4 0"/>
-                    </Style>
-                  </Grid.Resources>
 
-                  <Border Grid.Column="0"
-                          Grid.ColumnSpan="3"
-                          Grid.Row="0"
-                          Grid.RowSpan="5"
-                          Background="{StaticResource LightBackground}"
-                          CornerRadius="5"/>
+            <!--<ItemsControl.Resources>
+              <DataTemplate DataType="{x:Type dataTypeConfigViews:NoParameterDataTypeView}">
 
-                  <Border BorderBrush="{StaticResource MainAccent}"
-                          CornerRadius="0"
-                          Grid.Column="1"
-                          Background="Transparent"
-                          BorderThickness="0 0 0 2"/>
-                  <TextBlock Grid.Row="0"
-                             Margin="6 8"
-                             Grid.Column="1"
-                             Grid.ColumnSpan="2"
-                             Style="{StaticResource LargeTextBlockStyle}"
-                             FontWeight="Bold"
-                             Text="{Binding DataName}"/>
-
-                  <ComboBox ItemsSource="{Binding DataContext.ParameterTypes, ElementName=ExcelDataTypeSetup}"
-                            SelectedItem="{Binding Path=SelectedParameterType, Mode=TwoWay}"
-                            SelectedIndex="{Binding StartingSelectedIndex, Mode=OneTime}"
-                            DisplayMemberPath="Name"
-                            Margin="4 5 2 1"
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Width="250"
-                            Name="ComboBoxSelectedItem"/>
-
-                  <Grid Grid.Row="2"
-                        Grid.Column="1"
-                        Grid.ColumnSpan="2">
-                    <Grid.ColumnDefinitions>
-                      <ColumnDefinition Width="Auto"/>
-                      <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="Example:"
-                               Style="{StaticResource BaseTextBlockStyle}"
-                               Grid.Row="2"
-                               Margin="10 0 4 0"/>
-                    <TextBlock Text="{Binding SelectedItem.Example, ElementName=ComboBoxSelectedItem}"
-                               Style="{StaticResource BaseTextBlockStyle}"
-                               Grid.Row="2"
-                               Grid.Column="1"/>
-                  </Grid>
-                
-                  <Grid Grid.Row="3"
-                        Grid.Column="1"
-                        Margin="0 8 0 0">
-                  
-                    <Grid.RowDefinitions>
-                      <RowDefinition Height="Auto"/>
-                      <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                  
-                    <Grid Grid.Row="0"
-                          Visibility="{Binding SelectedParameterType.Type, Converter={StaticResource OneParamToVisibility}}">
-                      <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                      </Grid.ColumnDefinitions>
-                      <TextBlock Grid.Column="0"
-                                 Margin="10 0 4 0"
-                                 Text="{Binding Parameter1Name}"/>
-                      <TextBox Grid.Column="1"
-                               Text="{Binding Parameter1Value}"/>
-                    </Grid>
-                  
-                    <Grid Grid.Row="1"
-                          Visibility="{Binding SelectedParameterType.Type, Converter={StaticResource TwoParamToVisibility}}">
-                      <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                      </Grid.ColumnDefinitions>
-                      <TextBlock Grid.Column="0"
-                                 Margin="10 0 4 0"
-                                 Text="{Binding Parameter2Name}"/>
-                      <TextBox Grid.Column="1"
-                               Visibility="{Binding SelectedParameterType.Type, Converter={StaticResource ParamNotBooleanToVisibility}}"
-                               Text="{Binding Parameter2Value}"/>
-                      <CheckBox Grid.Column="1"
-                                Visibility="{Binding SelectedParameterType.Type, Converter={StaticResource ParamIsBooleanToVisibility}}"
-                                IsChecked="{Binding Parameter2Value}"/>
-                    </Grid>
-                  </Grid>
-
+                <Grid>
+                  <dataTypeConfigViews:NoParameterDataTypeView
+                    Visibility="{Binding DataTypeName, Converter={StaticResource NoParamToVisibility}}"
+                    DataContext="{Binding}"/>
                 </Grid>
+              </DataTemplate>
+            </ItemsControl.Resources>-->
+
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <Grid>
+                  <dataTypeConfigViews:NoParameterDataTypeView
+                    Visibility="{Binding DataTypeName, Converter={StaticResource NoParamToVisibility}}"
+                    DataContext="{Binding}"/>
+                  <dataTypeConfigViews:OneParameterDataTypeView
+                    Visibility="{Binding DataTypeName, Converter={StaticResource OneParamToVisibility}}"
+                    DataContext="{Binding Converter={StaticResource IntParamToConcrete}}"/>
+                  <dataTypeConfigViews:TwoParameterDataTypeView
+                    Visibility="{Binding DataTypeName, Converter={StaticResource TwoParamToVisibility}}"
+                    DataContext="{Binding}"/>
+                </Grid>
+
               </DataTemplate>
             </ItemsControl.ItemTemplate>
           </ItemsControl>

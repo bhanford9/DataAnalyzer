@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
 {
-  public class ExcelSavedConfigurationsViewModel : BasePropertyChanged
-  {
-    public ExcelSavedConfigurationsViewModel()
+    internal class ExcelSavedConfigurationsViewModel : BasePropertyChanged
     {
+        public ExcelSavedConfigurationsViewModel()
+        {
 
+        }
     }
-  }
 }

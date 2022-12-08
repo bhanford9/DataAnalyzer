@@ -1,7 +1,7 @@
 ﻿namespace DataAnalyzer.Common.DataConverters
 {
-  public enum ConverterType
-  {
-    Queryable
-  }
+    public enum ConverterType
+    {
+        Queryable
+    }
 }

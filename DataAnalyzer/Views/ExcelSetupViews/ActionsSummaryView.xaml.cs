@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Views.ExcelSetupViews
 {
-  public partial class ActionsSummaryView : UserControl
-  {
-    public ActionsSummaryView()
+    public partial class ActionsSummaryView : UserControl
     {
-      this.InitializeComponent();
+        public ActionsSummaryView()
+        {
+            this.InitializeComponent();
+        }
     }
-  }
 }

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Common.DataConverters
 {
-  public interface IDataConverter
-  {
-    ConverterType Type { get; }
+    internal interface IDataConverter
+    {
+        ConverterType Type { get; }
 
-    bool IsValidData(IData timeData);
-    ICollection<IStats> ToAnalyzerStats(ICollection<IData> timeData);
-    IStats ToAnalyzerStats(IData timeData);
-  }
+        bool IsValidData(IData timeData);
+        ICollection<IStats> ToAnalyzerStats(ICollection<IData> timeData);
+        IStats ToAnalyzerStats(IData timeData);
+    }
 }

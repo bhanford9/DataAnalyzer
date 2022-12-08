@@ -6,78 +6,78 @@ using System.Collections.ObjectModel;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
-  public class AlignmentEditViewModel : EditActionViewModel
-  {
-    private string selectedHorizontalAlignment = string.Empty;
-    private string selectedVerticalAlignment = string.Empty;
-    private int nth = 0;
-    private readonly EnumUtilities enumUtilities = new EnumUtilities();
-
-    public AlignmentEditViewModel()
+    internal class AlignmentEditViewModel : EditActionViewModel
     {
+        private string selectedHorizontalAlignment = string.Empty;
+        private string selectedVerticalAlignment = string.Empty;
+        private int nth = 0;
+        private readonly EnumUtilities enumUtilities = new EnumUtilities();
+
+        public AlignmentEditViewModel()
+        {
+        }
+
+        public AlignmentEditViewModel(IActionCreationModel actionCreationModel, IEditActionViewModel toCopy)
+          : base(actionCreationModel, toCopy)
+        {
+        }
+
+        public ObservableCollection<string> HorizontalAlignments { get; }
+          = new ObservableCollection<string>();
+
+        public ObservableCollection<string> VerticalAlignments { get; }
+          = new ObservableCollection<string>();
+
+        public string SelectedHorizontalAlignment
+        {
+            get => this.selectedHorizontalAlignment;
+            set => this.NotifyPropertyChanged(ref this.selectedHorizontalAlignment, value);
+        }
+
+        public string SelectedVerticalAlignment
+        {
+            get => this.selectedVerticalAlignment;
+            set => this.NotifyPropertyChanged(ref this.selectedVerticalAlignment, value);
+        }
+
+        public int Nth
+        {
+            get => this.nth;
+            set => this.NotifyPropertyChanged(ref this.nth, value);
+        }
+
+        public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
+        {
+            AlignmentEditViewModel viewModel = new AlignmentEditViewModel(this.actionCreationModel, this);
+            AlignmentParameters alignmentParameters = parameters as AlignmentParameters;
+            viewModel.SelectedHorizontalAlignment = alignmentParameters.HorizontalAlignment.ToString();
+            viewModel.SelectedVerticalAlignment = alignmentParameters.VerticalAlignment.ToString();
+            viewModel.Nth = alignmentParameters.Nth;
+            return viewModel;
+        }
+
+        public override bool IsApplicable(IActionParameters parameters)
+        {
+            return parameters is AlignmentParameters;
+        }
+
+        protected override void DoAct()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void InternalInit(IEditActionViewModel toCopy)
+        {
+            this.enumUtilities.LoadNames(typeof(HorizontalAlignment), this.HorizontalAlignments);
+            this.enumUtilities.LoadNames(typeof(VerticalAlignment), this.VerticalAlignments);
+        }
+
+        public override void ApplyParameterSettings()
+        {
+            AlignmentParameters alignmentParameters = this.ActionParameters as AlignmentParameters;
+            alignmentParameters.HorizontalAlignment = Enum.Parse<HorizontalAlignment>(this.SelectedHorizontalAlignment);
+            alignmentParameters.VerticalAlignment = Enum.Parse<VerticalAlignment>(this.SelectedVerticalAlignment);
+            alignmentParameters.Nth = this.Nth;
+        }
     }
-
-    public AlignmentEditViewModel(IActionCreationModel actionCreationModel, IEditActionViewModel toCopy)
-      : base(actionCreationModel, toCopy)
-    {
-    }
-
-    public ObservableCollection<string> HorizontalAlignments { get; }
-      = new ObservableCollection<string>();
-
-    public ObservableCollection<string> VerticalAlignments { get; }
-      = new ObservableCollection<string>();
-
-    public string SelectedHorizontalAlignment
-    {
-      get => this.selectedHorizontalAlignment;
-      set => this.NotifyPropertyChanged(nameof(this.SelectedHorizontalAlignment), ref this.selectedHorizontalAlignment, value);
-    }
-
-    public string SelectedVerticalAlignment
-    {
-      get => this.selectedVerticalAlignment;
-      set => this.NotifyPropertyChanged(nameof(this.SelectedVerticalAlignment), ref this.selectedVerticalAlignment, value);
-    }
-
-    public int Nth
-    {
-      get => this.nth;
-      set => this.NotifyPropertyChanged(nameof(this.Nth), ref this.nth, value);
-    }
-
-    public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
-    {
-      AlignmentEditViewModel viewModel = new AlignmentEditViewModel(this.actionCreationModel, this);
-      AlignmentParameters alignmentParameters = parameters as AlignmentParameters;
-      viewModel.SelectedHorizontalAlignment = alignmentParameters.HorizontalAlignment.ToString();
-      viewModel.SelectedVerticalAlignment = alignmentParameters.VerticalAlignment.ToString();
-      viewModel.Nth = alignmentParameters.Nth;
-      return viewModel;
-    }
-
-    public override bool IsApplicable(IActionParameters parameters)
-    {
-      return parameters is AlignmentParameters;
-    }
-
-    protected override void DoAct()
-    {
-      throw new NotImplementedException();
-    }
-
-    protected override void InternalInit(IEditActionViewModel toCopy)
-    {
-      this.enumUtilities.LoadNames(typeof(HorizontalAlignment), this.HorizontalAlignments);
-      this.enumUtilities.LoadNames(typeof(VerticalAlignment), this.VerticalAlignments);
-    }
-
-    public override void ApplyParameterSettings()
-    {
-      AlignmentParameters alignmentParameters = this.ActionParameters as AlignmentParameters;
-      alignmentParameters.HorizontalAlignment = Enum.Parse<HorizontalAlignment>(this.SelectedHorizontalAlignment);
-      alignmentParameters.VerticalAlignment = Enum.Parse<VerticalAlignment>(this.SelectedVerticalAlignment);
-      alignmentParameters.Nth = this.Nth;
-    }
-  }
 }

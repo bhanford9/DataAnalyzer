@@ -5,12 +5,12 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Common.DataConfigurations
 {
-  public interface IDataConfiguration
-  {
-    int GroupingLevels { get; }
+    internal interface IDataConfiguration
+    {
+        int GroupingLevels { get; }
 
-    ICollection<IGroupingConfiguration> GroupingConfigurations { get; }
+        ICollection<IGroupingConfiguration> GroupingConfigurations { get; }
 
-    void AddGroupingRule(int level, Func<IStats, IComparable> propertyGetter);
-  }
+        void AddGroupingRule(int level, Func<IStats, IComparable> propertyGetter);
+    }
 }

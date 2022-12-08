@@ -2,14 +2,14 @@
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-  public class RowViewModel : BasePropertyChanged
-  {
-    private string value = string.Empty;
-
-    public string Value
+    internal class RowViewModel : BasePropertyChanged
     {
-      get => this.value;
-      set => this.NotifyPropertyChanged(nameof(this.Value), ref this.value, value);
+        private string value = string.Empty;
+
+        public string Value
+        {
+            get => this.value;
+            set => this.NotifyPropertyChanged(ref this.value, value);
+        }
     }
-  }
 }

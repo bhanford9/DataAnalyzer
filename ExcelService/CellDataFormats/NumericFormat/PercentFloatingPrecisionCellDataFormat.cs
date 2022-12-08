@@ -1,36 +1,36 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat
 {
-  public class PercentFloatingPrecisionCellDataFormat : ICellDataFormat
-  {
-    private readonly int precisionCount = 1;
-
-    public string Name => "Percent with Decimals";
-
-    public string Example
+    public class PercentFloatingPrecisionCellDataFormat : ICellDataFormat
     {
-      get
-      {
-        if (this.precisionCount == 1)
+        private readonly int precisionCount = 1;
+
+        public string Name => "Percent with Decimals";
+
+        public string Example
         {
-          return "6.3%";
+            get
+            {
+                if (this.precisionCount == 1)
+                {
+                    return "6.3%";
+                }
+                if (this.precisionCount == 2)
+                {
+                    return "6.30%";
+                }
+
+                return "6.39" + new string(new string('0', this.precisionCount - 2)) + "%";
+            }
         }
-        if (this.precisionCount == 2)
+
+        public PercentFloatingPrecisionCellDataFormat(int precisionCount)
         {
-          return "6.30%";
+            this.precisionCount = precisionCount < 1 ? 1 : precisionCount;
         }
 
-        return "6.39" + new string(new string('0', this.precisionCount - 2)) + "%";
-      }
+        public string GetFormatString()
+        {
+            return "0." + new string('0', this.precisionCount) + "%";
+        }
     }
-
-    public PercentFloatingPrecisionCellDataFormat(int precisionCount)
-    {
-      this.precisionCount = precisionCount < 1 ? 1 : precisionCount;
-    }
-
-    public string GetFormatString()
-    {
-      return "0." + new string('0', this.precisionCount) + "%";
-    }
-  }
 }

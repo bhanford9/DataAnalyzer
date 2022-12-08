@@ -5,14 +5,14 @@ using DataScraper.DataScrapers;
 
 namespace DataAnalyzer.Services
 {
-  public class ScraperService
-  {
-    private readonly ScraperLibrary scraperLibrary = new ScraperLibrary();
-
-    public ICollection<IStats> ScrapeFromFile(string file, IDataConverter converter)
+    internal class ScraperService
     {
-      IDataScraper scraper = this.scraperLibrary.GetScraper(DataScraper.DataScrapers.ScraperType.Queryable);
-      return converter.ToAnalyzerStats(scraper.ScrapeFromFile(file));
+        private readonly ScraperLibrary scraperLibrary = new ScraperLibrary();
+
+        public ICollection<IStats> ScrapeFromFile(string file, IDataConverter converter)
+        {
+            IDataScraper scraper = this.scraperLibrary.GetScraper(DataScraper.DataScrapers.ScraperType.Queryable);
+            return converter.ToAnalyzerStats(scraper.ScrapeFromFile(file));
+        }
     }
-  }
 }

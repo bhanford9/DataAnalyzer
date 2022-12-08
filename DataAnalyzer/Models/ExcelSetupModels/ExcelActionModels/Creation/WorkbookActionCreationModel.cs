@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation
 {
-  public class WorkbookActionCreationModel : ActionCreationModel
-  {
-    protected override ObservableCollection<ExcelAction> GetActionCollection()
+    internal class WorkbookActionCreationModel : ActionCreationModel
     {
-      return this.excelSetupModel.AvailableWorkbookActions;
+        protected override ObservableCollection<ExcelAction> GetActionCollection()
+        {
+            return this.excelSetupModel.AvailableWorkbookActions;
+        }
     }
-  }
 }

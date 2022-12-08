@@ -3,14 +3,14 @@ using System.Windows;
 
 namespace DataAnalyzer
 {
-  public partial class MainWindow : Window
-  {
-    private readonly MainViewModel viewModel = new MainViewModel();
-
-    public MainWindow()
+    public partial class MainWindow : Window
     {
-      this.InitializeComponent();
-      this.DataContext = this.viewModel;
+        private readonly MainViewModel viewModel = new MainViewModel();
+
+        public MainWindow()
+        {
+            this.InitializeComponent();
+            this.DataContext = this.viewModel;
+        }
     }
-  }
 }

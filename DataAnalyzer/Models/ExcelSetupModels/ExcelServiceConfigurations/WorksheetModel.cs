@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations
 {
-  public class WorksheetModel : BasePropertyChanged
-  {
-    public string WorksheetName { get; set; } = string.Empty;
+    internal class WorksheetModel : BasePropertyChanged
+    {
+        public string WorksheetName { get; set; } = string.Empty;
 
-    public ICollection<ExcelAction> WorksheetActions { get; set; } = new List<ExcelAction>();
+        public ICollection<ExcelAction> WorksheetActions { get; set; } = new List<ExcelAction>();
 
-    public ICollection<DataClusterModel> DataClusters { get; set; } = new List<DataClusterModel>();
-  }
+        public ICollection<DataClusterModel> DataClusters { get; set; } = new List<DataClusterModel>();
+    }
 }

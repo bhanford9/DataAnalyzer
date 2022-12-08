@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Views.ExcelSetupViews
 {
-  public partial class ExcelDataClusterSetupView : UserControl
-  {
-    public ExcelDataClusterSetupView()
+    public partial class ExcelDataClusterSetupView : UserControl
     {
-      this.InitializeComponent();
+        public ExcelDataClusterSetupView()
+        {
+            this.InitializeComponent();
+        }
     }
-  }
 }

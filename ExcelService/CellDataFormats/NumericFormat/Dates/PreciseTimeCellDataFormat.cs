@@ -1,14 +1,14 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat.Dates
 {
-  public class PreciseTimeCellDataFormat : ICellDataFormat
-  {
-    public string Example => "12:00:00";
-
-    public string Name => "Time with Seconds";
-
-    public string GetFormatString()
+    public class PreciseTimeCellDataFormat : ICellDataFormat
     {
-      return "h:mm:ss";
+        public string Example => "12:00:00";
+
+        public string Name => "Time with Seconds";
+
+        public string GetFormatString()
+        {
+            return "h:mm:ss";
+        }
     }
-  }
 }

@@ -3,18 +3,18 @@ using DataAnalyzer.Services;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
-  public abstract class ActionParameters : BasePropertyChanged, IActionParameters
-  {
-    private string name = string.Empty;
-
-    public abstract ActionCategory ActionCategory { get; }
-
-    public string Name
+    internal abstract class ActionParameters : BasePropertyChanged, IActionParameters
     {
-      get => this.name;
-      set => this.NotifyPropertyChanged(nameof(this.Name), ref this.name, value);
-    }
+        private string name = string.Empty;
 
-    public abstract override string ToString();
-  }
+        public abstract ActionCategory ActionCategory { get; }
+
+        public string Name
+        {
+            get => this.name;
+            set => this.NotifyPropertyChanged(ref this.name, value);
+        }
+
+        public abstract override string ToString();
+    }
 }

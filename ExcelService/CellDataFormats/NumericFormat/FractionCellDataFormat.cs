@@ -1,30 +1,30 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat
 {
-  public class FractionCellDataFormat : ICellDataFormat
-  {
-    private readonly int precisionCount = 1;
-
-    public string Example
+    public class FractionCellDataFormat : ICellDataFormat
     {
-      get
-      {
-        string numerator = new string('1', this.precisionCount);
-        string denominator = new string('3', this.precisionCount);
-        return numerator + "/" + denominator;
-      }
-    }
+        private readonly int precisionCount = 1;
 
-    public string Name => "Fraction";
+        public string Example
+        {
+            get
+            {
+                string numerator = new string('1', this.precisionCount);
+                string denominator = new string('3', this.precisionCount);
+                return numerator + "/" + denominator;
+            }
+        }
 
-    public FractionCellDataFormat(int precisionCount)
-    {
-      this.precisionCount = precisionCount < 1 ? 1 : precisionCount;
-    }
+        public string Name => "Fraction";
 
-    public string GetFormatString()
-    {
-      string qs = new string('?', this.precisionCount);
-      return "# " + qs + "/" + qs;
+        public FractionCellDataFormat(int precisionCount)
+        {
+            this.precisionCount = precisionCount < 1 ? 1 : precisionCount;
+        }
+
+        public string GetFormatString()
+        {
+            string qs = new string('?', this.precisionCount);
+            return "# " + qs + "/" + qs;
+        }
     }
-  }
 }

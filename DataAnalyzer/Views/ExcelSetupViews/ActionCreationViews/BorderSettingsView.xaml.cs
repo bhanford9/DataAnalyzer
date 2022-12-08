@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews
 {
-  public partial class BorderSettingsView : UserControl
-  {
-    public BorderSettingsView()
+    public partial class BorderSettingsView : UserControl
     {
-      this.InitializeComponent();
+        public BorderSettingsView()
+        {
+            this.InitializeComponent();
+        }
     }
-  }
 }

@@ -2,44 +2,44 @@
 
 namespace DataAnalyzer.Models.LoadedConfigurations
 {
-  public class LoadedInputFiles : BasePropertyChanged
-  {
-    private readonly string directoryPathKey = "Directory: ";
-    private string directoryPath = "Not set";
-
-    private readonly string dataTypeKey = "Data Type: ";
-    private string dataType = "Not set";
-
-    public string Name => "Input Files";
-
-    public string DirectoryPathKey => this.directoryPathKey;
-    public string DirectoryPathKeyValue => this.directoryPathKey + this.directoryPath;
-    public string DirectoryPath
+    internal class LoadedInputFiles : BasePropertyChanged
     {
-      get => this.directoryPath;
-      set
-      {
-        if (this.directoryPath != value)
-        {
-          this.directoryPath = value;
-          this.NotifyPropertyChanged(nameof(this.DirectoryPathKeyValue));
-        }
-      }
-    }
+        private readonly string directoryPathKey = "Directory: ";
+        private string directoryPath = "Not set";
 
-    public string DataTypeKey => this.dataTypeKey;
-    public string DataTypeKeyValue => this.dataTypeKey + this.dataType;
-    public string DataType
-    {
-      get => this.dataType;
-      set
-      {
-        if (this.dataType != value)
+        private readonly string dataTypeKey = "Data TypeParameter: ";
+        private string dataType = "Not set";
+
+        public string Name => "Input Files";
+
+        public string DirectoryPathKey => this.directoryPathKey;
+        public string DirectoryPathKeyValue => this.directoryPathKey + this.directoryPath;
+        public string DirectoryPath
         {
-          this.dataType = value;
-          this.NotifyPropertyChanged(nameof(this.DataTypeKeyValue));
+            get => this.directoryPath;
+            set
+            {
+                if (this.directoryPath != value)
+                {
+                    this.directoryPath = value;
+                    this.NotifyPropertyChanged(nameof(this.DirectoryPathKeyValue));
+                }
+            }
         }
-      }
+
+        public string DataTypeKey => this.dataTypeKey;
+        public string DataTypeKeyValue => this.dataTypeKey + this.dataType;
+        public string DataType
+        {
+            get => this.dataType;
+            set
+            {
+                if (this.dataType != value)
+                {
+                    this.dataType = value;
+                    this.NotifyPropertyChanged(nameof(this.DataTypeKeyValue));
+                }
+            }
+        }
     }
-  }
 }

@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Views
 {
-  public partial class ConfigurationGroupingRuleRow : UserControl
-  {
-    public ConfigurationGroupingRuleRow()
+    public partial class ConfigurationGroupingRuleRow : UserControl
     {
-      this.InitializeComponent();
+        public ConfigurationGroupingRuleRow()
+        {
+            this.InitializeComponent();
+        }
     }
-  }
 }

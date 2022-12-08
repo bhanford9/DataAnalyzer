@@ -3,9 +3,9 @@ using DataAnalyzer.ViewModels.Utilities;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 {
-  public interface IActionApplicationModel : IExcelActionModel
-  {
-    void ApplyAction(CheckableTreeViewItem item, IEditActionViewModel action);
-    void LoadWhereToApply(CheckableTreeViewItem baseItem);
-  }
+    internal interface IActionApplicationModel : IExcelActionModel
+    {
+        void ApplyAction(CheckableTreeViewItem item, IEditActionViewModel action);
+        void LoadWhereToApply(CheckableTreeViewItem baseItem);
+    }
 }

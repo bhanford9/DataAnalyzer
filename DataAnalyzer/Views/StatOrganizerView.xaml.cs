@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Views
 {
-  public partial class StatOrganizerView : UserControl
-  {
-    public StatOrganizerView()
+    public partial class StatOrganizerView : UserControl
     {
-      this.InitializeComponent();
+        public StatOrganizerView()
+        {
+            this.InitializeComponent();
+        }
     }
-  }
 }

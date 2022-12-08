@@ -5,16 +5,16 @@ using System.Windows.Data;
 
 namespace DataAnalyzer.Common.Mvvm.ValueConverters
 {
-  public class InverseBooleanToVisibilityConverter : IValueConverter
-  {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    internal class InverseBooleanToVisibilityConverter : IValueConverter
     {
-      return value is bool val ? !val ? Visibility.Visible : Visibility.Hidden : Visibility.Visible;
-    }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value is bool val ? !val ? Visibility.Visible : Visibility.Hidden : Visibility.Visible;
+        }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-      return !(value is Visibility visibility) || visibility != Visibility.Visible;
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return !(value is Visibility visibility) || visibility != Visibility.Visible;
+        }
     }
-  }
 }

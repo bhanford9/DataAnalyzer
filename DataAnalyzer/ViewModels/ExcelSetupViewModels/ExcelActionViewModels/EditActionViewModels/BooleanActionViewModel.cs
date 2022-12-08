@@ -4,51 +4,51 @@ using System;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
-  public class BooleanActionViewModel : EditActionViewModel
-  {
-    private bool doPerform = false;
-
-    public BooleanActionViewModel()
+    internal class BooleanActionViewModel : EditActionViewModel
     {
-    }
+        private bool doPerform = false;
 
-    public BooleanActionViewModel(IActionCreationModel actionCreationModel, IEditActionViewModel toCopy)
-      : base(actionCreationModel, toCopy)
-    {
-    }
+        public BooleanActionViewModel()
+        {
+        }
 
-    public bool DoPerform
-    {
-      get => this.doPerform;
-      set => this.NotifyPropertyChanged(nameof(this.DoPerform), ref this.doPerform, value);
-    }
+        public BooleanActionViewModel(IActionCreationModel actionCreationModel, IEditActionViewModel toCopy)
+          : base(actionCreationModel, toCopy)
+        {
+        }
 
-    public override void ApplyParameterSettings()
-    {
-      BooleanOperationParameters booleanParameters = this.ActionParameters as BooleanOperationParameters;
-      booleanParameters.DoPerform = this.DoPerform;
-    }
+        public bool DoPerform
+        {
+            get => this.doPerform;
+            set => this.NotifyPropertyChanged(ref this.doPerform, value);
+        }
 
-    public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
-    {
-      BooleanActionViewModel viewModel = new BooleanActionViewModel(this.actionCreationModel, this);
-      BooleanOperationParameters booleanParameters = parameters as BooleanOperationParameters;
-      viewModel.DoPerform = booleanParameters.DoPerform;
-      return viewModel;
-    }
+        public override void ApplyParameterSettings()
+        {
+            BooleanOperationParameters booleanParameters = this.ActionParameters as BooleanOperationParameters;
+            booleanParameters.DoPerform = this.DoPerform;
+        }
 
-    public override bool IsApplicable(IActionParameters parameters)
-    {
-      return parameters is BooleanOperationParameters;
-    }
+        public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
+        {
+            BooleanActionViewModel viewModel = new BooleanActionViewModel(this.actionCreationModel, this);
+            BooleanOperationParameters booleanParameters = parameters as BooleanOperationParameters;
+            viewModel.DoPerform = booleanParameters.DoPerform;
+            return viewModel;
+        }
 
-    protected override void DoAct()
-    {
-      throw new NotImplementedException();
-    }
+        public override bool IsApplicable(IActionParameters parameters)
+        {
+            return parameters is BooleanOperationParameters;
+        }
 
-    protected override void InternalInit(IEditActionViewModel toCopy)
-    {
+        protected override void DoAct()
+        {
+            throw new NotImplementedException();
+        }
+
+        protected override void InternalInit(IEditActionViewModel toCopy)
+        {
+        }
     }
-  }
 }

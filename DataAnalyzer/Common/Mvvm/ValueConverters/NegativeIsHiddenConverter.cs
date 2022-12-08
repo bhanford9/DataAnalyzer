@@ -5,16 +5,16 @@ using System.Windows.Data;
 
 namespace DataAnalyzer.Common.Mvvm.ValueConverters
 {
-  class NegativeIsHiddenConverter : IValueConverter
-  {
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    class NegativeIsHiddenConverter : IValueConverter
     {
-      return value is int val ? val >= 0 ? Visibility.Visible : Visibility.Collapsed : Visibility.Collapsed;
-    }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value is int val ? val >= 0 ? Visibility.Visible : Visibility.Collapsed : Visibility.Collapsed;
+        }
 
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-      return default;
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return default;
+        }
     }
-  }
 }

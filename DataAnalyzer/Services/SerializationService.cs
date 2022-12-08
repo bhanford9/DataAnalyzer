@@ -1,50 +1,29 @@
 ﻿using DataSerialization;
-using DataSerialization.CustomSerializations;
 
 namespace DataAnalyzer.Services
 {
-  public class SerializationService
-  {
-    private readonly SerializationExecutive serializer = new SerializationExecutive();
-
-    public string JsonSerialize<T>(T data)
+    internal class SerializationService
     {
-      return this.serializer.JsonSerialize(data);
-    }
+        private readonly SerializationExecutive serializer = new SerializationExecutive();
 
-    public T JsonDeserialize<T>(string json)
-    {
-      return this.serializer.JsonDeserialize<T>(json);
-    }
+        public string JsonSerialize<T>(T data)
+        {
+            return this.serializer.JsonSerialize(data);
+        }
 
-    public void JsonSerializeToFile<T>(T data, string filePath)
-    {
-      this.serializer.JsonSerializeToFile(data, filePath);
-    }
+        public T JsonDeserialize<T>(string json)
+        {
+            return this.serializer.JsonDeserialize<T>(json);
+        }
 
-    public T JsonDeserializeFromFile<T>(string filePath)
-    {
-      return this.serializer.JsonDeserializeFromFile<T>(filePath);
-    }
+        public void JsonSerializeToFile<T>(T data, string filePath)
+        {
+            this.serializer.JsonSerializeToFile(data, filePath);
+        }
 
-    public string CustomSerialize(ISerializationData data)
-    {
-      return this.serializer.CustomSerialize(data);
+        public T JsonDeserializeFromFile<T>(string filePath)
+        {
+            return this.serializer.JsonDeserializeFromFile<T>(filePath);
+        }
     }
-
-    public ISerializationData CustomDeserialize(string serializedData)
-    {
-      return this.serializer.CustomDeserialize(serializedData);
-    }
-
-    public void CustomSerializeToFile(ISerializationData data, string filePath)
-    {
-      this.serializer.CustomSerializeToFile(data, filePath);
-    }
-
-    public ISerializationData CustomDeserializeFromFile(string filePath)
-    {
-      return this.serializer.CustomDeserializeFromFile(filePath);
-    }
-  }
 }

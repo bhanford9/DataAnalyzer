@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews
 {
-  public partial class AlignmentCreationView : UserControl
-  {
-    public AlignmentCreationView()
+    public partial class AlignmentCreationView : UserControl
     {
-      this.InitializeComponent();
+        public AlignmentCreationView()
+        {
+            this.InitializeComponent();
+        }
     }
-  }
 }

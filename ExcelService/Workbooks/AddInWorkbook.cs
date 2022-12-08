@@ -5,16 +5,16 @@ using System.Collections.Generic;
 
 namespace ExcelService.Workbooks
 {
-  class AddInWorkbook : Workbook
-  {
-    public AddInWorkbook(
-      string filePath,
-      ICollection<IWorksheet> worksheets,
-      IActionDefinitions workbookActions = null)
-      : base(filePath, worksheets, workbookActions)
+    class AddInWorkbook : Workbook
     {
-    }
+        public AddInWorkbook(
+          string filePath,
+          ICollection<IWorksheet> worksheets,
+          IActionDefinitions workbookActions = null)
+          : base(filePath, worksheets, workbookActions)
+        {
+        }
 
-    public override DocumentType DocumentType => DocumentType.AddIn;
-  }
+        public override DocumentType DocumentType => DocumentType.AddIn;
+    }
 }

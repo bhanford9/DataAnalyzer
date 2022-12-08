@@ -2,23 +2,23 @@
 
 namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {
-  public class ActionApplicationListItemViewModel : LoadableRemovableRowViewModel
-  {
-    private readonly IActionApplicationModel actionApplicationModel;
-
-    public ActionApplicationListItemViewModel(IActionApplicationModel model)
+    internal class ActionApplicationListItemViewModel : LoadableRemovableRowViewModel
     {
-      this.actionApplicationModel = model;
-    }
+        private readonly IActionApplicationModel actionApplicationModel;
 
-    protected override void DoLoad()
-    {
-      this.actionApplicationModel.LoadAction(this.Value);
-    }
+        public ActionApplicationListItemViewModel(IActionApplicationModel model)
+        {
+            this.actionApplicationModel = model;
+        }
 
-    protected override void InternalDoRemove()
-    {
-      // Not Applicable
+        protected override void DoLoad()
+        {
+            this.actionApplicationModel.LoadAction(this.Value);
+        }
+
+        protected override void InternalDoRemove()
+        {
+            // Not Applicable
+        }
     }
-  }
 }

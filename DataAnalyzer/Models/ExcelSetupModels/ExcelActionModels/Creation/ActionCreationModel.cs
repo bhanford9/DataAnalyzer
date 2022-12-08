@@ -1,6 +1,6 @@
 ﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation
 {
-  public abstract class ActionCreationModel : ExcelActionModel, IActionCreationModel
-  {
-  }
+    internal abstract class ActionCreationModel : ExcelActionModel, IActionCreationModel
+    {
+    }
 }

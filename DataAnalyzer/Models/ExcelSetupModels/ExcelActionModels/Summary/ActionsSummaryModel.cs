@@ -6,25 +6,25 @@ using System.Collections.ObjectModel;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
 {
-  public abstract class ActionsSummaryModel : BasePropertyChanged, IActionsSummaryModel
-  {
-    protected readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
-    protected readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-
-    public void LoadHeirarchicalSummariesFromStats(ActionSummaryTreeViewItem baseItem)
+    internal abstract class ActionsSummaryModel : BasePropertyChanged, IActionsSummaryModel
     {
-      this.InternalLoadWhereToApply(baseItem, this.statsModel.HeirarchalStats.Children);
+        protected readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
+        protected readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
+
+        public void LoadHeirarchicalSummariesFromStats(ActionSummaryTreeViewItem baseItem)
+        {
+            this.InternalLoadWhereToApply(baseItem, this.statsModel.HeirarchalStats.Children);
+        }
+
+        public abstract void LoadHeirarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem);
+
+        public abstract ObservableCollection<ExcelAction> GetActionCollection();
+
+        public void SaveConfiguration(string configName)
+        {
+            this.excelSetupModel.SaveWorkbookConfiguration(configName);
+        }
+
+        protected abstract void InternalLoadWhereToApply(ActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats);
     }
-
-    public abstract void LoadHeirarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem);
-
-    public abstract ObservableCollection<ExcelAction> GetActionCollection();
-
-    public void SaveConfiguration(string configName)
-    {
-      this.excelSetupModel.SaveWorkbookConfiguration(configName);
-    }
-
-    protected abstract void InternalLoadWhereToApply(ActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats);
-  }
 }

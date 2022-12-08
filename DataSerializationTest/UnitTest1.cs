@@ -1,10 +1,9 @@
-using DataSerialization.CustomSerializations;
 using System.Collections.Generic;
 using Xunit;
 
 namespace DataSerializationTest
 {
-  public class UnitTest1
+    public class UnitTest1
   {
     [Fact]
     public void Test1()

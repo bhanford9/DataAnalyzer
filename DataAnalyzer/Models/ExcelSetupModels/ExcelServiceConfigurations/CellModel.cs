@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations
 {
-  public class CellModel : BasePropertyChanged
-  {
-    public ICollection<ExcelAction> CellActions { get; set; } = new List<ExcelAction>();
+    internal class CellModel : BasePropertyChanged
+    {
+        public ICollection<ExcelAction> CellActions { get; set; } = new List<ExcelAction>();
 
-    public object Value { get; set; } = new object();
+        public object Value { get; set; } = new object();
 
-    public ITypeParameter DataType { get; set; }
+        public ITypeParameter DataType { get; set; }
 
-    public int ColumnIndex { get; set; }
+        public int ColumnIndex { get; set; }
 
-    public string DataMemberName { get; set; } = string.Empty;
-  }
+        public string DataMemberName { get; set; } = string.Empty;
+    }
 }

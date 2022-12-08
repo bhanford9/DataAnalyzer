@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Views.ExcelSetupViews
 {
-  public partial class ExcelWorksheetSetupView : UserControl
-  {
-    public ExcelWorksheetSetupView()
+    public partial class ExcelWorksheetSetupView : UserControl
     {
-      this.InitializeComponent();
+        public ExcelWorksheetSetupView()
+        {
+            this.InitializeComponent();
+        }
     }
-  }
 }

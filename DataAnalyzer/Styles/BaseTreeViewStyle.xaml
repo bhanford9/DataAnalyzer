@@ -167,7 +167,7 @@
             <Trigger Property="HasItems" Value="false">
               <Setter Property="Visibility" TargetName="Expander" Value="Hidden"/>
             </Trigger>
-            
+
             <!--Disabling the selectability UI changes-->
             <!--<Trigger Property="IsSelected" Value="true">
               <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>

@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Views
 {
-  public partial class LoadedConfigurationItemView : UserControl
-  {
-    public LoadedConfigurationItemView()
+    public partial class LoadedConfigurationItemView : UserControl
     {
-      this.InitializeComponent();
+        public LoadedConfigurationItemView()
+        {
+            this.InitializeComponent();
+        }
     }
-  }
 }

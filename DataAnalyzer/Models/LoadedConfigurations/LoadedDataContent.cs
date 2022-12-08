@@ -2,9 +2,9 @@
 
 namespace DataAnalyzer.Models.LoadedConfigurations
 {
-  public class LoadedDataContent : BasePropertyChanged
-  {
+    internal class LoadedDataContent : BasePropertyChanged
+    {
 
-    public string Name => "Data Content";
-  }
+        public string Name => "Data Content";
+    }
 }

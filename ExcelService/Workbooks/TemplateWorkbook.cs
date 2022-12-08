@@ -5,16 +5,16 @@ using System.Collections.Generic;
 
 namespace ExcelService.Workbooks
 {
-  public class TemplateWorkbook : Workbook
-  {
-    public TemplateWorkbook(
-      string filePath,
-      ICollection<IWorksheet> worksheets,
-      IActionDefinitions workbookActions = null)
-      : base(filePath, worksheets, workbookActions)
+    public class TemplateWorkbook : Workbook
     {
-    }
+        public TemplateWorkbook(
+          string filePath,
+          ICollection<IWorksheet> worksheets,
+          IActionDefinitions workbookActions = null)
+          : base(filePath, worksheets, workbookActions)
+        {
+        }
 
-    public override DocumentType DocumentType => DocumentType.Template;
-  }
+        public override DocumentType DocumentType => DocumentType.Template;
+    }
 }

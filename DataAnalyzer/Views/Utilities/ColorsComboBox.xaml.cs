@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Views.Utilities
 {
-  public partial class ColorsComboBox : UserControl
-  {
-    public ColorsComboBox()
+    public partial class ColorsComboBox : UserControl
     {
-      this.InitializeComponent();
+        public ColorsComboBox()
+        {
+            this.InitializeComponent();
+        }
     }
-  }
 }

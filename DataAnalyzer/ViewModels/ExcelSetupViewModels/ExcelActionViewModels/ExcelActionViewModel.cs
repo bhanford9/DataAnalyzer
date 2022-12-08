@@ -7,30 +7,30 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
 {
-  public class ExcelActionViewModel : BasePropertyChanged
-  {
-    public ExcelActionViewModel(
-      ICollection<ExcelAction> actions,
-      IActionCreationModel actionCreationModel,
-      IActionApplicationModel actionApplicationModel,
-      IActionsSummaryModel actionsSummaryModel)
+    internal class ExcelActionViewModel : BasePropertyChanged
     {
-      this.ActionCreationViewModel = new ActionCreationViewModel(
-        actions,
-        actionCreationModel);
+        public ExcelActionViewModel(
+          ICollection<ExcelAction> actions,
+          IActionCreationModel actionCreationModel,
+          IActionApplicationModel actionApplicationModel,
+          IActionsSummaryModel actionsSummaryModel)
+        {
+            this.ActionCreationViewModel = new ActionCreationViewModel(
+              actions,
+              actionCreationModel);
 
-      this.ActionApplicationViewModel = new ActionApplicationViewModel(
-        actions,
-        actionApplicationModel);
+            this.ActionApplicationViewModel = new ActionApplicationViewModel(
+              actions,
+              actionApplicationModel);
 
-      this.ActionsSummaryViewModel = new ActionsSummaryViewModel(
-        actionsSummaryModel);
+            this.ActionsSummaryViewModel = new ActionsSummaryViewModel(
+              actionsSummaryModel);
+        }
+
+        public ActionCreationViewModel ActionCreationViewModel { get; set; }
+
+        public ActionApplicationViewModel ActionApplicationViewModel { get; set; }
+
+        public ActionsSummaryViewModel ActionsSummaryViewModel { get; set; }
     }
-
-    public ActionCreationViewModel ActionCreationViewModel { get; set; }
-
-    public ActionApplicationViewModel ActionApplicationViewModel { get; set; }
-
-    public ActionsSummaryViewModel ActionsSummaryViewModel { get; set; }
-  }
 }

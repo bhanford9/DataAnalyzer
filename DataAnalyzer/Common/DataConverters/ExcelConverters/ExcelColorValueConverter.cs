@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Common.DataConverters.ExcelConverters
 {
-  public class ExcelColorValueConverter
-  {
-    public static ColorValue ToExcelColorValue(System.Drawing.Color color)
+    internal class ExcelColorValueConverter
     {
-      return new ColorValue(color.A, color.R, color.G, color.B);
+        public static ColorValue ToExcelColorValue(System.Drawing.Color color)
+        {
+            return new ColorValue(color.A, color.R, color.G, color.B);
+        }
     }
-  }
 }

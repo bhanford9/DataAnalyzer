@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace DataScraper.DataScrapers
 {
-  public interface IDataScraper
-  {
-    ScraperType ScraperType { get; }
+    public interface IDataScraper
+    {
+        ScraperType ScraperType { get; }
 
-    ICollection<IData> ScrapeFromFile(string filePath);
-  }
+        ICollection<IData> ScrapeFromFile(string filePath);
+    }
 }

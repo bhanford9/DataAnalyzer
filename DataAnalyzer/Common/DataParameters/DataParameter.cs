@@ -3,27 +3,27 @@ using System;
 
 namespace DataAnalyzer.Common.DataParameters
 {
-  public class DataParameter : IDataParameter
-  {
-    public DataParameter(Func<IStats, IComparable> extractor, Func<IStats, bool> validator)
+    internal class DataParameter : IDataParameter
     {
-      this.StatAccessor = (stats) =>
-      {
-        if (validator(stats))
+        public DataParameter(Func<IStats, IComparable> extractor, Func<IStats, bool> validator)
         {
-          return extractor(stats);
+            this.StatAccessor = (stats) =>
+            {
+                if (validator(stats))
+                {
+                    return extractor(stats);
+                }
+
+                throw new Exception("Stats passed in for parameter " + this.Name + " are not valid");
+            };
         }
 
-        throw new Exception("Stats passed in for parameter " + this.Name + " are not valid");
-      };
+        public string Name { get; set; } = string.Empty;
+
+        public bool CanGroupBy { get; set; } = true;
+
+        public bool CanSortBy { get; set; } = true;
+
+        public Func<IStats, IComparable> StatAccessor { get; }
     }
-
-    public string Name { get; set; } = string.Empty;
-
-    public bool CanGroupBy { get; set; } = true;
-
-    public bool CanSortBy { get; set; } = true;
-
-    public Func<IStats, IComparable> StatAccessor { get; }
-  }
 }

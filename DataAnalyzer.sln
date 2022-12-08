@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31410.357
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAnalyzer", "DataAnalyzer\DataAnalyzer.csproj", "{1036A26F-94EC-48DE-84FC-3E5ECD1CBF4C}"
 EndProject
@@ -15,9 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{FFB3B34C-8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelServiceTest", "ExcelServiceTest\ExcelServiceTest.csproj", "{156EC01F-A0C4-4BCB-8497-7C82F2B285AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAnalyzerTetst", "DataAnalyzerTetst\DataAnalyzerTetst.csproj", "{2C05D393-DE67-41CD-B13D-2848C5DD9166}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataSerializationTest", "DataSerializationTest\DataSerializationTest.csproj", "{F20355F5-972A-47BB-81F0-3D5EE5481963}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAnalyzerTetst", "DataAnalyzerTetst\DataAnalyzerTetst.csproj", "{2C05D393-DE67-41CD-B13D-2848C5DD9166}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +47,6 @@ Global
 		{2C05D393-DE67-41CD-B13D-2848C5DD9166}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C05D393-DE67-41CD-B13D-2848C5DD9166}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C05D393-DE67-41CD-B13D-2848C5DD9166}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F20355F5-972A-47BB-81F0-3D5EE5481963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F20355F5-972A-47BB-81F0-3D5EE5481963}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F20355F5-972A-47BB-81F0-3D5EE5481963}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F20355F5-972A-47BB-81F0-3D5EE5481963}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,7 +54,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{156EC01F-A0C4-4BCB-8497-7C82F2B285AC} = {FFB3B34C-865F-411E-B0FE-C15F43A4A217}
 		{2C05D393-DE67-41CD-B13D-2848C5DD9166} = {FFB3B34C-865F-411E-B0FE-C15F43A4A217}
-		{F20355F5-972A-47BB-81F0-3D5EE5481963} = {FFB3B34C-865F-411E-B0FE-C15F43A4A217}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B890BB9-0185-48C8-BAA7-C76619435917}

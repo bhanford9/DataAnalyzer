@@ -4,23 +4,23 @@ using DataScraper.DataScrapers.TimeDataScrapers;
 
 namespace DataScraper.DataScrapers
 {
-  public class ScraperLibrary
-  {
-    private readonly ICollection<IDataScraper> scrapers = new List<IDataScraper>();
-
-    private void LoadScrapers()
+    public class ScraperLibrary
     {
-      this.scrapers.Add(new QueryableDataScraper());
-    }
+        private readonly ICollection<IDataScraper> scrapers = new List<IDataScraper>();
 
-    public ScraperLibrary()
-    {
-      this.LoadScrapers();
-    }
+        private void LoadScrapers()
+        {
+            this.scrapers.Add(new QueryableDataScraper());
+        }
 
-    public IDataScraper GetScraper(ScraperType type)
-    {
-      return this.scrapers.First(x => x.ScraperType == type);
+        public ScraperLibrary()
+        {
+            this.LoadScrapers();
+        }
+
+        public IDataScraper GetScraper(ScraperType type)
+        {
+            return this.scrapers.First(x => x.ScraperType == type);
+        }
     }
-  }
 }

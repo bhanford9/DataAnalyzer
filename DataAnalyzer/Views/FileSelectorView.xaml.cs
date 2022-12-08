@@ -3,14 +3,14 @@ using DataAnalyzer.ViewModels;
 
 namespace DataAnalyzer.Views
 {
-  public partial class FileSelectorView : UserControl
-  {
-    private readonly FileSelectorViewModel viewModel = new FileSelectorViewModel();
-
-    public FileSelectorView()
+    public partial class FileSelectorView : UserControl
     {
-      this.InitializeComponent();
-      this.DataContext = this.viewModel;
+        private readonly FileSelectorViewModel viewModel = new FileSelectorViewModel();
+
+        public FileSelectorView()
+        {
+            this.InitializeComponent();
+            this.DataContext = this.viewModel;
+        }
     }
-  }
 }

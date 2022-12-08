@@ -5,20 +5,20 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 {
-  public abstract class ActionApplicationModel : ExcelActionModel, IActionApplicationModel
-  {
-    public void LoadWhereToApply(CheckableTreeViewItem baseItem)
+    internal abstract class ActionApplicationModel : ExcelActionModel, IActionApplicationModel
     {
-      this.InternalLoadWhereToApply(baseItem, this.statsModel.HeirarchalStats.Children);
+        public void LoadWhereToApply(CheckableTreeViewItem baseItem)
+        {
+            this.InternalLoadWhereToApply(baseItem, this.statsModel.HeirarchalStats.Children);
+        }
+
+        public void ApplyAction(CheckableTreeViewItem item, IEditActionViewModel action)
+        {
+            this.InternalApplyAction(item, action);
+        }
+
+        protected abstract void InternalApplyAction(CheckableTreeViewItem item, IEditActionViewModel action);
+
+        protected abstract void InternalLoadWhereToApply(CheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats);
     }
-
-    public void ApplyAction(CheckableTreeViewItem item, IEditActionViewModel action)
-    {
-      this.InternalApplyAction(item, action);
-    }
-
-    protected abstract void InternalApplyAction(CheckableTreeViewItem item, IEditActionViewModel action);
-
-    protected abstract void InternalLoadWhereToApply(CheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats);
-  }
 }

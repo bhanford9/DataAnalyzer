@@ -3,32 +3,32 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.Common.Mvvm
 {
-  public class BaseCommand : ICommand
-  {
-    private readonly Predicate<object> canExecute;
-    private readonly Action<object> execute;
-
-    public BaseCommand(Action<object> execute, Predicate<object> canExecute = null)
+    internal class BaseCommand : ICommand
     {
-      this.canExecute = canExecute;
-      this.execute = execute;
-    }
+        private readonly Predicate<object> canExecute;
+        private readonly Action<object> execute;
 
-    public event EventHandler CanExecuteChanged;
+        public BaseCommand(Action<object> execute, Predicate<object> canExecute = null)
+        {
+            this.canExecute = canExecute;
+            this.execute = execute;
+        }
 
-    public void RaiseCanExecuteChanged()
-    {
-      this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-    }
+        public event EventHandler CanExecuteChanged;
 
-    public bool CanExecute(object parameter)
-    {
-      return this.canExecute?.Invoke(parameter) ?? true;
-    }
+        public void RaiseCanExecuteChanged()
+        {
+            this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
 
-    public void Execute(object parameter)
-    {
-      this.execute?.Invoke(parameter);
+        public bool CanExecute(object parameter)
+        {
+            return this.canExecute?.Invoke(parameter) ?? true;
+        }
+
+        public void Execute(object parameter)
+        {
+            this.execute?.Invoke(parameter);
+        }
     }
-  }
 }

@@ -7,52 +7,52 @@ using System.Linq;
 
 namespace DataAnalyzer.Common.DataOrganizers
 {
-  public class DataOrganizer : IDataOrganizer
-  {
-    public HeirarchalStats Organize(IDataConfiguration configuration, ICollection<IStats> data)
+    internal class DataOrganizer : IDataOrganizer
     {
-      HeirarchalStats heirarchalStats = new HeirarchalStats();
-
-      LinkedGroupingConfiguration groupingConfigurations =
-        new LinkedGroupingConfiguration(configuration.GroupingConfigurations.First().GetProperty);
-
-      LinkedGroupingConfiguration temp = groupingConfigurations;
-      for (int i = 1; i < configuration.GroupingConfigurations.Count; i++)
-      {
-        temp.Next = new LinkedGroupingConfiguration(configuration.GroupingConfigurations.ElementAt(i).GetProperty);
-        temp = temp.Next;
-      }
-
-      this.ApplyNestedGrouping(heirarchalStats, data, groupingConfigurations);
-
-      return heirarchalStats;
-    }
-
-    private void ApplyNestedGrouping(
-      HeirarchalStats heirarchalStats,
-      ICollection<IStats> stats,
-      LinkedGroupingConfiguration groupingConfigurations)
-    {
-      heirarchalStats.Values.Clear();
-
-      ICollection<IGrouping<IComparable, IStats>> groups =
-        stats.GroupBy(x => groupingConfigurations.GetProperty(x)).ToList();
-
-      groups.ToList().ForEach(group =>
-      {
-        HeirarchalStats stats = new HeirarchalStats() { Key = group.Key };
-        group.ToList().ForEach(x => stats.Values.Add(x));
-
-        if (groupingConfigurations.Next != null)
+        public HeirarchalStats Organize(IDataConfiguration configuration, ICollection<IStats> data)
         {
-          this.ApplyNestedGrouping(
-            stats,
-            stats.Values.ToList(),
-            groupingConfigurations.Next);
+            HeirarchalStats heirarchalStats = new HeirarchalStats();
+
+            LinkedGroupingConfiguration groupingConfigurations =
+              new LinkedGroupingConfiguration(configuration.GroupingConfigurations.First().GetProperty);
+
+            LinkedGroupingConfiguration temp = groupingConfigurations;
+            for (int i = 1; i < configuration.GroupingConfigurations.Count; i++)
+            {
+                temp.Next = new LinkedGroupingConfiguration(configuration.GroupingConfigurations.ElementAt(i).GetProperty);
+                temp = temp.Next;
+            }
+
+            this.ApplyNestedGrouping(heirarchalStats, data, groupingConfigurations);
+
+            return heirarchalStats;
         }
 
-        heirarchalStats.Children.Add(stats);
-      });
+        private void ApplyNestedGrouping(
+          HeirarchalStats heirarchalStats,
+          ICollection<IStats> stats,
+          LinkedGroupingConfiguration groupingConfigurations)
+        {
+            heirarchalStats.Values.Clear();
+
+            ICollection<IGrouping<IComparable, IStats>> groups =
+              stats.GroupBy(x => groupingConfigurations.GetProperty(x)).ToList();
+
+            groups.ToList().ForEach(group =>
+            {
+                HeirarchalStats stats = new HeirarchalStats() { Key = group.Key };
+                group.ToList().ForEach(x => stats.Values.Add(x));
+
+                if (groupingConfigurations.Next != null)
+                {
+                    this.ApplyNestedGrouping(
+                stats,
+                stats.Values.ToList(),
+                groupingConfigurations.Next);
+                }
+
+                heirarchalStats.Children.Add(stats);
+            });
+        }
     }
-  }
 }

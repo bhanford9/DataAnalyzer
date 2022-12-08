@@ -8,59 +8,59 @@ using System.Linq;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 {
-  public class WorkbookActionApplicationModel : ActionApplicationModel
-  {
-    private const string PATH_DELIMITER = "~~";
-
-    public const string ACTION_APPLIED_KEY = "Workbook Action Applied";
-
-    protected override void InternalApplyAction(CheckableTreeViewItem item, IEditActionViewModel action)
+    internal class WorkbookActionApplicationModel : ActionApplicationModel
     {
-      string[] pathSplit = item.Path.Split(PATH_DELIMITER);
-      if (pathSplit.Length < 1 || pathSplit[0].Length == 0)
-      {
-        return;
-      }
+        private const string PATH_DELIMITER = "~~";
 
-      string workbookName = pathSplit[0];
-      WorkbookModel workbook = this.excelSetupModel.ExcelConfiguration.WorkbookModels.FirstOrDefault(x => x.Name.Equals(workbookName));
+        public const string ACTION_APPLIED_KEY = "Workbook Action Applied";
 
-      if (workbook != default)
-      {
-        workbook.WorkbookActions.Add(new ExcelAction()
+        protected override void InternalApplyAction(CheckableTreeViewItem item, IEditActionViewModel action)
         {
-          ActionParameters = action.ActionParameters,
-          Description = action.Description,
-          Name = action.ActionName
-        });
+            string[] pathSplit = item.Path.Split(PATH_DELIMITER);
+            if (pathSplit.Length < 1 || pathSplit[0].Length == 0)
+            {
+                return;
+            }
 
-        this.excelSetupModel.NotiyExcelActionApplied(ACTION_APPLIED_KEY);
-      }
-      else
-      {
-        throw new System.Exception($"Failed to find workbook model with name: {item.Name}");
-      }
-    }
+            string workbookName = pathSplit[0];
+            WorkbookModel workbook = this.excelSetupModel.ExcelConfiguration.WorkbookModels.FirstOrDefault(x => x.Name.Equals(workbookName));
 
-    protected override ObservableCollection<ExcelAction> GetActionCollection()
-    {
-      return this.excelSetupModel.AvailableWorkbookActions;
-    }
+            if (workbook != default)
+            {
+                workbook.WorkbookActions.Add(new ExcelAction()
+                {
+                    ActionParameters = action.ActionParameters,
+                    Description = action.Description,
+                    Name = action.ActionName
+                });
 
-    protected override void InternalLoadWhereToApply(CheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
-    {
-      foreach (HeirarchalStats workbookStats in heirarchalStats)
-      {
-        string path = workbookStats.Key.ToString();
+                this.excelSetupModel.BroadcastExcelActionApplied(ACTION_APPLIED_KEY);
+            }
+            else
+            {
+                throw new System.Exception($"Failed to find workbook model with name: {item.Name}");
+            }
+        }
 
-        baseItem.Children.Add(new CheckableTreeViewItem()
+        protected override ObservableCollection<ExcelAction> GetActionCollection()
         {
-          IsChecked = true,
-          IsLeaf = true,
-          Name = workbookStats.Key.ToString(),
-          Path = path,
-        });
-      }
+            return this.excelSetupModel.AvailableWorkbookActions;
+        }
+
+        protected override void InternalLoadWhereToApply(CheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
+        {
+            foreach (HeirarchalStats workbookStats in heirarchalStats)
+            {
+                string path = workbookStats.Key.ToString();
+
+                baseItem.Children.Add(new CheckableTreeViewItem()
+                {
+                    IsChecked = true,
+                    IsLeaf = true,
+                    Name = workbookStats.Key.ToString(),
+                    Path = path,
+                });
+            }
+        }
     }
-  }
 }

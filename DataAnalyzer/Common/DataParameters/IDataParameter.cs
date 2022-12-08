@@ -3,11 +3,11 @@ using System;
 
 namespace DataAnalyzer.Common.DataParameters
 {
-  public interface IDataParameter
-  {
-    bool CanGroupBy { get; set; }
-    bool CanSortBy { get; set; }
-    string Name { get; set; }
-    Func<IStats, IComparable> StatAccessor { get; }
-  }
+    internal interface IDataParameter
+    {
+        bool CanGroupBy { get; set; }
+        bool CanSortBy { get; set; }
+        string Name { get; set; }
+        Func<IStats, IComparable> StatAccessor { get; }
+    }
 }

@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation
 {
-  public class DataClusterActionCreationModel : ActionCreationModel
-  {
-    protected override ObservableCollection<ExcelAction> GetActionCollection()
+    internal class DataClusterActionCreationModel : ActionCreationModel
     {
-      return this.excelSetupModel.AvailableDataClusterActions;
+        protected override ObservableCollection<ExcelAction> GetActionCollection()
+        {
+            return this.excelSetupModel.AvailableDataClusterActions;
+        }
     }
-  }
 }

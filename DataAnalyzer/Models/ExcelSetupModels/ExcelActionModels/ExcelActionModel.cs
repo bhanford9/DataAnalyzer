@@ -4,29 +4,29 @@ using System.Linq;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
 {
-  public abstract class ExcelActionModel : BasePropertyChanged, IExcelActionModel
-  {
-    private string loadedActionName = string.Empty;
-
-    protected readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
-    protected readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-
-    public string LoadedActionName
+    internal abstract class ExcelActionModel : BasePropertyChanged, IExcelActionModel
     {
-      get => this.loadedActionName;
-      set => this.NotifyPropertyChanged(nameof(this.LoadedActionName), ref this.loadedActionName, value);
-    }
+        private string loadedActionName = string.Empty;
 
-    public void LoadAction(string name)
-    {
-      this.LoadedActionName = name;
-    }
+        protected readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
+        protected readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
 
-    public ExcelAction GetLoadedAction()
-    {
-      return this.GetActionCollection().First(x => x.Name.Equals(this.loadedActionName));
-    }
+        public string LoadedActionName
+        {
+            get => this.loadedActionName;
+            set => this.NotifyPropertyChanged(ref this.loadedActionName, value);
+        }
 
-    protected abstract ObservableCollection<ExcelAction> GetActionCollection();
-  }
+        public void LoadAction(string name)
+        {
+            this.LoadedActionName = name;
+        }
+
+        public ExcelAction GetLoadedAction()
+        {
+            return this.GetActionCollection().First(x => x.Name.Equals(this.loadedActionName));
+        }
+
+        protected abstract ObservableCollection<ExcelAction> GetActionCollection();
+    }
 }

@@ -192,7 +192,7 @@
                 <Thumb Style="{StaticResource ScrollBarThumbVertical}"/>
               </Track.Thumb>
             </Track>
-            
+
             <!--<RepeatButton x:Name="PART_LineDownButton" 
                           Command="{x:Static ScrollBar.LineDownCommand}" 
                           IsEnabled="{TemplateBinding IsMouseOver}" 
@@ -204,9 +204,9 @@
                     Margin="3,4,3,3" 
                     Stretch="Uniform"/>
             </RepeatButton>-->
-            
+
           </Grid>
-          
+
           <!--<ControlTemplate.Triggers>
             <MultiDataTrigger>
               <MultiDataTrigger.Conditions>

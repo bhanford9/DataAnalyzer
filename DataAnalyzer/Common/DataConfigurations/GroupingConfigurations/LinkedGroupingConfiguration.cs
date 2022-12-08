@@ -3,13 +3,13 @@ using System;
 
 namespace DataAnalyzer.Common.DataConfigurations.GroupingConfigurations
 {
-  public class LinkedGroupingConfiguration : GroupingConfiguration
-  {
-    public LinkedGroupingConfiguration(Func<IStats, IComparable> propertyGetter)
-      : base(propertyGetter)
+    internal class LinkedGroupingConfiguration : GroupingConfiguration
     {
-    }
+        public LinkedGroupingConfiguration(Func<IStats, IComparable> propertyGetter)
+          : base(propertyGetter)
+        {
+        }
 
-    public LinkedGroupingConfiguration Next { get; set; } = null;
-  }
+        public LinkedGroupingConfiguration Next { get; set; } = null;
+    }
 }

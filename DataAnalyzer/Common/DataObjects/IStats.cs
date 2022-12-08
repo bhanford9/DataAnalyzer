@@ -2,11 +2,11 @@
 
 namespace DataAnalyzer.Common.DataObjects
 {
-  public interface IStats
-  {
-    string Uid { get; }
-    ICollection<string> ParameterNames { get; }
+    internal interface IStats
+    {
+        string Uid { get; }
+        ICollection<string> ParameterNames { get; }
 
-    T GetEnumeratedParameters<T>();
-  }
+        T GetEnumeratedParameters<T>();
+    }
 }

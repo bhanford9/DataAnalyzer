@@ -1,36 +1,36 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat
 {
-  public class FloatingPrecisionWithSeparatorCellDataFormat : ICellDataFormat
-  {
-    private readonly int precisionCount = 0;
-
-    public string Example
+    public class FloatingPrecisionWithSeparatorCellDataFormat : ICellDataFormat
     {
-      get
-      {
-        if (this.precisionCount == 1)
+        private readonly int precisionCount = 0;
+
+        public string Example
         {
-          return "1,236.3";
+            get
+            {
+                if (this.precisionCount == 1)
+                {
+                    return "1,236.3";
+                }
+                if (this.precisionCount == 2)
+                {
+                    return "1,236.30";
+                }
+
+                return "1,236.39" + new string(new string('0', this.precisionCount - 2));
+            }
         }
-        if (this.precisionCount == 2)
+
+        public string Name => "Separated With Decimals";
+
+        public FloatingPrecisionWithSeparatorCellDataFormat(int precisionCount)
         {
-          return "1,236.30";
+            this.precisionCount = precisionCount < 1 ? 1 : precisionCount;
         }
 
-        return "1,236.39" + new string(new string('0', this.precisionCount - 2));
-      }
+        public string GetFormatString()
+        {
+            return "#,##0." + new string('0', this.precisionCount);
+        }
     }
-
-    public string Name => "Separated With Decimals";
-
-    public FloatingPrecisionWithSeparatorCellDataFormat(int precisionCount)
-    {
-      this.precisionCount = precisionCount < 1 ? 1 : precisionCount;
-    }
-
-    public string GetFormatString()
-    {
-      return "#,##0." + new string('0', this.precisionCount);
-    }
-  }
 }
