@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelService", "ExcelServic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{FFB3B34C-865F-411E-B0FE-C15F43A4A217}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelServiceTest", "ExcelServiceTest\ExcelServiceTest.csproj", "{156EC01F-A0C4-4BCB-8497-7C82F2B285AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExcelServiceTest", "Test\ExcelServiceTest\ExcelServiceTest.csproj", "{156EC01F-A0C4-4BCB-8497-7C82F2B285AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAnalyzerTetst", "DataAnalyzerTetst\DataAnalyzerTetst.csproj", "{2C05D393-DE67-41CD-B13D-2848C5DD9166}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAnalyzerTest", "Test\DataAnalyzerTest\DataAnalyzerTest.csproj", "{2C05D393-DE67-41CD-B13D-2848C5DD9166}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
