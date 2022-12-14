@@ -6,7 +6,6 @@ using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;
 using ExcelService.DataActions;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -17,6 +16,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
     internal class ExcelSetupModel : BasePropertyChanged
     {
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+        private readonly ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
         private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
 
         public const string DATA_TYPE_UPDATE_KEY = "DATA_TYPE_UPDATE-";
@@ -225,6 +225,12 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             }
         }
 
+        public void ApplyTypeParametersToConfig()
+        {
+            this.WorkingParameterTypes.ToList().ForEach(x => UpdateDataTypeForMember(x.DataName, x));
+            this.ExcelConfiguration.ApplyTypeParametersToConfig(this.WorkingParameterTypes);
+        }
+
         public void SaveWorkbookConfiguration(string configName)
         {
             this.ExcelConfiguration.SaveWorkbookConfiguration(configName);
@@ -253,7 +259,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels
 
                     foreach (ITypeParameter param in this.ExcelConfiguration.LoadedParameterTypes)
                     {
-                        this.WorkingParameterTypes.Add(Activator.CreateInstance(param.GetType(), param) as ITypeParameter);
+                        this.WorkingParameterTypes.Add(this.excelDataTypeLibrary.GetInstanceByName(param.ExcelTypeName));
+                        this.WorkingParameterTypes[^1].CloneParameters(param);
                     }
 
                     this.NotifyPropertyChanged(nameof(this.WorkingParameterTypes));

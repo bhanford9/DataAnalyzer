@@ -109,6 +109,13 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             set => this.NotifyPropertyChanged(ref this.loadedParameterTypes, value);
         }
 
+        public void ApplyTypeParametersToConfig(IList<ITypeParameter> typeParams)
+        {
+            this.LoadedParameterTypes.Clear();
+            typeParams.ToList().ForEach(x => this.LoadedParameterTypes.Add(x));
+            this.NotifyPropertyChanged(nameof(this.LoadedParameterTypes));
+        }
+
         public void ApplyWorkbooksOutputPath(string path)
         {
             foreach (WorkbookModel workbookModel in this.workbookModels)
@@ -137,6 +144,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels
                     this.LoadedParameterTypes.Add(this.excelDataTypeLibrary.GetInstanceByName(parameter.ExcelTypeName));
                     this.LoadedParameterTypes[^1].CloneParameters(parameter);
                 }
+
+                this.NotifyPropertyChanged(nameof(this.LoadedParameterTypes));
 
                 string fileName = Path.GetFileName(configPath);
                 this.DataTypeConfigName = fileName[..fileName.IndexOf('.')];
@@ -191,7 +200,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
         {
             if (File.Exists(filePath))
             {
-                this.WorkbookModels = this.serializationService.JsonDeserializeFromFile<ICollection<WorkbookModel>>(filePath);// workbookSerializations.Items.Select(x => x.Value as WorkbookModel).ToList();
+                this.WorkbookModels = this.serializationService.JsonDeserializeFromFile<ICollection<WorkbookModel>>(filePath);
                 this.WorkbookConfigName = Path.GetFileNameWithoutExtension(filePath);
                 while (this.WorkbookConfigName.Contains("."))
                 {

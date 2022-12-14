@@ -8,6 +8,7 @@ using ExcelService.Rows;
 using ExcelService.Workbooks;
 using ExcelService.Worksheets;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace ExcelService

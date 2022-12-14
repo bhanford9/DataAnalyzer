@@ -1,4 +1,5 @@
 ﻿using ExcelService.Styles.Borders;
+using ExcelService.Utilities;
 
 namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
 {
@@ -17,6 +18,8 @@ namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
                 this.border.DoApply = true;
             }
         }
+
+        public IColumnSpecification ColumnSpecification { get; set; } = new ColumnSpecification();
 
         public override ActionCategory Category => ActionCategory.ColumnBorderStyle;
     }

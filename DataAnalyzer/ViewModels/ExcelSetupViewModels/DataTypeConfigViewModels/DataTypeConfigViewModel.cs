@@ -60,16 +60,27 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
                     this.UpdateTypeParam(this.TypeParameter);
                     this.Example = this.TypeParameter.Example;
 
-                    for (int i = 0; i < this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes.Count; i++)
+                    for (int i = 0; i < this.excelSetupModel.WorkingParameterTypes.Count; i++)
                     {
-                        if (this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes[i].DataName.Equals(this.TypeParameter.DataName))
+                        if (this.excelSetupModel.WorkingParameterTypes[i].DataName.Equals(this.TypeParameter.DataName))
                         {
-                            this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes[i] = this.TypeParameter;
-                            //this.excelSetupModel.UpdateDataTypeForMember(this.DataName, this.TypeParameter);
+                            this.excelSetupModel.WorkingParameterTypes[i] = this.TypeParameter;
+                            this.excelSetupModel.UpdateDataTypeForMember(this.DataName, this.TypeParameter);
                             this.excelSetupModel.BroadcastExcelDataTypeUpdated(this.DataName);
                             break;
                         }
                     }
+
+                    //for (int i = 0; i < this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes.Count; i++)
+                    //{
+                    //    if (this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes[i].DataName.Equals(this.TypeParameter.DataName))
+                    //    {
+                    //        this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes[i] = this.TypeParameter;
+                    //        this.excelSetupModel.UpdateDataTypeForMember(this.DataName, this.TypeParameter);
+                    //        this.excelSetupModel.BroadcastExcelDataTypeUpdated(this.DataName);
+                    //        break;
+                    //    }
+                    //}
                 }
             }
         }

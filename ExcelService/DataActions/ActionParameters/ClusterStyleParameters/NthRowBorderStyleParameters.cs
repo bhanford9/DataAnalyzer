@@ -4,6 +4,8 @@ namespace ExcelService.DataActions.ActionParameters.ClusterStyleParameters
 {
     public class NthRowBorderStyleParameters : BorderStyleParameters
     {
+        public override string Name => "Nth Row Border Style";
+
         public override ActionPerformer Performer { get; set; } = ActionPerformer.DataCluster;
 
         public int NthRow { get; set; }

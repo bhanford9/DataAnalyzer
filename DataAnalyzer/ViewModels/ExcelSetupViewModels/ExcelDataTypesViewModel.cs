@@ -62,9 +62,6 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         public ObservableCollection<ExcelDataTypeListItemViewModel> SavedConfigurations { get; }
           = new ObservableCollection<ExcelDataTypeListItemViewModel>();
 
-        //public ObservableCollection<DataTypeSelectionViewModel> ParameterSelections { get; }
-        //  = new ObservableCollection<DataTypeSelectionViewModel>();
-
         public ObservableCollection<IDataTypeConfigViewModel> ParameterSelections { get; }
           = new ObservableCollection<IDataTypeConfigViewModel>();
 
@@ -165,10 +162,6 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
                             this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes.Add(temp);
                             this.ParameterSelections.Add(new NoParameterDataTypeViewModel(temp));
                         }
-
-                        //this.ParameterSelections.Last().StartingSelectedIndex = this.ParameterTypes
-                        //    .IndexOf(this.ParameterTypes
-                        //      .First(x => x.ExcelTypeName.Equals(this.ParameterSelections.Last().SelectedParameterType.DataName)));
                     }
 
                     break;
@@ -182,13 +175,13 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
                 case nameof(this.excelSetupModel.ExcelConfiguration.DataTypeConfigName):
                     this.DataTypeConfigName = this.excelSetupModel.ExcelConfiguration.DataTypeConfigName;
                     break;
-                case nameof(this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes):
-                    this.ParameterSelections.Clear();
+                //case nameof(this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes):
+                //    this.ParameterSelections.Clear();
 
-                    this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes.ToList()
-                        .ForEach(typeParameters => this.ParameterSelections.Add(
-                            this.typeParameterToViewModel[typeParameters.GetType()](typeParameters)));
-                    break;
+                //    this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes.ToList()
+                //        .ForEach(typeParameters => this.ParameterSelections.Add(
+                //            this.typeParameterToViewModel[typeParameters.GetType()](typeParameters)));
+                //    break;
                 case nameof(this.excelSetupModel.ExcelConfiguration.DataTypeConfigurationPath):
                     break;
                 case nameof(this.excelSetupModel.ExcelConfiguration.SavedConfigurations):
@@ -208,6 +201,17 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 
         private void ExcelSetupModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            switch (e.PropertyName)
+            {
+                case nameof(this.excelSetupModel.WorkingParameterTypes):
+                    this.ParameterSelections.Clear();
+
+                    this.excelSetupModel.WorkingParameterTypes.ToList()
+                        .ForEach(typeParameters => this.ParameterSelections.Add(
+                            this.typeParameterToViewModel[typeParameters.GetType()](typeParameters)));
+                    break;
+            }
+
             if (e.PropertyName.StartsWith(ExcelSetupModel.DATA_TYPE_UPDATE_KEY))
             {
                 string dataName = e.PropertyName[ExcelSetupModel.DATA_TYPE_UPDATE_KEY.Length..];

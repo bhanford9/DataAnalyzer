@@ -13,10 +13,12 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters
     {
         public static IWorkbook WorkbookModelToExcelWorkbook(WorkbookModel workbookModel)
         {
+            var res = ExcelActionParamConverters.ToExcelDefinitions(workbookModel.WorkbookActions.Select(x => x.ActionParameters).ToList());
+
             StandardWorkbook standardWorkbook = new StandardWorkbook(
               workbookModel.FilePath,
               workbookModel.Worksheets.Select(x => WorksheetModelToExcelWorksheet(x)).ToList(),
-              ExcelActionConverter.ToExcelDefinitions(workbookModel.WorkbookActions.Select(x => x.ActionParameters).ToList()));
+              res);
 
             return standardWorkbook;
         }
@@ -26,7 +28,7 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters
             Worksheet worksheet = new Worksheet(
               worksheetModel.WorksheetName,
               worksheetModel.DataClusters.Select(x => DataClusterModelToExcelDataCluster(x)).ToList(),
-              ExcelActionConverter.ToExcelDefinitions(worksheetModel.WorksheetActions.Select(x => x.ActionParameters).ToList()));
+              ExcelActionParamConverters.ToExcelDefinitions(worksheetModel.WorksheetActions.Select(x => x.ActionParameters).ToList()));
 
             return worksheet;
         }
@@ -41,7 +43,7 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters
                   dataClusterModel.StartRowIndex,
                   dataClusterModel.StartColIndex,
                   true,  // generates titles
-                  ExcelActionConverter.ToExcelDefinitions(dataClusterModel.DataClusterActions.Select(x => x.ActionParameters).ToList()),
+                  ExcelActionParamConverters.ToExcelDefinitions(dataClusterModel.DataClusterActions.Select(x => x.ActionParameters).ToList()),
                   true); // uses cluster id
 
                 return dataCluster;
@@ -54,7 +56,7 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters
                   dataClusterModel.StartRowIndex,
                   dataClusterModel.StartColIndex,
                   new Row(dataClusterModel.Rows.First().Cells.Select(x => (ICell)new Cell(x.DataMemberName, x.ColumnIndex)).ToList()),
-                  ExcelActionConverter.ToExcelDefinitions(dataClusterModel.DataClusterActions.Select(x => x.ActionParameters).ToList()),
+                  ExcelActionParamConverters.ToExcelDefinitions(dataClusterModel.DataClusterActions.Select(x => x.ActionParameters).ToList()),
                   true); // uses cluster id
 
                 return dataCluster;
@@ -71,7 +73,7 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters
 
             return new Row(
               cells,
-              ExcelActionConverter.ToExcelDefinitions(rowModel.RowActions.Select(x => x.ActionParameters).ToList()));
+              ExcelActionParamConverters.ToExcelDefinitions(rowModel.RowActions.Select(x => x.ActionParameters).ToList()));
         }
 
         public static ICell CellModelToExcelCell(CellModel cellModel, int rowIndex)
@@ -80,7 +82,7 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters
               cellModel.Value,
               rowIndex,
               cellModel.DataType.CreateCellDataFormat(),
-              ExcelActionConverter.ToExcelDefinitions(cellModel.CellActions.Select(x => x.ActionParameters).ToList()));
+              ExcelActionParamConverters.ToExcelDefinitions(cellModel.CellActions.Select(x => x.ActionParameters).ToList()));
         }
     }
 }

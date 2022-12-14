@@ -1,6 +1,6 @@
 ﻿namespace DataAnalyzer.Common.DataConverters.ExcelConverters
 {
-    internal class AlignmentConverters
+    internal class AlignmentConverters2
     {
         public static Services.HorizontalAlignment ToLocalHorizontalAlignment(ExcelService.Styles.Alignments.HorizontalAlignment horizontalAlignment)
         {

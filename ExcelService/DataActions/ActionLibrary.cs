@@ -271,7 +271,7 @@ namespace ExcelService.DataActions
 
             this.dataClusterActions.Add(new BorderStyleAction());
             this.dataClusterActions.Add(new BackgroundStyleAction());
-            this.dataClusterActions.Add(new ColumnBorderStyleAction());
+            //this.dataClusterActions.Add(new ColumnBorderStyleAction());
             this.dataClusterActions.Add(new AlignmentStyleAction());
         }
 
@@ -279,7 +279,7 @@ namespace ExcelService.DataActions
         {
             this.rowActions.Add(new BorderStyleAction());
             this.rowActions.Add(new BackgroundStyleAction());
-            this.rowActions.Add(new ColumnBorderStyleAction());
+            //this.rowActions.Add(new ColumnBorderStyleAction());
             this.rowActions.Add(new AlignmentStyleAction());
         }
 

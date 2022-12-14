@@ -2,12 +2,12 @@
 {
     public enum CategoryType
     {
-        BuiltInLowLoad,
-        BuiltInMediumLoad,
-        BuiltInHeavyLoad,
-        ClassLowLoad,
-        ClassMediumLoad,
-        ClassHeavyLoad,
+        BuiltIn,
+        //BuiltInMediumLoad,
+        //BuiltInHeavyLoad,
+        Class,
+        //ClassMediumLoad,
+        //ClassHeavyLoad,
         Other
     }
 }

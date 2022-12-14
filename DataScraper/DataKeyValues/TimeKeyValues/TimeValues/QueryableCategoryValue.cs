@@ -8,12 +8,12 @@ namespace DataScraper.DataKeyValues.TimeKeyValues.TimeValues
         {
             return str switch
             {
-                "BuiltInTypeWithLowLoad" => CategoryType.BuiltInLowLoad,
-                "BuiltInTypeWithMediumLoad" => CategoryType.BuiltInMediumLoad,
-                "BuiltInTypeWithHeavyLoad" => CategoryType.BuiltInHeavyLoad,
-                "ClassTypeWithLowLoad" => CategoryType.ClassLowLoad,
-                "ClassTypeWithMediumLoad" => CategoryType.ClassMediumLoad,
-                "ClassTypeWithHeavyLoad" => CategoryType.ClassHeavyLoad,
+                "BuiltIn" => CategoryType.BuiltIn,
+                //"BuiltInTypeWithMediumLoad" => CategoryType.BuiltInMediumLoad,
+                //"BuiltInTypeWithHeavyLoad" => CategoryType.BuiltInHeavyLoad,
+                "Class" => CategoryType.Class,
+                //"ClassTypeWithMediumLoad" => CategoryType.ClassMediumLoad,
+                //"ClassTypeWithHeavyLoad" => CategoryType.ClassHeavyLoad,
                 _ => CategoryType.Other,
             };
         }

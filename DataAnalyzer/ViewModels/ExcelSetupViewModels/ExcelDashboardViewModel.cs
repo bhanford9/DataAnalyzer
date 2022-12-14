@@ -36,7 +36,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         }
 
         public ObservableCollection<WorkbookConfigListItemViewModel> SavedWorkbookConfigs { get; }
-          = new ObservableCollection<WorkbookConfigListItemViewModel>();
+            = new ObservableCollection<WorkbookConfigListItemViewModel>();
 
         public ICommand StartNewConfiguration => this.startNewConfiguration;
 
@@ -71,6 +71,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         private void DoSaveConfiguration()
         {
             // Note, this is not saving the datatypes, but may want to in the future.
+            this.excelSetupModel.ApplyTypeParametersToConfig();
             this.excelSetupModel.ExcelConfiguration.WorkbookOutputDirectory = this.OutputDirectory;
             this.excelSetupModel.ExcelConfiguration.SaveWorkbookConfiguration(this.configName);
         }
@@ -88,6 +89,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         private void DoExecuteExcelExport()
         {
             ExcelExecutive excelExecutive = new ExcelExecutive();
+            // This apears to have not converted things correctly
+            this.excelSetupModel.ApplyTypeParametersToConfig();
             excelExecutive.GenerateWorkbooks(
               this.excelSetupModel.ExcelConfiguration.WorkbookModels
                 .Select(x => ExcelWorkbookConverter.WorkbookModelToExcelWorkbook(x))

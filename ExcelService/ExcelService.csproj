@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="DataActions\CellActions\" />
-    <Folder Include="DataActions\RowActions\" />
     <Folder Include="DataActions\WorksheetActions\" />
   </ItemGroup>
 
