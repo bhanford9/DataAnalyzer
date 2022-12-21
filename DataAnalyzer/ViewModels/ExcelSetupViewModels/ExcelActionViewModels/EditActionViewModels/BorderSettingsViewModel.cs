@@ -10,18 +10,16 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
         private string selectedStyle = string.Empty;
         private string borderName = string.Empty;
 
-        private readonly EnumUtilities EnumUtilities = new EnumUtilities();
+        private readonly EnumUtilities EnumUtilities = new();
 
         public BorderSettingsViewModel()
         {
             this.EnumUtilities.LoadNames(typeof(BorderStyle), this.BorderStyles);
         }
 
-        public ObservableCollection<string> BorderStyles { get; }
-          = new ObservableCollection<string>();
+        public ObservableCollection<string> BorderStyles { get; } = new();
 
-        public ColorsComboBoxViewModel ComboBoxColors { get; }
-          = new ColorsComboBoxViewModel();
+        public ColorsComboBoxViewModel ComboBoxColors { get; } = new();
 
         public string SelectedStyle
         {

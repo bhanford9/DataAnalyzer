@@ -25,7 +25,7 @@ namespace DataAnalyzer.ViewModels
         private string selectedDataType = string.Empty;
         private string selectedExportType = string.Empty;
         private int groupingLayersCount = 0;
-        private EnumUtilities EnumUtilities = new EnumUtilities();
+        private EnumUtilities EnumUtilities = new();
 
         private readonly BaseCommand browseDirectory;
         private readonly BaseCommand createConfiguration;
@@ -34,10 +34,10 @@ namespace DataAnalyzer.ViewModels
 
         public ConfigurationCreationViewModel()
         {
-            this.browseDirectory = new BaseCommand((obj) => this.DoBrowseDirectory());
-            this.createConfiguration = new BaseCommand((obj) => this.DoCreateConfiguration());
-            this.cancelChanges = new BaseCommand((obj) => this.DoCancelChanges());
-            this.saveConfiguration = new BaseCommand((obj) => this.DoSaveConfiguration());
+            this.browseDirectory = new BaseCommand(obj => this.DoBrowseDirectory());
+            this.createConfiguration = new BaseCommand(obj => this.DoCreateConfiguration());
+            this.cancelChanges = new BaseCommand(obj => this.DoCancelChanges());
+            this.saveConfiguration = new BaseCommand(obj => this.DoSaveConfiguration());
 
             this.ConfigurationDirectory = Properties.Settings.Default.LastUsedConfigurationDirectory;
             this.ApplyConfigurationDirectory(this.ConfigurationDirectory);
@@ -53,16 +53,12 @@ namespace DataAnalyzer.ViewModels
         public ICommand CancelChanges => this.cancelChanges;
         public ICommand SaveConfiguration => this.saveConfiguration;
 
-        public ObservableCollection<string> DataTypes { get; }
-          = new ObservableCollection<string>();
-        public ObservableCollection<string> ExportTypes { get; }
-          = new ObservableCollection<string>();
+        public ObservableCollection<string> DataTypes { get; } = new();
+        public ObservableCollection<string> ExportTypes { get; } = new();
 
-        public ObservableCollection<ConfigurationGroupingViewModel> ConfigurationGroupings { get; }
-          = new ObservableCollection<ConfigurationGroupingViewModel>();
+        public ObservableCollection<ConfigurationGroupingViewModel> ConfigurationGroupings { get; } = new();
 
-        public ObservableCollection<LoadableRemovableRowViewModel> Configurations { get; }
-          = new ObservableCollection<LoadableRemovableRowViewModel>();
+        public ObservableCollection<LoadableRemovableRowViewModel> Configurations { get; } = new();
 
         public bool IsCreating
         {
@@ -184,7 +180,7 @@ namespace DataAnalyzer.ViewModels
             int level = 0;
             this.ConfigurationGroupings.ToList().ForEach(configGroupingViewModel =>
             {
-                this.configurationModel.AddGroupingConfiguration(new GroupingConfiguration()
+                this.configurationModel.AddGroupingConfiguration(new GroupingConfiguration
                 {
                     GroupLevel = level++,
                     GroupName = configGroupingViewModel.Name,
@@ -212,7 +208,7 @@ namespace DataAnalyzer.ViewModels
                         displayText = Path.GetFileNameWithoutExtension(displayText);
                     }
 
-                    this.Configurations.Add(new ConfigurationFileListItemViewModel() { Value = displayText, ToolTipText = configFile });
+                    this.Configurations.Add(new ConfigurationFileListItemViewModel { Value = displayText, ToolTipText = configFile });
                 });
             }
         }

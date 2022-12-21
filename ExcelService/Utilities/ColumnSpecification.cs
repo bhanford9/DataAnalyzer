@@ -1,55 +1,23 @@
 ﻿namespace ExcelService.Utilities
 {
-    internal class ColumnSpecification : IColumnSpecification
+    // TODO --> keep connecting up the column row specs with all of the excel actions
+    // Excel side data structures should be only that, no causation during setting of params
+    // Each action should behave similar to that of AlignmentAction
+    // Need to test all connections from V --> VM --> M --> Excel (and back up)
+    public class ColumnSpecification : IColumnSpecification
     {
-        private int nthColumn = 0;
-        private string columnAddress = "A";
-        private string columnHeader = string.Empty;
+        public int NthColumn { get; set; }
 
-        public int NthColumn
-        {
-            get => nthColumn;
-            set
-            {
-                nthColumn = value;
-                SetAllUses();
-                UseNthColumn = true;
-            }
-        }
+        public string ColumnAddress { get; set; }
 
-        public string ColumnAddress
-        {
-            get => columnAddress;
-            set
-            {
-                columnAddress = value;
-                SetAllUses();
-                UseColumnAddress = true;
-            }
-        }
+        public string ColumnHeader { get; set; }
 
-        public string ColumnHeader
-        {
-            get => columnHeader;
-            set
-            {
-                columnHeader = value;
-                SetAllUses();
-                UseColumnHeader = true;
-            }
-        }
+        public bool AllColumns { get; set; } = true;
 
-        public bool UseNthColumn { get; private set; } = false;
+        public bool UseNthColumn { get; set; } = false;
 
-        public bool UseColumnAddress { get; private set; } = false;
+        public bool UseColumnAddress { get; set; } = false;
 
-        public bool UseColumnHeader { get; private set; } = false;
-
-        private void SetAllUses(bool use = false)
-        {
-            UseNthColumn = use;
-            UseColumnAddress = use;
-            UseColumnHeader = use;
-        }
+        public bool UseColumnHeader { get; set; } = false;
     }
 }

@@ -3,6 +3,7 @@ using DataAnalyzer.Models;
 using DataAnalyzer.Models.ExcelSetupModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels;
 using DataAnalyzer.ViewModels.Utilities;
 using DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;
@@ -27,14 +28,16 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
 
         public ActionApplicationViewModel(
           ICollection<ExcelAction> actions,
-          IActionApplicationModel actionApplicationModel)
+          IActionApplicationModel actionApplicationModel,
+          ExcelEntityType excelEntityType)
         {
             this.actionApplicationModel = actionApplicationModel;
+            this.ExcelEntityType = excelEntityType;
 
-            this.applyAction = new BaseCommand((obj) => this.DoApplyAction());
+            this.applyAction = new BaseCommand(obj => this.DoApplyAction());
 
             EmptyParameters empty = new EmptyParameters();
-            this.currentAction = this.editActionLibrary.GetEditAction(new EmptyParameters());
+            this.currentAction = this.editActionLibrary.GetEditAction(new EmptyParameters { ExcelEntityType = excelEntityType }, excelEntityType);
             this.currentAction.ActionParameters = empty;
 
             actions.ToList().ForEach(action =>
@@ -51,11 +54,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             this.actionApplicationModel.PropertyChanged += this.ActionApplicationModelPropertyChanged;
         }
 
-        public ObservableCollection<CheckableTreeViewItem> WhereToApply { get; }
-          = new ObservableCollection<CheckableTreeViewItem>();
+        public ObservableCollection<CheckableTreeViewItem> WhereToApply { get; } = new();
 
-        public ObservableCollection<LoadableRemovableRowViewModel> Actions { get; }
-          = new ObservableCollection<LoadableRemovableRowViewModel>();
+        public ObservableCollection<LoadableRemovableRowViewModel> Actions { get; } = new();
 
         public ICommand ApplyAction => this.applyAction;
 
@@ -64,6 +65,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             get => this.currentAction;
             set => this.NotifyPropertyChanged(ref this.currentAction, value);
         }
+
+        public ExcelEntityType ExcelEntityType { get; }
 
         private ICollection<CheckableTreeViewItem> GetFlattenedWhereToApply()
         {
@@ -110,7 +113,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             {
                 case nameof(this.statsModel.HeirarchalStats):
                     this.WhereToApply.Clear();
-                    this.WhereToApply.Add(new CheckableTreeViewItem() { Name = "All Workbooks", Path = string.Empty });
+                    this.WhereToApply.Add(new CheckableTreeViewItem { Name = "All Workbooks", Path = string.Empty });
 
                     this.actionApplicationModel.LoadWhereToApply(this.WhereToApply.First());
                     break;
@@ -123,7 +126,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             {
                 case nameof(this.actionApplicationModel.LoadedActionName):
                     ExcelAction action = this.actionApplicationModel.GetLoadedAction();
-                    this.CurrentAction = this.editActionLibrary.GetEditAction(action.ActionParameters);
+                    this.CurrentAction = this.editActionLibrary.GetEditAction(action.ActionParameters, this.ExcelEntityType);
                     this.CurrentAction.ActionName = action.Name;
                     this.CurrentAction.Description = action.Description;
                     this.CurrentAction.ActionParameters = action.ActionParameters;

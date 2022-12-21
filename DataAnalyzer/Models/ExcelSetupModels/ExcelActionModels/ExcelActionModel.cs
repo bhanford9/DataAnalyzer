@@ -24,7 +24,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
 
         public ExcelAction GetLoadedAction()
         {
-            return this.GetActionCollection().First(x => x.Name.Equals(this.loadedActionName));
+            return this.GetActionCollection().First(x => x.Name.Equals(this.loadedActionName)).Clone();
         }
 
         protected abstract ObservableCollection<ExcelAction> GetActionCollection();

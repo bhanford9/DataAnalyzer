@@ -1,5 +1,6 @@
 ﻿using ExcelService.Styles.Colors;
 using ExcelService.Styles.Patterns;
+using ExcelService.Utilities;
 
 namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
 {
@@ -33,5 +34,9 @@ namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
                 this.pattern.DoApply = true;
             }
         }
+
+        public IColumnSpecification ColumnSpecification { get; set; } = new ColumnSpecification();
+
+        public IRowSpecification RowSpecification { get; set; } = new RowSpecification();
     }
 }

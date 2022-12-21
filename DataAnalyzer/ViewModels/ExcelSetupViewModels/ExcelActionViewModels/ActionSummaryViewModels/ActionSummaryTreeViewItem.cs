@@ -14,8 +14,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Act
         {
         }
 
-        public ObservableCollection<ActionSummaryTreeViewItem> Children { get; }
-          = new ObservableCollection<ActionSummaryTreeViewItem>();
+        public ObservableCollection<ActionSummaryTreeViewItem> Children { get; } = new();
+
+        public ObservableCollection<ActionSummaryExpandableViewModel> SummaryViewModels { get; } = new();
 
         public bool IsLeaf
         {

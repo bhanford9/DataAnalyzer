@@ -22,8 +22,7 @@ namespace DataAnalyzer.ViewModels.Utilities
               .ForEach(info => this.Colors.Add(info.Name));
         }
 
-        public ObservableCollection<string> Colors { get; }
-          = new ObservableCollection<string>();
+        public ObservableCollection<string> Colors { get; } = new();
 
         public string SelectedColor
         {

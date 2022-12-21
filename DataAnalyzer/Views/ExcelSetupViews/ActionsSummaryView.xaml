@@ -46,8 +46,9 @@
     <GroupBox Header="Summaries" 
               Grid.Row="1">
       <TreeView Style="{StaticResource BaseTreeViewStyle}" 
-                ItemsSource="{Binding HeirarchicalSummaries}"
-                Margin="1 3 1 1">
+                ItemsSource="{Binding HierarchicalSummaries}"
+                Margin="1 3 1 1"
+                FontSize="16">
 
         <TreeView.ItemContainerStyle>
           <Style TargetType="TreeViewItem" BasedOn="{StaticResource BaseTreeViewItemStyle}">
@@ -57,17 +58,30 @@
         </TreeView.ItemContainerStyle>
 
         <TreeView.Resources>
+          <Style TargetType="TextBlock" BasedOn="{StaticResource LargeTextBlockStyle}">
+          </Style>
+
           <HierarchicalDataTemplate
             DataType="{x:Type actionSummaryViewModels:ActionSummaryTreeViewItem}"
             ItemsSource="{Binding Children}">
 
             <!-- Easiest way to handle this might be to have a boolean flag within the template data type that indicates whether it is a leaf node -->
             <!-- Then need a way to distinguish which type of Summary to display (i.e. border vs background etc.) -->
-            <!-- ActionApplictionView used a CategoryToVisibility converter to have all of them present but only the correct one visible -->
+            <!-- ActionApplicationView used a CategoryToVisibility converter to have all of them present but only the correct one visible -->
             <Grid>
-              <StackPanel Orientation="Vertical"
-                          Visibility="{Binding IsLeaf, Converter={StaticResource BooleanToVisibility}}">
-                <Grid>
+              <Grid Visibility="{Binding IsLeaf, Converter={StaticResource BooleanToVisibility}}">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="10"/>
+                  <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto"/>
+                  <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="2">
                   <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
@@ -76,21 +90,76 @@
 
                   <TextBlock Grid.Column="0"
                              FontWeight="Bold"
-                             Style="{StaticResource SmallTextBlockStyle}" 
                              Text="{Binding Id}"/>
                   <TextBlock Grid.Column="1"
-                             Style="{StaticResource SmallTextBlockStyle}" 
-                             Text=":"/>                  
+                             Text=":"/>
                   <TextBlock Grid.Column="2"
-                             Style="{StaticResource SmallTextBlockStyle}" 
                              Margin="4 0 0 0"
                              Text="{Binding Name}"/>
                 </Grid>
-                <!--TODO: change description into custom view for each type of summary objects-->
-                <TextBlock Style="{StaticResource SmallTextBlockStyle}"
+
+                <ItemsControl ItemsSource="{Binding SummaryViewModels}"
+                              Grid.Row="1"
+                              Grid.Column="1"
+                              x:Name="ActionsControl">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                      <Expander Style="{StaticResource BlockExpanderStyle}"
+                                Margin="8 2"
+                                HorizontalAlignment="Left"
+                                MaxWidth="600"
+                                Width="{Binding ActualWidth, ElementName=ActionsControl}">
+                        <Expander.Effect>
+                          <DropShadowEffect BlurRadius="1"
+                                            Direction="-90"
+                                            RenderingBias="Quality"
+                                            ShadowDepth="1"/>
+                        </Expander.Effect>
+
+                        <Expander.Resources>
+                          <Style TargetType="TextBlock" BasedOn="{StaticResource LargeTextBlockStyle}">
+                            <Setter Property="Margin" Value="5 0"/>
+                          </Style>
+                        </Expander.Resources>
+                        <Expander.Header>
+                          <Grid Margin="2 8">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                              </Grid.ColumnDefinitions>
+
+                              <TextBlock Grid.Column="0" Text="{Binding ActionName}"/>
+                              <TextBlock Grid.Column="1" Text="{Binding DescriptionPreview}"/>
+                              <Button Grid.Column="3"
+                                      Command="{Binding PreviewRemove}"
+                                      Style="{StaticResource IconDeleteButton}"
+                                      Margin="4 0"/>
+                            </Grid>
+                        </Expander.Header>
+                        <Grid>
+                          <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                          </Grid.RowDefinitions>
+                          <TextBlock Grid.Row="0"
+                                     Text="{Binding ActionDescription}"
+                                     Margin="5 5 5 8"/>
+
+                          <!--TODO: turn detailed description into data structure that can be viewed as a table-->
+                          <TextBlock Grid.Row="1" Text="{Binding DetailedDescription}" />
+                        </Grid>
+                      </Expander>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!--<TextBlock Style="{StaticResource SmallTextBlockStyle}"
                             Margin="24 4 0 0"
-                            Text="{Binding Description}"/>
-              </StackPanel>
+                            Text="{Binding Description}"/>-->
+              </Grid>
 
               <StackPanel Orientation="Horizontal"
                           Visibility="{Binding IsLeaf, Converter={StaticResource InverseBooleanToVisibility}}"
@@ -104,13 +173,10 @@
 
                   <TextBlock Grid.Column="0"
                              FontWeight="Bold"
-                             Style="{StaticResource SmallTextBlockStyle}" 
                              Text="{Binding Id}"/>
                   <TextBlock Grid.Column="1"
-                             Style="{StaticResource SmallTextBlockStyle}" 
                              Text=":"/>
                   <TextBlock Grid.Column="2"
-                             Style="{StaticResource SmallTextBlockStyle}" 
                              Margin="4 0 0 0"
                              Text="{Binding Name}"/>
                 </Grid>

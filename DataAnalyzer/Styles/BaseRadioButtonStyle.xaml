@@ -25,47 +25,47 @@
   <Style x:Key="BaseRadioButtonStyle" TargetType="{x:Type RadioButton}">
     <Setter Property="Background" Value="Transparent"/>
     <Setter Property="BorderBrush" Value="{StaticResource MainAccent}"/>
-    <Setter Property="Foreground" Value="{StaticResource DarkText}"/>
+    <Setter Property="Foreground" Value="{StaticResource LightText}"/>
     <Setter Property="VerticalContentAlignment" Value="Center"/>
-    <Setter Property="FontSize" Value="14"/>
-    <Setter Property="BorderThickness" Value="3"/>
+    <Setter Property="FontSize" Value="12"/>
+    <Setter Property="BorderThickness" Value="2"/>
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type RadioButton}">
           <Grid x:Name="templateRoot"
-                          Background="Transparent"
-                          SnapsToDevicePixels="True">
+                Background="Transparent"
+                SnapsToDevicePixels="True">
             <Grid.ColumnDefinitions>
               <ColumnDefinition Width="Auto"/>
               <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Border x:Name="radioButtonBorder"
-                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}" 
-                                Height="20"
-                                Width="20"
-                                CornerRadius="100" 
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                Margin="3"
-                                Padding="3"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                    BorderBrush="{TemplateBinding BorderBrush}" 
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Background="{TemplateBinding Background}" 
+                    Height="18"
+                    Width="18"
+                    CornerRadius="100" 
+                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                    Margin="3"
+                    Padding="3"
+                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
               <Grid x:Name="markGrid">
                 <Ellipse x:Name="optionMark"
-                                         Panel.ZIndex="19"
-                                         Fill="{StaticResource MainAccent}"
-                                         MinWidth="8" 
-                                         MinHeight="8"/>
+                         Panel.ZIndex="19"
+                         Fill="{StaticResource MainAccent}"
+                         Width="6" 
+                         Height="6"/>
               </Grid>
             </Border>
             <ContentPresenter x:Name="contentPresenter" 
-                                          Grid.Column="1"
-                                          Focusable="False" 
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}" 
-                                          RecognizesAccessKey="True"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                              Grid.Column="1"
+                              Focusable="False" 
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              Margin="{TemplateBinding Padding}" 
+                              RecognizesAccessKey="True"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
           </Grid>
           <ControlTemplate.Triggers>
             <Trigger Property="HasContent" Value="true">
@@ -88,5 +88,5 @@
       </Setter.Value>
     </Setter>
   </Style>
-
+  
 </ResourceDictionary>

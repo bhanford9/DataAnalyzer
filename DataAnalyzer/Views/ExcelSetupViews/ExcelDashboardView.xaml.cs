@@ -5,7 +5,7 @@ namespace DataAnalyzer.Views.ExcelSetupViews
 {
     public partial class ExcelDashboardView : UserControl
     {
-        private readonly ExcelDashboardViewModel viewModel = new ExcelDashboardViewModel();
+        private readonly ExcelDashboardViewModel viewModel = new();
 
         public ExcelDashboardView()
         {

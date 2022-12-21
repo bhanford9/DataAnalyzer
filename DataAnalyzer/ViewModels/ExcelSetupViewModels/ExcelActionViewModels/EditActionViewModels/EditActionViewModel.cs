@@ -1,6 +1,7 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+using DataAnalyzer.Services;
 using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
@@ -15,18 +16,19 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 
         private readonly BaseCommand act;
 
-        public EditActionViewModel(
-          IActionCreationModel actionCreationModel)
+        public EditActionViewModel(IActionCreationModel actionCreationModel, ExcelEntityType excelEntityType)
+            : this(excelEntityType)
         {
             this.actionCreationModel = actionCreationModel;
 
-            this.act = new BaseCommand((obj) => this.DoAct());
+            this.act = new BaseCommand(obj => this.DoAct());
         }
 
         public EditActionViewModel(
           IActionCreationModel actionCreationModel,
-          IEditActionViewModel toCopy)
-          : this(actionCreationModel)
+          IEditActionViewModel toCopy,
+          ExcelEntityType excelEntityType)
+          : this(actionCreationModel, excelEntityType)
         {
             this.ActionName = toCopy.ActionName;
             this.Description = toCopy.Description;
@@ -37,9 +39,14 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             //   This will make sure the original does not have events, but children do
         }
 
-        protected EditActionViewModel() { }
+        protected EditActionViewModel(ExcelEntityType excelEntityType)
+        {
+            this.ExcelEntityType = excelEntityType;
+        }
 
         public ICommand Act => this.act;
+
+        public ExcelEntityType ExcelEntityType { get; }
 
         public string ActionName
         {
@@ -59,7 +66,12 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             set => this.NotifyPropertyChanged(ref this.actionParameters, value);
         }
 
-        public abstract bool IsApplicable(IActionParameters parameters);
+        public bool IsApplicable(IActionParameters parameters)
+        {
+            return this.InternalIsApplicable(parameters) && this.ExcelEntityType.Equals(parameters.ExcelEntityType);
+        }
+
+        protected abstract bool InternalIsApplicable(IActionParameters parameters);
 
         public abstract IEditActionViewModel GetNewInstance(IActionParameters parameters);
 

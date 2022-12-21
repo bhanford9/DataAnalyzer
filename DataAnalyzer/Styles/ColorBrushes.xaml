@@ -11,6 +11,7 @@
   <SolidColorBrush x:Key="DarkAccentBorder" Color="#775720"/>
   <SolidColorBrush x:Key="GrayAccent" Color="#e0e0e0"/>
   <SolidColorBrush x:Key="LightBlueAccent" Color="#cadce0"/>
+  <SolidColorBrush x:Key="DisabledInput" Color="#a89e8a"/>
 
 
   <SolidColorBrush x:Key="DarkBackground" Color="#272727"/>

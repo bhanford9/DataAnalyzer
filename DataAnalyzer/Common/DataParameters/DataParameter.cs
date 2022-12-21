@@ -7,7 +7,7 @@ namespace DataAnalyzer.Common.DataParameters
     {
         public DataParameter(Func<IStats, IComparable> extractor, Func<IStats, bool> validator)
         {
-            this.StatAccessor = (stats) =>
+            this.StatAccessor = stats =>
             {
                 if (validator(stats))
                 {

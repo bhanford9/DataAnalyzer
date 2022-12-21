@@ -9,8 +9,8 @@ namespace DataAnalyzer.Models
 {
     internal class ConfigurationModel : BasePropertyChanged
     {
-        private readonly SerializationService serializationService = new SerializationService();
-        private readonly DataParameterLibrary dataParameterLibrary = new DataParameterLibrary();
+        private readonly SerializationService serializationService = new();
+        private readonly DataParameterLibrary dataParameterLibrary = new();
         private IDataParameterCollection dataParameterCollection = null;
         private string configurationDirectory = string.Empty;
         private string configurationName = string.Empty;
@@ -19,7 +19,7 @@ namespace DataAnalyzer.Models
         private ExportType selectedExportType = ExportType.NotApplicable;
 
         public int RemoveLevel { get; private set; } = -1;
-        public DataConfiguration DataConfiguration { get; private set; } = new DataConfiguration();
+        public DataConfiguration DataConfiguration { get; private set; } = new();
 
         public StatType SelectedDataType
         {

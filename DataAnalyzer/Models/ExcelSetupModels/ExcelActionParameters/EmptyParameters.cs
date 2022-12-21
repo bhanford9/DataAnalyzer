@@ -7,9 +7,13 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
     {
         public override ActionCategory ActionCategory => ActionCategory.Unknown;
 
-        public override string ToString()
-        {
-            return Environment.NewLine;
-        }
+        public override string ToString() => Environment.NewLine;
+
+        public override IActionParameters Clone() =>
+            new EmptyParameters
+            {
+                ExcelEntityType = this.ExcelEntityType,
+                Name = this.Name
+            };
     }
 }

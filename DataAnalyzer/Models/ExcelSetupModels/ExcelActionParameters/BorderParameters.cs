@@ -22,7 +22,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
         private BorderStyle diagonalUpStyle = BorderStyle.None;
         private BorderStyle diagonalDownStyle = BorderStyle.None;
 
-        private int nth = -1;
+        private ColumnSpecificationParameters columnSpecification = new();
+        private RowSpecificationParameters rowSpecification = new();
 
         public Color LeftColor
         {
@@ -108,33 +109,59 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
             set => this.NotifyPropertyChanged(ref this.diagonalDownStyle, value);
         }
 
-        public int Nth
+        public ColumnSpecificationParameters ColumnSpecification
         {
-            get => this.nth;
-            set => this.NotifyPropertyChanged(ref this.nth, value);
+            get => this.columnSpecification;
+            set => this.NotifyPropertyChanged(ref this.columnSpecification, value);
+        }
+
+        public RowSpecificationParameters RowSpecification
+        {
+            get => this.rowSpecification;
+            set => this.NotifyPropertyChanged(ref this.rowSpecification, value);
         }
 
         public override ActionCategory ActionCategory => ActionCategory.BorderStyle;
 
-        public override string ToString()
-        {
-            string str =
-              $"Left Color: {this.LeftColor.Name}{Environment.NewLine}" +
-              $"Left Style: {this.LeftStyle}{Environment.NewLine}" +
-              $"Top Color: {this.TopColor.Name}{Environment.NewLine}" +
-              $"Top Style: {this.TopStyle}{Environment.NewLine}" +
-              $"Right Color: {this.RightColor.Name}{Environment.NewLine}" +
-              $"Right Style: {this.RightStyle}{Environment.NewLine}" +
-              $"Bottom Color: {this.BottomColor.Name}{Environment.NewLine}" +
-              $"Bottom Style: {this.BottomStyle}{Environment.NewLine}" +
-              $"All Color: {this.AllColor.Name}{Environment.NewLine}" +
-              $"All Style: {this.AllStyle}{Environment.NewLine}" +
-              $"Diagonal Up Color: {this.DiagonalUpColor.Name}{Environment.NewLine}" +
-              $"Diagonal Up Style: {this.DiagonalUpStyle}{Environment.NewLine}" +
-              $"Diagonal Down Color: {this.DiagonalDownColor.Name}{Environment.NewLine}" +
-              $"Diagonal Down Style: {this.DiagonalDownStyle}{Environment.NewLine}";
+        public override string ToString() =>
+            $"Left Color: {this.LeftColor.Name}{Environment.NewLine}" +
+            $"Left Style: {this.LeftStyle}{Environment.NewLine}" +
+            $"Top Color: {this.TopColor.Name}{Environment.NewLine}" +
+            $"Top Style: {this.TopStyle}{Environment.NewLine}" +
+            $"Right Color: {this.RightColor.Name}{Environment.NewLine}" +
+            $"Right Style: {this.RightStyle}{Environment.NewLine}" +
+            $"Bottom Color: {this.BottomColor.Name}{Environment.NewLine}" +
+            $"Bottom Style: {this.BottomStyle}{Environment.NewLine}" +
+            $"All Color: {this.AllColor.Name}{Environment.NewLine}" +
+            $"All Style: {this.AllStyle}{Environment.NewLine}" +
+            $"Diagonal Up Color: {this.DiagonalUpColor.Name}{Environment.NewLine}" +
+            $"Diagonal Up Style: {this.DiagonalUpStyle}{Environment.NewLine}" +
+            $"Diagonal Down Color: {this.DiagonalDownColor.Name}{Environment.NewLine}" +
+            $"Diagonal Down Style: {this.DiagonalDownStyle}{Environment.NewLine}" +
+            $"{ColumnSpecification}{Environment.NewLine}" +
+            $"{RowSpecification}{Environment.NewLine}";
 
-            return str + (this.Nth >= 0 ? $"Nth: {this.Nth}{Environment.NewLine}" : "");
-        }
+        public override IActionParameters Clone() =>
+            new BorderParameters
+            {
+                ExcelEntityType = this.ExcelEntityType,
+                Name = this.Name,
+                LeftColor = this.leftColor,
+                TopColor = this.topColor,
+                RightColor = this.rightColor,
+                BottomColor = this.bottomColor,
+                AllColor = this.allColor,
+                DiagonalUpColor = this.diagonalUpColor,
+                DiagonalDownColor = this.diagonalDownColor,
+                LeftStyle = this.leftStyle,
+                TopStyle = this.topStyle,
+                RightStyle = this.rightStyle,
+                BottomStyle = this.bottomStyle,
+                AllStyle = this.allStyle,
+                DiagonalUpStyle = this.diagonalUpStyle,
+                DiagonalDownStyle = this.diagonalDownStyle,
+                ColumnSpecification = this.columnSpecification.Clone(),
+                RowSpecification = this.rowSpecification.Clone(),
+            };
     }
 }

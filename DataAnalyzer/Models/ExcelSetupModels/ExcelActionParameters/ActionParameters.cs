@@ -5,9 +5,16 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
     internal abstract class ActionParameters : BasePropertyChanged, IActionParameters
     {
+        private ExcelEntityType excelEntityType;
         private string name = string.Empty;
 
         public abstract ActionCategory ActionCategory { get; }
+
+        public ExcelEntityType ExcelEntityType
+        {
+            get => this.excelEntityType;
+            set => this.NotifyPropertyChanged(ref this.excelEntityType, value);
+        }
 
         public string Name
         {
@@ -15,6 +22,14 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
             set => this.NotifyPropertyChanged(ref this.name, value);
         }
 
+        public IActionParameters WithExcelEntity(ExcelEntityType excelEntityType)
+        {
+            this.excelEntityType = excelEntityType;
+            return this;
+        }
+
         public abstract override string ToString();
+
+        public abstract IActionParameters Clone();
     }
 }

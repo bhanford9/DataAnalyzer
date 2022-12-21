@@ -15,7 +15,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
             return this.excelSetupModel.AvailableWorkbookActions;
         }
 
-        public override void LoadHeirarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem)
+        public override void LoadHierarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem)
         {
             foreach (ActionSummaryTreeViewItem workbookItem in baseItem.Children)
             {
@@ -23,6 +23,20 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
 
                 if (workbook != default && workbook.WorkbookActions.Count > 0)
                 {
+                    workbookItem.SummaryViewModels.Clear();
+
+                    foreach (ExcelAction action in workbook.WorkbookActions)
+                    {
+                        workbookItem.SummaryViewModels.Add(new ActionSummaryExpandableViewModel
+                        {
+                            PathId = $"{workbookItem.Name}",
+                            ActionName = $"{action.Name}",
+                            ActionDescription = $"{action.Description}",
+                            DescriptionPreview = $"{action.ActionParameters.Name}", // TBD
+                            DetailedDescription = $"{action.ActionParameters}",
+                        });
+                    }
+
                     workbookItem.Description = workbook.WorkbookActions.Select(x => x.ActionParameters.ToString()).Aggregate((a, b) => a + Environment.NewLine + b);
                 }
             }
@@ -32,7 +46,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
         {
             foreach (HeirarchalStats workbookStats in heirarchalStats)
             {
-                baseItem.Children.Add(new ActionSummaryTreeViewItem()
+                baseItem.Children.Add(new ActionSummaryTreeViewItem
                 {
                     IsLeaf = true,
                     Name = workbookStats.Key.ToString(),

@@ -11,8 +11,7 @@ namespace DataAnalyzer.ViewModels
         {
         }
 
-        public ObservableCollection<string> ConfigData { get; }
-          = new ObservableCollection<string>();
+        public ObservableCollection<string> ConfigData { get; } = new();
 
         public string Title
         {

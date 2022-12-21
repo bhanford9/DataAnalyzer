@@ -2,6 +2,7 @@
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary;
+using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ActionSummaryViewModels;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -23,20 +24,22 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
 
         private readonly BaseCommand saveConfiguration;
 
-        public ActionsSummaryViewModel(IActionsSummaryModel actionsSummaryModel)
+        public ActionsSummaryViewModel(IActionsSummaryModel actionsSummaryModel, ExcelEntityType excelEntityType)
         {
             this.actionsSummaryModel = actionsSummaryModel;
+            this.ExcelEntityType = excelEntityType;
 
-            this.saveConfiguration = new BaseCommand((obj) => this.DoSaveConfiguration());
+            this.saveConfiguration = new BaseCommand(obj => this.DoSaveConfiguration());
 
             this.statsModel.PropertyChanged += this.StatsModelPropertyChanged;
             this.actionsSummaryModel.PropertyChanged += this.ActionsSummaryModelPropertyChanged;
         }
 
-        public ObservableCollection<ActionSummaryTreeViewItem> HeirarchicalSummaries { get; }
-          = new ObservableCollection<ActionSummaryTreeViewItem>();
+        public ObservableCollection<ActionSummaryTreeViewItem> HierarchicalSummaries { get; } = new();
 
         public ICommand SaveConfiguration => this.saveConfiguration;
+
+        public ExcelEntityType ExcelEntityType { get; }
 
         public string ConfigName
         {
@@ -46,13 +49,13 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
 
         public void LoadActionsFromModel()
         {
-            if (this.HeirarchicalSummaries.Count == 0)
+            if (this.HierarchicalSummaries.Count == 0)
             {
                 this.statsModel.StructureStats();
                 this.InitializeFromStats();
             }
-
-            this.actionsSummaryModel.LoadHeirarchicalSummariesFromModel(this.HeirarchicalSummaries.First());
+            
+            this.actionsSummaryModel.LoadHierarchicalSummariesFromModel(this.HierarchicalSummaries.First());
         }
 
         private void DoSaveConfiguration()
@@ -69,9 +72,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
 
         private void InitializeFromStats()
         {
-            this.HeirarchicalSummaries.Clear();
-            this.HeirarchicalSummaries.Add(new ActionSummaryTreeViewItem() { Name = "All Workbooks" });
-            this.actionsSummaryModel.LoadHeirarchicalSummariesFromStats(this.HeirarchicalSummaries.First());
+            this.HierarchicalSummaries.Clear();
+            this.HierarchicalSummaries.Add(new ActionSummaryTreeViewItem { Name = "All Workbooks" });
+            this.actionsSummaryModel.LoadHierarchicalSummariesFromStats(this.HierarchicalSummaries.First());
         }
 
         private void StatsModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -89,7 +92,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             switch (e.PropertyName)
             {
                 case WorkbookActionApplicationModel.ACTION_APPLIED_KEY:
-                    //this.actionsSummaryModel.LoadHeirarchicalSummariesFromModel(this.HeirarchicalSummaries.First());
+                    //this.actionsSummaryModel.LoadHierarchicalSummariesFromModel(this.HierarchicalSummaries.First());
                     break;
             }
         }

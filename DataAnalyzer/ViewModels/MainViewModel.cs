@@ -12,26 +12,25 @@ namespace DataAnalyzer.ViewModels
 
         public MainViewModel()
         {
-            this.LoadedConfigs.Add(new LoadedConfigurationItemViewModel() { Title = this.mainModel.LoadedInputFiles.Name });
+            this.LoadedConfigs.Add(new LoadedConfigurationItemViewModel { Title = this.mainModel.LoadedInputFiles.Name });
             this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedInputFiles.DirectoryPathKeyValue);
             this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedInputFiles.DataTypeKeyValue);
 
-            this.LoadedConfigs.Add(new LoadedConfigurationItemViewModel() { Title = this.mainModel.LoadedDataStructure.Name });
+            this.LoadedConfigs.Add(new LoadedConfigurationItemViewModel { Title = this.mainModel.LoadedDataStructure.Name });
             this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.DirectoryPathKeyValue);
             this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.StructureNameKeyValue);
             this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.DataTypeKeyValue);
             this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.ExportTypeKeyValue);
             this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.GroupingsKeyValue);
 
-            this.LoadedConfigs.Add(new LoadedConfigurationItemViewModel() { Title = this.mainModel.LoadedDataContent.Name });
+            this.LoadedConfigs.Add(new LoadedConfigurationItemViewModel { Title = this.mainModel.LoadedDataContent.Name });
 
             this.mainModel.LoadedInputFiles.PropertyChanged += this.LoadedInputFilesPropertyChanged;
             this.mainModel.LoadedDataStructure.PropertyChanged += this.LoadedDataStructurePropertyChanged;
             this.mainModel.LoadedDataContent.PropertyChanged += this.LoadedDataContentPropertyChanged;
         }
 
-        public ObservableCollection<LoadedConfigurationItemViewModel> LoadedConfigs { get; }
-          = new ObservableCollection<LoadedConfigurationItemViewModel>();
+        public ObservableCollection<LoadedConfigurationItemViewModel> LoadedConfigs { get; } = new();
 
         private void UpdateLoadedConfigs(string name, string key, string keyValue)
         {
@@ -108,9 +107,9 @@ namespace DataAnalyzer.ViewModels
 
         private void LoadedDataContentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            switch (e.PropertyName)
-            {
-            }
+            //switch (e.PropertyName)
+            //{
+            //}
         }
     }
 }

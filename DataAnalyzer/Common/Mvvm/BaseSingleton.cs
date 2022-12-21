@@ -11,7 +11,7 @@ namespace DataAnalyzer.Common.Mvvm
     {
         private BaseSingleton() { }
 
-        private static readonly Lazy<T> instance = new Lazy<T>(() => new T());
+        private static readonly Lazy<T> instance = new(() => new T());
 
         public static T Instance => instance.Value;
     }

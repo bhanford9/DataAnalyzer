@@ -5,7 +5,7 @@ namespace DataAnalyzer.Views
 {
     public partial class FileSelectorView : UserControl
     {
-        private readonly FileSelectorViewModel viewModel = new FileSelectorViewModel();
+        private readonly FileSelectorViewModel viewModel = new();
 
         public FileSelectorView()
         {

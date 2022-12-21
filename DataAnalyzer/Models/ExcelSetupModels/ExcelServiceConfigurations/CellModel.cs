@@ -8,7 +8,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations
     {
         public ICollection<ExcelAction> CellActions { get; set; } = new List<ExcelAction>();
 
-        public object Value { get; set; } = new object();
+        public object Value { get; set; } = new();
 
         public ITypeParameter DataType { get; set; }
 

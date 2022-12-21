@@ -4,7 +4,7 @@ namespace DataSerialization.Serializers
 {
     internal class JsonSerializer<T> : Serializer<T>
     {
-        private readonly JsonSerializerSettings options = new JsonSerializerSettings()
+        private readonly JsonSerializerSettings options = new JsonSerializerSettings
         {
             TypeNameHandling = TypeNameHandling.Auto,
             Formatting = Formatting.Indented,

@@ -15,12 +15,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
             AlignmentParameters alignmentParameters = actionParameters as AlignmentParameters;
             this.Description =
               $"Horizontal Alignment: {alignmentParameters.HorizontalAlignment}{Environment.NewLine}" +
-              $"Vertical Alignment: {alignmentParameters.VerticalAlignment}{Environment.NewLine}";
-
-            if (alignmentParameters.Nth >= 0)
-            {
-                this.Description += $"Nth: {alignmentParameters.Nth}{Environment.NewLine}";
-            }
+              $"Vertical Alignment: {alignmentParameters.VerticalAlignment}{Environment.NewLine}" +
+              $"{alignmentParameters.ColumnSpecification}{Environment.NewLine}" +
+              $"{alignmentParameters.RowSpecification}";
         }
     }
 }

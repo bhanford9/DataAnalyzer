@@ -120,7 +120,7 @@ namespace ExcelService
                     }
                 }
 
-                dataCluster.HeaderRange = new Row(new List<ICell>() { new Cell(dataCluster.ClusterHeader, string.Empty, new TextCellDataFormat()) });
+                dataCluster.HeaderRange = new Row(new List<ICell> { new Cell(dataCluster.ClusterHeader, string.Empty, new TextCellDataFormat()) });
                 dataCluster.HeaderRange.StartRowNumber = dataCluster.StartRowNumber - 1;
                 dataCluster.HeaderRange.StartColNumber = dataCluster.StartColNumber;
                 for (int i = 1; i < dataCluster.EndColNumber - 1; i++)

@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="DataAnalyzer.Views.Utilities.ColumnSpecificationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DataAnalyzer.Views.Utilities"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+  <GroupBox Header="Column Specification"
+            Margin="2 10">
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+
+      <Grid.Resources>
+        <Style TargetType="TextBox" BasedOn="{StaticResource BaseTextBoxStyle}">
+          <Setter Property="Margin" Value="8 4"/>
+          <Setter Property="Grid.Column" Value="1"/>
+        </Style>
+      </Grid.Resources>
+
+      <CheckBox Content="All Columns"
+                Margin="3 0 3 10"
+                Grid.Row="0"
+                Grid.Column="0"
+                IsChecked="{Binding AllColumns}"/>
+
+      <RadioButton Content="Column Name"
+                   IsEnabled="{Binding RadiosEnabled}"
+                   Grid.Row="1"
+                   Grid.Column="0"
+                   IsChecked="{Binding UseColumnName}"/>
+      <TextBox Text="{Binding ColumnName}"
+               IsEnabled="{Binding ColumnNameEnabled}"
+               Grid.Row="1"/>
+
+      <RadioButton Content="Nth Column"
+                   IsEnabled="{Binding RadiosEnabled}"
+                   Grid.Row="2"
+                   Grid.Column="0"
+                   IsChecked="{Binding UseNthColumn}"/>
+      <TextBox Text="{Binding NthColumn}"
+               IsEnabled="{Binding NthColumnEnabled}"
+               Grid.Row="2"/>
+
+      <RadioButton Content="Data Name"
+                   IsEnabled="{Binding RadiosEnabled}"
+                   Grid.Row="3"
+                   Grid.Column="0"
+                   IsChecked="{Binding UseDataName}"/>
+      <ComboBox ItemsSource="{Binding DataTypes}"
+                Margin="6 4"
+                IsEnabled="{Binding DataNameEnabled}"
+                Grid.Row="3"
+                Grid.Column="1"
+                SelectedItem="{Binding SelectedDataType}"/>
+
+    </Grid>
+  </GroupBox>
+</UserControl>

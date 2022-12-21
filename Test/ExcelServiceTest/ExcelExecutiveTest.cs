@@ -45,47 +45,43 @@ namespace ExcelServiceTest
       Row adamRow = new Row(adamData);
       Row aliceRow = new Row(aliceData);
 
-      ICollection<IRow> rows = new List<IRow>()
+      ICollection<IRow> rows = new List<IRow>
       {
         adamRow,
         aliceRow
       };
 
-      ActionDefinitions clusterActions = new ActionDefinitions()
+      ActionDefinitions clusterActions = new ActionDefinitions
       {
         new HeaderMergeCenterFullParameters(),
-        new HeaderBorderStyleParameters()
+        new HeaderBorderStyleParameters
         {
-          AllBorders = new Border() { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin }
+          AllBorders = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin }
         },
-        new HeaderBackgroundStyleParameters() { Color = new ColorValue(Color.LightGray) },
-        new BorderStyleParameters()
+        new HeaderBackgroundStyleParameters { Color = new ColorValue(Color.LightGray) },
+        new BorderStyleParameters
         {
-          Left = new Border() { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin },
-          Top = new Border() { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin },
-          Right = new Border() { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin },
-          Bottom = new Border() { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin }
+          Left = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin },
+          Top = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin },
+          Right = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin },
+          Bottom = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin }
         },
-        new ColumnBorderStyleParameters()
-        {
-          Border = new Border() { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin }
-        },
-        new NthRowBorderStyleParameters()
+        new NthRowBorderStyleParameters
         {
           NthRow = 0,
-          AllBorders = new Border() { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin }
+          AllBorders = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin }
         },
-        new NthRowAlignmentStyleParameters()
+        new NthRowAlignmentStyleParameters
         {
           NthRow = 0,
-          Alignments = new AlignmentValues() { HorizontalAlignment = HorizontalAlignment.Center }
+          Alignments = new AlignmentValues { HorizontalAlignment = HorizontalAlignment.Center }
         }
       };
 
       DataCluster dataCluster1 = new DataCluster(rows, "First Cluster", 3, 1, true, clusterActions, true);
       DataCluster dataCluster2 = new DataCluster(rows, "Second Cluster", 2, 1, true, clusterActions, true);
 
-      ICollection<IDataCluster> dataClusters = new List<IDataCluster>()
+      ICollection<IDataCluster> dataClusters = new List<IDataCluster>
       {
         dataCluster1,
         dataCluster2
@@ -93,7 +89,7 @@ namespace ExcelServiceTest
 
       Worksheet worksheet = new Worksheet("MyFirstWorksheet", dataClusters);
 
-      ICollection<IWorksheet> worksheets = new List<IWorksheet>()
+      ICollection<IWorksheet> worksheets = new List<IWorksheet>
       {
         worksheet
       };

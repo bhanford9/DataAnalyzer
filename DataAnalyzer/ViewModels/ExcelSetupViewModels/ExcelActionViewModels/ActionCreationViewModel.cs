@@ -2,6 +2,7 @@
 using DataAnalyzer.Models.ExcelSetupModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels;
 using DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;
 using System.Collections.Generic;
@@ -21,12 +22,14 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
 
         public ActionCreationViewModel(
           ICollection<ExcelAction> actions,
-          IActionCreationModel actionCreationModel)
+          IActionCreationModel actionCreationModel,
+          ExcelEntityType excelEntityType)
         {
             this.actionCreationModel = actionCreationModel;
+            this.ExcelEntityType = excelEntityType;
 
             EmptyParameters empty = new EmptyParameters();
-            this.currentAction = this.editActionLibrary.GetEditAction(new EmptyParameters());
+            this.currentAction = this.editActionLibrary.GetEditAction(new EmptyParameters { ExcelEntityType = excelEntityType }, this.ExcelEntityType);
             this.currentAction.ActionParameters = empty;
 
             actions.ToList().ForEach(action =>
@@ -42,8 +45,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             this.actionCreationModel.PropertyChanged += this.ActionCreationModelPropertyChanged;
         }
 
-        public ObservableCollection<LoadableRemovableRowViewModel> Actions { get; }
-          = new ObservableCollection<LoadableRemovableRowViewModel>();
+        public ObservableCollection<LoadableRemovableRowViewModel> Actions { get; } = new();
 
         public IEditActionViewModel CurrentAction
         {
@@ -51,13 +53,15 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             set => this.NotifyPropertyChanged(ref this.currentAction, value);
         }
 
+        public ExcelEntityType ExcelEntityType { get; }
+
         private void ActionCreationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
                 case nameof(this.actionCreationModel.LoadedActionName):
                     ExcelAction action = this.actionCreationModel.GetLoadedAction();
-                    this.CurrentAction = this.editActionLibrary.GetEditAction(action.ActionParameters);
+                    this.CurrentAction = this.editActionLibrary.GetEditAction(action.ActionParameters, this.ExcelEntityType);
                     this.CurrentAction.ActionName = action.Name;
                     this.CurrentAction.Description = action.Description;
                     this.CurrentAction.ActionParameters = action.ActionParameters;

@@ -5,9 +5,9 @@ namespace DataAnalyzer.Models
 {
     internal class MainModel : BasePropertyChanged
     {
-        private LoadedDataContent loadedDataContent = new LoadedDataContent();
-        private LoadedDataStructure loadedDataStructure = new LoadedDataStructure();
-        private LoadedInputFiles loadedInputFiles = new LoadedInputFiles();
+        private LoadedDataContent loadedDataContent = new();
+        private LoadedDataStructure loadedDataStructure = new();
+        private LoadedInputFiles loadedInputFiles = new();
 
         public MainModel()
         {

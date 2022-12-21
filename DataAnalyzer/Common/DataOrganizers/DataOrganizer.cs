@@ -40,7 +40,7 @@ namespace DataAnalyzer.Common.DataOrganizers
 
             groups.ToList().ForEach(group =>
             {
-                HeirarchalStats stats = new HeirarchalStats() { Key = group.Key };
+                HeirarchalStats stats = new HeirarchalStats { Key = group.Key };
                 group.ToList().ForEach(x => stats.Values.Add(x));
 
                 if (groupingConfigurations.Next != null)

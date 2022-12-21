@@ -1,5 +1,6 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+using DataAnalyzer.Services;
 using System;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
@@ -8,12 +9,15 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
     {
         private bool doPerform = false;
 
-        public BooleanActionViewModel()
+        public BooleanActionViewModel(ExcelEntityType excelEntityType) : base(excelEntityType)
         {
         }
 
-        public BooleanActionViewModel(IActionCreationModel actionCreationModel, IEditActionViewModel toCopy)
-          : base(actionCreationModel, toCopy)
+        public BooleanActionViewModel(
+            IActionCreationModel actionCreationModel,
+            IEditActionViewModel toCopy,
+            ExcelEntityType excelEntityType)
+          : base(actionCreationModel, toCopy, excelEntityType)
         {
         }
 
@@ -31,13 +35,14 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 
         public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
         {
-            BooleanActionViewModel viewModel = new BooleanActionViewModel(this.actionCreationModel, this);
+            BooleanActionViewModel viewModel = new(this.actionCreationModel, this, this.ExcelEntityType);
+
             BooleanOperationParameters booleanParameters = parameters as BooleanOperationParameters;
             viewModel.DoPerform = booleanParameters.DoPerform;
             return viewModel;
         }
 
-        public override bool IsApplicable(IActionParameters parameters)
+        protected override bool InternalIsApplicable(IActionParameters parameters)
         {
             return parameters is BooleanOperationParameters;
         }

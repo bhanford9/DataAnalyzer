@@ -5,7 +5,7 @@ namespace DataAnalyzer.Views.ExcelSetupViews
 {
     public partial class ExcelDataTypeSetupView : UserControl
     {
-        private readonly ExcelDataTypesViewModel excelDataTypesViewModel = new ExcelDataTypesViewModel();
+        private readonly ExcelDataTypesViewModel excelDataTypesViewModel = new();
 
         public ExcelDataTypeSetupView()
         {

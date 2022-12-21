@@ -5,6 +5,7 @@ using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;
+using DataAnalyzer.Services;
 using ExcelService.DataActions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,27 +29,27 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             ActionLibrary actionLibrary = new ActionLibrary();
 
             actionLibrary.GetWorkbookActionInfo()
-              .Select(x => ExcelActionConverter.FromExcelActionInfo(x))
+              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, ExcelEntityType.Workbook))
               .ToList()
               .ForEach(x => this.AvailableWorkbookActions.Add(x));
 
             actionLibrary.GetWorksheetActionInfo()
-              .Select(x => ExcelActionConverter.FromExcelActionInfo(x))
+              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, ExcelEntityType.Worksheet))
               .ToList()
               .ForEach(x => this.AvailableWorksheetActions.Add(x));
 
             actionLibrary.GetDataClusterActionInfo()
-              .Select(x => ExcelActionConverter.FromExcelActionInfo(x))
+              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, ExcelEntityType.DataCluster))
               .ToList()
               .ForEach(x => this.AvailableDataClusterActions.Add(x));
 
             actionLibrary.GetRowActionInfo()
-              .Select(x => ExcelActionConverter.FromExcelActionInfo(x))
+              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, ExcelEntityType.Row))
               .ToList()
               .ForEach(x => this.AvailableRowActions.Add(x));
 
             actionLibrary.GetCellActionInfo()
-              .Select(x => ExcelActionConverter.FromExcelActionInfo(x))
+              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, ExcelEntityType.Cell))
               .ToList()
               .ForEach(x => this.AvailableCellActions.Add(x));
 
@@ -59,20 +60,15 @@ namespace DataAnalyzer.Models.ExcelSetupModels
 
         public ExcelConfigurationModel ExcelConfiguration => BaseSingleton<ExcelConfigurationModel>.Instance;
 
-        public ObservableCollection<ExcelAction> AvailableWorkbookActions { get; }
-          = new ObservableCollection<ExcelAction>();
+        public ObservableCollection<ExcelAction> AvailableWorkbookActions { get; } = new();
 
-        public ObservableCollection<ExcelAction> AvailableWorksheetActions { get; }
-          = new ObservableCollection<ExcelAction>();
+        public ObservableCollection<ExcelAction> AvailableWorksheetActions { get; } = new();
 
-        public ObservableCollection<ExcelAction> AvailableDataClusterActions { get; }
-          = new ObservableCollection<ExcelAction>();
+        public ObservableCollection<ExcelAction> AvailableDataClusterActions { get; } = new();
 
-        public ObservableCollection<ExcelAction> AvailableRowActions { get; }
-          = new ObservableCollection<ExcelAction>();
+        public ObservableCollection<ExcelAction> AvailableRowActions { get; } = new();
 
-        public ObservableCollection<ExcelAction> AvailableCellActions { get; }
-          = new ObservableCollection<ExcelAction>();
+        public ObservableCollection<ExcelAction> AvailableCellActions { get; } = new();
 
         public IList<ITypeParameter> WorkingParameterTypes
         {
@@ -106,84 +102,84 @@ namespace DataAnalyzer.Models.ExcelSetupModels
                                         QueryableTimeStats queryableTimeStats = rowStats as QueryableTimeStats;
                                         rowModel.Cells = new List<CellModel>
                                         {
-                                            new CellModel()
+                                            new()
                                             {
                                                 Value = queryableTimeStats.AverageTimeMillis,
                                                 DataMemberName = nameof(queryableTimeStats.AverageTimeMillis),
                                                 DataType = defaultType,
                                                 ColumnIndex = 0
                                             },
-                                            new CellModel()
+                                            new()
                                             {
                                                 Value = queryableTimeStats.CategoryType,
                                                 DataMemberName = nameof(queryableTimeStats.CategoryType),
                                                 DataType = defaultType,
                                                 ColumnIndex = 1
                                             },
-                                            new CellModel()
+                                            new()
                                             {
                                                 Value = queryableTimeStats.ContainerSize,
                                                 DataMemberName = nameof(queryableTimeStats.ContainerSize),
                                                 DataType = defaultType,
                                                 ColumnIndex = 2
                                             },
-                                            new CellModel()
+                                            new()
                                             {
                                                 Value = queryableTimeStats.ContainerType,
                                                 DataMemberName = nameof(queryableTimeStats.ContainerType),
                                                 DataType = defaultType,
                                                 ColumnIndex = 3
                                             },
-                                            new CellModel()
+                                            new()
                                             {
                                                 Value = queryableTimeStats.ExecuterName,
                                                 DataMemberName = nameof(queryableTimeStats.ExecuterName),
                                                 DataType = defaultType,
                                                 ColumnIndex = 4
                                             },
-                                            new CellModel()
+                                            new()
                                             {
                                                 Value = queryableTimeStats.FastestTimeMillis,
                                                 DataMemberName = nameof(queryableTimeStats.FastestTimeMillis),
                                                 DataType = defaultType,
                                                 ColumnIndex = 5
                                             },
-                                            new CellModel()
+                                            new()
                                             {
                                                 Value = queryableTimeStats.Iterations,
                                                 DataMemberName = nameof(queryableTimeStats.Iterations),
                                                 DataType = defaultType,
                                                 ColumnIndex = 6
                                             },
-                                            new CellModel()
+                                            new()
                                             {
                                                 Value = queryableTimeStats.MethodName,
                                                 DataMemberName = nameof(queryableTimeStats.MethodName),
                                                 DataType = defaultType,
                                                 ColumnIndex = 7
                                             },
-                                            new CellModel()
+                                            new()
                                             {
                                                 Value = queryableTimeStats.RangeTimeMillis,
                                                 DataMemberName = nameof(queryableTimeStats.RangeTimeMillis),
                                                 DataType = defaultType,
                                                 ColumnIndex = 8
                                             },
-                                            new CellModel()
+                                            new()
                                             {
                                                 Value = queryableTimeStats.SlowestTimeMillis,
                                                 DataMemberName = nameof(queryableTimeStats.SlowestTimeMillis),
                                                 DataType = defaultType,
                                                 ColumnIndex = 9
                                             },
-                                            new CellModel()
+                                            new()
                                             {
                                                 Value = queryableTimeStats.TotalTimeMillis,
                                                 DataMemberName = nameof(queryableTimeStats.TotalTimeMillis),
                                                 DataType = defaultType,
                                                 ColumnIndex = 10
                                             },
-                                            new CellModel()
+                                            new()
                                             {
                                                 Value = queryableTimeStats.TriggerType,
                                                 DataMemberName = nameof(queryableTimeStats.TriggerType),

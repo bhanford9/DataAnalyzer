@@ -6,7 +6,7 @@ namespace DataAnalyzer.Views.Utilities
 {
     public partial class SelectableRemovableRow : UserControl
     {
-        private readonly SelectableRemoveableRowViewModel viewModel = new SelectableRemoveableRowViewModel();
+        private readonly SelectableRemoveableRowViewModel viewModel = new();
 
         //public static readonly DependencyProperty OnSelectProperty =
         //  DependencyProperty.Register("OnSelect", typeof(ICommand), typeof(SelectableRemoveableRowViewModel));

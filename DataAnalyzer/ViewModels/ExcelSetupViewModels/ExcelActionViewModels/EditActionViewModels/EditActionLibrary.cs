@@ -1,4 +1,6 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+using DataAnalyzer.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,28 +8,28 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 {
     internal class EditActionLibrary
     {
-        private readonly ICollection<IEditActionViewModel> editActionViewModels = new List<IEditActionViewModel>();
+        private readonly IReadOnlyCollection<Func<ExcelEntityType, IEditActionViewModel>> editActionViewModels;
 
+        // TODO --> this is now a factory instead of a library
         public EditActionLibrary()
         {
-            this.LoadItems();
+            editActionViewModels = new List<Func<ExcelEntityType, IEditActionViewModel>>
+            {
+                x => new EmptyEditViewModel(x),
+                x => new AlignmentEditViewModel(x),
+                x => new BackgroundEditViewModel(x),
+                x => new BorderEditViewModel(x),
+                x => new BooleanActionViewModel(x),
+            };
         }
 
-        public IEditActionViewModel GetEditAction(IActionParameters actionParameters)
+        public IEditActionViewModel GetEditAction(IActionParameters actionParameters, ExcelEntityType excelEntityType)
         {
+            // this is expensive, but I don't really care. Only doing it this way to support 1-to-many relationship between
+            // parameter type and view model. If that is not needed, then this can be simplified & optimized to a dictionary
             return this.editActionViewModels
-              .FirstOrDefault(x => x.IsApplicable(actionParameters))
-              .GetNewInstance(actionParameters);
-        }
-
-        private void LoadItems()
-        {
-            this.editActionViewModels.Add(new EmptyEditViewModel());
-
-            this.editActionViewModels.Add(new AlignmentEditViewModel());
-            this.editActionViewModels.Add(new BackgroundEditViewModel());
-            this.editActionViewModels.Add(new BorderEditViewModel());
-            this.editActionViewModels.Add(new BooleanActionViewModel());
+              .FirstOrDefault(x => x(excelEntityType).IsApplicable(actionParameters))
+              .Invoke(excelEntityType).GetNewInstance(actionParameters); // GetNewInstance could probably just be moved into the constructor
         }
     }
 }

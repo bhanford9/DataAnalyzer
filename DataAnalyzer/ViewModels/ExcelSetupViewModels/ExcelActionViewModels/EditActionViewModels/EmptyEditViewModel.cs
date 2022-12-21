@@ -1,19 +1,26 @@
-﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+using DataAnalyzer.Services;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
     internal class EmptyEditViewModel : EditActionViewModel
     {
+        public EmptyEditViewModel(ExcelEntityType excelEntityType)
+            : base(excelEntityType)
+        {
+        }
+
         public override void ApplyParameterSettings()
         {
         }
 
         public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
         {
-            return new EmptyEditViewModel();
+            return new EmptyEditViewModel(this.ExcelEntityType);
         }
 
-        public override bool IsApplicable(IActionParameters parameters)
+        protected override bool InternalIsApplicable(IActionParameters parameters)
         {
             return parameters is EmptyParameters;
         }

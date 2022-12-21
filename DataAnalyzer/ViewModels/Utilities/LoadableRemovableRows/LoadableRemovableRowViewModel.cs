@@ -13,8 +13,8 @@ namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 
         public LoadableRemovableRowViewModel()
         {
-            this.remove = new BaseCommand((obj) => this.DoRemove());
-            this.load = new BaseCommand((obj) => this.DoLoad());
+            this.remove = new BaseCommand(obj => this.DoRemove());
+            this.load = new BaseCommand(obj => this.DoLoad());
         }
 
         public ICommand Remove => this.remove;

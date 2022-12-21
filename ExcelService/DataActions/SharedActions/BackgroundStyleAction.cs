@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using ExcelService.DataActions.ActionParameters;
 using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
+using ExcelService.Utilities;
 
 namespace ExcelService.DataActions.SharedActions
 {
@@ -54,15 +55,30 @@ namespace ExcelService.DataActions.SharedActions
               cellRange.EndRowNumber,
               cellRange.EndColNumber);
 
+            ColumnRowSpecification columnRowSpec = new ColumnRowSpecification
+            {
+                RowSpecification = backgroundColorParameters.RowSpecification,
+                ColumnSpecification = backgroundColorParameters.ColumnSpecification,
+            };
+
             if (backgroundColorParameters.DoApplyColor)
             {
-                range.Style.Fill.BackgroundColor = backgroundColorParameters.Color.ToXlColorFromLocal();
+                RowAndColumnSpecHandler.Handle(
+                    columnRowSpec,
+                    range,
+                    x => x.Style.Fill.BackgroundColor = backgroundColorParameters.Color.ToXlColorFromLocal());
             }
 
             if (backgroundColorParameters.Pattern.DoApply)
             {
-                range.Style.Fill.PatternType = backgroundColorParameters.Pattern.ToXlFromLocal();
-                range.Style.Fill.PatternColor = backgroundColorParameters.Pattern.Color.ToXlColorFromLocal();
+                RowAndColumnSpecHandler.Handle(
+                    columnRowSpec,
+                    range,
+                    x =>
+                    {
+                        x.Style.Fill.PatternType = backgroundColorParameters.Pattern.ToXlFromLocal();
+                        x.Style.Fill.PatternColor = backgroundColorParameters.Pattern.Color.ToXlColorFromLocal();
+                    });
             }
 
             message = string.Empty;

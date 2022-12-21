@@ -85,7 +85,8 @@
             DataContext="{Binding DataContext.DataClusterActionViewModel, ElementName=ExcelConfigSetup}"/>
         </TabItem>
         <TabItem Header="Rows">
-          
+          <excelsetupviews:ExcelRowSetupView
+            DataContext="{Binding DataContext.RowActionViewModel, ElementName=ExcelConfigSetup}"/>
         </TabItem>
         <TabItem Header="Cells">
           

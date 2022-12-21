@@ -1,48 +1,51 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using DataAnalyzer.Services;
+using DataAnalyzer.ViewModels.Utilities;
 using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.SubModelConversions;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
     internal class BorderEditViewModel : EditActionViewModel
     {
-        private int nth = 0;
+        private RowSpecificationViewModel rowSpecification = new();
+        private ColumnSpecificationViewModel columnSpecification = new();
 
-
-        public BorderEditViewModel()
+        public BorderEditViewModel(ExcelEntityType excelEntityType) : base(excelEntityType)
         {
         }
 
-        public BorderEditViewModel(IActionCreationModel actionCreationModel, IEditActionViewModel toCopy)
-          : base(actionCreationModel, toCopy)
+        public BorderEditViewModel(
+            IActionCreationModel actionCreationModel,
+            IEditActionViewModel toCopy,
+            ExcelEntityType excelEntityType)
+          : base(actionCreationModel, toCopy, excelEntityType)
         {
         }
 
-        public ObservableCollection<BorderSettingsViewModel> BorderSettings { get; }
-          = new ObservableCollection<BorderSettingsViewModel>();
+        public ObservableCollection<BorderSettingsViewModel> BorderSettings { get; } = new();
 
-        public BorderSettingsViewModel LeftBorderSettings { get; }
-          = new BorderSettingsViewModel();
-        public BorderSettingsViewModel TopBorderSettings { get; }
-          = new BorderSettingsViewModel();
-        public BorderSettingsViewModel RightBorderSettings { get; }
-          = new BorderSettingsViewModel();
-        public BorderSettingsViewModel BottomBorderSettings { get; }
-          = new BorderSettingsViewModel();
-        public BorderSettingsViewModel AllBorderSettings { get; }
-          = new BorderSettingsViewModel();
-        public BorderSettingsViewModel DiagonalUpBorderSettings { get; }
-          = new BorderSettingsViewModel();
-        public BorderSettingsViewModel DiagonalDownBorderSettings { get; }
-          = new BorderSettingsViewModel();
+        public BorderSettingsViewModel LeftBorderSettings { get; } = new();
+        public BorderSettingsViewModel TopBorderSettings { get; } = new();
+        public BorderSettingsViewModel RightBorderSettings { get; } = new();
+        public BorderSettingsViewModel BottomBorderSettings { get; } = new();
+        public BorderSettingsViewModel AllBorderSettings { get; } = new();
+        public BorderSettingsViewModel DiagonalUpBorderSettings { get; } = new();
+        public BorderSettingsViewModel DiagonalDownBorderSettings { get; } = new();
 
-        public int Nth
+        public RowSpecificationViewModel RowSpecification
         {
-            get => this.nth;
-            set => this.NotifyPropertyChanged(ref this.nth, value);
+            get => this.rowSpecification;
+            set => this.NotifyPropertyChanged(ref this.rowSpecification, value);
+        }
+
+        public ColumnSpecificationViewModel ColumnSpecification
+        {
+            get => this.columnSpecification;
+            set => this.NotifyPropertyChanged(ref this.columnSpecification, value);
         }
 
         public override void ApplyParameterSettings()
@@ -65,12 +68,13 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             borderParameters.DiagonalUpStyle = Enum.Parse<BorderStyle>(this.DiagonalUpBorderSettings.SelectedStyle);
             borderParameters.DiagonalDownStyle = Enum.Parse<BorderStyle>(this.DiagonalDownBorderSettings.SelectedStyle);
 
-            borderParameters.Nth = this.Nth;
+            borderParameters.ColumnSpecification = ColumnSpecificationConversion.ToModel(this.ColumnSpecification);
+            borderParameters.RowSpecification = RowSpecificationConversion.ToModel(this.RowSpecification);
         }
 
         public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
         {
-            BorderEditViewModel viewModel = new BorderEditViewModel(this.actionCreationModel, this);
+            BorderEditViewModel viewModel = new(this.actionCreationModel, this, this.ExcelEntityType);
             BorderParameters borderParameters = parameters as BorderParameters;
             viewModel.LeftBorderSettings.ComboBoxColors.SelectedColor = borderParameters.LeftColor.Name;
             viewModel.TopBorderSettings.ComboBoxColors.SelectedColor = borderParameters.TopColor.Name;
@@ -96,8 +100,6 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             viewModel.DiagonalUpBorderSettings.BorderName = "Diagonal Up Border";
             viewModel.DiagonalDownBorderSettings.BorderName = "Diagonal Down Border";
 
-            viewModel.Nth = borderParameters.Nth;
-
             viewModel.BorderSettings.Add(viewModel.LeftBorderSettings);
             viewModel.BorderSettings.Add(viewModel.TopBorderSettings);
             viewModel.BorderSettings.Add(viewModel.RightBorderSettings);
@@ -106,10 +108,13 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             viewModel.BorderSettings.Add(viewModel.DiagonalUpBorderSettings);
             viewModel.BorderSettings.Add(viewModel.DiagonalDownBorderSettings);
 
+            viewModel.ColumnSpecification = ColumnSpecificationConversion.ToViewModel(borderParameters.ColumnSpecification);
+            viewModel.RowSpecification = RowSpecificationConversion.ToViewModel(borderParameters.RowSpecification);
+
             return viewModel;
         }
 
-        public override bool IsApplicable(IActionParameters parameters)
+        protected override bool InternalIsApplicable(IActionParameters parameters)
         {
             return parameters is BorderParameters;
         }

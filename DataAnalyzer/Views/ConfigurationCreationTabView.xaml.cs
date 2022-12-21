@@ -5,7 +5,7 @@ namespace DataAnalyzer.Views
 {
     public partial class ConfigurationCreationTabView : UserControl
     {
-        private readonly ConfigurationCreationViewModel viewModel = new ConfigurationCreationViewModel();
+        private readonly ConfigurationCreationViewModel viewModel = new();
 
         public ConfigurationCreationTabView()
         {

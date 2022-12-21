@@ -1,4 +1,5 @@
 ﻿using ExcelService.Styles.Alignments;
+using ExcelService.Utilities;
 
 namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
 {
@@ -9,5 +10,9 @@ namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
         public AlignmentValues Alignments { get; set; } = new AlignmentValues();
 
         public override ActionCategory Category => ActionCategory.AlignmentStyle;
+
+        public IColumnSpecification ColumnSpecification { get; set; } = new ColumnSpecification();
+
+        public IRowSpecification RowSpecification { get; set; } = new RowSpecification();
     }
 }

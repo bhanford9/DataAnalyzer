@@ -1,8 +1,7 @@
-﻿using DataAnalyzer.Models.ExcelSetupModels;
-using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
-using ExcelService.DataActions;
+﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
 using System;
+using DataAnalyzer.Common.DataConverters.ExcelConverters.UtilityConverters;
 
 namespace DataAnalyzer.Common.DataConverters.ExcelConverters.BorderConverters
 {
@@ -15,7 +14,7 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters.BorderConverters
         {
             if (input is BorderStyleParameters excelBorderParams)
             {
-                return new BorderParameters()
+                return new BorderParameters
                 {
                     LeftColor = excelBorderParams.Left.Color.ToSystemColor(),
                     LeftStyle = BorderTypesConverter.ToLocalBorderStyle(excelBorderParams.Left.Style),
@@ -38,65 +37,70 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters.BorderConverters
                     DiagonalDownColor = excelBorderParams.DiagonalDown.Color.ToSystemColor(),
                     DiagonalDownStyle = BorderTypesConverter.ToLocalBorderStyle(excelBorderParams.DiagonalDown.Style),
 
+                    ColumnSpecification = ColumnSpecificationConverter.ToLocalColumnSpecification(excelBorderParams.ColumnSpecification),
+                    RowSpecification = RowSpecificationConverter.ToLocalRowSpecification(excelBorderParams.RowSpecification),
+
                     Name = excelBorderParams.Name
                 };
             }
 
-            throw new ArgumentException("Invalid type. Excpected BorderStyleParameters.");
+            throw new ArgumentException("Invalid type. Expected BorderStyleParameters.");
         }
 
         public override ExcelService.DataActions.ActionParameters.IActionParameters ToExcel(IActionParameters input)
         {
             if (input is BorderParameters borderParameters)
             {
-                return new BorderStyleParameters()
+                return new BorderStyleParameters
                 {
-                    AllBorders = new ExcelService.Styles.Borders.Border()
+                    AllBorders = new ExcelService.Styles.Borders.Border
                     {
                         DoApply = true,
                         Color = ExcelColorValueConverter.ToExcelColorValue(borderParameters.AllColor),
                         Style = BorderTypesConverter.ToExcelBorderStyle(borderParameters.AllStyle)
                     },
-                    Bottom = new ExcelService.Styles.Borders.Border()
+                    Bottom = new ExcelService.Styles.Borders.Border
                     {
                         DoApply = true,
                         Color = ExcelColorValueConverter.ToExcelColorValue(borderParameters.BottomColor),
                         Style = BorderTypesConverter.ToExcelBorderStyle(borderParameters.BottomStyle)
                     },
-                    DiagonalDown = new ExcelService.Styles.Borders.Border()
+                    DiagonalDown = new ExcelService.Styles.Borders.Border
                     {
                         DoApply = true,
                         Color = ExcelColorValueConverter.ToExcelColorValue(borderParameters.DiagonalDownColor),
                         Style = BorderTypesConverter.ToExcelBorderStyle(borderParameters.DiagonalDownStyle)
                     },
-                    DiagonalUp = new ExcelService.Styles.Borders.Border()
+                    DiagonalUp = new ExcelService.Styles.Borders.Border
                     {
                         DoApply = true,
                         Color = ExcelColorValueConverter.ToExcelColorValue(borderParameters.DiagonalUpColor),
                         Style = BorderTypesConverter.ToExcelBorderStyle(borderParameters.DiagonalUpStyle)
                     },
-                    Left = new ExcelService.Styles.Borders.Border()
+                    Left = new ExcelService.Styles.Borders.Border
                     {
                         DoApply = true,
                         Color = ExcelColorValueConverter.ToExcelColorValue(borderParameters.LeftColor),
                         Style = BorderTypesConverter.ToExcelBorderStyle(borderParameters.LeftStyle)
                     },
-                    Right = new ExcelService.Styles.Borders.Border()
+                    Right = new ExcelService.Styles.Borders.Border
                     {
                         DoApply = true,
                         Color = ExcelColorValueConverter.ToExcelColorValue(borderParameters.RightColor),
                         Style = BorderTypesConverter.ToExcelBorderStyle(borderParameters.RightStyle)
                     },
-                    Top = new ExcelService.Styles.Borders.Border()
+                    Top = new ExcelService.Styles.Borders.Border
                     {
                         DoApply = true,
                         Color = ExcelColorValueConverter.ToExcelColorValue(borderParameters.TopColor),
                         Style = BorderTypesConverter.ToExcelBorderStyle(borderParameters.TopStyle)
-                    }
+                    },
+                    ColumnSpecification = ColumnSpecificationConverter.ToExcelColumnSpecification(borderParameters.ColumnSpecification),
+                    RowSpecification = RowSpecificationConverter.ToExcelRowSpecification(borderParameters.RowSpecification)
                 };
             }
 
-            throw new ArgumentException("Invalid type. Excpected BorderParameters.");
+            throw new ArgumentException("Invalid type. Expected BorderParameters.");
         }
     }
 }

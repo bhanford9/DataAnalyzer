@@ -7,7 +7,7 @@ namespace DataAnalyzer.Services
 {
     internal class ScraperService
     {
-        private readonly ScraperLibrary scraperLibrary = new ScraperLibrary();
+        private readonly ScraperLibrary scraperLibrary = new();
 
         public ICollection<IStats> ScrapeFromFile(string file, IDataConverter converter)
         {

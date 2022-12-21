@@ -26,16 +26,15 @@ namespace DataAnalyzer.ViewModels
         {
             this.level = level;
 
-            this.addParameter = new BaseCommand((obj) => this.DoAddParameter());
-            this.removeParameter = new BaseCommand((obj) => this.DoRemoveParameter(obj.ToString()));
+            this.addParameter = new BaseCommand(obj => this.DoAddParameter());
+            this.removeParameter = new BaseCommand(obj => this.DoRemoveParameter(obj.ToString()));
 
             this.configurationCreationModel.PropertyChanged += this.ConfigurationCreationModelPropertyChanged;
 
             this.LoadParameters();
         }
 
-        public ObservableCollection<ConfigurationGroupingViewModel> Children { get; }
-          = new ObservableCollection<ConfigurationGroupingViewModel>();
+        public ObservableCollection<ConfigurationGroupingViewModel> Children { get; } = new();
 
         public ConfigurationGroupingViewModel Parent { get; private set; } = null;
 

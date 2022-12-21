@@ -12,7 +12,7 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters.BooleanConverters
         {
             if (input is DisplayWorkbookParameters displayParameters)
             {
-                return new BooleanOperationParameters()
+                return new BooleanOperationParameters
                 {
                     DoPerform = displayParameters.DisplayAfter,
                     Name = displayParameters.Name,
@@ -26,7 +26,7 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters.BooleanConverters
         {
             if (input is BooleanOperationParameters booleanParameters)
             {
-                return new DisplayWorkbookParameters()
+                return new DisplayWorkbookParameters
                 {
                     DisplayAfter = booleanParameters.DoPerform,
                 };

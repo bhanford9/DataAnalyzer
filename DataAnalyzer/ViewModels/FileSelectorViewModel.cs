@@ -23,8 +23,8 @@ namespace DataAnalyzer.ViewModels
 
         private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
         private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
-        private readonly DataConverterLibrary dataConverterLibrary = new DataConverterLibrary();
-        private EnumUtilities EnumUtilities = new EnumUtilities();
+        private readonly DataConverterLibrary dataConverterLibrary = new();
+        private EnumUtilities EnumUtilities = new();
 
         public FileSelectorViewModel()
         {
@@ -42,11 +42,9 @@ namespace DataAnalyzer.ViewModels
             this.EnumUtilities.LoadNames(typeof(ScraperType), this.ScraperTypes);
         }
 
-        public ObservableCollection<CheckableTreeViewItem> Files { get; }
-          = new ObservableCollection<CheckableTreeViewItem>();
+        public ObservableCollection<CheckableTreeViewItem> Files { get; } = new();
 
-        public ObservableCollection<string> ScraperTypes { get; }
-          = new ObservableCollection<string>();
+        public ObservableCollection<string> ScraperTypes { get; } = new();
 
         public ICommand BrowseDirectory => this.browseDirectory;
 
@@ -119,7 +117,7 @@ namespace DataAnalyzer.ViewModels
 
             this.Files.Clear();
 
-            this.Files.Add(new CheckableTreeViewItem()
+            this.Files.Add(new CheckableTreeViewItem
             {
                 Path = this.ActiveDirectory,
                 Name = Path.GetFileName(this.ActiveDirectory)
@@ -138,7 +136,7 @@ namespace DataAnalyzer.ViewModels
                 foreach (string file in Directory.GetFiles(pathRoot))
                 {
                     treeRoot.Children.Add(
-                      new CheckableTreeViewItem()
+                      new CheckableTreeViewItem
                       {
                           Path = file,
                           Name = Path.GetFileName(file)
@@ -152,7 +150,7 @@ namespace DataAnalyzer.ViewModels
                 foreach (string directory in Directory.GetDirectories(pathRoot))
                 {
                     treeRoot.Children.Add(
-                      new CheckableTreeViewItem()
+                      new CheckableTreeViewItem
                       {
                           Path = directory,
                           Name = Path.GetFileName(directory)

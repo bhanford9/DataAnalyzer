@@ -2,6 +2,7 @@
 using DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels;
 using DataAnalyzer.ViewModels.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -27,9 +28,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 
             if (workbook != default)
             {
-                workbook.WorkbookActions.Add(new ExcelAction()
+                workbook.WorkbookActions.Add(new ExcelAction
                 {
-                    ActionParameters = action.ActionParameters,
+                    ActionParameters = action.ActionParameters.Clone(),
                     Description = action.Description,
                     Name = action.ActionName
                 });
@@ -38,7 +39,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
             }
             else
             {
-                throw new System.Exception($"Failed to find workbook model with name: {item.Name}");
+                throw new Exception($"Failed to find workbook model with name: {item.Name}");
             }
         }
 
@@ -53,7 +54,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
             {
                 string path = workbookStats.Key.ToString();
 
-                baseItem.Children.Add(new CheckableTreeViewItem()
+                baseItem.Children.Add(new CheckableTreeViewItem
                 {
                     IsChecked = true,
                     IsLeaf = true,

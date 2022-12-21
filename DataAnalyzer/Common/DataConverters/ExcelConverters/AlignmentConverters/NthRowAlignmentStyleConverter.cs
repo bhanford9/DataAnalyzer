@@ -1,6 +1,4 @@
-﻿using DataAnalyzer.Models.ExcelSetupModels;
-using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
-using ExcelService.DataActions;
+﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using ExcelService.DataActions.ActionParameters.ClusterStyleParameters;
 using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
 using System;
@@ -16,7 +14,7 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters.AlignmentConverters
             if (input is NthRowAlignmentStyleParameters nthAlignmentParams)
             {
                 AlignmentParameters alignmentParameters = base.FromExcel(input) as AlignmentParameters;
-                alignmentParameters.Nth = nthAlignmentParams.NthRow;
+                alignmentParameters.RowSpecification = new () { AllRows = false, UseNthRow = true, NthRow = nthAlignmentParams.NthRow };
                 return alignmentParameters;
             }
 
@@ -28,10 +26,10 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters.AlignmentConverters
             if (input is AlignmentParameters alignmentParameters)
             {
                 AlignmentStyleParameters alignmentStyle = base.ToExcel(alignmentParameters) as AlignmentStyleParameters;
-                return new NthRowAlignmentStyleParameters()
+                return new NthRowAlignmentStyleParameters
                 {
                     Alignments = alignmentStyle.Alignments,
-                    NthRow = alignmentParameters.Nth
+                    NthRow = alignmentParameters.RowSpecification.NthRow
                 };
             }
 

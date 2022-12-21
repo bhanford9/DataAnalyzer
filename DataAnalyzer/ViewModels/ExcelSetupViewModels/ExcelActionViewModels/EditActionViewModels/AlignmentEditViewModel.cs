@@ -1,6 +1,8 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using DataAnalyzer.Services;
+using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.SubModelConversions;
+using DataAnalyzer.ViewModels.Utilities;
 using System;
 using System.Collections.ObjectModel;
 
@@ -10,23 +12,27 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
     {
         private string selectedHorizontalAlignment = string.Empty;
         private string selectedVerticalAlignment = string.Empty;
-        private int nth = 0;
-        private readonly EnumUtilities enumUtilities = new EnumUtilities();
+        private RowSpecificationViewModel rowSpecification = new();
+        private ColumnSpecificationViewModel columnSpecification = new();
 
-        public AlignmentEditViewModel()
+        private readonly EnumUtilities enumUtilities = new ();
+
+        public AlignmentEditViewModel(ExcelEntityType excelEntityType)
+            : base(excelEntityType)
         {
         }
 
-        public AlignmentEditViewModel(IActionCreationModel actionCreationModel, IEditActionViewModel toCopy)
-          : base(actionCreationModel, toCopy)
+        public AlignmentEditViewModel(
+            IActionCreationModel actionCreationModel,
+            IEditActionViewModel toCopy,
+            ExcelEntityType excelEntityType)
+          : base(actionCreationModel, toCopy, excelEntityType)
         {
         }
 
-        public ObservableCollection<string> HorizontalAlignments { get; }
-          = new ObservableCollection<string>();
+        public ObservableCollection<string> HorizontalAlignments { get; } = new();
 
-        public ObservableCollection<string> VerticalAlignments { get; }
-          = new ObservableCollection<string>();
+        public ObservableCollection<string> VerticalAlignments { get; } = new();
 
         public string SelectedHorizontalAlignment
         {
@@ -40,23 +46,30 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             set => this.NotifyPropertyChanged(ref this.selectedVerticalAlignment, value);
         }
 
-        public int Nth
+        public RowSpecificationViewModel RowSpecification
         {
-            get => this.nth;
-            set => this.NotifyPropertyChanged(ref this.nth, value);
+            get => this.rowSpecification;
+            set => this.NotifyPropertyChanged(ref this.rowSpecification, value);
+        }
+
+        public ColumnSpecificationViewModel ColumnSpecification
+        {
+            get => this.columnSpecification;
+            set => this.NotifyPropertyChanged(ref this.columnSpecification, value);
         }
 
         public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
         {
-            AlignmentEditViewModel viewModel = new AlignmentEditViewModel(this.actionCreationModel, this);
+            AlignmentEditViewModel viewModel = new(this.actionCreationModel, this, this.ExcelEntityType);
             AlignmentParameters alignmentParameters = parameters as AlignmentParameters;
             viewModel.SelectedHorizontalAlignment = alignmentParameters.HorizontalAlignment.ToString();
             viewModel.SelectedVerticalAlignment = alignmentParameters.VerticalAlignment.ToString();
-            viewModel.Nth = alignmentParameters.Nth;
+            viewModel.ColumnSpecification = ColumnSpecificationConversion.ToViewModel(alignmentParameters.ColumnSpecification);
+            viewModel.RowSpecification = RowSpecificationConversion.ToViewModel(alignmentParameters.RowSpecification);
             return viewModel;
         }
 
-        public override bool IsApplicable(IActionParameters parameters)
+        protected override bool InternalIsApplicable(IActionParameters parameters)
         {
             return parameters is AlignmentParameters;
         }
@@ -77,7 +90,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             AlignmentParameters alignmentParameters = this.ActionParameters as AlignmentParameters;
             alignmentParameters.HorizontalAlignment = Enum.Parse<HorizontalAlignment>(this.SelectedHorizontalAlignment);
             alignmentParameters.VerticalAlignment = Enum.Parse<VerticalAlignment>(this.SelectedVerticalAlignment);
-            alignmentParameters.Nth = this.Nth;
+            alignmentParameters.ColumnSpecification = ColumnSpecificationConversion.ToModel(this.ColumnSpecification);
+            alignmentParameters.RowSpecification = RowSpecificationConversion.ToModel(this.RowSpecification);
         }
     }
 }

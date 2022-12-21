@@ -3,6 +3,7 @@ using DataAnalyzer.Models.ExcelSetupModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary;
+using DataAnalyzer.Services;
 using System.Collections.Generic;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
@@ -13,18 +14,22 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
           ICollection<ExcelAction> actions,
           IActionCreationModel actionCreationModel,
           IActionApplicationModel actionApplicationModel,
-          IActionsSummaryModel actionsSummaryModel)
+          IActionsSummaryModel actionsSummaryModel,
+          ExcelEntityType type)
         {
             this.ActionCreationViewModel = new ActionCreationViewModel(
               actions,
-              actionCreationModel);
+              actionCreationModel,
+              type);
 
             this.ActionApplicationViewModel = new ActionApplicationViewModel(
               actions,
-              actionApplicationModel);
+              actionApplicationModel,
+              type);
 
             this.ActionsSummaryViewModel = new ActionsSummaryViewModel(
-              actionsSummaryModel);
+              actionsSummaryModel,
+              type);
         }
 
         public ActionCreationViewModel ActionCreationViewModel { get; set; }

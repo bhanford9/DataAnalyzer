@@ -9,6 +9,12 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 
         ActionCategory ActionCategory { get; }
 
+        ExcelEntityType ExcelEntityType { get; set; }
+
         string ToString();
+
+        IActionParameters WithExcelEntity(ExcelEntityType excelEntityType);
+
+        IActionParameters Clone();
     }
 }

@@ -41,7 +41,7 @@ namespace ExcelService.DataActions
 
                     if (action == default)
                     {
-                        return new ActionStatus()
+                        return new ActionStatus
                         {
                             Successful = false,
                             FailureLayer = FailureLayer.Exception,
@@ -52,7 +52,7 @@ namespace ExcelService.DataActions
 
                     if (!action.CanExecute(excelEntity, actionParameters, out string canExecuteMessage))
                     {
-                        return new ActionStatus()
+                        return new ActionStatus
                         {
                             Successful = false,
                             FailureLayer = FailureLayer.CanExecute,
@@ -63,7 +63,7 @@ namespace ExcelService.DataActions
 
                     if (!action.Execute(workbook, excelEntity, actionParameters, out string executeMessage))
                     {
-                        return new ActionStatus()
+                        return new ActionStatus
                         {
                             Successful = false,
                             FailureLayer = FailureLayer.Execute,
@@ -74,7 +74,7 @@ namespace ExcelService.DataActions
 
                     if (!action.PostExecution(workbook, excelEntity, actionParameters, out string postExecutionMessage))
                     {
-                        return new ActionStatus()
+                        return new ActionStatus
                         {
                             Successful = false,
                             FailureLayer = FailureLayer.PostExecution,
@@ -86,7 +86,7 @@ namespace ExcelService.DataActions
             }
             catch (Exception ex)
             {
-                return new ActionStatus()
+                return new ActionStatus
                 {
                     Successful = false,
                     FailureLayer = FailureLayer.Exception,

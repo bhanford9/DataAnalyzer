@@ -48,7 +48,7 @@ namespace ExcelService.DataActions.WorkbookActions
             if (param.DisplayAfter)
             {
                 IWorkbook workbookData = excelEntity as IWorkbook;
-                Process.Start(new ProcessStartInfo() { FileName = workbookData.FilePath, UseShellExecute = true });
+                Process.Start(new ProcessStartInfo { FileName = workbookData.FilePath, UseShellExecute = true });
             }
 
             message = string.Empty;

@@ -2,6 +2,7 @@
 using DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels;
 using DataAnalyzer.ViewModels.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -36,9 +37,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 
                     if (dataCluster != default)
                     {
-                        dataCluster.DataClusterActions.Add(new ExcelAction()
+                        dataCluster.DataClusterActions.Add(new ExcelAction
                         {
-                            ActionParameters = action.ActionParameters,
+                            ActionParameters = action.ActionParameters.Clone(),
                             Description = action.Description,
                             Name = action.ActionName
                         });
@@ -47,17 +48,17 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
                     }
                     else
                     {
-                        throw new System.Exception($"Failed to find data cluster model with name: {dataClusterName}");
+                        throw new Exception($"Failed to find data cluster model with name: {dataClusterName}");
                     }
                 }
                 else
                 {
-                    throw new System.Exception($"Failed to find worksheet model with name: {worksheetName}");
+                    throw new Exception($"Failed to find worksheet model with name: {worksheetName}");
                 }
             }
             else
             {
-                throw new System.Exception($"Failed to find workbook model with name: {workbookName}");
+                throw new Exception($"Failed to find workbook model with name: {workbookName}");
             }
         }
 
@@ -72,7 +73,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
             {
                 string workbookPath = workbookStats.Key.ToString();
 
-                baseItem.Children.Add(new CheckableTreeViewItem()
+                baseItem.Children.Add(new CheckableTreeViewItem
                 {
                     IsChecked = true,
                     IsLeaf = false,
@@ -84,7 +85,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
                 {
                     string worksheetPath = workbookPath + PATH_DELIMITER + worksheetStats.Key.ToString();
 
-                    baseItem.Children.Last().Children.Add(new CheckableTreeViewItem()
+                    baseItem.Children.Last().Children.Add(new CheckableTreeViewItem
                     {
                         IsChecked = true,
                         IsLeaf = false,
@@ -96,7 +97,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
                     {
                         string dataClusterPath = worksheetPath + PATH_DELIMITER + dataClusters.Key.ToString();
 
-                        baseItem.Children.Last().Children.Last().Children.Add(new CheckableTreeViewItem()
+                        baseItem.Children.Last().Children.Last().Children.Add(new CheckableTreeViewItem
                         {
                             IsChecked = true,
                             IsLeaf = true,

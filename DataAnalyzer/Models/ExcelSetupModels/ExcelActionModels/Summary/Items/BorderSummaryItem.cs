@@ -21,12 +21,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
               $"Bottom Color: {borderParameters.BottomColor}, Bottom Style: {borderParameters.BottomStyle}{Environment.NewLine}" +
               $"All Color: {borderParameters.AllColor}, All Style: {borderParameters.AllStyle}{Environment.NewLine}" +
               $"Diagonal Up Color: {borderParameters.DiagonalUpColor}, Diagonal Up Style: {borderParameters.DiagonalUpStyle}{Environment.NewLine}" +
-              $"Diagonal Down Color: {borderParameters.DiagonalDownColor}, Diagonal Down Style: {borderParameters.DiagonalDownStyle}{Environment.NewLine}";
-
-            if (borderParameters.Nth >= 0)
-            {
-                this.Description += $"Nth: {borderParameters.Nth}{Environment.NewLine}";
-            }
+              $"Diagonal Down Color: {borderParameters.DiagonalDownColor}, Diagonal Down Style: {borderParameters.DiagonalDownStyle}{Environment.NewLine}" +
+              $"{borderParameters.ColumnSpecification}{Environment.NewLine}" +
+              $"{borderParameters.RowSpecification}{Environment.NewLine}";
         }
     }
 }

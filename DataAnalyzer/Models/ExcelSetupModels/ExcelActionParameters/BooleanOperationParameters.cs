@@ -19,5 +19,13 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
         {
             return $"Do Perform: {this.DoPerform}{Environment.NewLine}";
         }
+
+        public override IActionParameters Clone() =>
+            new BooleanOperationParameters
+            {
+                ExcelEntityType = this.ExcelEntityType,
+                Name = this.Name,
+                DoPerform = this.doPerform
+            };
     }
 }

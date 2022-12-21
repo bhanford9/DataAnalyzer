@@ -231,7 +231,7 @@ namespace ExcelService.DataActions
         private ICollection<ActionInfo> GetActionInfo(ICollection<IDataAction> subLibrary)
         {
             return subLibrary
-              .Select(x => new ActionInfo()
+              .Select(x => new ActionInfo
               {
                   Name = x.GetName(),
                   Description = x.GetDescription(),
@@ -266,12 +266,8 @@ namespace ExcelService.DataActions
             this.dataClusterActions.Add(new HeaderMergeCenterFullAction());
             this.dataClusterActions.Add(new HeaderBackgroundStyleAction());
 
-            this.dataClusterActions.Add(new NthRowBorderStyleAction());
-            this.dataClusterActions.Add(new NthRowAlignmentStyleAction());
-
             this.dataClusterActions.Add(new BorderStyleAction());
             this.dataClusterActions.Add(new BackgroundStyleAction());
-            //this.dataClusterActions.Add(new ColumnBorderStyleAction());
             this.dataClusterActions.Add(new AlignmentStyleAction());
         }
 
@@ -279,7 +275,6 @@ namespace ExcelService.DataActions
         {
             this.rowActions.Add(new BorderStyleAction());
             this.rowActions.Add(new BackgroundStyleAction());
-            //this.rowActions.Add(new ColumnBorderStyleAction());
             this.rowActions.Add(new AlignmentStyleAction());
         }
 

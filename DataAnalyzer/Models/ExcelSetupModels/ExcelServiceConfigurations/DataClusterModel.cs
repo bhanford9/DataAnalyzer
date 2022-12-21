@@ -7,7 +7,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations
     {
         public ICollection<RowModel> Rows { get; set; } = new List<RowModel>();
 
-        public RowModel TitleRow { get; set; } = new RowModel();
+        public RowModel TitleRow { get; set; } = new();
 
         public ICollection<ExcelAction> DataClusterActions { get; set; } = new List<ExcelAction>();
 

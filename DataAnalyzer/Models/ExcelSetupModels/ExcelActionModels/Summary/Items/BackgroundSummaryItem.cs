@@ -17,12 +17,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
             this.Description =
               $"Background Color: {backgroundParameters.BackgroundColor}{Environment.NewLine}" +
               $"Background Pattern: {backgroundParameters.PatternColor}{Environment.NewLine}" +
-              $"Pattern Fill: {backgroundParameters.FillPattern}{Environment.NewLine}";
-
-            if (backgroundParameters.Nth >= 0)
-            {
-                this.Description += $"Nth: {backgroundParameters.Nth}{Environment.NewLine}";
-            }
+              $"Pattern Fill: {backgroundParameters.FillPattern}{Environment.NewLine}" +
+              $"{backgroundParameters.ColumnSpecification}{Environment.NewLine}" +
+              $"{backgroundParameters.RowSpecification}{Environment.NewLine}";
         }
     }
 }

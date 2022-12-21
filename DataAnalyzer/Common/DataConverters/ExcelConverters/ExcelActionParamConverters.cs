@@ -9,15 +9,14 @@ using System.Linq;
 
 namespace DataAnalyzer.Common.DataConverters.ExcelConverters
 {
-    internal class ExcelActionParamConverters
+    internal static class ExcelActionParamConverters
     {
-        private static readonly IReadOnlyDictionary<string, IExcelActionParamConverter> converters = new Dictionary<string, IExcelActionParamConverter>()
+        private static readonly IReadOnlyDictionary<string, IExcelActionParamConverter> converters = new Dictionary<string, IExcelActionParamConverter>
         {
             { new AlignmentStyleConverter ().Name, new AlignmentStyleConverter () },
             { new NthRowAlignmentStyleConverter ().Name, new NthRowAlignmentStyleConverter () },
             { new BackgroundStyleConverter ().Name, new BackgroundStyleConverter () },
             { new BorderStyleConverter ().Name, new BorderStyleConverter () },
-            { new NthRowBorderStyleConverter ().Name, new NthRowBorderStyleConverter () },
             { new OpenWorkbookConverter().Name, new OpenWorkbookConverter() },
             { new HeaderBorderStyleActionConverter().Name, new HeaderBorderStyleActionConverter() },
             { new HeaderMergeCenterFullConverter().Name, new HeaderMergeCenterFullConverter() },

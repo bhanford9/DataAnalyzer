@@ -40,5 +40,15 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             get => this.actionParameterType;
             set => this.NotifyPropertyChanged(ref this.actionParameterType, value);
         }
+
+        public ExcelAction Clone() =>
+            new()
+            {
+                Name = this.name,
+                Description = this.description,
+                IsBuiltIn = this.isBuiltIn,
+                ActionParameters = this.actionParameters.Clone(),
+                ActionParameterType = this.actionParameterType,
+            };
     }
 }

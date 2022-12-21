@@ -5,7 +5,7 @@ namespace DataAnalyzer.Common.DataObjects.TimeStats.QueryableTimeStats
 {
     internal class QueryableTimeStats : TimeStats
     {
-        private readonly List<string> parameterNames = new List<string>();
+        private readonly List<string> parameterNames = new();
 
         public QueryableTimeStats()
         {

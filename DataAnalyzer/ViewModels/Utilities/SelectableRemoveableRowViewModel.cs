@@ -10,8 +10,8 @@ namespace DataAnalyzer.ViewModels.Utilities
 
         public SelectableRemoveableRowViewModel()
         {
-            this.remove = new BaseCommand((obj) => this.DoRemove());
-            this.select = new BaseCommand((obj) => this.DoSelect());
+            this.remove = new BaseCommand(obj => this.DoRemove());
+            this.select = new BaseCommand(obj => this.DoSelect());
         }
 
         public ICommand Remove => this.remove;

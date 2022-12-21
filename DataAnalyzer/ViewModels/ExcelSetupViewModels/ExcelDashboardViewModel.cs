@@ -27,16 +27,15 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 
         public ExcelDashboardViewModel()
         {
-            this.startNewConfiguration = new BaseCommand((obj) => this.DoStartNewConfiguration());
-            this.saveConfiguration = new BaseCommand((obj) => this.DoSaveConfiguration());
-            this.browseOutputDirectory = new BaseCommand((obj) => this.DoBrowseOutputDirectory());
-            this.executeExcelExport = new BaseCommand((obj) => this.DoExecuteExcelExport());
+            this.startNewConfiguration = new BaseCommand(obj => this.DoStartNewConfiguration());
+            this.saveConfiguration = new BaseCommand(obj => this.DoSaveConfiguration());
+            this.browseOutputDirectory = new BaseCommand(obj => this.DoBrowseOutputDirectory());
+            this.executeExcelExport = new BaseCommand(obj => this.DoExecuteExcelExport());
 
             this.excelSetupModel.ExcelConfiguration.PropertyChanged += this.ExcelConfigurationPropertyChanged;
         }
 
-        public ObservableCollection<WorkbookConfigListItemViewModel> SavedWorkbookConfigs { get; }
-            = new ObservableCollection<WorkbookConfigListItemViewModel>();
+        public ObservableCollection<WorkbookConfigListItemViewModel> SavedWorkbookConfigs { get; } = new();
 
         public ICommand StartNewConfiguration => this.startNewConfiguration;
 
@@ -115,7 +114,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
                         displayText = Path.GetFileNameWithoutExtension(displayText);
                     }
 
-                    this.SavedWorkbookConfigs.Add(new WorkbookConfigListItemViewModel() { Value = displayText, ToolTipText = configFile });
+                    this.SavedWorkbookConfigs.Add(new WorkbookConfigListItemViewModel { Value = displayText, ToolTipText = configFile });
                 });
             }
         }

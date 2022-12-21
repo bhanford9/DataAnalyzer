@@ -28,27 +28,27 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         private readonly BaseCommand saveDataTypes;
 
         private readonly IReadOnlyDictionary<Type, Func<ITypeParameter, IDataTypeConfigViewModel>> typeParameterToViewModel
-            = new Dictionary<Type, Func<ITypeParameter, IDataTypeConfigViewModel>>()
+            = new Dictionary<Type, Func<ITypeParameter, IDataTypeConfigViewModel>>
             {
-                { typeof(NoTypeParameter), (x) => new NoParameterDataTypeViewModel(x) },
-                { typeof(IntegerTypeParameter), (x) => new OneParameterDataTypeViewModel<int>(x) },
-                { typeof(IntegerIntegerTypeParameter), (x) => new TwoParameterDataTypeViewModel<int, int>(x) },
-                { typeof(IntegerBooleanTypeParameter), (x) => new TwoParameterDataTypeViewModel<int, bool>(x) },
+                { typeof(NoTypeParameter), x => new NoParameterDataTypeViewModel(x) },
+                { typeof(IntegerTypeParameter), x => new OneParameterDataTypeViewModel<int>(x) },
+                { typeof(IntegerIntegerTypeParameter), x => new TwoParameterDataTypeViewModel<int, int>(x) },
+                { typeof(IntegerBooleanTypeParameter), x => new TwoParameterDataTypeViewModel<int, bool>(x) },
             };
 
         private readonly IReadOnlyDictionary<ParameterType, Func<ITypeParameter, IDataTypeConfigViewModel>> parameterTypeToToViewModel
-            = new Dictionary<ParameterType, Func<ITypeParameter, IDataTypeConfigViewModel>>()
+            = new Dictionary<ParameterType, Func<ITypeParameter, IDataTypeConfigViewModel>>
             {
-                { ParameterType.None, (x) => new NoParameterDataTypeViewModel(x) },
-                { ParameterType.Integer, (x) => new OneParameterDataTypeViewModel<int>(x) },
-                { ParameterType.IntegerInteger, (x) => new TwoParameterDataTypeViewModel<int, int>(x) },
-                { ParameterType.IntegerBoolean, (x) => new TwoParameterDataTypeViewModel<int, bool>(x) },
+                { ParameterType.None, x => new NoParameterDataTypeViewModel(x) },
+                { ParameterType.Integer, x => new OneParameterDataTypeViewModel<int>(x) },
+                { ParameterType.IntegerInteger, x => new TwoParameterDataTypeViewModel<int, int>(x) },
+                { ParameterType.IntegerBoolean, x => new TwoParameterDataTypeViewModel<int, bool>(x) },
             };
 
         public ExcelDataTypesViewModel()
         {
-            this.browseDirectory = new BaseCommand((obj) => this.DoBrowseDirectory());
-            this.saveDataTypes = new BaseCommand((obj) => this.DoSaveDataTypes());
+            this.browseDirectory = new BaseCommand(obj => this.DoBrowseDirectory());
+            this.saveDataTypes = new BaseCommand(obj => this.DoSaveDataTypes());
 
             this.ConfigurationDirectory = this.excelSetupModel.ExcelConfiguration.ConfigurationDirectory;
 
@@ -59,11 +59,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         }
 
 
-        public ObservableCollection<ExcelDataTypeListItemViewModel> SavedConfigurations { get; }
-          = new ObservableCollection<ExcelDataTypeListItemViewModel>();
+        public ObservableCollection<ExcelDataTypeListItemViewModel> SavedConfigurations { get; } = new();
 
-        public ObservableCollection<IDataTypeConfigViewModel> ParameterSelections { get; }
-          = new ObservableCollection<IDataTypeConfigViewModel>();
+        public ObservableCollection<IDataTypeConfigViewModel> ParameterSelections { get; } = new();
 
         public ICommand BrowseDirectory => this.browseDirectory;
         public ICommand SaveDataTypes => this.saveDataTypes;
@@ -129,7 +127,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
                         displayText = Path.GetFileNameWithoutExtension(displayText);
                     }
 
-                    this.SavedConfigurations.Add(new ExcelDataTypeListItemViewModel() { Value = displayText, ToolTipText = configFile });
+                    this.SavedConfigurations.Add(new ExcelDataTypeListItemViewModel { Value = displayText, ToolTipText = configFile });
                 });
             }
         }
@@ -188,7 +186,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
                     this.SavedConfigurations.Clear();
                     this.excelSetupModel.ExcelConfiguration.SavedConfigurations.ToList().ForEach(savedConfig =>
                     {
-                        this.SavedConfigurations.Add(new ExcelDataTypeListItemViewModel()
+                        this.SavedConfigurations.Add(new ExcelDataTypeListItemViewModel
                         {
                             IsRemovable = true,
                             Value = savedConfig.FileName,

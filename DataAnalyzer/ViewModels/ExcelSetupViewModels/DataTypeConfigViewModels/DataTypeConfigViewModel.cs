@@ -28,7 +28,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
             // TODO --> setup selected item based on configuration
         }
 
-        public List<string> ParameterTypes { get; init; } = new List<string>();
+        public List<string> ParameterTypes { get; init; } = new();
 
         public ITypeParameter TypeParameter { get; private set; }
 

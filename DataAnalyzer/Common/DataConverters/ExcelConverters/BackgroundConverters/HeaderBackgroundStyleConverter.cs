@@ -16,7 +16,7 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters.BackgroundConverter
                 return base.FromExcel(backgroundParameters);
             }
 
-            throw new ArgumentException("Invalid type. Excpected HeaderBackgroundStyleParameters.");
+            throw new ArgumentException("Invalid type. Expected HeaderBackgroundStyleParameters.");
         }
 
         public override ExcelService.DataActions.ActionParameters.IActionParameters ToExcel(IActionParameters input)
@@ -25,15 +25,17 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters.BackgroundConverter
             {
                 BackgroundStyleParameters backgroundStyleParameters = base.ToExcel(backgroundParameters) as BackgroundStyleParameters;
 
-                return new HeaderBackgroundStyleParameters()
+                return new HeaderBackgroundStyleParameters
                 {
                     DoApplyColor = backgroundStyleParameters.DoApplyColor,
                     Color = backgroundStyleParameters.Color,
                     Pattern = backgroundStyleParameters.Pattern,
+                    ColumnSpecification = backgroundStyleParameters.ColumnSpecification,
+                    RowSpecification = backgroundStyleParameters.RowSpecification,
                 };
             }
 
-            throw new ArgumentException("Invalid type. Excpected BackgroundParameters.");
+            throw new ArgumentException("Invalid type. Expected BackgroundParameters.");
         }
     }
 }

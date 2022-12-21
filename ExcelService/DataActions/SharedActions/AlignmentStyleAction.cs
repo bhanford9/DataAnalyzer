@@ -1,6 +1,7 @@
 ﻿using ClosedXML.Excel;
 using ExcelService.DataActions.ActionParameters;
 using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
+using ExcelService.Utilities;
 
 namespace ExcelService.DataActions.SharedActions
 {
@@ -53,14 +54,26 @@ namespace ExcelService.DataActions.SharedActions
               cellRange.EndRowNumber,
               cellRange.EndColNumber);
 
+            ColumnRowSpecification columnRowSpec = new ColumnRowSpecification
+            {
+                RowSpecification = alignmentStyleParameters.RowSpecification,
+                ColumnSpecification = alignmentStyleParameters.ColumnSpecification,
+            };
+
             if (alignmentStyleParameters.Alignments.DoApplyHorizontal)
             {
-                range.Style.Alignment.SetHorizontal(alignmentStyleParameters.Alignments.ToXlHorizontalAlignment());
+                RowAndColumnSpecHandler.Handle(
+                    columnRowSpec,
+                    range,
+                    x => x.Style.Alignment.SetHorizontal(alignmentStyleParameters.Alignments.ToXlHorizontalAlignment()));
             }
 
             if (alignmentStyleParameters.Alignments.DoApplyVertical)
             {
-                range.Style.Alignment.SetVertical(alignmentStyleParameters.Alignments.ToXlVerticalAlignment());
+                RowAndColumnSpecHandler.Handle(
+                    columnRowSpec,
+                    range,
+                    x => x.Style.Alignment.SetVertical(alignmentStyleParameters.Alignments.ToXlVerticalAlignment()));
             }
 
             message = string.Empty;

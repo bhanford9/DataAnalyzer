@@ -5,7 +5,7 @@ namespace DataAnalyzer.Views
 {
     public partial class ExcelConfigurationSetupView : UserControl
     {
-        private readonly ExcelSetupViewModel excelSetupViewModel = new ExcelSetupViewModel();
+        private readonly ExcelSetupViewModel excelSetupViewModel = new();
 
         public ExcelConfigurationSetupView()
         {

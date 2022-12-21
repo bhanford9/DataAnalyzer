@@ -5,7 +5,7 @@ namespace DataAnalyzer
 {
     public partial class MainWindow : Window
     {
-        private readonly MainViewModel viewModel = new MainViewModel();
+        private readonly MainViewModel viewModel = new();
 
         public MainWindow()
         {

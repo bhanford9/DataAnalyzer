@@ -9,8 +9,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
         private Color backgroundColor;
         private Color patternColor;
         private FillPattern fillPattern;
-
-        private int nth = -1;
+        private ColumnSpecificationParameters columnSpecification = new();
+        private RowSpecificationParameters rowSpecification = new();
 
         public Color BackgroundColor
         {
@@ -30,22 +30,37 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
             set => this.NotifyPropertyChanged(ref this.fillPattern, value);
         }
 
-        public int Nth
+        public ColumnSpecificationParameters ColumnSpecification
         {
-            get => this.nth;
-            set => this.NotifyPropertyChanged(ref this.nth, value);
+            get => this.columnSpecification;
+            set => this.NotifyPropertyChanged(ref this.columnSpecification, value);
+        }
+
+        public RowSpecificationParameters RowSpecification
+        {
+            get => this.rowSpecification;
+            set => this.NotifyPropertyChanged(ref this.rowSpecification, value);
         }
 
         public override ActionCategory ActionCategory => ActionCategory.BackgroundStyle;
 
-        public override string ToString()
-        {
-            string str =
-              $"Background Color: {this.BackgroundColor.Name}{Environment.NewLine}" +
-              $"Pattern Color: {this.PatternColor.Name}{Environment.NewLine}" +
-              $"Fill Pattern: {this.FillPattern}{Environment.NewLine}";
+        public override string ToString() =>
+            $"Background Color: {this.BackgroundColor.Name}{Environment.NewLine}" +
+            $"Pattern Color: {this.PatternColor.Name}{Environment.NewLine}" +
+            $"Fill Pattern: {this.FillPattern}{Environment.NewLine}" +
+            $"{ColumnSpecification}{Environment.NewLine}" +
+            $"{RowSpecification}{Environment.NewLine}";
 
-            return str + (this.Nth >= 0 ? $"Nth: {this.Nth}{Environment.NewLine}" : "");
-        }
+        public override IActionParameters Clone() =>
+            new BackgroundParameters
+            {
+                ExcelEntityType = this.ExcelEntityType,
+                Name = this.Name,
+                BackgroundColor = this.backgroundColor,
+                PatternColor = this.patternColor,
+                FillPattern = this.fillPattern,
+                ColumnSpecification = this.columnSpecification.Clone(),
+                RowSpecification = this.rowSpecification.Clone(),
+            };
     }
 }

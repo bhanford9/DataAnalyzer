@@ -5,13 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews"
              xmlns:converters="clr-namespace:DataAnalyzer.Common.Mvvm.ValueConverters"
+             xmlns:utils="clr-namespace:DataAnalyzer.Views.Utilities"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
   <UserControl.Resources>
-    <converters:NegativeIsHiddenConverter x:Key="NegativeIsHidden"/>
+    <converters:ExcelEntityTypeToColumnVisibility x:Key="ColVisibilityConverter"/>
+    <converters:ExcelEntityTypeToRowVisibility x:Key="RowVisibilityConverter"/>
   </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
       <RowDefinition Height="Auto"/>
@@ -26,30 +29,33 @@
         <Setter Property="Margin" Value="2 6 8 6"/>
       </Style>
     </Grid.Resources>
-    
-    <TextBlock Text="Nth:"
-               Grid.Row="0"
-               Grid.Column="0"
-               Visibility="{Binding Nth, Converter={StaticResource NegativeIsHidden}}"/>
-    <TextBox Grid.Row="0"
-             Grid.Column="1"
-             Text="{Binding Nth}"
-             Visibility="{Binding Nth, Converter={StaticResource NegativeIsHidden}}"/>
-    
+
     <TextBlock Text="Horizontal Alignment:"
-               Grid.Row="1"
+               Grid.Row="0"
                Grid.Column="0"/>
-    <ComboBox Grid.Row="1"
+    <ComboBox Grid.Row="0"
               Grid.Column="1"
               ItemsSource="{Binding HorizontalAlignments}"
               SelectedItem="{Binding SelectedHorizontalAlignment}"/>
 
     <TextBlock Text="Vertical Alignment:"
-               Grid.Row="2"
+               Grid.Row="1"
                Grid.Column="0"/>
-    <ComboBox Grid.Row="2"
+    <ComboBox Grid.Row="1"
               Grid.Column="1"
               ItemsSource="{Binding VerticalAlignments}"
               SelectedItem="{Binding SelectedVerticalAlignment}"/>
+
+    <utils:ColumnSpecificationView
+      Grid.Row="2"
+      Grid.Column="0"
+      Grid.ColumnSpan="2"
+      DataContext="{Binding ColumnSpecification}"/>
+
+    <utils:RowSpecificationView
+      Grid.Row="3"
+      Grid.Column="0"
+      Grid.ColumnSpan="2"
+      DataContext="{Binding RowSpecification}"/>
   </Grid>
 </UserControl>

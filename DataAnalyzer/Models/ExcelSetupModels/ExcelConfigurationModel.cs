@@ -19,7 +19,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
         private const string WORKBOOK_CONFIG_PATH_KEY = "WorkbookConfigs";
         private const string DATA_TYPES_CONFIG_PATH_KEY = "DataTypeConfigs";
 
-        private readonly SerializationService serializationService = new SerializationService();
+        private readonly SerializationService serializationService = new();
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
         private readonly ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
         private ICollection<WorkbookModel> workbookModels = new List<WorkbookModel>();
@@ -54,8 +54,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
         }
 
-        public ObservableCollection<FilePathAndNamePair> SavedConfigurations { get; }
-          = new ObservableCollection<FilePathAndNamePair>();
+        public ObservableCollection<FilePathAndNamePair> SavedConfigurations { get; } = new();
 
         public string ConfigurationDirectory
         {
@@ -178,7 +177,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
 
             if (!found)
             {
-                this.lastSavedDataTypeConfigs.Add(new LastSavedConfiguration()
+                this.lastSavedDataTypeConfigs.Add(new LastSavedConfiguration
                 {
                     FilePath = filePath,
                     StatType = this.configurationModel.SelectedDataType

@@ -33,7 +33,7 @@ namespace ExcelService
                 worksheetPart.Worksheet = new Worksheet(new SheetData());
 
                 Sheets sheets = spreadsheetDocument.WorkbookPart.Workbook.AppendChild(new Sheets());
-                sheets.Append(new Sheet()
+                sheets.Append(new Sheet
                 {
                     Id = spreadsheetDocument.WorkbookPart.GetIdOfPart(worksheetPart),
                     SheetId = (uint)excelIndex,
@@ -52,17 +52,17 @@ namespace ExcelService
                         int columnNumber = 1;
                         string columnName = ColumnConversions.NumberToName(dataCluster.StartColNumber);
 
-                        Row row = new Row() { RowIndex = (uint)rowNumber };
+                        Row row = new Row { RowIndex = (uint)rowNumber };
                         sheetData.Append(row);
 
                         dataCluster.Rows.ElementAt(rowIndex).ToList().ForEach(cell =>
                 {
                         string cellReference = columnName + rowNumber;
-                        _ = row.AppendChild(new Cell()
+                        _ = row.AppendChild(new Cell
                         {
                             CellReference = cellReference,
                             DataType = CellValues.InlineString,
-                            InlineString = new InlineString() { Text = new Text(cell.Value.ToString()) }
+                            InlineString = new InlineString { Text = new Text(cell.Value.ToString()) }
                         });
 
                         columnName = ColumnConversions.NumberToName(++columnNumber);

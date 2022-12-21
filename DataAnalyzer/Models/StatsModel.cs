@@ -15,7 +15,7 @@ namespace DataAnalyzer.Models
     internal class StatsModel : BasePropertyChanged
     {
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-        private readonly ScraperService scraperService = new ScraperService();
+        private readonly ScraperService scraperService = new();
         private HeirarchalStats heirarchalStats;
 
         public StatsModel()
@@ -24,8 +24,7 @@ namespace DataAnalyzer.Models
 
         public ICollection<IStats> Stats { get; } = new List<IStats>();
 
-        public ObservableCollection<string> StatNames { get; }
-          = new ObservableCollection<string>();
+        public ObservableCollection<string> StatNames { get; } = new();
 
         public HeirarchalStats HeirarchalStats
         {

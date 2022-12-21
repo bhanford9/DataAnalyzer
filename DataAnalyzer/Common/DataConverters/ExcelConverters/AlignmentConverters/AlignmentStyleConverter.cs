@@ -1,6 +1,8 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.SubModelConversions;
 using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
 using System;
+using DataAnalyzer.Common.DataConverters.ExcelConverters.UtilityConverters;
 
 namespace DataAnalyzer.Common.DataConverters.ExcelConverters.AlignmentConverters
 {
@@ -13,34 +15,38 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters.AlignmentConverters
         {
             if (input is AlignmentStyleParameters excelAlignmentParams)
             {
-                return new AlignmentParameters()
+                return new AlignmentParameters
                 {
-                    HorizontalAlignment = AlignmentConverters2.ToLocalHorizontalAlignment(excelAlignmentParams.Alignments.HorizontalAlignment),
-                    VerticalAlignment = AlignmentConverters2.ToLocalVerticalAlignment(excelAlignmentParams.Alignments.VerticalAlignment),
+                    HorizontalAlignment = AlignmentTypeConverters.ToLocalHorizontalAlignment(excelAlignmentParams.Alignments.HorizontalAlignment),
+                    VerticalAlignment = AlignmentTypeConverters.ToLocalVerticalAlignment(excelAlignmentParams.Alignments.VerticalAlignment),
+                    ColumnSpecification = ColumnSpecificationConverter.ToLocalColumnSpecification(excelAlignmentParams.ColumnSpecification),
+                    RowSpecification = RowSpecificationConverter.ToLocalRowSpecification(excelAlignmentParams.RowSpecification),
                     Name = excelAlignmentParams.Name
                 };
             }
 
-            throw new ArgumentException("Invalid type. Excpected AlignmentStyleParameters.");
+            throw new ArgumentException("Invalid type. Expected AlignmentStyleParameters.");
         }
 
         public override ExcelService.DataActions.ActionParameters.IActionParameters ToExcel(IActionParameters input)
         {
             if (input is AlignmentParameters alignmentParameters)
             {
-                return new AlignmentStyleParameters()
+                return new AlignmentStyleParameters
                 {
-                    Alignments = new ExcelService.Styles.Alignments.AlignmentValues()
+                    Alignments = new ExcelService.Styles.Alignments.AlignmentValues
                     {
                         DoApplyHorizontal = true,
                         DoApplyVertical = true,
-                        HorizontalAlignment = AlignmentConverters2.ToExcelHorizontalAlignment(alignmentParameters.HorizontalAlignment),
-                        VerticalAlignment = AlignmentConverters2.ToExcelVerticalAlignment(alignmentParameters.VerticalAlignment),
+                        HorizontalAlignment = AlignmentTypeConverters.ToExcelHorizontalAlignment(alignmentParameters.HorizontalAlignment),
+                        VerticalAlignment = AlignmentTypeConverters.ToExcelVerticalAlignment(alignmentParameters.VerticalAlignment),
                     },
+                    ColumnSpecification = ColumnSpecificationConverter.ToExcelColumnSpecification(alignmentParameters.ColumnSpecification),
+                    RowSpecification = RowSpecificationConverter.ToExcelRowSpecification(alignmentParameters.RowSpecification),
                 };
             }
 
-            throw new ArgumentException("Invalid type. Excpected AlignmentParameters.");
+            throw new ArgumentException("Invalid type. Expected AlignmentParameters.");
         }
     }
 }

@@ -11,12 +11,12 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
         protected readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
         protected readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
 
-        public void LoadHeirarchicalSummariesFromStats(ActionSummaryTreeViewItem baseItem)
+        public void LoadHierarchicalSummariesFromStats(ActionSummaryTreeViewItem baseItem)
         {
             this.InternalLoadWhereToApply(baseItem, this.statsModel.HeirarchalStats.Children);
         }
 
-        public abstract void LoadHeirarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem);
+        public abstract void LoadHierarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem);
 
         public abstract ObservableCollection<ExcelAction> GetActionCollection();
 
@@ -25,6 +25,6 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
             this.excelSetupModel.SaveWorkbookConfiguration(configName);
         }
 
-        protected abstract void InternalLoadWhereToApply(ActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats);
+        protected abstract void InternalLoadWhereToApply(ActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> hierarchalStats);
     }
 }

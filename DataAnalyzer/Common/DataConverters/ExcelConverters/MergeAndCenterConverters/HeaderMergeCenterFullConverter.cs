@@ -12,14 +12,14 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters.MergeAndCenterConve
         {
             if (input is HeaderMergeCenterFullParameters mergeAndCenterParams)
             {
-                return new BooleanOperationParameters()
+                return new BooleanOperationParameters
                 {
                     Name = mergeAndCenterParams.Name,
                     DoPerform = true
                 };
             }
 
-            throw new ArgumentException("Invalid type. Excpected HeaderMergeCenterFullParameters.");
+            throw new ArgumentException("Invalid type. Expected HeaderMergeCenterFullParameters.");
         }
 
         public override ExcelService.DataActions.ActionParameters.IActionParameters ToExcel(IActionParameters input)
@@ -29,7 +29,7 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters.MergeAndCenterConve
                 return new HeaderMergeCenterFullParameters();
             }
 
-            throw new ArgumentException("Invalid type. Excpected BooleanOperationParameters.");
+            throw new ArgumentException("Invalid type. Expected BooleanOperationParameters.");
         }
     }
 }

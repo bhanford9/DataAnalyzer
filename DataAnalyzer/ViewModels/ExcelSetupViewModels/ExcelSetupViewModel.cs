@@ -31,14 +31,17 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         private readonly IActionCreationModel workbookActionCreationModel = new WorkbookActionCreationModel();
         private readonly IActionCreationModel worksheetActionCreationModel = new WorksheetActionCreationModel();
         private readonly IActionCreationModel dataClusterActionCreationModel = new DataClusterActionCreationModel();
+        private readonly IActionCreationModel rowActionCreationModel = new RowActionCreationModel();
 
         private readonly IActionApplicationModel workbookActionApplicationModel = new WorkbookActionApplicationModel();
         private readonly IActionApplicationModel worksheetActionApplicationModel = new WorksheetActionApplicationModel();
         private readonly IActionApplicationModel dataClusterActionApplicationModel = new DataClusterActionApplicationModel();
+        private readonly IActionApplicationModel rowActionApplicationModel = new RowActionApplicationModel();
 
         private readonly IActionsSummaryModel workbookActionsSummaryModel = new WorkbookActionsSummaryModel();
         private readonly IActionsSummaryModel worksheetActionsSummaryModel = new WorksheetActionsSummaryModel();
         private readonly IActionsSummaryModel dataClusterActionsSummaryModel = new DataClusterActionsSummaryModel();
+        private readonly IActionsSummaryModel rowActionSummaryModel = new RowActionsSummaryModel();
 
         private readonly BaseCommand loadDataIntoStructure;
 
@@ -47,25 +50,35 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 
         public ExcelSetupViewModel()
         {
-            this.loadDataIntoStructure = new BaseCommand((obj) => this.DoLoadDataIntoStructure());
+            this.loadDataIntoStructure = new BaseCommand(obj => this.DoLoadDataIntoStructure());
 
             this.WorkbookActionViewModel = new ExcelActionViewModel(
-              this.WorkbookActions,
-              this.workbookActionCreationModel,
-              this.workbookActionApplicationModel,
-              this.workbookActionsSummaryModel);
+                this.WorkbookActions,
+                this.workbookActionCreationModel,
+                this.workbookActionApplicationModel,
+                this.workbookActionsSummaryModel,
+                ExcelEntityType.Workbook);
 
             this.WorksheetActionViewModel = new ExcelActionViewModel(
-              this.WorksheetActions,
-              this.worksheetActionCreationModel,
-              this.worksheetActionApplicationModel,
-              this.worksheetActionsSummaryModel);
+                this.WorksheetActions,
+                this.worksheetActionCreationModel,
+                this.worksheetActionApplicationModel,
+                this.worksheetActionsSummaryModel,
+                ExcelEntityType.Worksheet);
 
             this.DataClusterActionViewModel = new ExcelActionViewModel(
-              this.DataClusterActions,
-              this.dataClusterActionCreationModel,
-              this.dataClusterActionApplicationModel,
-              this.dataClusterActionsSummaryModel);
+                this.DataClusterActions,
+                this.dataClusterActionCreationModel,
+                this.dataClusterActionApplicationModel,
+                this.dataClusterActionsSummaryModel,
+                ExcelEntityType.DataCluster);
+
+            this.RowActionViewModel = new ExcelActionViewModel(
+                this.RowActions,
+                this.rowActionCreationModel,
+                this.rowActionApplicationModel,
+                this.rowActionSummaryModel,
+                ExcelEntityType.Row);
 
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
             this.excelSetupModel.PropertyChanged += this.ExcelSetupModelPropertyChanged;
@@ -76,6 +89,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         public ExcelActionViewModel WorksheetActionViewModel { get; set; }
 
         public ExcelActionViewModel DataClusterActionViewModel { get; set; }
+
+        public ExcelActionViewModel RowActionViewModel { get; set; }
 
         public ObservableCollection<ExcelAction> WorkbookActions => this.excelSetupModel.AvailableWorkbookActions;
 

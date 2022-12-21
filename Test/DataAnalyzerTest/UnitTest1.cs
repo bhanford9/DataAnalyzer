@@ -13,7 +13,7 @@ namespace DataAnalyzerTetst
     public void Test1()
     {
       SerializationExecutive serializationExecutive = new SerializationExecutive();
-      IActionParameters testParams = new AlignmentParameters()
+      IActionParameters testParams = new AlignmentParameters
       {
         HorizontalAlignment = DataAnalyzer.Services.HorizontalAlignment.Distributed,
         VerticalAlignment = DataAnalyzer.Services.VerticalAlignment.Bottom
@@ -31,7 +31,7 @@ namespace DataAnalyzerTetst
         "Hello World",
         "Goodbye World",
         new FloatingSeparatorParensCellDataFormat(4, true),
-        (param) => new FloatingSeparatorParensCellDataFormat((param as IntegerBooleanTypeParameter).IntegerValue, (param as IntegerBooleanTypeParameter).BooleanValue));
+        param => new FloatingSeparatorParensCellDataFormat((param as IntegerBooleanTypeParameter).IntegerValue, (param as IntegerBooleanTypeParameter).BooleanValue));
 
       //ExcelActionParametersSerialization actions = new ExcelActionParametersSerialization(
       //  new List<IActionParameters>()
@@ -41,7 +41,7 @@ namespace DataAnalyzerTetst
       //      HorizontalAlignment = DataAnalyzer.Services.HorizontalAlignment.Right,
       //      VerticalAlignment = DataAnalyzer.Services.VerticalAlignment.Bottom,
       //      ExcelTypeName = "My First ALignment Serializaiton Project",
-      //      Nth = 2
+      //      NthRow = 2
       //    },
       //    new BackgroundParameters()
       //    {
@@ -49,7 +49,7 @@ namespace DataAnalyzerTetst
       //      FillPattern = DataAnalyzer.Services.FillPattern.DarkTrellis,
       //      PatternColor = System.Drawing.Color.Turquoise,
       //      ExcelTypeName = "MY FIrst Background Serialation Project",
-      //      Nth = 7
+      //      NthRow = 7
       //    }
       //  },
       //  "My Excel Actions");
