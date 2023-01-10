@@ -2,6 +2,7 @@
 {
     public enum ConverterType
     {
-        Queryable
+        Queryable,
+        CsvNames
     }
 }

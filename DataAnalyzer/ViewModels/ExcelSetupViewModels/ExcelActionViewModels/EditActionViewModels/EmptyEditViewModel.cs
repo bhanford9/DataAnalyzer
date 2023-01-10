@@ -1,5 +1,4 @@
-﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
-using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using DataAnalyzer.Services;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels

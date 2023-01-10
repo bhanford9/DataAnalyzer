@@ -1,26 +1,25 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using DataAnalyzer.Common.DataConverters.CsvConverters;
 using DataAnalyzer.Common.DataConverters.TimeStatConverters.QueryableTimeStatConverters;
 
 namespace DataAnalyzer.Common.DataConverters
 {
     internal class DataConverterLibrary
     {
-        private readonly ICollection<IDataConverter> converters = new List<IDataConverter>();
-
-        private void LoadConverters()
-        {
-            this.converters.Add(new QueryableTimeStatsConverter());
-        }
+        private readonly IReadOnlyDictionary<ConverterType, IDataConverter> converters;
 
         public DataConverterLibrary()
         {
-            this.LoadConverters();
+            this.converters = new Dictionary<ConverterType, IDataConverter>
+            {
+                { ConverterType.Queryable, new QueryableTimeStatsConverter() },
+                { ConverterType.CsvNames, new CsvToNameListConverter() },
+            };
         }
 
         public IDataConverter GetConverter(ConverterType type)
         {
-            return this.converters.First(x => x.Type == type);
+            return this.converters[type];
         }
     }
 }

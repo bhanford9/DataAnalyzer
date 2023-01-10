@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+using DataAnalyzer.Common.DataConfigurations;
+using DataAnalyzer.Common.DataConfigurations.CsvConfigurations;
 using DataAnalyzer.Common.DataConfigurations.ExcelConfiguration;
 using DataAnalyzer.Common.DataConverters;
 using DataAnalyzer.Common.DataObjects;
 using DataAnalyzer.Common.DataOrganizers;
-using DataAnalyzer.Common.DataParameters;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Services;
 
@@ -15,11 +16,34 @@ namespace DataAnalyzer.Models
     internal class StatsModel : BasePropertyChanged
     {
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+        private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
         private readonly ScraperService scraperService = new();
         private HeirarchalStats heirarchalStats;
 
+        private IDataConfiguration activeConfiguration;
+
+        private readonly IReadOnlyDictionary<ExecutiveType, IDataConfiguration> configurationMapping;
+        private readonly IReadOnlyDictionary<ExecutiveType, IDataOrganizer> dataOrganizerMapping;
+
         public StatsModel()
         {
+            this.configurationMapping = new Dictionary<ExecutiveType, IDataConfiguration>()
+            {
+                { ExecutiveType.CreateQueryableExcelReport, new ExcelConfiguration() },
+                { ExecutiveType.CsvToCSharpStringClass, new CsvConfiguration() },
+                { ExecutiveType.CsvToCSharpTypedClass, new CsvConfiguration() }, // TODO --> handle typed if necessary
+                { ExecutiveType.NotSupported, new NotSupportedDataConfiguration() },
+            };
+
+            this.dataOrganizerMapping = new Dictionary<ExecutiveType, IDataOrganizer>()
+            {
+                { ExecutiveType.CreateQueryableExcelReport, new ExcelDataOrganizer() },
+                { ExecutiveType.CsvToCSharpStringClass, new CsvDataOrganizer() },
+                { ExecutiveType.CsvToCSharpTypedClass, new CsvDataOrganizer() }, // TODO --> handle typed if necessary
+                { ExecutiveType.NotSupported, new NotSupportedDataOrganizer() },
+            };
+
+            mainModel.PropertyChanged += this.MainModelPropertyChanged;
         }
 
         public ICollection<IStats> Stats { get; } = new List<IStats>();
@@ -32,6 +56,12 @@ namespace DataAnalyzer.Models
             set => this.NotifyPropertyChanged(ref this.heirarchalStats, value);
         }
 
+        public IDataConfiguration ActiveConfiguration
+        {
+            get => this.activeConfiguration;
+            set => this.NotifyPropertyChanged(ref this.activeConfiguration, value);
+        }
+
         public void ClearLoadedStats()
         {
             this.Stats.Clear();
@@ -41,26 +71,18 @@ namespace DataAnalyzer.Models
 
         public void LoadStatsForFile(string filePath, IDataConverter converter)
         {
-            this.scraperService.ScrapeFromFile(filePath, converter)
-              .ToList()
-              .ForEach(this.Stats.Add);
+            this.scraperService.ScrapeFromFile(filePath, converter, this.mainModel.ScraperType)
+                .ToList()
+                .ForEach(this.Stats.Add);
 
             this.NotifyPropertyChanged(nameof(this.Stats));
         }
 
-        public void StructureStats()
+        public void StructureStats(ApplicationConfigurations.DataConfigurations.IDataConfiguration applicationConfiguration)
         {
-            ExcelConfiguration configuration = new ExcelConfiguration();
-            IDataParameterCollection parameters = this.configurationModel.DataParameterCollection;
-            ICollection<GroupingConfiguration> groupings = this.configurationModel.DataConfiguration.GroupingConfiguration;
+            this.activeConfiguration.Initialize(this.configurationModel.DataParameterCollection, applicationConfiguration);
 
-            for (int i = 0; i < groupings.Count; i++)
-            {
-                configuration.AddGroupingRule(i, parameters.GetStatAccessor(groupings.ElementAt(i).SelectedParameter));
-            }
-
-            DataOrganizer organizer = new DataOrganizer();
-            this.HeirarchalStats = organizer.Organize(configuration, this.Stats);
+            this.HeirarchalStats = this.dataOrganizerMapping[this.mainModel.ExecutiveType].Organize(this.activeConfiguration, this.Stats);
 
             this.LoadStatNames(this.HeirarchalStats);
         }
@@ -75,6 +97,16 @@ namespace DataAnalyzer.Models
             }
 
             this.LoadStatNames(stats.Children.First());
+        }
+
+        private void MainModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(this.mainModel.ExecutiveType):
+                    this.ActiveConfiguration = this.configurationMapping[this.mainModel.ExecutiveType];
+                    break;
+            }
         }
     }
 }

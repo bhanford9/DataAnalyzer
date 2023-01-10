@@ -98,7 +98,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
                                 // don't like this, should find a better way to handle it
                                 switch (this.configurationModel.SelectedDataType)
                                 {
-                                    case Services.StatType.Queryable:
+                                    case StatType.Queryable:
                                         QueryableTimeStats queryableTimeStats = rowStats as QueryableTimeStats;
                                         rowModel.Cells = new List<CellModel>
                                         {

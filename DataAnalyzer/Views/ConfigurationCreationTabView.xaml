@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:DataAnalyzer.Views"
              xmlns:utils="clr-namespace:DataAnalyzer.Views.Utilities"
              xmlns:converters="clr-namespace:DataAnalyzer.Common.Mvvm.ValueConverters"
+             xmlns:dataStructureViews="clr-namespace:DataAnalyzer.Views.DataStructureSetupViews"
+             Name="ConfigCreation"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
   <UserControl.Resources>
@@ -25,34 +27,31 @@
         <ColumnDefinition/>
       </Grid.ColumnDefinitions>
       <Grid.RowDefinitions>
-        <RowDefinition Height="200"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="80"/>
         <RowDefinition Height="*"/>
+        <RowDefinition Height="30"/>
+        <RowDefinition Height="10"/>
       </Grid.RowDefinitions>
 
       <GroupBox Grid.Column="0"
                 Grid.Row="0"
                 Header="Configuration Location">
-        <Grid>
-          <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="*"/>
-          </Grid.RowDefinitions>
-
-          <Button Grid.Row="0"
-                  Content="Browse Directory"
-                  Command="{Binding BrowseDirectory}"
-                  Margin="6 2"/>
-
-          <TextBlock Grid.Row="1"
-                     Text="{Binding ConfigurationDirectory}"
-                     VerticalAlignment="Top"
-                     Margin="2 4"/>
-
-        </Grid>
+        <TextBlock Text="{Binding ExecutiveUtilities.ConfigurationDirectory}"
+                    VerticalAlignment="Top"
+                    Margin="2 4"/>
       </GroupBox>
 
       <GroupBox Grid.Column="0"
                 Grid.Row="1"
+                Header="Export Type">
+        <ComboBox ItemsSource="{Binding ExportTypes}"
+                  SelectedItem="{Binding ExecutiveUtilities.SelectedExportType}"/>
+      </GroupBox>
+
+      <GroupBox Grid.Column="0"
+                Grid.Row="2"
+                Grid.RowSpan="3"
                 Header="Configurations">
         <Grid>
           <Grid.RowDefinitions>
@@ -85,173 +84,50 @@
       </GroupBox>
 
       <Grid Grid.Column="1"
-            Grid.RowSpan="2"
-            Visibility="{Binding IsCreating, Converter={StaticResource BooleanToVisibility}}">
-        <Grid.RowDefinitions>
-          <RowDefinition Height="40"/>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="*"/>
-          <RowDefinition Height="30"/>
-        </Grid.RowDefinitions>
+            Grid.RowSpan="3">
 
-        <Grid Margin="0 2 0 6">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="46*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="27*" MinWidth="158"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="27*" MinWidth="158"/>
-          </Grid.ColumnDefinitions>
+        <dataStructureViews:GroupingSetupView
+          Visibility="{Binding 
+            DataContext.ExecutiveUtilities.DisplayGroupingSetup,
+            Converter={StaticResource BooleanToVisibility},
+            ElementName=ConfigCreation}"
+          DataContext="{Binding DataContext.ActiveViewModel, ElementName=ConfigCreation}"/>
 
-          <Grid.Resources>
-            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
-              <Setter Property="Margin" Value="2 0 5 0"/>
-            </Style>
-          </Grid.Resources>
+        <dataStructureViews:CsvCSharpStringClassSetupView
+          Visibility="{Binding
+            DataContext.ExecutiveUtilities.DisplayCsvStringSetup,
+            Converter={StaticResource BooleanToVisibility},
+            ElementName=ConfigCreation}"
+          DataContext="{Binding DataContext.ActiveViewModel, ElementName=ConfigCreation}"/>
+        
+        <dataStructureViews:NotSupportedSetupView 
+          Visibility="{Binding
+            DataContext.ExecutiveUtilities.DisplayNotSupported,
+            Converter={StaticResource BooleanToVisibility},
+            ElementName=ConfigCreation}"
+          DataContext="{Binding DataContext.ActiveViewModel, ElementName=ConfigCreation}"/>
 
-          <TextBlock Grid.Column="0"
-                     Text="Name:"/>
-
-          <TextBox Grid.Column="1"
-                   Text="{Binding ConfigurationName}">
-
-          </TextBox>
-
-          <TextBlock Grid.Column="2"
-                     Text="Data:"/>
-
-          <ComboBox Grid.Column="3"
-                    ItemsSource="{Binding DataTypes}"
-                    SelectedItem="{Binding SelectedDataType}"/>
-
-          <TextBlock Grid.Column="4"
-                     Text="Export:"/>
-
-          <ComboBox Grid.Column="5"
-                    ItemsSource="{Binding ExportTypes}"
-                    SelectedItem="{Binding SelectedExportType}"/>
-        </Grid>
-
-        <GroupBox Grid.Row="1"
-                  Header="Grouping Settings">
-          <Grid>
-            <Grid.RowDefinitions>
-              <RowDefinition Height="40"/>
-              <RowDefinition/>
-            </Grid.RowDefinitions>
-
-            <Grid Grid.Row="0">
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-              </Grid.ColumnDefinitions>
-
-              <TextBlock Grid.Column="0"
-                         Text="Number of Grouping Layers:"/>
-
-              <TextBox Grid.Column="1"
-                       Text="{Binding GroupingLayersCount}"
-                       Width="180"
-                       HorizontalAlignment="Left"/>
-            </Grid>
-
-            <ScrollViewer Grid.Row="1">
-              <ItemsControl ItemsSource="{Binding ConfigurationGroupings}"
-                            Margin="2 6">
-
-                <ItemsControl.ItemTemplate>
-                  <DataTemplate>
-                    <Grid>
-                      <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                      </Grid.RowDefinitions>
-
-                      <local:ConfigurationGroupingRuleRow
-                        Grid.Row="0"
-                        Margin="0 6 0 0"
-                        DataContext="{Binding}"/>
-
-                      <ItemsControl ItemsSource="{Binding Children}"
-                                    Visibility="{Binding HasChildren, Converter={StaticResource BooleanToVisibility}}"
-                                    Grid.Row="1">
-
-                        <ItemsControl.ItemTemplate>
-                          <DataTemplate>
-                            <local:ConfigurationGroupingRuleRow DataContext="{Binding}"/>
-                          </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                      </ItemsControl>
-                    </Grid>
-                  </DataTemplate>
-                </ItemsControl.ItemTemplate>
-              </ItemsControl>
-            </ScrollViewer>
-          </Grid>
-        </GroupBox>
-
-        <GroupBox Grid.Row="2"
-                  Header="Sorting Settings">
-
-        </GroupBox>
-
-        <Grid Grid.Row="3">
-          <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="180"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="180"/>
-            <ColumnDefinition Width="*"/>
-          </Grid.ColumnDefinitions>
-
-          <Button Grid.Column="1"
-                  Content="Cancel Changes"
-                  Style="{StaticResource OutlinedButtonStyle}"
-                  Command="{Binding CancelChanges}"/>
-
-          <Button Grid.Column="3"
-                  Content="Save Configuration"
-                  Command="{Binding SaveConfiguration}"/>
-        </Grid>
+        <!--Next: create CSV views and map accordingly-->
       </Grid>
+
       <Grid Grid.Column="1"
-            Grid.RowSpan="2"
-            Visibility="{Binding IsCreating, Converter={StaticResource InverseBooleanToVisibility}}">
-        <Border Style="{StaticResource DarkBackgroundBorderStyle}"
-                Margin="40 100"
-                MaxHeight="600">
-          <GroupBox Header="Getting Started...">
-            <StackPanel Orientation="Vertical"
-                        VerticalAlignment="Center">
-              <StackPanel.Resources>
-                <Style TargetType="TextBlock" BasedOn="{StaticResource GiantTextBlockStyle}">
+            Grid.Row="3">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="180"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="180"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>        
 
-                </Style>
-              </StackPanel.Resources>
+        <Button Grid.Column="1"
+              Content="Cancel Changes"
+              Style="{StaticResource OutlinedButtonStyle}"
+              Command="{Binding CancelChanges}"/>
 
-              <TextBlock>
-                This tool can be setup to have different data configurations to fit your needs.
-                A configuration can consist of several different entities that aim to allow for
-                customizability of relationships within the data.
-              </TextBlock>
-
-              <TextBlock Margin="0 20 0 0">
-                To implement this, a file is stored on the system for every configuration that
-                gets created. The location at which these are stored can be specified within the
-                <Bold>Configuration Location</Bold> section of this tab. Avoid changing this
-                location so files don't have to be manually transferred to other locations
-              </TextBlock>
-
-              <TextBlock Margin="0 20 0 0">
-                The known configuration files at the selected directory will be displayed within
-                the <Bold>Configurations</Bold> section of this tab. Each can be selected to
-                display its current configuration in place of these instructions or you can press
-                the <Bold>Create Configuration</Bold> button to start a new configuration.
-              </TextBlock>
-            </StackPanel>
-          </GroupBox>
-        </Border>
+        <Button Grid.Column="3"
+              Content="Save Configuration"
+              Command="{Binding SaveConfiguration}"/>
       </Grid>
     </Grid>
   </Border>

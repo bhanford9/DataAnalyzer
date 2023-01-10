@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="DataAnalyzer.Views.DataStructureSetupViews.NotSupportedSetupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DataAnalyzer.Views.DataStructureSetupViews"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+  <Grid>
+    <Border Style="{StaticResource DarkBackgroundBorderStyle}"
+            Margin="40 100"
+            MaxHeight="600">
+      <GroupBox Header="Getting Started...">
+        <StackPanel Orientation="Vertical"
+                    VerticalAlignment="Center">
+          <StackPanel.Resources>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource GiantTextBlockStyle}">
+              
+            </Style>
+          </StackPanel.Resources>
+          
+          <TextBlock>
+            This tool can be setup to have different data configurations to fit your needs.
+            A configuration can consist of several different entities that aim to allow for
+            customizability of relationships within the data.
+          </TextBlock>
+          
+          <TextBlock Margin="0 20 0 0">
+            To implement this, a file is stored on the system for every configuration that
+            gets created. The location at which these are stored can be specified within the
+            <Bold>Configuration Location</Bold> section of this tab. Avoid changing this
+            location so files don't have to be manually transferred to other locations
+          </TextBlock>
+          
+          <TextBlock Margin="0 20 0 0">
+            The known configuration files at the selected directory will be displayed within
+            the <Bold>Configurations</Bold> section of this tab. Each can be selected to
+            display its current configuration in place of these instructions or you can press
+            the <Bold>Create Configuration</Bold> button to start a new configuration.
+          </TextBlock>
+        </StackPanel>
+      </GroupBox>
+    </Border>
+  </Grid>
+</UserControl>

@@ -2,6 +2,8 @@
 {
     public enum ScraperType
     {
-        Queryable
+        Queryable,
+        CsvNames,
+        NotApplicable
     }
 }

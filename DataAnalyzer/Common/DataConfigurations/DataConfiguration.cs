@@ -1,29 +1,15 @@
-﻿using DataAnalyzer.Common.DataConfigurations.GroupingConfigurations;
-using DataAnalyzer.Common.DataObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using DataAnalyzer.Common.DataParameters;
 
 namespace DataAnalyzer.Common.DataConfigurations
 {
-    internal abstract class DataConfiguration : IDataConfiguration
+    internal abstract class DataConfiguration<T> : IDataConfiguration
+        where T : ApplicationConfigurations.DataConfigurations.IDataConfiguration
     {
-        protected ICollection<IGroupingConfiguration> groupingConfigurations = new List<IGroupingConfiguration>();
+        public void Initialize(
+            IDataParameterCollection parameters,
+            ApplicationConfigurations.DataConfigurations.IDataConfiguration applicationConfiguration) =>
+            this.InternalInit(parameters, (T)applicationConfiguration);
 
-        public abstract int GroupingLevels { get; protected set; }
-
-        public ICollection<IGroupingConfiguration> GroupingConfigurations => this.groupingConfigurations;
-
-        public void AddGroupingRule(int level, Func<IStats, IComparable> propertyGetter)
-        {
-            if (level >= this.groupingConfigurations.Count)
-            {
-                this.groupingConfigurations.Add(new GroupingConfiguration(propertyGetter));
-            }
-            else
-            {
-                this.groupingConfigurations.ElementAt(level).AddCondition(propertyGetter);
-            }
-        }
+        protected abstract void InternalInit(IDataParameterCollection parameters, T configuration);
     }
 }

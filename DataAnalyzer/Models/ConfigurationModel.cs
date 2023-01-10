@@ -1,25 +1,19 @@
-﻿using DataAnalyzer.ApplicationConfigurations;
-using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
-using DataAnalyzer.Common.DataParameters;
+﻿using DataAnalyzer.Common.DataParameters;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Services;
-using System;
 
 namespace DataAnalyzer.Models
 {
     internal class ConfigurationModel : BasePropertyChanged
     {
-        private readonly SerializationService serializationService = new();
         private readonly DataParameterLibrary dataParameterLibrary = new();
         private IDataParameterCollection dataParameterCollection = null;
         private string configurationDirectory = string.Empty;
         private string configurationName = string.Empty;
+        private string savedDataFilePath = string.Empty;
 
         private StatType selectedStatType = StatType.NotApplicable;
         private ExportType selectedExportType = ExportType.NotApplicable;
-
-        public int RemoveLevel { get; private set; } = -1;
-        public DataConfiguration DataConfiguration { get; private set; } = new();
 
         public StatType SelectedDataType
         {
@@ -57,65 +51,13 @@ namespace DataAnalyzer.Models
         public string ConfigurationName
         {
             get => this.configurationName;
-            set
-            {
-                this.NotifyPropertyChanged(ref this.configurationName, value);
-                this.DataConfiguration.Name = value;
-            }
+            set => this.NotifyPropertyChanged(ref this.configurationName, value);
         }
 
-        public void CreateNewDataConfiguration()
+        public string SavedDataFilePath
         {
-            this.DataConfiguration = new DataConfiguration();
-        }
-
-        public void AddGroupingConfiguration(GroupingConfiguration groupingConfig)
-        {
-            this.DataConfiguration.GroupingConfiguration.Add(groupingConfig);
-        }
-
-        public void RemoveGroupingConfiguration(int level)
-        {
-            this.RemoveLevel = level;
-            this.NotifyPropertyChanged(nameof(this.RemoveLevel));
-        }
-
-        public void ClearGroupingConfigurations()
-        {
-            this.DataConfiguration.GroupingConfiguration.Clear();
-        }
-
-        public void LoadConfiguration(string configName)
-        {
-            string filePath = this.ConfigurationDirectory + "/" + configName + FileProperties.CONFIGN_FILE_EXTENSION;
-            this.DataConfiguration = this.serializationService.JsonDeserializeFromFile<DataConfiguration>(filePath);
-            this.NotifyPropertyChanged(nameof(this.DataConfiguration));
-        }
-
-        public void SaveConfiguration()
-        {
-            DateTime saveTime = DateTime.Now;
-            string saveUid = Guid.NewGuid().ToString();
-
-            foreach (GroupingConfiguration groupConfig in this.DataConfiguration.GroupingConfiguration)
-            {
-                groupConfig.DateTime = saveTime;
-                groupConfig.VersionUid = saveUid;
-            }
-
-            this.DataConfiguration.DateTime = saveTime;
-            this.DataConfiguration.VersionUid = saveUid;
-            this.DataConfiguration.StatType = this.selectedStatType;
-            this.DataConfiguration.ExportType = this.selectedExportType;
-
-            string fullFilePath = this.ConfigurationDirectory + "\\" + this.ConfigurationName + FileProperties.CONFIGN_FILE_EXTENSION;
-            this.serializationService.JsonSerializeToFile(this.DataConfiguration, fullFilePath);
-        }
-
-        public void ApplyDataPath(string filePath)
-        {
-            this.DataConfiguration.SavedDataFilePath = filePath;
-            this.SaveConfiguration();
+            get => this.savedDataFilePath;
+            set => this.NotifyPropertyChanged(ref this.savedDataFilePath, value);
         }
     }
 }

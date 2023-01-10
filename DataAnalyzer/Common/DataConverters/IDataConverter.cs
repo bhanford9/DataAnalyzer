@@ -8,8 +8,8 @@ namespace DataAnalyzer.Common.DataConverters
     {
         ConverterType Type { get; }
 
-        bool IsValidData(IData timeData);
-        ICollection<IStats> ToAnalyzerStats(ICollection<IData> timeData);
-        IStats ToAnalyzerStats(IData timeData);
+        bool IsValidData(IData data);
+        ICollection<IStats> ToAnalyzerStats(ICollection<IData> data);
+        IStats ToAnalyzerStats(IData data);
     }
 }

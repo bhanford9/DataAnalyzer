@@ -1,5 +1,8 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.LoadedConfigurations;
+using DataAnalyzer.Services;
+using System;
+using System.Collections.Generic;
 
 namespace DataAnalyzer.Models
 {
@@ -9,8 +12,16 @@ namespace DataAnalyzer.Models
         private LoadedDataStructure loadedDataStructure = new();
         private LoadedInputFiles loadedInputFiles = new();
 
+        private IReadOnlyDictionary<InputExportKey, ExecutiveType> executiveMap;
+
         public MainModel()
         {
+            executiveMap = new Dictionary<InputExportKey, ExecutiveType>()
+            {
+                { new InputExportKey(ScraperType.CsvNames, ExportType.CSharpStringProperties), ExecutiveType.CsvToCSharpStringClass },
+                { new InputExportKey(ScraperType.CsvNames, ExportType.CSharpTypedProperties), ExecutiveType.CsvToCSharpTypedClass },
+                { new InputExportKey(ScraperType.Queryable, ExportType.Excel), ExecutiveType.CreateQueryableExcelReport},
+            };
         }
 
         public LoadedDataContent LoadedDataContent
@@ -29,6 +40,30 @@ namespace DataAnalyzer.Models
         {
             get => this.loadedInputFiles;
             set => this.NotifyPropertyChanged(ref this.loadedInputFiles, value);
+        }
+
+        public ExecutiveType ExecutiveType { get; private set; }
+
+        public ScraperType ScraperType => Enum.Parse<ScraperType>(this.LoadedInputFiles.DataType);
+
+        public bool ApplyInputExportTypes()
+        {
+            ScraperType scraperType = Enum.Parse<ScraperType>(this.LoadedInputFiles.DataType);
+            ExportType exportType = Enum.Parse<ExportType>(this.LoadedDataStructure.ExportType);
+            bool supported = false;
+
+            if (this.executiveMap.TryGetValue(new InputExportKey(scraperType, exportType), out ExecutiveType executiveType))
+            {
+                this.ExecutiveType = executiveType;
+                supported = true;
+            }
+            else
+            {
+                this.ExecutiveType = ExecutiveType.NotSupported;
+            }
+
+            this.NotifyPropertyChanged(nameof(this.ExecutiveType));
+            return supported;
         }
     }
 }

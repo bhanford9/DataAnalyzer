@@ -1,5 +1,7 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
+using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
+using DataAnalyzer.ViewModels.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,6 +14,7 @@ namespace DataAnalyzer.ViewModels
     internal class ConfigurationGroupingViewModel : BasePropertyChanged
     {
         private readonly ConfigurationModel configurationCreationModel = BaseSingleton<ConfigurationModel>.Instance;
+        private readonly ExecutiveCommissioner executiveCommissioner = BaseSingleton<ExecutiveCommissioner>.Instance;
 
         private readonly int level = 0;
         private string name = string.Empty;
@@ -85,7 +88,7 @@ namespace DataAnalyzer.ViewModels
             }
             else
             {
-                this.configurationCreationModel.RemoveGroupingConfiguration(this.level);
+                (this.executiveCommissioner.GetViewModel() as GroupingSetupViewModel).RemoveGroupingConfiguration(this.level);
             }
 
             this.NotifyPropertyChanged(nameof(this.HasChildren));

@@ -1,9 +1,4 @@
-﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
-using ExcelService.DataActions.ActionParameters.ClusterStyleParameters;
-using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
-using System;
-
-namespace DataAnalyzer.Common.DataConverters.ExcelConverters.BorderConverters
+﻿namespace DataAnalyzer.Common.DataConverters.ExcelConverters.BorderConverters
 {
     //internal sealed class NthRowBorderStyleConverter : BorderStyleConverter
     //{

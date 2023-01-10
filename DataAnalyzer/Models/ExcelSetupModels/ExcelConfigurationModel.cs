@@ -138,7 +138,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
                 {
                     // this is complicated (ugly)... We have static possibilities of excel data types and we build up an
                     // example and format string for these classes. We save other related metadata to configuraiton files.
-                    // These are separate, but also joined in a messay way, so I create the excel part of the object and then
+                    // These are separate, but also joined in a messy way, so I create the excel part of the object and then
                     // copy in the saved metadata.
                     this.LoadedParameterTypes.Add(this.excelDataTypeLibrary.GetInstanceByName(parameter.ExcelTypeName));
                     this.LoadedParameterTypes[^1].CloneParameters(parameter);
@@ -149,9 +149,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels
                 string fileName = Path.GetFileName(configPath);
                 this.DataTypeConfigName = fileName[..fileName.IndexOf('.')];
 
-                if (!string.IsNullOrEmpty(this.configurationModel.DataConfiguration.SavedDataFilePath))
+                if (!string.IsNullOrEmpty(this.configurationModel.SavedDataFilePath))
                 {
-                    this.LoadWorkbookConfigByPath(this.configurationModel.DataConfiguration.SavedDataFilePath);
+                    this.LoadWorkbookConfigByPath(this.configurationModel.SavedDataFilePath);
                 }
             }
         }
@@ -201,7 +201,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             {
                 this.WorkbookModels = this.serializationService.JsonDeserializeFromFile<ICollection<WorkbookModel>>(filePath);
                 this.WorkbookConfigName = Path.GetFileNameWithoutExtension(filePath);
-                while (this.WorkbookConfigName.Contains("."))
+
+                while (this.WorkbookConfigName.Contains('.'))
                 {
                     this.WorkbookConfigName = Path.GetFileNameWithoutExtension(this.WorkbookConfigName);
                 }
@@ -215,7 +216,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
 
             this.serializationService.JsonSerializeToFile(this.workbookModels, filePath);
 
-            this.configurationModel.ApplyDataPath(filePath);
+            this.configurationModel.SavedDataFilePath = filePath;
         }
 
         public void LoadDataTypesFromConfig()
@@ -224,27 +225,21 @@ namespace DataAnalyzer.Models.ExcelSetupModels
 
             string directoryPath = this.GetCurrentDataTypeConfigDirectoryPath();
             Directory
-              .GetFiles(directoryPath, $"*{FileProperties.EXCEL_DATA_TYPE_CONFIG_FILE_EXTENSION}")
-              .ToList()
-              .ForEach(x => this.SavedConfigurations.Add(new FilePathAndNamePair(x)));
+                .GetFiles(directoryPath, $"*{FileProperties.EXCEL_DATA_TYPE_CONFIG_FILE_EXTENSION}")
+                .ToList()
+                .ForEach(x => this.SavedConfigurations.Add(new FilePathAndNamePair(x)));
 
             this.NotifyPropertyChanged(nameof(this.SavedConfigurations));
         }
 
-        public string GetDataTypeConfigPath()
-        {
-            return this.configurationDirectory + "\\" + DATA_TYPE_CONFIG_FILE_NAME;
-        }
+        public string GetDataTypeConfigPath() =>
+            this.configurationDirectory + "\\" + DATA_TYPE_CONFIG_FILE_NAME;
 
-        public string GetCurrentDataTypeConfigDirectoryPath()
-        {
-            return this.configurationDirectory + "\\" + this.configurationModel.SelectedDataType.ToString() + "\\" + DATA_TYPES_CONFIG_PATH_KEY;
-        }
+        public string GetCurrentDataTypeConfigDirectoryPath() => 
+            this.configurationDirectory + "\\" + this.configurationModel.SelectedDataType.ToString() + "\\" + DATA_TYPES_CONFIG_PATH_KEY;
 
-        public string GetCurrentWorkbookConfigDirectoryPath()
-        {
-            return this.configurationDirectory + "\\" + this.configurationModel.SelectedDataType.ToString() + "\\" + WORKBOOK_CONFIG_PATH_KEY;
-        }
+        public string GetCurrentWorkbookConfigDirectoryPath() =>
+            this.configurationDirectory + "\\" + this.configurationModel.SelectedDataType.ToString() + "\\" + WORKBOOK_CONFIG_PATH_KEY;
 
         private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
@@ -252,7 +247,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             {
                 case nameof(this.configurationModel.SelectedDataType):
                     LastSavedConfiguration lastSavedConfiguration = this.lastSavedDataTypeConfigs
-                      .FirstOrDefault(x => x.StatType.Equals(this.configurationModel.SelectedDataType));
+                        .FirstOrDefault(x => x.StatType.Equals(this.configurationModel.SelectedDataType));
                     if (lastSavedConfiguration != default)
                     {
                         this.LoadDataTypesFromConfig();

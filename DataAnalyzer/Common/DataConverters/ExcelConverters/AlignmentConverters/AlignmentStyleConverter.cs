@@ -1,5 +1,4 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
-using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.SubModelConversions;
 using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
 using System;
 using DataAnalyzer.Common.DataConverters.ExcelConverters.UtilityConverters;

@@ -3,6 +3,7 @@
     public enum StatType
     {
         Queryable,
+        CsvNames,
         NotApplicable
     }
 }

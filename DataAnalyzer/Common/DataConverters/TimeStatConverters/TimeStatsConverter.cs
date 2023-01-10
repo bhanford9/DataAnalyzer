@@ -7,6 +7,8 @@ namespace DataAnalyzer.Common.DataConverters.TimeStatConverters
 {
     internal abstract class TimeStatsConverter : DataConverter
     {
+        protected abstract void InternalToAnalyzer(IData data, IStats stats);
+
         public override IStats ToAnalyzerStats(IData data)
         {
             if (this.IsValidData(data))

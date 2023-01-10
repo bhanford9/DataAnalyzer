@@ -1,6 +1,7 @@
 ﻿using DataAnalyzer.Common.DataConverters.ExcelConverters;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.ExcelSetupModels;
+using DataAnalyzer.ViewModels.Utilities;
 using DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;
 using ExcelService;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     internal class ExcelDashboardViewModel : BasePropertyChanged
     {
         private readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
+        private readonly ExecutiveCommissioner executiveCommissioner = BaseSingleton<ExecutiveCommissioner>.Instance;
 
         private readonly BaseCommand startNewConfiguration;
         private readonly BaseCommand saveConfiguration;
@@ -73,6 +75,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
             this.excelSetupModel.ApplyTypeParametersToConfig();
             this.excelSetupModel.ExcelConfiguration.WorkbookOutputDirectory = this.OutputDirectory;
             this.excelSetupModel.ExcelConfiguration.SaveWorkbookConfiguration(this.configName);
+            this.executiveCommissioner.SaveConfiguration();
         }
 
         private void DoBrowseOutputDirectory()

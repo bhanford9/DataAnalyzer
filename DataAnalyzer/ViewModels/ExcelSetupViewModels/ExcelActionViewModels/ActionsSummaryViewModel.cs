@@ -1,9 +1,11 @@
-﻿using DataAnalyzer.Common.Mvvm;
+﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary;
 using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ActionSummaryViewModels;
+using DataAnalyzer.ViewModels.Utilities;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -18,6 +20,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
         //   2. The Summary side Model should react to those changes and update itself
         //   3. The Summary side View Model should react to its Model's changes
         private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
+        private readonly ExecutiveCommissioner executiveCommissioner = BaseSingleton<ExecutiveCommissioner>.Instance;
         private readonly IActionsSummaryModel actionsSummaryModel;
 
         private string configName = string.Empty;
@@ -47,11 +50,11 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             set => this.NotifyPropertyChanged(ref this.configName, value);
         }
 
-        public void LoadActionsFromModel()
+        public void LoadActionsFromModel(IDataConfiguration configuration)
         {
             if (this.HierarchicalSummaries.Count == 0)
             {
-                this.statsModel.StructureStats();
+                this.statsModel.StructureStats(configuration);
                 this.InitializeFromStats();
             }
             
@@ -63,6 +66,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             if (!string.IsNullOrEmpty(this.configName))
             {
                 this.actionsSummaryModel.SaveConfiguration(this.configName);
+                this.executiveCommissioner.SaveConfiguration();
             }
             else
             {

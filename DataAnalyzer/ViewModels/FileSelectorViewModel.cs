@@ -26,6 +26,8 @@ namespace DataAnalyzer.ViewModels
         private readonly DataConverterLibrary dataConverterLibrary = new();
         private EnumUtilities EnumUtilities = new();
 
+        private IReadOnlyDictionary<ScraperType, ConverterType> scraperToConverterMap;
+
         public FileSelectorViewModel()
         {
             this.browseDirectory = new BaseCommand((object o) => this.DoBrowseDirectory());
@@ -38,6 +40,13 @@ namespace DataAnalyzer.ViewModels
             {
                 this.ApplyActiveDirectory(this.ActiveDirectory);
             }
+
+            // TODO --> put into a class. Scraper Service could use similar tools
+            this.scraperToConverterMap = new Dictionary<ScraperType, ConverterType>()
+            {
+                { ScraperType.Queryable, ConverterType.Queryable },
+                { ScraperType.CsvNames, ConverterType.CsvNames },
+            };
 
             this.EnumUtilities.LoadNames(typeof(ScraperType), this.ScraperTypes);
         }
@@ -92,7 +101,7 @@ namespace DataAnalyzer.ViewModels
               .ToList()
               .ForEach(file =>
             {
-                ConverterType currentType = Enum.Parse<ConverterType>(this.selectedScraperType);
+                ConverterType currentType = this.scraperToConverterMap[Enum.Parse<ScraperType>(this.selectedScraperType)];
                 IDataConverter converter = this.dataConverterLibrary.GetConverter(currentType);
                 this.statsModel.LoadStatsForFile(file.Path, converter);
             });

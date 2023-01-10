@@ -6,6 +6,7 @@ using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary;
 using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels;
+using DataAnalyzer.ViewModels.Utilities;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -18,7 +19,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
         private readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
         private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-
+        private readonly ExecutiveCommissioner executiveCommissioner = BaseSingleton<ExecutiveCommissioner>.Instance;
 
         // If these never get used in this class, then they can be removed as private members
         //
@@ -80,7 +81,6 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
                 this.rowActionSummaryModel,
                 ExcelEntityType.Row);
 
-            this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
             this.excelSetupModel.PropertyChanged += this.ExcelSetupModelPropertyChanged;
         }
 
@@ -129,22 +129,10 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
             {
                 this.CurrentState = DataLoadingState.LoadingData.ToString();
 
-                this.statsModel.StructureStats();
+                this.statsModel.StructureStats(this.executiveCommissioner.GetDataConfiguration());
                 this.excelSetupModel.LoadWorkbookConfiguration();
 
                 this.CurrentState = DataLoadingState.DataLoaded.ToString();
-            }
-        }
-
-        private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(this.configurationModel.DataConfiguration):
-                    if (this.configurationModel.SelectedExportType.Equals(ExportType.Excel))
-                    {
-                    }
-                    break;
             }
         }
 
@@ -153,18 +141,18 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
             switch (e.PropertyName)
             {
                 case WorkbookActionApplicationModel.ACTION_APPLIED_KEY:
-                    this.WorkbookActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel();
+                    this.WorkbookActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel(this.executiveCommissioner.GetDataConfiguration());
                     break;
                 case WorksheetActionApplicationModel.ACTION_APPLIED_KEY:
-                    this.WorksheetActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel();
+                    this.WorksheetActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel(this.executiveCommissioner.GetDataConfiguration());
                     break;
                 case DataClusterActionApplicationModel.ACTION_APPLIED_KEY:
-                    this.DataClusterActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel();
+                    this.DataClusterActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel(this.executiveCommissioner.GetDataConfiguration());
                     break;
                 case nameof(this.excelSetupModel.ExcelConfiguration):
-                    this.WorkbookActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel();
-                    this.WorksheetActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel();
-                    this.DataClusterActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel();
+                    this.WorkbookActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel(this.executiveCommissioner.GetDataConfiguration());
+                    this.WorksheetActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel(this.executiveCommissioner.GetDataConfiguration());
+                    this.DataClusterActionViewModel.ActionsSummaryViewModel.LoadActionsFromModel(this.executiveCommissioner.GetDataConfiguration());
 
                     this.CurrentState = DataLoadingState.DataLoaded.ToString();
                     break;
