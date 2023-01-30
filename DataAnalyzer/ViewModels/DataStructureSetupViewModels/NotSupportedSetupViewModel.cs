@@ -16,17 +16,9 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             reason = "Configuration not supported";
             return false;
         }
-
-        public override void ClearConfiguration()
-        {
-        }
-
-        public override void LoadViewModelFromConfiguration()
-        {
-        }
-
-        public override void SaveConfiguration()
-        {
-        }
+        public override void ClearConfiguration() { }
+        public override void LoadViewModelFromConfiguration() { }
+        public override void SaveConfiguration() { }
+        public override void Initialize() { }
     }
 }

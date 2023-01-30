@@ -4,28 +4,33 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DataAnalyzer.Views"
+             xmlns:executionViews="clr-namespace:DataAnalyzer.Views.ExecutionViews"
              mc:Ignorable="d"
              Name="MainSetupTab"
              d:DesignHeight="450" d:DesignWidth="800">
-
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+  </UserControl.Resources>
+  
   <Border>
     <Border.Resources>
       <Style TargetType="GroupBox" BasedOn="{StaticResource DarkGroupBoxStyle}">
       </Style>
     </Border.Resources>
+    <Grid>
 
-    <local:ExcelConfigurationSetupView>
-      <local:ExcelConfigurationSetupView.Style>
-        <Style TargetType="local:ExcelConfigurationSetupView">
-          <Setter Property="Visibility" Value="Collapsed"/>
-          <Style.Triggers>
-            <DataTrigger Binding="{Binding DataContext.SelectedExportType, ElementName=MainSetupTab}" Value="Excel">
-              <Setter Property="Visibility" Value="Visible"/>
-            </DataTrigger>
-          </Style.Triggers>
-        </Style>
-      </local:ExcelConfigurationSetupView.Style>
-    </local:ExcelConfigurationSetupView>
-    
+      <executionViews:ExcelConfigurationSetupView
+        Visibility="{Binding 
+          DataContext.ExecutiveCommissioner.DisplayExcelCreation, 
+          Converter={StaticResource BooleanToVisibility},
+          ElementName=MainSetupTab}"/>
+
+      <executionViews:ClassCreationSetupView
+        Visibility="{Binding 
+          DataContext.ExecutiveCommissioner.DisplayClassCreation,
+          Converter={StaticResource BooleanToVisibility},
+          ElementName=MainSetupTab}"/>
+
+    </Grid>
   </Border>
 </UserControl>

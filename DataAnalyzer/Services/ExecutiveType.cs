@@ -2,8 +2,7 @@
 {
     internal enum ExecutiveType
     {
-        CsvToCSharpStringClass,
-        CsvToCSharpTypedClass,
+        CsvToCSharpClass,
         CreateQueryableExcelReport,
         NotSupported,
     }

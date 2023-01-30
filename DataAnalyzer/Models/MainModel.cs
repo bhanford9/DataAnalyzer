@@ -18,8 +18,7 @@ namespace DataAnalyzer.Models
         {
             executiveMap = new Dictionary<InputExportKey, ExecutiveType>()
             {
-                { new InputExportKey(ScraperType.CsvNames, ExportType.CSharpStringProperties), ExecutiveType.CsvToCSharpStringClass },
-                { new InputExportKey(ScraperType.CsvNames, ExportType.CSharpTypedProperties), ExecutiveType.CsvToCSharpTypedClass },
+                { new InputExportKey(ScraperType.CsvNames, ExportType.CSharpStringProperties), ExecutiveType.CsvToCSharpClass },
                 { new InputExportKey(ScraperType.Queryable, ExportType.Excel), ExecutiveType.CreateQueryableExcelReport},
             };
         }

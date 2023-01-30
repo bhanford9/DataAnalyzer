@@ -9,7 +9,7 @@ namespace DataAnalyzer.Common.DataObjects
 
         public string Uid => this.uid;
 
-        public abstract ICollection<string> ParameterNames { get; }
+        public abstract IReadOnlyCollection<string> ParameterNames { get; }
 
         public abstract T GetEnumeratedParameters<T>();
     }

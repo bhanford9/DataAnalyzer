@@ -14,6 +14,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         bool CanSave(out string reason);
         void ClearConfiguration();
         void CreateNewDataConfiguration();
+        void Initialize();
         void LoadConfiguration(string configName);
         void LoadViewModelFromConfiguration();
         void SaveConfiguration();

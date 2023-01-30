@@ -19,7 +19,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
         private readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
         private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-        private readonly ExecutiveCommissioner executiveCommissioner = BaseSingleton<ExecutiveCommissioner>.Instance;
+        private readonly StructureExecutiveCommissioner executiveCommissioner = BaseSingleton<StructureExecutiveCommissioner>.Instance;
 
         // If these never get used in this class, then they can be removed as private members
         //

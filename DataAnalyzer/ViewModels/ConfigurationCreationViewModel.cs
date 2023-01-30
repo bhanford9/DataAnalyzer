@@ -17,7 +17,6 @@ namespace DataAnalyzer.ViewModels
     {
         //private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
         private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
-        private readonly ExecutiveCommissioner executiveCommissioner = BaseSingleton<ExecutiveCommissioner>.Instance;
 
         private ExecutiveType executiveType = ExecutiveType.NotSupported;
         private IDataStructureSetupViewModel activeViewModel;
@@ -34,16 +33,19 @@ namespace DataAnalyzer.ViewModels
 
             this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
             //this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
-            this.executiveCommissioner.PropertyChanged += this.ExecutiveCommissionerPropertyChanged;
+            this.ExecutiveCommissioner.PropertyChanged += this.ExecutiveCommissionerPropertyChanged;
         }
 
         public ICommand CreateConfiguration => this.createConfiguration;
         public ICommand CancelChanges => this.cancelChanges;
         public ICommand SaveConfiguration => this.saveConfiguration;
 
-        public ObservableCollection<string> DataTypes => this.executiveCommissioner.DataTypes;
-        public ObservableCollection<string> ExportTypes => this.executiveCommissioner.ExportTypes;
+        public ObservableCollection<string> DataTypes => this.ExecutiveCommissioner.DataTypes;
+        public ObservableCollection<string> ExportTypes => this.ExecutiveCommissioner.ExportTypes;
         public ObservableCollection<LoadableRemovableRowViewModel> Configurations { get; } = new();
+
+        public StructureExecutiveCommissioner ExecutiveCommissioner { get; }
+            = BaseSingleton<StructureExecutiveCommissioner>.Instance;
 
         public ExecutiveType ExecutiveType
         {
@@ -59,37 +61,37 @@ namespace DataAnalyzer.ViewModels
 
         private void DoCreateConfiguration()
         {
-            this.executiveCommissioner.DisplayNotSupported = false;
+            this.ExecutiveCommissioner.DisplayNotSupported = false;
             this.ClearConfigurationData();
-            this.executiveCommissioner.CreateNewDataConfiguration();
+            this.ExecutiveCommissioner.CreateNewDataConfiguration();
         }
 
         private void DoCancelChanges()
         {
-            this.executiveCommissioner.DisplayNotSupported = true;
+            this.ExecutiveCommissioner.DisplayNotSupported = true;
             this.ClearConfigurationData();
         }
 
         private void ClearConfigurationData()
         {
-            this.executiveCommissioner.ClearConfiguration();
+            this.ExecutiveCommissioner.ClearConfiguration();
         }
 
         private void DoSaveConfiguration()
         {
-            if (string.IsNullOrEmpty(this.executiveCommissioner.GetConfigurationName()))
+            if (string.IsNullOrEmpty(this.ExecutiveCommissioner.GetConfigurationName()))
             {
                 // TODO --> Display that there is a problem
                 return;
             }
 
-            if (!this.executiveCommissioner.CanSave(out string reason))
+            if (!this.ExecutiveCommissioner.CanSave(out string reason))
             {
                 // TODO --> Display that there is a problem
                 return;
             }
 
-            this.executiveCommissioner.SaveConfiguration();
+            this.ExecutiveCommissioner.SaveConfiguration();
         }
 
         private void ApplyConfigurationDirectory(string directoryPath)
@@ -110,6 +112,11 @@ namespace DataAnalyzer.ViewModels
 
                 this.Configurations.Add(new ConfigurationFileListItemViewModel { Value = displayText, ToolTipText = configFile });
             });
+
+            if (!this.Configurations.Any())
+            {
+                this.DoCreateConfiguration();
+            }
         }
 
         private void MainModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -126,14 +133,14 @@ namespace DataAnalyzer.ViewModels
         {
             switch (e.PropertyName)
             {
-                case nameof(this.executiveCommissioner.SelectedExportType):
+                case nameof(this.ExecutiveCommissioner.SelectedExportType):
                     if (this.ExecutiveType != ExecutiveType.NotSupported)
                     {
-                        this.ActiveViewModel = this.executiveCommissioner.GetViewModel();
-                        this.ApplyConfigurationDirectory(this.executiveCommissioner.GetConfigurationDirectory());
+                        this.ActiveViewModel = this.ExecutiveCommissioner.GetInitializedViewModel();
+                        this.ApplyConfigurationDirectory(this.ExecutiveCommissioner.GetConfigurationDirectory());
                     }
 
-                    this.executiveCommissioner.SetDisplay(this.ExecutiveType);
+                    this.ExecutiveCommissioner.SetDisplay(this.ExecutiveType);
                     break;
             }
         }

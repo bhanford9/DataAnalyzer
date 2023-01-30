@@ -12,7 +12,7 @@ namespace DataAnalyzer.Common.DataObjects
 
         public ICollection<HeirarchalStats> Children { get; set; } = new List<HeirarchalStats>();
 
-        public override ICollection<string> ParameterNames
+        public override IReadOnlyCollection<string> ParameterNames
         {
             get
             {

@@ -5,7 +5,7 @@ namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {
     class ConfigurationFileListItemViewModel : LoadableRemovableRowViewModel
     {
-        private readonly ExecutiveCommissioner executiveCommissioner = BaseSingleton<ExecutiveCommissioner>.Instance;
+        private readonly StructureExecutiveCommissioner executiveCommissioner = BaseSingleton<StructureExecutiveCommissioner>.Instance;
 
         public ConfigurationFileListItemViewModel() { }
 

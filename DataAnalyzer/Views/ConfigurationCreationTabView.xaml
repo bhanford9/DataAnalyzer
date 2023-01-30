@@ -37,7 +37,7 @@
       <GroupBox Grid.Column="0"
                 Grid.Row="0"
                 Header="Configuration Location">
-        <TextBlock Text="{Binding ExecutiveUtilities.ConfigurationDirectory}"
+        <TextBlock Text="{Binding ExecutiveCommissioner.ConfigurationDirectory}"
                     VerticalAlignment="Top"
                     Margin="2 4"/>
       </GroupBox>
@@ -46,7 +46,7 @@
                 Grid.Row="1"
                 Header="Export Type">
         <ComboBox ItemsSource="{Binding ExportTypes}"
-                  SelectedItem="{Binding ExecutiveUtilities.SelectedExportType}"/>
+                  SelectedItem="{Binding ExecutiveCommissioner.SelectedExportType}"/>
       </GroupBox>
 
       <GroupBox Grid.Column="0"
@@ -88,21 +88,21 @@
 
         <dataStructureViews:GroupingSetupView
           Visibility="{Binding 
-            DataContext.ExecutiveUtilities.DisplayGroupingSetup,
+            DataContext.ExecutiveCommissioner.DisplayGroupingSetup,
             Converter={StaticResource BooleanToVisibility},
             ElementName=ConfigCreation}"
           DataContext="{Binding DataContext.ActiveViewModel, ElementName=ConfigCreation}"/>
 
         <dataStructureViews:CsvCSharpStringClassSetupView
           Visibility="{Binding
-            DataContext.ExecutiveUtilities.DisplayCsvStringSetup,
+            DataContext.ExecutiveCommissioner.DisplayCsvToClassSetup,
             Converter={StaticResource BooleanToVisibility},
             ElementName=ConfigCreation}"
           DataContext="{Binding DataContext.ActiveViewModel, ElementName=ConfigCreation}"/>
         
         <dataStructureViews:NotSupportedSetupView 
           Visibility="{Binding
-            DataContext.ExecutiveUtilities.DisplayNotSupported,
+            DataContext.ExecutiveCommissioner.DisplayNotSupported,
             Converter={StaticResource BooleanToVisibility},
             ElementName=ConfigCreation}"
           DataContext="{Binding DataContext.ActiveViewModel, ElementName=ConfigCreation}"/>

@@ -12,9 +12,7 @@ namespace DataAnalyzer.Models.DataStructureSetupModels
         protected readonly SerializationService serializationService = new();
         protected readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
 
-        protected DataStructureSetupModel()
-        {
-        }
+        protected DataStructureSetupModel() { }
 
         public TDataConfiguration DataConfiguration { get; protected set; }
 
@@ -45,7 +43,7 @@ namespace DataAnalyzer.Models.DataStructureSetupModels
         public void CreateNewDataConfiguration()
         {
             this.DataConfiguration = new TDataConfiguration();
-            this.NotifyPropertyChanged(nameof(this.DataConfiguration));
+            //this.NotifyPropertyChanged(nameof(this.DataConfiguration));
         }
 
         protected abstract void PrepareConfigurationForSaving(DateTime saveTime, string saveUid);

@@ -30,16 +30,14 @@ namespace DataAnalyzer.Models
             this.configurationMapping = new Dictionary<ExecutiveType, IDataConfiguration>()
             {
                 { ExecutiveType.CreateQueryableExcelReport, new ExcelConfiguration() },
-                { ExecutiveType.CsvToCSharpStringClass, new CsvConfiguration() },
-                { ExecutiveType.CsvToCSharpTypedClass, new CsvConfiguration() }, // TODO --> handle typed if necessary
+                { ExecutiveType.CsvToCSharpClass, new CsvConfiguration() },
                 { ExecutiveType.NotSupported, new NotSupportedDataConfiguration() },
             };
 
             this.dataOrganizerMapping = new Dictionary<ExecutiveType, IDataOrganizer>()
             {
                 { ExecutiveType.CreateQueryableExcelReport, new ExcelDataOrganizer() },
-                { ExecutiveType.CsvToCSharpStringClass, new CsvDataOrganizer() },
-                { ExecutiveType.CsvToCSharpTypedClass, new CsvDataOrganizer() }, // TODO --> handle typed if necessary
+                { ExecutiveType.CsvToCSharpClass, new CsvDataOrganizer() },
                 { ExecutiveType.NotSupported, new NotSupportedDataOrganizer() },
             };
 

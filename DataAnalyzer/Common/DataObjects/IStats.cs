@@ -5,7 +5,7 @@ namespace DataAnalyzer.Common.DataObjects
     internal interface IStats
     {
         string Uid { get; }
-        ICollection<string> ParameterNames { get; }
+        IReadOnlyCollection<string> ParameterNames { get; }
 
         T GetEnumeratedParameters<T>();
     }

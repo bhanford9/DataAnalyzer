@@ -35,7 +35,7 @@ namespace DataAnalyzer.Common.DataObjects.TimeStats
 
         public string ExecuterName { get; set; } = string.Empty;
 
-        public override ICollection<string> ParameterNames => this.parameterNames.Union(this.InternalParameterNames).ToList();
+        public override IReadOnlyCollection<string> ParameterNames => this.parameterNames.Union(this.InternalParameterNames).ToList();
 
         protected abstract ICollection<string> InternalParameterNames { get; }
     }

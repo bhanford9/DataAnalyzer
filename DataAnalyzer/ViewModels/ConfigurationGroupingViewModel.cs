@@ -14,7 +14,7 @@ namespace DataAnalyzer.ViewModels
     internal class ConfigurationGroupingViewModel : BasePropertyChanged
     {
         private readonly ConfigurationModel configurationCreationModel = BaseSingleton<ConfigurationModel>.Instance;
-        private readonly ExecutiveCommissioner executiveCommissioner = BaseSingleton<ExecutiveCommissioner>.Instance;
+        private readonly StructureExecutiveCommissioner executiveCommissioner = BaseSingleton<StructureExecutiveCommissioner>.Instance;
 
         private readonly int level = 0;
         private string name = string.Empty;
@@ -88,7 +88,7 @@ namespace DataAnalyzer.ViewModels
             }
             else
             {
-                (this.executiveCommissioner.GetViewModel() as GroupingSetupViewModel).RemoveGroupingConfiguration(this.level);
+                (this.executiveCommissioner.GetInitializedViewModel() as GroupingSetupViewModel).RemoveGroupingConfiguration(this.level);
             }
 
             this.NotifyPropertyChanged(nameof(this.HasChildren));

@@ -5,7 +5,14 @@ namespace DataAnalyzer.Common.DataObjects.CsvStats
 {
     internal class CsvNamesStats : Stats
     {
-        public override ICollection<string> ParameterNames { get; } = new List<string>();
+        public CsvNamesStats()
+        {
+            this.ParameterNames = new List<string>() { "CSV Headers" };
+        }
+
+        public override IReadOnlyCollection<string> ParameterNames { get; }
+
+        public ICollection<string> CsvNames { get; set; } = new List<string>();
 
         public override T GetEnumeratedParameters<T>()
         {

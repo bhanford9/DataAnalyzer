@@ -7,7 +7,6 @@ namespace DataAnalyzer.Models.DataStructureSetupModels
     {
         protected override void PrepareConfigurationForSaving(DateTime saveTime, string saveUid)
         {
-            throw new NotImplementedException();
         }
     }
 }

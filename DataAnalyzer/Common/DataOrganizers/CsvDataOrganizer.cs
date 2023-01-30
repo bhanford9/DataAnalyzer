@@ -1,5 +1,6 @@
 ﻿using DataAnalyzer.Common.DataConfigurations.CsvConfigurations;
 using DataAnalyzer.Common.DataObjects;
+using DataAnalyzer.Common.DataObjects.CsvStats;
 using System.Collections.Generic;
 
 namespace DataAnalyzer.Common.DataOrganizers
@@ -8,8 +9,10 @@ namespace DataAnalyzer.Common.DataOrganizers
     {
         protected override HeirarchalStats InternalOrganize(CsvConfiguration configuration, ICollection<IStats> data)
         {
-            // TODO
-            return new();
+            return new HeirarchalStats()
+            {
+                Values = new List<IStats>() { new CsvNamesStats() { CsvNames = configuration.Names } }
+            };
         }
     }
 }

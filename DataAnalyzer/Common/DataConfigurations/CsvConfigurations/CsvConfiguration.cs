@@ -1,5 +1,6 @@
 ﻿using DataAnalyzer.Common.DataParameters;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DataAnalyzer.Common.DataConfigurations.CsvConfigurations
 {
@@ -13,9 +14,11 @@ namespace DataAnalyzer.Common.DataConfigurations.CsvConfigurations
         {
             // TODO --> init names with that within the configuration or parameters being passed in
             //   - the application configuraiton doesn't have any names
-            //   - there is not currently a CsvParameterCollection object
-            //
-            // need to figure out which one should have them and get that implemented
+            //   - IDataParameterCollection has names, but it also has grouping/sorting capabilities
+            //      These should be split out into interfaces and then there should be CSV and Grouping
+            //      parameter collections that inherit these
+
+            this.Names = parameters.GetParameters().Select(x => x.Name).ToList();
         }
     }
 }

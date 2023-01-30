@@ -29,7 +29,7 @@ namespace DataAnalyzer.Common.DataConverters.CsvConverters
         {
             CsvNamesData csvData = data as CsvNamesData;
             CsvNamesStats stats = new();
-            csvData.CsvNames.ToList().ForEach(name => stats.ParameterNames.Add(name));
+            csvData.CsvNames.ToList().ForEach(name => stats.CsvNames.Add(name));
             return stats;
         }
     }

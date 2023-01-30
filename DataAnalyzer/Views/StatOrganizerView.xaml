@@ -19,7 +19,7 @@
         <local:ConfigurationCreationTabView/>
       </TabItem>
 
-      <TabItem Header="3. Setup">
+      <TabItem Header="3. Execution">
         <local:ConfigurationSetupTabView/>
       </TabItem>
 

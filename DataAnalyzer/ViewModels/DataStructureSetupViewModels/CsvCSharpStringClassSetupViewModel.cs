@@ -1,7 +1,10 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+using DataAnalyzer.Common.DataObjects.CsvStats;
 using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.Services;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 {
@@ -49,19 +52,57 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         public override void LoadViewModelFromConfiguration()
         {
-            // TODO
-            throw new System.NotImplementedException();
+            this.ConfigurationName = this.model.DataConfiguration.Name;
+            this.ClassName = this.model.DataConfiguration.ClassName;
+            this.CsvPropertyRows.Clear();
+            this.model.DataConfiguration.CsvNameAndProperties.ToList().ForEach(x =>
+            {
+                this.CsvPropertyRows.Add(new StringPropertyRowViewModel()
+                {
+                    CsvName = x.CsvName,
+                    PropertyName = x.PropertyName,
+                    Include = x.Include,
+                });
+            });
         }
 
         public override void SaveConfiguration()
         {
-            // TODO
-            throw new System.NotImplementedException();
+            this.model.CreateNewDataConfiguration();
+
+            this.model.DataConfiguration.Name = this.ConfigurationName;
+            this.model.DataConfiguration.ClassName = this.ClassName;
+            this.CsvPropertyRows
+                .Where(row => row.Include)
+                .ToList()
+                .ForEach(row => this.model.DataConfiguration.CsvNameAndProperties.Add((row.CsvName, row.PropertyName, row.Include)));
+            
+            this.model.SaveConfiguration();
+        }
+
+        public override void Initialize()
+        {
+            ICollection<CsvNamesStats> stats = this.statsModel.Stats.OfType<CsvNamesStats>().ToList();
+            this.CsvPropertyRows.Clear();
+
+            if (stats.Any())
+            {
+                stats
+                    .First()
+                    .CsvNames
+                    .ToList()
+                    .ForEach(name => this.CsvPropertyRows.Add(new StringPropertyRowViewModel()
+                    {
+                        CsvName = name,
+                        PropertyName = name,
+                        Include = true
+                    }));
+            }
         }
 
         private void ModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            // may not be necessary for this class
         }
     }
 }

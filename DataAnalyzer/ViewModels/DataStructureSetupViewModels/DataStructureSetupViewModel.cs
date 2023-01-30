@@ -17,6 +17,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         protected readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
         protected readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
+        protected readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
 
         private string selectedDataType = string.Empty;
         private string configurationName = string.Empty;
@@ -58,8 +59,13 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
                 // TODO --> make sure there is good rationale for having 3 different locations house this value
                 this.configurationModel.ConfigurationName = value;
-                this.dataStructureModel.DataConfiguration.Name = value;
                 this.mainModel.LoadedDataStructure.StructureName = value;
+
+                // The data structure model may not be initialized yet during import/export type switching
+                if (this.dataStructureModel.DataConfiguration != null)
+                {
+                    this.dataStructureModel.DataConfiguration.Name = value;
+                }
             }
         }
 
@@ -105,6 +111,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         public void CreateNewDataConfiguration() => this.dataStructureModel.CreateNewDataConfiguration();
 
         public void LoadConfiguration(string configName) => this.dataStructureModel.LoadConfiguration(configName);
+
+        public abstract void Initialize();
 
         public abstract void ClearConfiguration();
 

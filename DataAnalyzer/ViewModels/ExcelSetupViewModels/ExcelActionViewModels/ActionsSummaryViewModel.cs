@@ -20,7 +20,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
         //   2. The Summary side Model should react to those changes and update itself
         //   3. The Summary side View Model should react to its Model's changes
         private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-        private readonly ExecutiveCommissioner executiveCommissioner = BaseSingleton<ExecutiveCommissioner>.Instance;
+        private readonly StructureExecutiveCommissioner executiveCommissioner = BaseSingleton<StructureExecutiveCommissioner>.Instance;
         private readonly IActionsSummaryModel actionsSummaryModel;
 
         private string configName = string.Empty;

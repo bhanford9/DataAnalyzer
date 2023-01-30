@@ -2,7 +2,6 @@
 
 namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
 {
-    [Serializable]
     internal class GroupingConfiguration : DataConfiguration
     {
         public string GroupName { get; set; } = string.Empty;

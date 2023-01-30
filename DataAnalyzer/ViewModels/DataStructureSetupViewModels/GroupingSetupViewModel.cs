@@ -64,6 +64,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         public override void LoadViewModelFromConfiguration()
         {
+            this.ConfigurationName = this.model.DataConfiguration.Name;
             this.GroupingLayersCount = this.model.DataConfiguration.GroupingConfiguration.Count;
             this.ConfigurationGroupings.Clear();
 
@@ -82,6 +83,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         {
             this.model.ClearGroupingConfigurations();
 
+            this.model.DataConfiguration.Name = this.ConfigurationName;
             int level = 0;
             this.ConfigurationGroupings.ToList().ForEach(configGroupingViewModel =>
             {
@@ -98,6 +100,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         }
 
         public void RemoveGroupingConfiguration(int level) => this.model.RemoveGroupingConfiguration(level);
+
+        public override void Initialize() { }
 
         protected void ModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {

@@ -12,22 +12,21 @@ using System.Linq;
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-    internal class ExecutiveCommissioner : BasePropertyChanged
+    internal class StructureExecutiveCommissioner : BasePropertyChanged
     {
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
         private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
         private EnumUtilities EnumUtilities = new();
 
         private bool displayGroupingSetup = false;
-        private bool displayCsvStringSetup = false;
-        private bool displayCsvClassSetup = false;
+        private bool displayCsvToClassSetup = false;
         private bool displayNotSupported = true;
         private string selectedExportType = string.Empty;
         private string configurationDirectory = string.Empty;
         private readonly IReadOnlyDictionary<ExecutiveType, Action> viewDisplayMap;
         private readonly IDictionary<ExecutiveType, IDataStructureSetupViewModel> executiveViewModelMap;
 
-        public ExecutiveCommissioner()
+        public StructureExecutiveCommissioner()
         {
             this.EnumUtilities.LoadNames(typeof(StatType), this.DataTypes);
             this.EnumUtilities.LoadNames(typeof(ExportType), this.ExportTypes);
@@ -43,19 +42,11 @@ namespace DataAnalyzer.ViewModels.Utilities
                     }
                 },
                 {
-                    ExecutiveType.CsvToCSharpStringClass,
+                    ExecutiveType.CsvToCSharpClass,
                     () =>
                     {
-                        this.DisplayCsvStringSetup = true;
-                        this.executiveViewModelMap[ExecutiveType.CsvToCSharpStringClass].StartListeners();
-                    }
-                },
-                {
-                    ExecutiveType.CsvToCSharpTypedClass,
-                    () =>
-                    {
-                        this.DisplayCsvClassSetup = true;
-                        this.executiveViewModelMap[ExecutiveType.CsvToCSharpTypedClass].StartListeners();
+                        this.DisplayCsvToClassSetup = true;
+                        this.executiveViewModelMap[ExecutiveType.CsvToCSharpClass].StartListeners();
                     }
                 },
                 {
@@ -70,8 +61,7 @@ namespace DataAnalyzer.ViewModels.Utilities
             this.executiveViewModelMap = new Dictionary<ExecutiveType, IDataStructureSetupViewModel>()
             {
                 { ExecutiveType.CreateQueryableExcelReport, new GroupingSetupViewModel(this.DataTypes, new GroupingSetupModel()) },
-                { ExecutiveType.CsvToCSharpStringClass, new CsvCSharpStringClassSetupViewModel(this.DataTypes, new CsvCSharpStringClassSetupModel()) },
-                { ExecutiveType.CsvToCSharpTypedClass, new CsvCSharpStringClassSetupViewModel(this.DataTypes, new CsvCSharpStringClassSetupModel()) }, // TODO --> replace with typed class
+                { ExecutiveType.CsvToCSharpClass, new CsvCSharpStringClassSetupViewModel(this.DataTypes, new CsvCSharpStringClassSetupModel()) },
                 { ExecutiveType.NotSupported, new NotSupportedSetupViewModel(this.DataTypes, new NotSupportedSetupModel())},
             };
 
@@ -96,16 +86,10 @@ namespace DataAnalyzer.ViewModels.Utilities
             set => this.NotifyPropertyChanged(ref this.displayGroupingSetup, value);
         }
 
-        public bool DisplayCsvStringSetup
+        public bool DisplayCsvToClassSetup
         {
-            get => this.displayCsvStringSetup;
-            set => this.NotifyPropertyChanged(ref this.displayCsvStringSetup, value);
-        }
-
-        public bool DisplayCsvClassSetup
-        {
-            get => this.displayCsvClassSetup;
-            set => this.NotifyPropertyChanged(ref this.displayCsvClassSetup, value);
+            get => this.displayCsvToClassSetup;
+            set => this.NotifyPropertyChanged(ref this.displayCsvToClassSetup, value);
         }
 
         public string SelectedExportType
@@ -147,12 +131,13 @@ namespace DataAnalyzer.ViewModels.Utilities
 
         public void CreateNewDataConfiguration() => this.executiveViewModelMap[this.mainModel.ExecutiveType].CreateNewDataConfiguration();
 
-        public IDataStructureSetupViewModel GetViewModel()
+        public IDataStructureSetupViewModel GetInitializedViewModel()
         {
-            // This is a bad hack to initialize the view model before returning it.
-            // Doing it as a lazy way to support the export type changing at any time.
-            this.executiveViewModelMap[this.mainModel.ExecutiveType].SelectedExportType = this.selectedExportType;
-            return this.executiveViewModelMap[this.mainModel.ExecutiveType];
+            IDataStructureSetupViewModel viewModel = this.executiveViewModelMap[this.mainModel.ExecutiveType];
+            viewModel.Initialize();
+            viewModel.SelectedExportType = this.selectedExportType;
+
+            return viewModel;
         }
 
         public void ClearConfiguration()
@@ -164,8 +149,7 @@ namespace DataAnalyzer.ViewModels.Utilities
         public void ClearDisplays()
         {
             this.DisplayGroupingSetup = false;
-            this.DisplayCsvStringSetup = false;
-            this.DisplayCsvClassSetup = false;
+            this.DisplayCsvToClassSetup = false;
             this.DisplayNotSupported = false;
 
             this.executiveViewModelMap.ToList().ForEach(x => x.Value.StopListeners());

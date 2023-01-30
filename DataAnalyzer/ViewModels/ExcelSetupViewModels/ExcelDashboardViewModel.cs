@@ -17,7 +17,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     internal class ExcelDashboardViewModel : BasePropertyChanged
     {
         private readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
-        private readonly ExecutiveCommissioner executiveCommissioner = BaseSingleton<ExecutiveCommissioner>.Instance;
+        private readonly StructureExecutiveCommissioner executiveCommissioner = BaseSingleton<StructureExecutiveCommissioner>.Instance;
 
         private readonly BaseCommand startNewConfiguration;
         private readonly BaseCommand saveConfiguration;
