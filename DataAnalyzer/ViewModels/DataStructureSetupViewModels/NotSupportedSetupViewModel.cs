@@ -18,6 +18,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         }
         public override void ClearConfiguration() { }
         public override void LoadViewModelFromConfiguration() { }
+        public override void ApplyConfiguration() { }
         public override void SaveConfiguration() { }
         public override void Initialize() { }
     }

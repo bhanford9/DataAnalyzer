@@ -3,6 +3,7 @@ using DataAnalyzer.Models.LoadedConfigurations;
 using DataAnalyzer.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DataAnalyzer.Models
 {
@@ -11,6 +12,7 @@ namespace DataAnalyzer.Models
         private LoadedDataContent loadedDataContent = new();
         private LoadedDataStructure loadedDataStructure = new();
         private LoadedInputFiles loadedInputFiles = new();
+        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
 
         private IReadOnlyDictionary<InputExportKey, ExecutiveType> executiveMap;
 
@@ -21,6 +23,8 @@ namespace DataAnalyzer.Models
                 { new InputExportKey(ScraperType.CsvNames, ExportType.CSharpStringProperties), ExecutiveType.CsvToCSharpClass },
                 { new InputExportKey(ScraperType.Queryable, ExportType.Excel), ExecutiveType.CreateQueryableExcelReport},
             };
+
+            loadedInputFiles.PropertyChanged += this.LoadedInputFilesPropertyChanged;
         }
 
         public LoadedDataContent LoadedDataContent
@@ -45,6 +49,22 @@ namespace DataAnalyzer.Models
 
         public ScraperType ScraperType => Enum.Parse<ScraperType>(this.LoadedInputFiles.DataType);
 
+        public void NotifyScraperTypeChange()
+        {
+            try
+            {
+                this.configurationModel.SelectedDataType = this.ScraperType switch
+                {
+                    ScraperType.Queryable => StatType.Queryable,
+                    ScraperType.CsvNames => StatType.CsvNames,
+                    _ => StatType.NotApplicable,
+                };
+
+                this.NotifyPropertyChanged(nameof(this.ScraperType));
+            }
+            catch { }
+        }
+
         public bool ApplyInputExportTypes()
         {
             ScraperType scraperType = Enum.Parse<ScraperType>(this.LoadedInputFiles.DataType);
@@ -63,6 +83,11 @@ namespace DataAnalyzer.Models
 
             this.NotifyPropertyChanged(nameof(this.ExecutiveType));
             return supported;
+        }
+
+        private void LoadedInputFilesPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this.NotifyScraperTypeChange();
         }
     }
 }

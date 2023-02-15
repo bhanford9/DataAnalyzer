@@ -3,6 +3,8 @@ using System;
 
 namespace DataAnalyzer.Common.DataParameters
 {
+    // TODO --> this structure was originally intended for groupable data and doesn't scale well
+    //   need to refactor this to better accommodate more dynamic usages
     internal class DataParameter : IDataParameter
     {
         public DataParameter(Func<IStats, IComparable> extractor, Func<IStats, bool> validator)

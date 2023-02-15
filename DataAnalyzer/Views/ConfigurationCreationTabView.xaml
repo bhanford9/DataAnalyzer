@@ -114,9 +114,11 @@
             Grid.Row="3">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="180"/>
+          <ColumnDefinition Width="160"/>
           <ColumnDefinition Width="*"/>
-          <ColumnDefinition Width="180"/>
+          <ColumnDefinition Width="160"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="160"/>
           <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>        
 
@@ -128,6 +130,10 @@
         <Button Grid.Column="3"
               Content="Save Configuration"
               Command="{Binding SaveConfiguration}"/>
+
+        <Button Grid.Column="5"
+              Content="Apply Without Save"
+              Command="{Binding ApplyWithoutSave}"/>
       </Grid>
     </Grid>
   </Border>

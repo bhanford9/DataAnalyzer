@@ -3,7 +3,6 @@ using System;
 
 namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
 {
-    [Serializable]
     internal class DataConfiguration : VersionedConfiguration, IDataConfiguration
     {
         public string Name { get; set; } = string.Empty;

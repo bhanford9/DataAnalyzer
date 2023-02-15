@@ -33,6 +33,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             this.DataTypes = dataTypes;
             this.dataStructureModel.PropertyChanged += this.DataStructureModelPropertyChanged;
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
+            this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
         }
 
         public ObservableCollection<string> DataTypes { get; }
@@ -118,6 +119,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         public abstract bool CanSave(out string reason);
 
+        public abstract void ApplyConfiguration();
+
         public abstract void SaveConfiguration();
 
         public abstract void LoadViewModelFromConfiguration();
@@ -149,6 +152,14 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
                         break;
                 }
             }
+        }
+
+        private void MainModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            //switch (e.propertyName)
+            //{
+            //    case nameof(this.mainModel.)
+            //}
         }
     }
 }

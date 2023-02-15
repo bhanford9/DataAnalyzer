@@ -8,97 +8,90 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace DataAnalyzer.Properties
-{
-
-
+namespace DataAnalyzer.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
-    {
-
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
-        public static Settings Default
-        {
-            get
-            {
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastUsedDataDirectory
-        {
-            get
-            {
+        public string LastUsedDataDirectory {
+            get {
                 return ((string)(this["LastUsedDataDirectory"]));
             }
-            set
-            {
+            set {
                 this["LastUsedDataDirectory"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastSelectedScraperType
-        {
-            get
-            {
+        public string LastSelectedScraperType {
+            get {
                 return ((string)(this["LastSelectedScraperType"]));
             }
-            set
-            {
+            set {
                 this["LastSelectedScraperType"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastUsedConfigurationDirectory
-        {
-            get
-            {
+        public string LastUsedConfigurationDirectory {
+            get {
                 return ((string)(this["LastUsedConfigurationDirectory"]));
             }
-            set
-            {
+            set {
                 this["LastUsedConfigurationDirectory"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastUsedExcelConfigurationDirectory
-        {
-            get
-            {
+        public string LastUsedExcelConfigurationDirectory {
+            get {
                 return ((string)(this["LastUsedExcelConfigurationDirectory"]));
             }
-            set
-            {
+            set {
                 this["LastUsedExcelConfigurationDirectory"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastUsedExcelOutputDirectory
-        {
-            get
-            {
+        public string LastUsedExcelOutputDirectory {
+            get {
                 return ((string)(this["LastUsedExcelOutputDirectory"]));
             }
-            set
-            {
+            set {
                 this["LastUsedExcelOutputDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastUsedClassCreationConfigurationDirectory {
+            get {
+                return ((string)(this["LastUsedClassCreationConfigurationDirectory"]));
+            }
+            set {
+                this["LastUsedClassCreationConfigurationDirectory"] = value;
             }
         }
     }

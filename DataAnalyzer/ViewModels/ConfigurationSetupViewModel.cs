@@ -62,7 +62,7 @@ namespace DataAnalyzer.ViewModels
 
         //private void ExecutiveCommissionerPropertyChanged(object sender, PropertyChangedEventArgs e)
         //{
-        //    switch (e.PropertyName)
+        //    switch (e.propertyName)
         //    {
         //        case nameof(this.ExecutiveCommissioner.ExecutiveType):
         //            //if (this.ExecutiveType != ExecutiveType.NotSupported)

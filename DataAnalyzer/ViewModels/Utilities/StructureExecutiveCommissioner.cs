@@ -123,13 +123,30 @@ namespace DataAnalyzer.ViewModels.Utilities
 
         public bool CanSave(out string reason) => this.executiveViewModelMap[this.mainModel.ExecutiveType].CanSave(out reason);
 
-        public void SaveConfiguration() => this.executiveViewModelMap[this.mainModel.ExecutiveType].SaveConfiguration();
-        
-        public void LoadConfiguration(string configName) => this.executiveViewModelMap[this.mainModel.ExecutiveType].LoadConfiguration(configName);
+        public void ApplyConfiguration() => this.executiveViewModelMap[this.mainModel.ExecutiveType].ApplyConfiguration();
+
+        public void SaveConfiguration() => this.executiveViewModelMap[this.mainModel.ExecutiveType].SaveConfiguration();        
 
         public IDataConfiguration GetDataConfiguration() => this.executiveViewModelMap[this.mainModel.ExecutiveType].DataConfiguration;
 
+        public TDataConfiguration GetDataConfiguration<TDataConfiguration>()
+            where TDataConfiguration : IDataConfiguration
+            => (TDataConfiguration)GetDataConfiguration();
+
         public void CreateNewDataConfiguration() => this.executiveViewModelMap[this.mainModel.ExecutiveType].CreateNewDataConfiguration();
+
+        public void LoadConfiguration(string configName)
+        {
+            IDataStructureSetupViewModel viewModel = this.executiveViewModelMap[this.mainModel.ExecutiveType];
+            viewModel.LoadConfiguration(configName);
+            
+            IDataConfiguration dataConfiguration = this.GetDataConfiguration();
+            viewModel.SelectedDataType = dataConfiguration.StatType.ToString();
+            viewModel.SelectedExportType = dataConfiguration.ExportType.ToString();
+            
+            // why did this not get set?
+            this.configurationModel.SelectedDataType = StatType.CsvNames;
+        }
 
         public IDataStructureSetupViewModel GetInitializedViewModel()
         {

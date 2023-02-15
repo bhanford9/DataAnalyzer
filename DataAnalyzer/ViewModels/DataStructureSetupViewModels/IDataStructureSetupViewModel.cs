@@ -17,6 +17,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         void Initialize();
         void LoadConfiguration(string configName);
         void LoadViewModelFromConfiguration();
+        void ApplyConfiguration();
         void SaveConfiguration();
         void StartListeners();
         void StopListeners();

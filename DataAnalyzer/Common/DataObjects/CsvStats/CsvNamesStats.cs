@@ -12,7 +12,7 @@ namespace DataAnalyzer.Common.DataObjects.CsvStats
 
         public override IReadOnlyCollection<string> ParameterNames { get; }
 
-        public ICollection<string> CsvNames { get; set; } = new List<string>();
+        public ComparableList CsvNames { get; set; } = new ComparableList();
 
         public override T GetEnumeratedParameters<T>()
         {

@@ -47,7 +47,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         public override void ClearConfiguration()
         {
-            this.SelectedDataType = StatType.NotApplicable.ToString();
+            //this.SelectedDataType = StatType.NotApplicable.ToString();
         }
 
         public override void LoadViewModelFromConfiguration()
@@ -55,6 +55,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             this.ConfigurationName = this.model.DataConfiguration.Name;
             this.ClassName = this.model.DataConfiguration.ClassName;
             this.CsvPropertyRows.Clear();
+
             this.model.DataConfiguration.CsvNameAndProperties.ToList().ForEach(x =>
             {
                 this.CsvPropertyRows.Add(new StringPropertyRowViewModel()
@@ -66,7 +67,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             });
         }
 
-        public override void SaveConfiguration()
+        public override void ApplyConfiguration()
         {
             this.model.CreateNewDataConfiguration();
 
@@ -76,7 +77,10 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
                 .Where(row => row.Include)
                 .ToList()
                 .ForEach(row => this.model.DataConfiguration.CsvNameAndProperties.Add((row.CsvName, row.PropertyName, row.Include)));
-            
+        }
+
+        public override void SaveConfiguration()
+        {            
             this.model.SaveConfiguration();
         }
 

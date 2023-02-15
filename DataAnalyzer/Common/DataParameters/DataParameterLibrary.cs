@@ -1,28 +1,26 @@
-﻿using DataAnalyzer.Common.DataParameters.TimeStatParameters;
+﻿using DataAnalyzer.Common.DataParameters.CsvParameters;
+using DataAnalyzer.Common.DataParameters.TimeStatParameters;
 using DataAnalyzer.Services;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DataAnalyzer.Common.DataParameters
 {
     internal class DataParameterLibrary
     {
-        private readonly ICollection<IDataParameterCollection> parameters = new List<IDataParameterCollection>();
+        private readonly IReadOnlyDictionary<StatType, IDataParameterCollection> parameters;
 
         public DataParameterLibrary()
         {
-            this.LoadParameters();
+            parameters = new Dictionary<StatType, IDataParameterCollection>()
+            {
+                { StatType.Queryable, new QueryableParameters() },
+                { StatType.CsvNames, new CsvClassParameters() },
+            };
         }
 
-        public IDataParameterCollection GetParameters(StatType statType)
-        {
-            return this.parameters.FirstOrDefault(x => x.StatType == statType);
-        }
+        public IDataParameterCollection GetParameters(StatType statType) =>
+            this.parameters.TryGetValue(statType, out IDataParameterCollection parameters) ? parameters : default;
 
-        private void LoadParameters()
-        {
-            this.parameters.Clear();
-            this.parameters.Add(new QueryableParameters());
-        }
+        public IDataParameterCollection this[StatType statType] => GetParameters(statType);
     }
 }

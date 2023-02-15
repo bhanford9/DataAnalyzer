@@ -30,7 +30,7 @@ namespace DataAnalyzer.Models
             this.configurationMapping = new Dictionary<ExecutiveType, IDataConfiguration>()
             {
                 { ExecutiveType.CreateQueryableExcelReport, new ExcelConfiguration() },
-                { ExecutiveType.CsvToCSharpClass, new CsvConfiguration() },
+                { ExecutiveType.CsvToCSharpClass, new ClassPropertiesConfiguration() },
                 { ExecutiveType.NotSupported, new NotSupportedDataConfiguration() },
             };
 

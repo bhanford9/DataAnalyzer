@@ -33,7 +33,6 @@
   <ItemGroup>
     <Folder Include="Common\DataConfigurations\FilteringConfigurations\" />
     <Folder Include="Common\DataConfigurations\SortingConfigurations\" />
-    <Folder Include="Common\DataParameters\CsvParameters\" />
   </ItemGroup>
 
   <ItemGroup>

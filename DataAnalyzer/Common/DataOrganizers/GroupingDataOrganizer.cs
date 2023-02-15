@@ -13,8 +13,6 @@ namespace DataAnalyzer.Common.DataOrganizers
         {
             HeirarchalStats heirarchalStats = new();
 
-            // TODO --> I don't think the 3rd tab can be used without actually saving the working configuration, which might be undesirable
-
             LinkedGroupingConfiguration groupingConfigurations = new (configuration.GroupingConfigurations.First().GetProperty);
 
             LinkedGroupingConfiguration temp = groupingConfigurations;

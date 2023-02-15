@@ -23,12 +23,14 @@ namespace DataAnalyzer.ViewModels
 
         private readonly BaseCommand createConfiguration;
         private readonly BaseCommand cancelChanges;
+        private readonly BaseCommand applyWithoutSave;
         private readonly BaseCommand saveConfiguration;
 
         public ConfigurationCreationViewModel()
         {
             this.createConfiguration = new BaseCommand(obj => this.DoCreateConfiguration());
             this.cancelChanges = new BaseCommand(obj => this.DoCancelChanges());
+            this.applyWithoutSave = new BaseCommand(obj => this.DoApplyConfiguration());
             this.saveConfiguration = new BaseCommand(obj => this.DoSaveConfiguration());
 
             this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
@@ -38,6 +40,7 @@ namespace DataAnalyzer.ViewModels
 
         public ICommand CreateConfiguration => this.createConfiguration;
         public ICommand CancelChanges => this.cancelChanges;
+        public ICommand ApplyWithoutSave => this.applyWithoutSave;
         public ICommand SaveConfiguration => this.saveConfiguration;
 
         public ObservableCollection<string> DataTypes => this.ExecutiveCommissioner.DataTypes;
@@ -77,7 +80,7 @@ namespace DataAnalyzer.ViewModels
             this.ExecutiveCommissioner.ClearConfiguration();
         }
 
-        private void DoSaveConfiguration()
+        private void DoApplyConfiguration()
         {
             if (string.IsNullOrEmpty(this.ExecutiveCommissioner.GetConfigurationName()))
             {
@@ -91,6 +94,12 @@ namespace DataAnalyzer.ViewModels
                 return;
             }
 
+            this.ExecutiveCommissioner.ApplyConfiguration();
+        }
+
+        private void DoSaveConfiguration()
+        {
+            this.DoApplyConfiguration();
             this.ExecutiveCommissioner.SaveConfiguration();
         }
 
@@ -147,7 +156,7 @@ namespace DataAnalyzer.ViewModels
 
         //private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         //{
-        //    switch (e.PropertyName)
+        //    switch (e.propertyName)
         //    {
         //        case nameof(this.configurationModel.ActiveModel.DataConfiguration):
         //            this.executiveCommissioner.LoadViewModelFromConfiguration(this.ExecutiveType);

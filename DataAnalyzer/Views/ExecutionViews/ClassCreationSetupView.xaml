@@ -4,64 +4,206 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DataAnalyzer.Views.ExecutionViews"
+             xmlns:utils="clr-namespace:DataAnalyzer.Views.Utilities"
+             xmlns:converters="clr-namespace:DataAnalyzer.Common.Mvvm.ValueConverters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibility"/>
+  </UserControl.Resources>
+  
   <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="Auto" MinWidth="240"/>
+      <ColumnDefinition Width="Auto" MinWidth="280"/>
       <ColumnDefinition Width="*"/>
     </Grid.ColumnDefinitions>
     <Grid.Resources>
       <ResourceDictionary>
         <Style TargetType="Button" BasedOn="{StaticResource BaseButtonStyle}">
-          <Setter Property="Margin" Value="6 8"/>
-          <Setter Property="MinHeight" Value="24"/>
+          <Setter Property="Margin" Value="6"/>
+          <Setter Property="MinHeight" Value="28"/>
         </Style>
       </ResourceDictionary>
     </Grid.Resources>
 
-    <GroupBox Header="Class Name"
-              Grid.Row="0"
-              Grid.Column="0">
-      <TextBox Text="{Binding ClassName}"/>
-    </GroupBox>
+    <Grid Grid.Column="0">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
 
-    <GroupBox Header="Auto-Controls"
-              Grid.Row="1"
-              Grid.Column="0">
-      <StackPanel Orientation="Vertical">
-        <Button Content="All Strings"
-                Command="{Binding SetAllPropertiesToStrings}"/>
+      <GroupBox Header="Class Name"
+                Grid.Row="0">
+        <TextBlock 
+          Style="{StaticResource LargeTextBlockStyle}"
+          Text="{Binding ClassName}"
+          HorizontalAlignment="Stretch"
+          TextAlignment="Center"/>
+      </GroupBox>
 
-        <Button Content="Auto-Detect"
-                Command="{Binding AutoDetectAllPropertyTypes}"/>
-      </StackPanel>
+      <GroupBox Header="Configuration Saving"
+                Grid.Row="1">
+        <StackPanel Orientation="Vertical">
+          <TextBox Text="{Binding ConfigName}"/>
+          <Button Content="Save Configuration"
+                  Command="{Binding SaveConfiguration}"/>
+        </StackPanel>
+      </GroupBox>
+                
 
-    </GroupBox>
+      <GroupBox Header="Saved Configurations"
+                Grid.Row="2">
+        <ScrollViewer>
+          <ItemsControl ItemsSource="{Binding SavedConfigs}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <Border BorderBrush="{StaticResource LightTextOpacity20}"
+                        BorderThickness="0 1"
+                        Background="Transparent">
+                  <utils:LoadableRemovableRow DataContext="{Binding}"/>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </ScrollViewer>
+      </GroupBox>
 
-    <GroupBox Header="Export-Controls"
-              Grid.Row="2"
-              Grid.Column="0">
-      <StackPanel Orientation="Vertical">
-        <Button Content="Preview Class"
-                Command="{Binding PreviewClass}"/>
+    </Grid>
 
-        <Button Content="Export Class"
-                Command="{Binding ExportClass}"/>
-      </StackPanel>
-    </GroupBox>
+    <Grid Grid.Column="1"
+          Visibility="{Binding IsPreviewing, Converter={StaticResource BooleanToVisibility}}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
 
-    <GroupBox Header="Class Properties"
-              Grid.Row="0"
-              Grid.RowSpan="4"
-              Grid.Column="1">
-      
-    </GroupBox>
+      <Grid Grid.Row="0">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Grid.Column="0"
+                Content="Close Preview"
+                Command="{Binding ClosePreview}"/>
+
+        <Button Grid.Column="2"
+                Content="Copy All Text"
+                Command="{Binding CopyAllText}"/>
+      </Grid>
+
+      <TextBox Grid.Row="1"
+               Style="{StaticResource BaseReadOnlyTextBoxStyle}"
+               VerticalAlignment="Stretch"
+               HorizontalAlignment="Stretch"
+               Foreground="{StaticResource LightText}"
+               Margin="10"
+               Text="{Binding ClassPreviewText}">
+        
+      </TextBox>
+    </Grid>
+
+    <Grid Grid.Column="1"
+          Visibility="{Binding IsPreviewing, Converter={StaticResource InverseBooleanToVisibility}}">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="Auto"/>
+      </Grid.RowDefinitions>
+      <Grid Grid.Row="0"
+            Grid.Column="1">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Content="Load In Data"
+                Grid.Column="0"
+                Command="{Binding LoadInData}"/>
+
+        <Button Content="Select Config Directory"
+                Grid.Column="1"
+                Command="{Binding SelectConfigDirectory}"/>
+
+        <TextBlock Grid.Column="2"
+                   Text="{Binding SelectedConfigDirectory}"/>
+      </Grid>
+
+
+      <Grid Grid.Row="2"
+            Grid.Column="2">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="10*"/>
+          <ColumnDefinition Width="35*" MinWidth="200"/>
+          <ColumnDefinition Width="10*"/>
+          <ColumnDefinition Width="35*" MinWidth="200"/>
+          <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Header="Typing Controls"
+                  Grid.Row="2"
+                  Grid.Column="1">
+          <StackPanel Orientation="Vertical">
+            <Button Content="All Types As Strings"
+                    Command="{Binding SetAllPropertiesToStrings}"/>
+
+            <Button Content="Auto-Detect All Types"
+                    Command="{Binding AutoDetectAllPropertyTypes}"/>
+          </StackPanel>
+
+        </GroupBox>
+
+        <GroupBox Header="Export Controls"
+                  Grid.Row="2"
+                  Grid.Column="3">
+          <StackPanel Orientation="Vertical">
+            <Button Content="Preview Class"
+                    Command="{Binding PreviewClass}"/>
+
+            <Button Content="Export Class"
+                    Command="{Binding ExportClass}"/>
+          </StackPanel>
+        </GroupBox>
+      </Grid>
+
+      <GroupBox Header="Class Properties"
+                Grid.Row="1"
+                Grid.Column="1">
+        <ScrollViewer>
+          <ItemsControl ItemsSource="{Binding PropertyItems}">
+            <ItemsControl.ItemTemplate>
+              <DataTemplate>
+                <Grid Margin="8">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition MinWidth="200" Width="Auto"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition MinWidth="200" Width="Auto"/>
+                    <ColumnDefinition Width="6"/>
+                  </Grid.ColumnDefinitions>
+
+                  <TextBlock Text="{Binding Name}"
+                             HorizontalAlignment="Stretch"
+                             TextAlignment="Center"
+                             Grid.Column="1"/>
+                  <ComboBox ItemsSource="{Binding Types}"
+                            SelectedItem="{Binding SelectedType}"
+                            Grid.Column="3"/>
+                  <ComboBox ItemsSource="{Binding Accessibilities}"
+                            SelectedItem="{Binding SelectedAccessibility}"
+                            Grid.Column="5"/>
+                </Grid>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </ScrollViewer>
+      </GroupBox>
+    </Grid>
   </Grid>
 </UserControl>

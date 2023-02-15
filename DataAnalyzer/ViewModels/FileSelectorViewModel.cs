@@ -74,8 +74,8 @@ namespace DataAnalyzer.ViewModels
             get => this.selectedScraperType;
             set
             {
-                this.NotifyPropertyChanged(ref this.selectedScraperType, value);
                 this.mainModel.LoadedInputFiles.DataType = value;
+                this.NotifyPropertyChanged(ref this.selectedScraperType, value);
 
                 Properties.Settings.Default.LastSelectedScraperType = value;
                 Properties.Settings.Default.Save();

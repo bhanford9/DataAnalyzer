@@ -79,7 +79,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             }
         }
 
-        public override void SaveConfiguration()
+        public override void ApplyConfiguration()
         {
             this.model.ClearGroupingConfigurations();
 
@@ -94,8 +94,10 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
                     SelectedParameter = configGroupingViewModel.SelectedParameter
                 });
             });
+        }
 
-            // TODO --> this did not properly update the list of configurations in the UI
+        public override void SaveConfiguration()
+        {
             this.model.SaveConfiguration();
         }
 

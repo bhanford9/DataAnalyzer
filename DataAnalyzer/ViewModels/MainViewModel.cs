@@ -107,7 +107,7 @@ namespace DataAnalyzer.ViewModels
 
         private void LoadedDataContentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            //switch (e.PropertyName)
+            //switch (e.propertyName)
             //{
             //}
         }
