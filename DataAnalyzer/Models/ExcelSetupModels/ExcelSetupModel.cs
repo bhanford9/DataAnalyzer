@@ -5,7 +5,7 @@ using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;
-using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 using ExcelService.DataActions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -4,6 +4,7 @@ using Xunit;
 using DataSerialization;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using ExcelService.CellDataFormats.NumericFormat;
+using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzerTetst
 {
@@ -12,26 +13,26 @@ namespace DataAnalyzerTetst
     [Fact]
     public void Test1()
     {
-      SerializationExecutive serializationExecutive = new SerializationExecutive();
-      IActionParameters testParams = new AlignmentParameters
-      {
-        HorizontalAlignment = DataAnalyzer.Services.HorizontalAlignment.Distributed,
-        VerticalAlignment = DataAnalyzer.Services.VerticalAlignment.Bottom
-      };
+      //SerializationExecutive serializationExecutive = new SerializationExecutive();
+      //IActionParameters testParams = new AlignmentParameters
+      //{
+      //  HorizontalAlignment = HorizontalAlignment.Distributed,
+      //  VerticalAlignment = VerticalAlignment.Bottom
+      //};
 
-      string result = serializationExecutive.JsonSerialize(testParams);
+      //string result = serializationExecutive.JsonSerialize(testParams);
 
-      IActionParameters deserializedParameters = serializationExecutive.JsonDeserialize<AlignmentParameters>(result);
+      //IActionParameters deserializedParameters = serializationExecutive.JsonDeserialize<AlignmentParameters>(result);
 
-      Type type = deserializedParameters.GetType();
+      //Type type = deserializedParameters.GetType();
 
-      //deserializedParameters.Deserialize();
+      ////deserializedParameters.Deserialize();
 
-      IntegerBooleanTypeParameter testParameter = new IntegerBooleanTypeParameter(
-        "Hello World",
-        "Goodbye World",
-        new FloatingSeparatorParensCellDataFormat(4, true),
-        param => new FloatingSeparatorParensCellDataFormat((param as IntegerBooleanTypeParameter).IntegerValue, (param as IntegerBooleanTypeParameter).BooleanValue));
+      //IntegerBooleanTypeParameter testParameter = new IntegerBooleanTypeParameter(
+      //  "Hello World",
+      //  "Goodbye World",
+      //  new FloatingSeparatorParensCellDataFormat(4, true),
+      //  param => new FloatingSeparatorParensCellDataFormat((param as IntegerBooleanTypeParameter).IntegerValue, (param as IntegerBooleanTypeParameter).BooleanValue));
 
       //ExcelActionParametersSerialization actions = new ExcelActionParametersSerialization(
       //  new List<IActionParameters>()

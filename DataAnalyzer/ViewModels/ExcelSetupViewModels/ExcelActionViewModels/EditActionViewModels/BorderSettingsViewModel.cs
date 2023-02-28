@@ -1,5 +1,6 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 using DataAnalyzer.ViewModels.Utilities;
 using System.Collections.ObjectModel;
 

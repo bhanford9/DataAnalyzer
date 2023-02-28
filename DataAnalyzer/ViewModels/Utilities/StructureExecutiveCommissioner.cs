@@ -3,6 +3,7 @@ using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace DataAnalyzer.ViewModels.Utilities
         private string selectedExportType = string.Empty;
         private string configurationDirectory = string.Empty;
         private readonly IReadOnlyDictionary<ExecutiveType, Action> viewDisplayMap;
-        private readonly IDictionary<ExecutiveType, IDataStructureSetupViewModel> executiveViewModelMap;
+        private readonly IReadOnlyDictionary<ExecutiveType, IDataStructureSetupViewModel> executiveViewModelMap;
 
         public StructureExecutiveCommissioner()
         {
@@ -54,7 +55,8 @@ namespace DataAnalyzer.ViewModels.Utilities
                     () =>
                     {
                         this.DisplayNotSupported = true;
-                        this.executiveViewModelMap[ExecutiveType.NotSupported].StartListeners(); }
+                        this.executiveViewModelMap[ExecutiveType.NotSupported].StartListeners();
+                    }
                 },
             };
 

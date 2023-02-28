@@ -1,4 +1,4 @@
-﻿using DataAnalyzer.Services;
+﻿using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzer.Models.ExcelSetupModels
 {

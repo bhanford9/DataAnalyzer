@@ -1,4 +1,5 @@
 ﻿using System;
+using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzer.Services
 {
@@ -6,22 +7,22 @@ namespace DataAnalyzer.Services
     {
         private readonly int hashCode;
 
-        public InputExportKey(ScraperType scraperType, ExportType exportType)
+        public InputExportKey(ImportKey importKey, ExportType exportType)
         {
-            this.InputType = scraperType;
+            this.ImportKey = importKey;
             this.ExportType = exportType;
 
-            this.hashCode = HashCode.Combine(this.InputType, this.ExportType);
+            this.hashCode = HashCode.Combine(this.ImportKey, this.ExportType);
         }
 
-        public ScraperType InputType { get; private set; }
+        public ImportKey ImportKey { get; private set; }
 
         public ExportType ExportType { get; private set; }
 
         public override bool Equals(object obj) => 
             obj is InputExportKey key &&
-                InputType == key.InputType &&
-                ExportType == key.ExportType;
+                ImportKey.Equals(key.ImportKey) &&
+                ExportType.Equals(key.ExportType);
 
         public override int GetHashCode() => this.hashCode;
     }

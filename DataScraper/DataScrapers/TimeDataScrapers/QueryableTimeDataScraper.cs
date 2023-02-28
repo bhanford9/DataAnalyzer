@@ -3,6 +3,7 @@ using System.IO;
 using DataScraper.Data;
 using DataScraper.Data.TimeData.QueryableData;
 using DataScraper.DataKeyValues.TimeKeyValues.Queryable;
+using DataScraper.DataSources;
 
 namespace DataScraper.DataScrapers.TimeDataScrapers
 {
@@ -11,10 +12,12 @@ namespace DataScraper.DataScrapers.TimeDataScrapers
         private const string STD_LIB_NAME = "Standard Library";
         private const string QUERYABLE_LIB_NAME = "Queryable Library";
 
-        public ScraperType ScraperType => ScraperType.Queryable;
+        public string Name => "Queryable Scraper";
 
-        public ICollection<IData> ScrapeFromFile(string filePath)
+        public ICollection<IData> ScrapeFromSource(IDataSource source)
         {
+            string filePath = (source as FileDataSource).FilePath;
+
             ICollection<IData> timeData = new List<IData>();
             QueryableTimeDataSetter dataSetter = new QueryableTimeDataSetter();
             QueryableTimeData standardTimeDatum = new QueryableTimeData { ExecuterName = STD_LIB_NAME };

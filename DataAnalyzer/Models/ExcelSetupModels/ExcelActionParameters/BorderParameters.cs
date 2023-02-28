@@ -1,4 +1,4 @@
-﻿using DataAnalyzer.Services;
+﻿using DataAnalyzer.Services.Enums;
 using System;
 using System.Drawing;
 

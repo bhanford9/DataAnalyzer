@@ -1,6 +1,6 @@
 ﻿using DataAnalyzer.Common.DataParameters.CsvParameters;
 using DataAnalyzer.Common.DataParameters.TimeStatParameters;
-using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 using System.Collections.Generic;
 
 namespace DataAnalyzer.Common.DataParameters

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:DataAnalyzer.Views.ExcelSetupViews"
              xmlns:utils="clr-namespace:DataAnalyzer.Views.Utilities"
              xmlns:utilities="clr-namespace:DataAnalyzer.ViewModels.Utilities"
-             xmlns:services="clr-namespace:DataAnalyzer.Services"
+             xmlns:enums="clr-namespace:DataAnalyzer.Services.Enums"
              xmlns:converters="clr-namespace:DataAnalyzer.Common.Mvvm.ValueConverters"
              xmlns:actioncreationviews="clr-namespace:DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews"
              Name="ActionApplication"
@@ -118,7 +118,7 @@
               DataContext.CurrentAction.ActionParameters.ActionCategory,
               ElementName=ActionApplication,
               Converter={StaticResource CategoryToVisibility}, 
-              ConverterParameter={x:Static services:ActionCategory.AlignmentStyle}}"
+              ConverterParameter={x:Static enums:ActionCategory.AlignmentStyle}}"
             DataContext="{Binding DataContext.CurrentAction, ElementName=ActionApplication}"/>
 
           <actioncreationviews:BackgroundCreationView 
@@ -127,7 +127,7 @@
               DataContext.CurrentAction.ActionParameters.ActionCategory,
               ElementName=ActionApplication,
               Converter={StaticResource CategoryToVisibility}, 
-              ConverterParameter={x:Static services:ActionCategory.BackgroundStyle}}"
+              ConverterParameter={x:Static enums:ActionCategory.BackgroundStyle}}"
             DataContext="{Binding DataContext.CurrentAction, ElementName=ActionApplication}"/>
 
           <actioncreationviews:BorderCreationView 
@@ -136,7 +136,7 @@
               DataContext.CurrentAction.ActionParameters.ActionCategory,
               ElementName=ActionApplication,
               Converter={StaticResource CategoryToVisibility}, 
-              ConverterParameter={x:Static services:ActionCategory.BorderStyle}}"
+              ConverterParameter={x:Static enums:ActionCategory.BorderStyle}}"
             DataContext="{Binding DataContext.CurrentAction, ElementName=ActionApplication}"/>
 
           <actioncreationviews:BooleanOperationCreationView 
@@ -145,7 +145,7 @@
               DataContext.CurrentAction.ActionParameters.ActionCategory,
               ElementName=ActionApplication,
               Converter={StaticResource CategoryToVisibility}, 
-              ConverterParameter={x:Static services:ActionCategory.BooleanOperation}}"
+              ConverterParameter={x:Static enums:ActionCategory.BooleanOperation}}"
             DataContext="{Binding DataContext.CurrentAction, ElementName=ActionApplication}"/>
         </Grid>
       </GroupBox>

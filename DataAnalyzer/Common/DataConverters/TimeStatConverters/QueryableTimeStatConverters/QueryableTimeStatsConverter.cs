@@ -7,8 +7,6 @@ namespace DataAnalyzer.Common.DataConverters.TimeStatConverters.QueryableTimeSta
 {
     internal class QueryableTimeStatsConverter : TimeStatsConverter
     {
-        public override ConverterType Type => ConverterType.Queryable;
-
         protected override void InternalToAnalyzer(IData timeData, IStats timeStats)
         {
             QueryableTimeData inData = timeData as QueryableTimeData;

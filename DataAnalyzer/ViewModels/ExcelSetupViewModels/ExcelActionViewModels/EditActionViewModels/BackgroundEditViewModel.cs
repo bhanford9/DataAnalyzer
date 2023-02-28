@@ -1,6 +1,7 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.SubModelConversions;
 using DataAnalyzer.ViewModels.Utilities;
 using System;

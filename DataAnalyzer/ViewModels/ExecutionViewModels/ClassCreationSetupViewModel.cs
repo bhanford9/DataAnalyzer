@@ -78,6 +78,9 @@ namespace DataAnalyzer.ViewModels.ExecutionViewModels
             get => this.selectedConfigDirectory;
             set
             {
+                // TODO --> The display of where the configurations are located is not good enough because
+                // the code uses some keywords as sub directories of what is actually displayed
+
                 this.NotifyPropertyChanged(ref this.selectedConfigDirectory, value);
                 this.setupModel.ClassCreationConfigModel.ConfigurationDirectory = value;
 

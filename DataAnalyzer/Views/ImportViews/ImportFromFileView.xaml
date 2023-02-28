@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="DataAnalyzer.Views.ImportViews.ImportFromFileView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:utilities="clr-namespace:DataAnalyzer.ViewModels.Utilities"
+             xmlns:local="clr-namespace:DataAnalyzer.Views.ImportViews"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+
+    <GroupBox Grid.Row="0"
+              Header="File Location"
+              MinHeight="80">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Button Grid.Column="0"
+                Height="28"
+                Content="Browse"
+                Margin="10 0"
+                Command="{Binding BrowseDirectory}"/>
+        
+        <TextBlock Grid.Column="1"
+                   Text="{Binding ActiveDirectory}"/>
+      </Grid>
+    </GroupBox>
+
+    <GroupBox Grid.Row="1"
+              Header="File Selection">
+      <TreeView Style="{StaticResource BaseTreeViewStyle}" 
+                ItemsSource="{Binding Files}"
+                Margin="1 3 1 1">
+        
+        <TreeView.ItemContainerStyle>
+          <Style TargetType="TreeViewItem" BasedOn="{StaticResource BaseTreeViewItemStyle}">
+            <Setter Property="IsExpanded" Value="True"/>
+          </Style>
+        </TreeView.ItemContainerStyle>
+        
+        <TreeView.Resources>
+          <HierarchicalDataTemplate
+            DataType="{x:Type utilities:CheckableTreeViewItem}"              
+            ItemsSource="{Binding Children}">
+            <StackPanel Orientation="Horizontal"
+                        Margin="1 3">
+              <CheckBox IsChecked="{Binding IsChecked}"/>
+              <TextBlock Style="{StaticResource BaseTextBlockStyle}" 
+                         Text="{Binding Name}"
+                         Margin="5 -2 0 0"/>
+            </StackPanel>
+            
+          </HierarchicalDataTemplate>
+        </TreeView.Resources>
+      </TreeView>
+    </GroupBox>
+    
+    <Button Grid.Row="2"
+            Content="Import Data"
+            Width="180"
+            Height="30"
+            Margin="10"
+            Command="{Binding ImportData}"/>
+  </Grid>
+</UserControl>  

@@ -1,11 +1,11 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
-using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels.Utilities;
 using System;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.SubModelConversions;
+using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {

@@ -1,4 +1,4 @@
-﻿using DataAnalyzer.Services;
+﻿using DataAnalyzer.Services.Enums;
 using System;
 
 namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations

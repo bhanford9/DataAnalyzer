@@ -8,7 +8,6 @@
              mc:Ignorable="d" 
              Name="FileSelectionView"
              d:DesignHeight="300" d:DesignWidth="200">
-
   <Border>
     <Border.Resources>
       <Style TargetType="GroupBox" BasedOn="{StaticResource DarkGroupBoxStyle}">
@@ -18,7 +17,7 @@
     
     <Grid>
       <Grid.RowDefinitions>
-        <RowDefinition Height="120"/>
+        <RowDefinition Height="Auto" MaxHeight="140"/>
         <RowDefinition Height="*"/>
       </Grid.RowDefinitions>
       
@@ -53,20 +52,30 @@
                   Header="2. Conversion Controls">
           <Grid>
             <Grid.RowDefinitions>
-              <RowDefinition/>
-              <RowDefinition/>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
+              <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
+            <Grid.Resources>
+              <Style TargetType="ComboBox" BasedOn="{StaticResource BaseComboBoxStyle}">
+                <Setter Property="Margin" Value="6 4"/>
+              </Style>
+            </Grid.Resources>
             
             <ComboBox Grid.Row="0"
-                      ItemsSource="{Binding ScraperTypes}"
-                      SelectedItem="{Binding SelectedScraperType}"
-                      Margin="6 2"/>
-            
-            <Button Grid.Row="1"
+                      ItemsSource="{Binding ScraperCategories}"
+                      SelectedItem="{Binding SelectedScraperCategory}"/>
+
+            <!--<ComboBox Grid.Row="1"
+                      ItemsSource="{Binding CsvScraperFlavors}"
+                      SelectedItem="{Binding SelectedCsvScraperFlavor}"
+                      Visibility="{Binding SelectedScraperCategory, Converter={StaticResource ScraperIsCsvConverter}}"/>-->
+
+            <Button Grid.Row="2"
                     Content="Load Stats"
                     Command="{Binding LoadStats}"
-                    MaxHeight="25"
-                    Margin="6 2"/>
+                    Height="25"
+                    Margin="8 2"/>
             
           </Grid>
         </GroupBox>

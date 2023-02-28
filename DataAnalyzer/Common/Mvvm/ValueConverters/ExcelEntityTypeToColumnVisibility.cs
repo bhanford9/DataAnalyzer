@@ -1,8 +1,8 @@
-﻿using DataAnalyzer.Services;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows;
+using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzer.Common.Mvvm.ValueConverters
 {

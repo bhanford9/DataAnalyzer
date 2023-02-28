@@ -1,25 +1,30 @@
 ﻿using System.Collections.Generic;
 using DataScraper.DataScrapers.CsvDataScrapers;
+using DataScraper.DataScrapers.ScraperFlavors;
+using DataScraper.DataScrapers.ScraperFlavors.CsvFlavors;
+using DataScraper.DataScrapers.ScraperFlavors.CsvNamesFlavors;
+using DataScraper.DataScrapers.ScraperFlavors.QueryableFlavors;
+using DataScraper.DataScrapers.ImportTypes;
+using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.TimeDataScrapers;
 
 namespace DataScraper.DataScrapers
 {
-    public class ScraperLibrary
+    public class ScraperLibrary : FlavoredCategorizedDataLibrary<IDataScraper>
     {
-        private readonly IReadOnlyDictionary<ScraperType, IDataScraper> scrapers;
-
         public ScraperLibrary()
         {
-            this.scrapers = new Dictionary<ScraperType, IDataScraper>()
-            {
-                { ScraperType.Queryable, new QueryableDataScraper() },
-                { ScraperType.CsvNames, new CsvNamesScraper() },
-            };
-        }
+            FileImportType fileType = new FileImportType();
+            //DatabaseImportType databaseType = new DatabaseImportType();
+            //HttpImportType httpType = new HttpImportType();
 
-        public IDataScraper GetScraper(ScraperType type)
-        {
-            return this.scrapers[type];
+            this[fileType] = new Dictionary<IScraperCategory, IDictionary<IScraperFlavor, IDataScraper>>();
+            this.InitializeCategory(fileType, new QueryableScraperCategory())
+                .ThenAdd(new QueryableStandardScraperFlavor(), new QueryableDataScraper());
+            this.InitializeCategory(fileType, new CsvNamesScraperCategory())
+                .ThenAdd(new CsvNamesStandardScraperFlavor(), new CsvNamesScraper());
+            this.InitializeCategory(fileType, new CsvScraperCategory())
+                .ThenAdd(new CsvTestScraperFlavor(), new CsvTestScraper());
         }
     }
 }

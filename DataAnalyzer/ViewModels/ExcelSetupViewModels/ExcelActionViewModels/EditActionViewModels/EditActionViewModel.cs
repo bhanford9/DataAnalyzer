@@ -1,7 +1,7 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
-using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels

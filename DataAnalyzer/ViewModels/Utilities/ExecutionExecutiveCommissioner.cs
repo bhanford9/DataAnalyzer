@@ -3,6 +3,7 @@ using DataAnalyzer.Models;
 using DataAnalyzer.Services;
 using System.Collections.Generic;
 using System;
+using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzer.ViewModels.Utilities
 {

@@ -1,12 +1,13 @@
 ﻿using DataScraper.Data;
+using DataScraper.DataSources;
 using System.Collections.Generic;
 
 namespace DataScraper.DataScrapers
 {
     public interface IDataScraper
     {
-        ScraperType ScraperType { get; }
+        string Name { get; }
 
-        ICollection<IData> ScrapeFromFile(string filePath);
+        ICollection<IData> ScrapeFromSource(IDataSource source);
     }
 }

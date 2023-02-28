@@ -1,5 +1,5 @@
 ﻿using DataAnalyzer.Common.DataObjects.TimeStats.QueryableTimeStats;
-using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzer.Common.DataParameters.TimeStatParameters
 {

@@ -2,7 +2,7 @@
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.DataStructureSetupModels;
-using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;

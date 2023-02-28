@@ -98,10 +98,16 @@ namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels
 
         public void AcquireConfigurations()
         {
-            this.Configurations = Directory
-                .GetFiles(this.GetCurrentConfigDirectoryPath())
-                .Select(x => Path.GetFileNameWithoutExtension(x))
-                .ToList();
+            try
+            {
+                this.Configurations = Directory
+                    .GetFiles(this.GetCurrentConfigDirectoryPath())
+                    .Select(x => Path.GetFileNameWithoutExtension(x))
+                    .ToList();
+            }
+            catch
+            { // TODO
+            }
         }
     }
 }

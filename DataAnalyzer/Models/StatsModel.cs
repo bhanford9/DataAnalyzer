@@ -10,6 +10,11 @@ using DataAnalyzer.Common.DataObjects;
 using DataAnalyzer.Common.DataOrganizers;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
+using DataScraper.DataScrapers.ImportTypes;
+using DataScraper.DataScrapers.ScraperCategories;
+using DataScraper.DataScrapers.ScraperFlavors;
+using DataScraper.DataSources;
 
 namespace DataAnalyzer.Models
 {
@@ -19,6 +24,7 @@ namespace DataAnalyzer.Models
         private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
         private readonly ScraperService scraperService = new();
         private HeirarchalStats heirarchalStats;
+        private readonly DataConverterLibrary dataConverterLibrary = new();
 
         private IDataConfiguration activeConfiguration;
 
@@ -67,9 +73,14 @@ namespace DataAnalyzer.Models
             this.NotifyPropertyChanged(nameof(this.Stats));
         }
 
-        public void LoadStatsForFile(string filePath, IDataConverter converter)
+        public void LoadStatsFromSource(IDataSource source)
         {
-            this.scraperService.ScrapeFromFile(filePath, converter, this.mainModel.ScraperType)
+            IImportType type = this.mainModel.ImportType;
+            IScraperCategory category = this.mainModel.ScraperCategory;
+            IScraperFlavor flavor = this.mainModel.ScraperFlavor;
+            IDataConverter converter = this.dataConverterLibrary[type][category][flavor];
+
+            this.scraperService.ScrapeFromSource(source, converter, type, category, flavor)
                 .ToList()
                 .ForEach(this.Stats.Add);
 

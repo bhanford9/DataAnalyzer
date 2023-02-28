@@ -1,5 +1,5 @@
 ﻿using DataAnalyzer.Common.DataObjects;
-using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 using System;
 using System.Collections.Generic;
 

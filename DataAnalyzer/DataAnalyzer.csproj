@@ -33,6 +33,7 @@
   <ItemGroup>
     <Folder Include="Common\DataConfigurations\FilteringConfigurations\" />
     <Folder Include="Common\DataConfigurations\SortingConfigurations\" />
+    <Folder Include="Documentation\" />
   </ItemGroup>
 
   <ItemGroup>

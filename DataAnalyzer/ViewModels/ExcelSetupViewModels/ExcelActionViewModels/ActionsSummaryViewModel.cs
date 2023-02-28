@@ -3,7 +3,7 @@ using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary;
-using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ActionSummaryViewModels;
 using DataAnalyzer.ViewModels.Utilities;
 using System.Collections.ObjectModel;

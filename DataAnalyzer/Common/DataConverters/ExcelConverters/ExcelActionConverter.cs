@@ -1,5 +1,5 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels;
-using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 using ExcelService.DataActions;
 
 namespace DataAnalyzer.Common.DataConverters.ExcelConverters

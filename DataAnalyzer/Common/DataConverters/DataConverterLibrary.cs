@@ -1,25 +1,31 @@
 ﻿using System.Collections.Generic;
 using DataAnalyzer.Common.DataConverters.CsvConverters;
 using DataAnalyzer.Common.DataConverters.TimeStatConverters.QueryableTimeStatConverters;
+using DataScraper;
+using DataScraper.DataScrapers.ScraperFlavors.CsvNamesFlavors;
+using DataScraper.DataScrapers.ScraperFlavors.QueryableFlavors;
+using DataScraper.DataScrapers.ImportTypes;
+using DataScraper.DataScrapers.ScraperCategories;
+using DataScraper.DataScrapers.ScraperFlavors;
 
 namespace DataAnalyzer.Common.DataConverters
 {
-    internal class DataConverterLibrary
+    // TODO --> this should be a 1-to-1 mapping with ScraperLibrary 
+    internal class DataConverterLibrary : FlavoredCategorizedDataLibrary<IDataConverter>
     {
-        private readonly IReadOnlyDictionary<ConverterType, IDataConverter> converters;
-
         public DataConverterLibrary()
         {
-            this.converters = new Dictionary<ConverterType, IDataConverter>
-            {
-                { ConverterType.Queryable, new QueryableTimeStatsConverter() },
-                { ConverterType.CsvNames, new CsvToNameListConverter() },
-            };
-        }
+            FileImportType fileType = new FileImportType();
+            //DatabaseImportType databaseType = new DatabaseImportType();
+            //HttpImportType httpType = new HttpImportType();
 
-        public IDataConverter GetConverter(ConverterType type)
-        {
-            return this.converters[type];
+            this[fileType] = new Dictionary<IScraperCategory, IDictionary<IScraperFlavor, IDataConverter>>();
+            this.InitializeCategory(fileType, new QueryableScraperCategory())
+                .ThenAdd(new QueryableStandardScraperFlavor(), new QueryableTimeStatsConverter());
+            this.InitializeCategory(fileType, new CsvNamesScraperCategory())
+                .ThenAdd(new CsvNamesStandardScraperFlavor(), new CsvToNameListConverter());
+            //this.InitializeCategory(fileType, new CsvScraperCategory())
+            //    .ThenAdd(new CsvTestScraperFlavor(), new CsvTestScraper());
         }
     }
 }

@@ -3,7 +3,7 @@ using DataAnalyzer.Models;
 using DataAnalyzer.Models.ExcelSetupModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
-using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels;
 using DataAnalyzer.ViewModels.Utilities;
 using DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;

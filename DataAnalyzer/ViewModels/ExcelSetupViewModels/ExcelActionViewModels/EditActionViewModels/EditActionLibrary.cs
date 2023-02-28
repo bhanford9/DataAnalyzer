@@ -1,5 +1,5 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
-using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;

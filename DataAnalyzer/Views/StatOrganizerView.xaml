@@ -11,8 +11,8 @@
 
       <TabItem Header="1. Input Data">
         <!-- This should support multiple differnt input data medias-->
-        <local:FileSelectorView Margin="2 5 0 2">
-        </local:FileSelectorView>
+        <local:ImportConfigurationView Margin="2 5 0 2">
+        </local:ImportConfigurationView>
       </TabItem>
 
       <TabItem Header="2. Structure">

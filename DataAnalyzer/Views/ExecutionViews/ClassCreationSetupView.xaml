@@ -190,6 +190,7 @@
 
                   <TextBlock Text="{Binding Name}"
                              HorizontalAlignment="Stretch"
+                             VerticalAlignment="Center"
                              TextAlignment="Center"
                              Grid.Column="1"/>
                   <ComboBox ItemsSource="{Binding Types}"

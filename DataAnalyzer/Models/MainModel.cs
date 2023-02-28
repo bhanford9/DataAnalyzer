@@ -1,29 +1,36 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.LoadedConfigurations;
 using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
+using DataAnalyzer.Services.Enums.ScraperFlavors;
+using DataScraper.DataScrapers.ScraperFlavors.CsvNamesFlavors;
+using DataScraper.DataScrapers.ScraperFlavors.QueryableFlavors;
+using DataScraper.DataScrapers.ImportTypes;
+using DataScraper.DataScrapers.ScraperCategories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using DataScraper.DataScrapers.ScraperFlavors;
+using DataAnalyzer.Models.Utilities;
 
 namespace DataAnalyzer.Models
 {
     internal class MainModel : BasePropertyChanged
     {
+        private IImportType importType;
+        private IScraperCategory scraperCategory;
+        private IScraperFlavor scraperFlavor;
+
         private LoadedDataContent loadedDataContent = new();
         private LoadedDataStructure loadedDataStructure = new();
         private LoadedInputFiles loadedInputFiles = new();
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
 
-        private IReadOnlyDictionary<InputExportKey, ExecutiveType> executiveMap;
+        //private IReadOnlyDictionary<InputExportKey, ExecutiveType> executiveMap;
+        ExecutiveLibrary executiveLibrary = new();
 
         public MainModel()
         {
-            executiveMap = new Dictionary<InputExportKey, ExecutiveType>()
-            {
-                { new InputExportKey(ScraperType.CsvNames, ExportType.CSharpStringProperties), ExecutiveType.CsvToCSharpClass },
-                { new InputExportKey(ScraperType.Queryable, ExportType.Excel), ExecutiveType.CreateQueryableExcelReport},
-            };
-
             loadedInputFiles.PropertyChanged += this.LoadedInputFilesPropertyChanged;
         }
 
@@ -45,44 +52,55 @@ namespace DataAnalyzer.Models
             set => this.NotifyPropertyChanged(ref this.loadedInputFiles, value);
         }
 
+        public IImportType ImportType
+        {
+            get => this.importType;
+            set => this.NotifyPropertyChanged(ref this.importType, value);
+        }
+
+        public IScraperCategory ScraperCategory
+        {
+            get => this.scraperCategory;
+            set => this.NotifyPropertyChanged(ref this.scraperCategory, value);
+        }
+
+        public IScraperFlavor ScraperFlavor
+        {
+            get => this.scraperFlavor;
+            set => this.NotifyPropertyChanged(ref this.scraperFlavor, value);
+        }
+
         public ExecutiveType ExecutiveType { get; private set; }
 
-        public ScraperType ScraperType => Enum.Parse<ScraperType>(this.LoadedInputFiles.DataType);
+        //public ScraperCategory ScraperType => Enum.Parse<ScraperCategory>(this.LoadedInputFiles.DataType);
 
         public void NotifyScraperTypeChange()
         {
             try
             {
-                this.configurationModel.SelectedDataType = this.ScraperType switch
-                {
-                    ScraperType.Queryable => StatType.Queryable,
-                    ScraperType.CsvNames => StatType.CsvNames,
-                    _ => StatType.NotApplicable,
-                };
+                //this.configurationModel.SelectedDataType = this.ScraperType switch
+                //{
+                //    ScraperCategory.Custom => StatType.Queryable,
+                //    ScraperCategory.CsvNames => StatType.CsvNames,
+                //    _ => StatType.NotApplicable,
+                //};
 
-                this.NotifyPropertyChanged(nameof(this.ScraperType));
+                //this.NotifyPropertyChanged(nameof(this.ScraperType));
             }
             catch { }
         }
 
         public bool ApplyInputExportTypes()
-        {
-            ScraperType scraperType = Enum.Parse<ScraperType>(this.LoadedInputFiles.DataType);
-            ExportType exportType = Enum.Parse<ExportType>(this.LoadedDataStructure.ExportType);
-            bool supported = false;
-
-            if (this.executiveMap.TryGetValue(new InputExportKey(scraperType, exportType), out ExecutiveType executiveType))
-            {
-                this.ExecutiveType = executiveType;
-                supported = true;
-            }
-            else
-            {
-                this.ExecutiveType = ExecutiveType.NotSupported;
-            }
+        {            
+            this.ExecutiveType = this.executiveLibrary.GetExecutiveType(
+                this.importType,
+                this.ScraperCategory,
+                this.scraperFlavor,
+                Enum.Parse<ExportType>(this.LoadedDataStructure.ExportType));
 
             this.NotifyPropertyChanged(nameof(this.ExecutiveType));
-            return supported;
+
+            return this.ExecutiveType != ExecutiveType.NotSupported;
         }
 
         private void LoadedInputFilesPropertyChanged(object sender, PropertyChangedEventArgs e)
