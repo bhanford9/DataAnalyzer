@@ -103,9 +103,6 @@ namespace DataAnalyzer.Models
             return this.ExecutiveType != ExecutiveType.NotSupported;
         }
 
-        private void LoadedInputFilesPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            this.NotifyScraperTypeChange();
-        }
+        private void LoadedInputFilesPropertyChanged(object sender, PropertyChangedEventArgs e) => this.NotifyScraperTypeChange();
     }
 }

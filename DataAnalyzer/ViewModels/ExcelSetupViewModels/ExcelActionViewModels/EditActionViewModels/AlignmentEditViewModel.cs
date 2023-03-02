@@ -70,15 +70,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             return viewModel;
         }
 
-        protected override bool InternalIsApplicable(IActionParameters parameters)
-        {
-            return parameters is AlignmentParameters;
-        }
+        protected override bool InternalIsApplicable(IActionParameters parameters) => parameters is AlignmentParameters;
 
-        protected override void DoAct()
-        {
-            throw new NotImplementedException();
-        }
+        protected override void DoAct() => throw new NotImplementedException();
 
         protected override void InternalInit(IEditActionViewModel toCopy)
         {

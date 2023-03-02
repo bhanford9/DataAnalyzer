@@ -5,10 +5,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
 {
     internal class BooleanOperationSummaryItem : SummaryItem
     {
-        public override bool IsApplicable(IActionParameters actionParameters)
-        {
-            return actionParameters is BooleanOperationParameters;
-        }
+        public override bool IsApplicable(IActionParameters actionParameters) => actionParameters is BooleanOperationParameters;
 
         public override void SetDescription(IActionParameters actionParameters)
         {

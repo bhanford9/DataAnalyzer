@@ -43,10 +43,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
             }
         }
 
-        protected override ObservableCollection<ExcelAction> GetActionCollection()
-        {
-            return this.excelSetupModel.AvailableWorkbookActions;
-        }
+        protected override ObservableCollection<ExcelAction> GetActionCollection() => this.excelSetupModel.AvailableWorkbookActions;
 
         protected override void InternalLoadWhereToApply(CheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
         {

@@ -5,10 +5,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
 {
     internal class BackgroundSummaryItem : SummaryItem
     {
-        public override bool IsApplicable(IActionParameters actionParameters)
-        {
-            return actionParameters is BackgroundParameters;
-        }
+        public override bool IsApplicable(IActionParameters actionParameters) => actionParameters is BackgroundParameters;
 
         public override void SetDescription(IActionParameters actionParameters)
         {

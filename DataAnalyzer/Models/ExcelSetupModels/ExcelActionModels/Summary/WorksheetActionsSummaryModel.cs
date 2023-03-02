@@ -12,10 +12,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
     {
         private const string PATH_DELIMITER = "~~";
 
-        public override ObservableCollection<ExcelAction> GetActionCollection()
-        {
-            return this.excelSetupModel.AvailableWorksheetActions;
-        }
+        public override ObservableCollection<ExcelAction> GetActionCollection() => this.excelSetupModel.AvailableWorksheetActions;
 
         public override void LoadHierarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem)
         {

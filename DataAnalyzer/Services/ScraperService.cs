@@ -2,6 +2,8 @@
 using System.Linq;
 using DataAnalyzer.Common.DataConverters;
 using DataAnalyzer.Common.DataObjects;
+using DataScraper;
+using DataScraper.Data;
 using DataScraper.DataScrapers;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
@@ -12,8 +14,13 @@ namespace DataAnalyzer.Services
 {
     internal class ScraperService
     {
-        // TODO --> looks like I may want to put ScraperType into the library and create a dict of dicts
-        private readonly ScraperLibrary scraperLibrary = new();
+        private static readonly ScraperExecutive scraperExecutive = new();
+        private static readonly ScraperLibrary scraperLibrary;
+
+        static ScraperService()
+        {
+            scraperLibrary = scraperExecutive.Scrapers;
+        }
 
         public IDataScraper GetScraper(IImportType type, IScraperCategory category, IScraperFlavor flavor)
             => scraperLibrary[type, category, flavor];
@@ -34,8 +41,25 @@ namespace DataAnalyzer.Services
             IScraperCategory category,
             IScraperFlavor flavor)
         {
-            IDataScraper scraper = this.scraperLibrary[type, category, flavor];
-            return converter.ToAnalyzerStats(scraper.ScrapeFromSource(source));
+            return converter.ToAnalyzerStats(scraperExecutive.ScrapeOutData(source, type, category, flavor));
+        }
+
+        public bool TryScrapeFromSource(
+            IDataSource source,
+            IDataConverter converter,
+            IImportType type,
+            IScraperCategory category,
+            IScraperFlavor flavor,
+            out ICollection<IStats> stats)
+        {
+            if (scraperExecutive.TryScrapeOutData(source, type, category, flavor, out ICollection<IData> data))
+            {
+                stats = converter.ToAnalyzerStats(data);
+                return true;
+            }
+
+            stats = new List<IStats>();
+            return false;
         }
     }
 }

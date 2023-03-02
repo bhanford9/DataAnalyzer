@@ -96,10 +96,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             });
         }
 
-        public override void SaveConfiguration()
-        {
-            this.model.SaveConfiguration();
-        }
+        public override void SaveConfiguration() => this.model.SaveConfiguration();
 
         public void RemoveGroupingConfiguration(int level) => this.model.RemoveGroupingConfiguration(level);
 

@@ -76,13 +76,10 @@ namespace DataAnalyzer.Common.DataConverters.ExcelConverters
               ExcelActionParamConverters.ToExcelDefinitions(rowModel.RowActions.Select(x => x.ActionParameters).ToList()));
         }
 
-        public static ICell CellModelToExcelCell(CellModel cellModel, int rowIndex)
-        {
-            return new Cell(
+        public static ICell CellModelToExcelCell(CellModel cellModel, int rowIndex) => new Cell(
               cellModel.Value,
               rowIndex,
               cellModel.DataType.CreateCellDataFormat(),
               ExcelActionParamConverters.ToExcelDefinitions(cellModel.CellActions.Select(x => x.ActionParameters).ToList()));
-        }
     }
 }

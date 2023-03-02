@@ -8,18 +8,15 @@ namespace DataAnalyzer.Common.DataOrganizers
 {
     internal class CsvDataOrganizer : DataOrganizer<ClassPropertiesConfiguration>
     {
-        protected override HeirarchalStats InternalOrganize(ClassPropertiesConfiguration configuration, ICollection<IStats> data)
+        protected override HeirarchalStats InternalOrganize(ClassPropertiesConfiguration configuration, ICollection<IStats> data) => new HeirarchalStats()
         {
-            return new HeirarchalStats()
-            {
-                Values = new List<IStats>()
+            Values = new List<IStats>()
                 {
-                    new CsvNamesStats() 
-                    { 
+                    new CsvNamesStats()
+                    {
                         CsvNames = new ComparableList(configuration.PropertyNames)
                     }
                 }
-            };
-        }
+        };
     }
 }

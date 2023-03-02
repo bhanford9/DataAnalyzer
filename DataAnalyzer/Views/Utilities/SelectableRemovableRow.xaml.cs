@@ -23,9 +23,6 @@ namespace DataAnalyzer.Views.Utilities
         //  set { SetValue(OnSelectProperty, value); }
         //}
 
-        private void Grid_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            this.viewModel.Select.Execute(sender);
-        }
+        private void Grid_MouseUp(object sender, MouseButtonEventArgs e) => this.viewModel.Select.Execute(sender);
     }
 }

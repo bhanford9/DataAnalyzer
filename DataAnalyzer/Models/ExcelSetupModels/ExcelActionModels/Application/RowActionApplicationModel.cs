@@ -65,10 +65,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
             }
         }
 
-        protected override ObservableCollection<ExcelAction> GetActionCollection()
-        {
-            return this.excelSetupModel.AvailableRowActions;
-        }
+        protected override ObservableCollection<ExcelAction> GetActionCollection() => this.excelSetupModel.AvailableRowActions;
 
         protected override void InternalLoadWhereToApply(CheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
         {

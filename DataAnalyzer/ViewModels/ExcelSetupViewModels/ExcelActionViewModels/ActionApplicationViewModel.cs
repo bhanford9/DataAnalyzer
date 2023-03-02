@@ -95,9 +95,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             flattened.Add(baseItem);
         }
 
-        private void DoApplyAction()
-        {
-            this.GetFlattenedWhereToApply()
+        private void DoApplyAction() => this.GetFlattenedWhereToApply()
               .Where(x => x.IsChecked && x.IsLeaf)
               .ToList()
               .ForEach(treeViewItem =>
@@ -105,7 +103,6 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
                   this.CurrentAction.ApplyParameterSettings();
                   this.actionApplicationModel.ApplyAction(treeViewItem, this.CurrentAction);
               });
-        }
 
         private void StatsModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {

@@ -21,10 +21,8 @@ namespace DataAnalyzer.Common.Mvvm.ValueConverters
             return Visibility.Hidden;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
             // No need to convert back
-            return default;
-        }
+            default;
     }
 }

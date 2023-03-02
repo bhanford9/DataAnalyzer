@@ -16,9 +16,6 @@ namespace DataAnalyzer.Common.DataConverters
 
         public abstract IStats ToAnalyzerStats(IData data);
 
-        public ICollection<IStats> ToAnalyzerStats(ICollection<IData> data)
-        {
-            return data.Select(x => this.ToAnalyzerStats(x)).ToList();
-        }
+        public ICollection<IStats> ToAnalyzerStats(ICollection<IData> data) => data.Select(x => this.ToAnalyzerStats(x)).ToList();
     }
 }

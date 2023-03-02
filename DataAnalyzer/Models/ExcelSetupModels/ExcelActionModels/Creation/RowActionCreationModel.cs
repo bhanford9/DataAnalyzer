@@ -4,9 +4,6 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation
 {
     internal class RowActionCreationModel : ActionCreationModel
     {
-        protected override ObservableCollection<ExcelAction> GetActionCollection()
-        {
-            return this.excelSetupModel.AvailableRowActions;
-        }
+        protected override ObservableCollection<ExcelAction> GetActionCollection() => this.excelSetupModel.AvailableRowActions;
     }
 }

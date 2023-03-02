@@ -13,9 +13,6 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
         {
         }
 
-        protected override IReadOnlyDictionary<string, object> GetNamedValues()
-        {
-            return new Dictionary<string, object> { };
-        }
+        protected override IReadOnlyDictionary<string, object> GetNamedValues() => new Dictionary<string, object> { };
     }
 }

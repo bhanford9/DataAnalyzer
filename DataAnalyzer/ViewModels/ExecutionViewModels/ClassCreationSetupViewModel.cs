@@ -148,7 +148,7 @@ namespace DataAnalyzer.ViewModels.ExecutionViewModels
         {
             string classString = this.setupModel.GetClassString(this.className, this.PropertyItems.ToList());
             this.ClassPreviewText = classString;
-            this.IsPreviewing= true;
+            this.IsPreviewing = true;
         }
 
         private void DoExportClass()

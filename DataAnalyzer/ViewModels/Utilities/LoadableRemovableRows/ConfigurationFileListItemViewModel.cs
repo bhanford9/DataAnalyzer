@@ -11,10 +11,8 @@ namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 
         protected override void DoLoad() => this.executiveCommissioner.LoadConfiguration(this.Value);
 
-        protected override void InternalDoRemove()
-        {
+        protected override void InternalDoRemove() =>
             // TODO --> prompt user with confirmation
             throw new NotImplementedException();
-        }
     }
 }

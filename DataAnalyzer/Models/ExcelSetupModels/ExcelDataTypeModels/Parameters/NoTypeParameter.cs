@@ -17,10 +17,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
         public override ParameterType Type => ParameterType.None;
 
-        public override object[] GetParameterNameValuePairs()
-        {
-            return new object[] { };
-        }
+        public override object[] GetParameterNameValuePairs() => new object[] { };
 
         public override void UpdateValues(IReadOnlyDictionary<string, object> namedValues)
         {

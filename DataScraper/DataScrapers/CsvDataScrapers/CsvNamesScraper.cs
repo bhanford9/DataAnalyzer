@@ -6,9 +6,14 @@ using System.IO;
 
 namespace DataScraper.DataScrapers.CsvDataScrapers
 {
-    internal class CsvNamesScraper : IDataScraper
+    public class CsvNamesScraper : IDataScraper
     {
         public string Name => "CSV Names Scraper";
+
+        public bool IsValidSource(IDataSource source)
+        {
+            return source is FileDataSource s && File.Exists(s.FilePath);
+        }
 
         public ICollection<IData> ScrapeFromSource(IDataSource source)
         {

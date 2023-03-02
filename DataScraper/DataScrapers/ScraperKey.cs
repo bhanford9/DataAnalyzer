@@ -1,5 +1,4 @@
-﻿using DataScraper.DataScrapers.ScraperCategories;
-using System;
+﻿using System;
 
 namespace DataScraper.DataScrapers
 {

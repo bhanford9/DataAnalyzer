@@ -95,16 +95,12 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
 
         protected abstract IReadOnlyDictionary<string, object> GetNamedValues();
 
-        public override bool Equals(object obj)
-        {
-            return 
-                obj != null && 
+        public override bool Equals(object obj) => obj != null &&
                 obj.GetType() == this.GetType() &&
                 obj is IDataTypeConfigViewModel o &&
                 this.DataTypeName.Equals(o.DataTypeName) &&
                 this.DataName.Equals(o.DataName) &&
                 this.TypeParameter.Equals(o.TypeParameter);
-        }
 
         // Should not be using a model as a view model
         //public ITypeParameter SelectedParameterType

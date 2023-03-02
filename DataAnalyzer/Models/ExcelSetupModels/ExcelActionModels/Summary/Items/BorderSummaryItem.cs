@@ -5,10 +5,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
 {
     internal class BorderSummaryItem : SummaryItem
     {
-        public override bool IsApplicable(IActionParameters actionParameters)
-        {
-            return actionParameters is BorderParameters;
-        }
+        public override bool IsApplicable(IActionParameters actionParameters) => actionParameters is BorderParameters;
 
         public override void SetDescription(IActionParameters actionParameters)
         {

@@ -25,9 +25,6 @@ namespace DataAnalyzer.Common.DataObjects.TimeStats.QueryableTimeStats
 
         protected override ICollection<string> InternalParameterNames => this.parameterNames;
 
-        public override T GetEnumeratedParameters<T>()
-        {
-            return (T)(object)StatType.Queryable;
-        }
+        public override T GetEnumeratedParameters<T>() => (T)(object)StatType.Queryable;
     }
 }

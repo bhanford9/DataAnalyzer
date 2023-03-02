@@ -8,6 +8,8 @@ namespace DataScraper.DataScrapers
     {
         string Name { get; }
 
+        bool IsValidSource(IDataSource source);
+
         ICollection<IData> ScrapeFromSource(IDataSource source);
     }
 }

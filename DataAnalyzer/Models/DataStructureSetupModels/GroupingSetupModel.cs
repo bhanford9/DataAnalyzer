@@ -11,10 +11,7 @@ namespace DataAnalyzer.Models.DataStructureSetupModels
 
         public int RemoveLevel { get; private set; } = -1;
 
-        public void AddGroupingConfiguration(GroupingConfiguration groupingConfig)
-        {
-            this.DataConfiguration.GroupingConfiguration.Add(groupingConfig);
-        }
+        public void AddGroupingConfiguration(GroupingConfiguration groupingConfig) => this.DataConfiguration.GroupingConfiguration.Add(groupingConfig);
 
         public void RemoveGroupingConfiguration(int level)
         {
@@ -22,10 +19,7 @@ namespace DataAnalyzer.Models.DataStructureSetupModels
             this.NotifyPropertyChanged(nameof(this.RemoveLevel));
         }
 
-        public void ClearGroupingConfigurations()
-        {
-            this.DataConfiguration.GroupingConfiguration.Clear();
-        }
+        public void ClearGroupingConfigurations() => this.DataConfiguration.GroupingConfiguration.Clear();
 
         protected override void PrepareConfigurationForSaving(DateTime saveTime, string saveUid)
         {

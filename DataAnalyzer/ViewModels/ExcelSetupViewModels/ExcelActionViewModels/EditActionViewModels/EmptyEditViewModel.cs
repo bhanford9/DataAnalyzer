@@ -14,15 +14,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
         {
         }
 
-        public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
-        {
-            return new EmptyEditViewModel(this.ExcelEntityType);
-        }
+        public override IEditActionViewModel GetNewInstance(IActionParameters parameters) => new EmptyEditViewModel(this.ExcelEntityType);
 
-        protected override bool InternalIsApplicable(IActionParameters parameters)
-        {
-            return parameters is EmptyParameters;
-        }
+        protected override bool InternalIsApplicable(IActionParameters parameters) => parameters is EmptyParameters;
 
         protected override void DoAct()
         {

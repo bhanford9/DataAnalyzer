@@ -7,15 +7,12 @@ namespace DataAnalyzer.Common.DataParameters.CsvParameters
     {
         public override StatType StatType => StatType.CsvNames;
 
-        protected override void InitializeParameters()
-        {
-            this.parameters.Add(
+        protected override void InitializeParameters() => this.parameters.Add(
                 new DataParameter(
                     x => (x as CsvNamesStats).CsvNames,
                     x => x is CsvNamesStats)
                 {
                     Name = nameof(CsvNamesStats.CsvNames)
                 });
-        }
     }
 }

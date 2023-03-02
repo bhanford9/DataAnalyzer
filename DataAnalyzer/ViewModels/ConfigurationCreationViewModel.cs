@@ -75,10 +75,7 @@ namespace DataAnalyzer.ViewModels
             this.ClearConfigurationData();
         }
 
-        private void ClearConfigurationData()
-        {
-            this.ExecutiveCommissioner.ClearConfiguration();
-        }
+        private void ClearConfigurationData() => this.ExecutiveCommissioner.ClearConfiguration();
 
         private void DoApplyConfiguration()
         {

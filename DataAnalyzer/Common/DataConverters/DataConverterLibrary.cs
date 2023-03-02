@@ -7,6 +7,7 @@ using DataScraper.DataScrapers.ScraperFlavors.QueryableFlavors;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
+using DataScraper.DataScrapers.ScraperFlavors.CsvFlavors;
 
 namespace DataAnalyzer.Common.DataConverters
 {
@@ -24,8 +25,8 @@ namespace DataAnalyzer.Common.DataConverters
                 .ThenAdd(new QueryableStandardScraperFlavor(), new QueryableTimeStatsConverter());
             this.InitializeCategory(fileType, new CsvNamesScraperCategory())
                 .ThenAdd(new CsvNamesStandardScraperFlavor(), new CsvToNameListConverter());
-            //this.InitializeCategory(fileType, new CsvScraperCategory())
-            //    .ThenAdd(new CsvTestScraperFlavor(), new CsvTestScraper());
+            this.InitializeCategory(fileType, new CsvScraperCategory())
+                .ThenAdd(new CsvTestScraperFlavor(), new CsvToTestConverter());
         }
     }
 }

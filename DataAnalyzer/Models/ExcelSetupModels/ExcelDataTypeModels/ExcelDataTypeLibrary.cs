@@ -17,10 +17,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels
 
         public IReadOnlyDictionary<string, ITypeParameter> NamedTypeParameters { get; private set; }
 
-        public ICollection<ITypeParameter> GetParameterTypes()
-        {
-            return this.typeParameters.ToList();
-        }
+        public ICollection<ITypeParameter> GetParameterTypes() => this.typeParameters.ToList();
 
         public ITypeParameter GetInstanceByName(string name)
         {

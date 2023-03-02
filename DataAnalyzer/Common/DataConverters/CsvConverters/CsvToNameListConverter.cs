@@ -8,20 +8,11 @@ namespace DataAnalyzer.Common.DataConverters.CsvConverters
 {
     internal class CsvToNameListConverter : DataConverter
     {
-        public override IData InstantiateData()
-        {
-            return new CsvNamesData();
-        }
+        public override IData InstantiateData() => new CsvNamesData();
 
-        public override IStats InstantiateStats()
-        {
-            return new CsvNamesStats();
-        }
+        public override IStats InstantiateStats() => new CsvNamesStats();
 
-        public override bool IsValidData(IData data)
-        {
-            return data is CsvNamesData;
-        }
+        public override bool IsValidData(IData data) => data is CsvNamesData;
 
         public override IStats ToAnalyzerStats(IData data)
         {

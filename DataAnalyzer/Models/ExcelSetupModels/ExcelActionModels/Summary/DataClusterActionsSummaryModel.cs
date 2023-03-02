@@ -11,10 +11,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
     internal class DataClusterActionsSummaryModel : ActionsSummaryModel
     {
         private const string PATH_DELIMITER = "~~";
-        public override ObservableCollection<ExcelAction> GetActionCollection()
-        {
-            return this.excelSetupModel.AvailableDataClusterActions;
-        }
+        public override ObservableCollection<ExcelAction> GetActionCollection() => this.excelSetupModel.AvailableDataClusterActions;
 
         public override void LoadHierarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem)
         {

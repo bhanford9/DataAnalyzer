@@ -14,6 +14,11 @@ namespace DataScraper.DataScrapers.TimeDataScrapers
 
         public string Name => "Queryable Scraper";
 
+        public bool IsValidSource(IDataSource source)
+        {
+            return source is FileDataSource s && File.Exists(s.FilePath);
+        }
+
         public ICollection<IData> ScrapeFromSource(IDataSource source)
         {
             string filePath = (source as FileDataSource).FilePath;

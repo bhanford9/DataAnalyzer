@@ -45,19 +45,13 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
         public override ParameterType Type => ParameterType.Integer;
 
-        public override object[] GetParameterNameValuePairs()
-        {
-            return new object[]
+        public override object[] GetParameterNameValuePairs() => new object[]
             {
                 this.IntegerName,
                 this.IntegerValue
             };
-        }
 
-        public override void UpdateValues(IReadOnlyDictionary<string, object> namedValues)
-        {
-            this.IntegerValue = namedValues.TryGetValue(this.IntegerName, out object val) ? val is int v ? v : this.IntegerValue : this.IntegerValue;
-        }
+        public override void UpdateValues(IReadOnlyDictionary<string, object> namedValues) => this.IntegerValue = namedValues.TryGetValue(this.IntegerName, out object val) ? val is int v ? v : this.IntegerValue : this.IntegerValue;
 
         protected override void InternalCloneParameters(ITypeParameter other)
         {

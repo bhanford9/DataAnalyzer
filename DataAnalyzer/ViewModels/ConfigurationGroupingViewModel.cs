@@ -94,10 +94,7 @@ namespace DataAnalyzer.ViewModels
             this.NotifyPropertyChanged(nameof(this.HasChildren));
         }
 
-        private void RemoveChild(string uid)
-        {
-            this.Children.Remove(this.Children.First(x => x.Uid.Equals(uid)));
-        }
+        private void RemoveChild(string uid) => this.Children.Remove(this.Children.First(x => x.Uid.Equals(uid)));
 
         private void LoadParameters()
         {

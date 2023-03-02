@@ -76,19 +76,10 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             return viewModel;
         }
 
-        protected override bool InternalIsApplicable(IActionParameters parameters)
-        {
-            return parameters is BackgroundParameters;
-        }
+        protected override bool InternalIsApplicable(IActionParameters parameters) => parameters is BackgroundParameters;
 
-        protected override void DoAct()
-        {
-            throw new NotImplementedException();
-        }
+        protected override void DoAct() => throw new NotImplementedException();
 
-        protected override void InternalInit(IEditActionViewModel toCopy)
-        {
-            this.enumUtilities.LoadNames(typeof(FillPattern), this.Patterns);
-        }
+        protected override void InternalInit(IEditActionViewModel toCopy) => this.enumUtilities.LoadNames(typeof(FillPattern), this.Patterns);
     }
 }

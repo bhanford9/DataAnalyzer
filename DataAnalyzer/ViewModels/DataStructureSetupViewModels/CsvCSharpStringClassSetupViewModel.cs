@@ -79,10 +79,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
                 .ForEach(row => this.model.DataConfiguration.CsvNameAndProperties.Add((row.CsvName, row.PropertyName, row.Include)));
         }
 
-        public override void SaveConfiguration()
-        {            
-            this.model.SaveConfiguration();
-        }
+        public override void SaveConfiguration() => this.model.SaveConfiguration();
 
         public override void Initialize()
         {

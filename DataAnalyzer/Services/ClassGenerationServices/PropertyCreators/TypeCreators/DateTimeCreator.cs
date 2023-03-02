@@ -10,14 +10,8 @@ namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCre
     {
         // TODO --> may need a way to handle importing a using statement
 
-        public override string Create(string dataType)
-        {
-            return "DateTime";
-        }
+        public override string Create(string dataType) => "DateTime";
 
-        public override bool IsApplicable(string dataType)
-        {
-            return dataType.Equals(ClassCreationConstants.DATE_TIME_TYPE);
-        }
+        public override bool IsApplicable(string dataType) => dataType.Equals(ClassCreationConstants.DATE_TIME_TYPE);
     }
 }

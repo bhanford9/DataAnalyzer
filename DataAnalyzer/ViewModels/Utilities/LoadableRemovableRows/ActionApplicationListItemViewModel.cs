@@ -11,10 +11,7 @@ namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
             this.actionApplicationModel = model;
         }
 
-        protected override void DoLoad()
-        {
-            this.actionApplicationModel.LoadAction(this.Value);
-        }
+        protected override void DoLoad() => this.actionApplicationModel.LoadAction(this.Value);
 
         protected override void InternalDoRemove()
         {

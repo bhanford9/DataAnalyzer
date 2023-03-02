@@ -13,15 +13,10 @@ namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
         private readonly ClassCreationConfigurationModel classCreationConfigModel =
             BaseSingleton<ClassCreationConfigurationModel>.Instance;
 
-        protected override void DoLoad()
-        {
-            this.classCreationConfigModel.LoadConfigByName(this.Value);
-        }
+        protected override void DoLoad() => this.classCreationConfigModel.LoadConfigByName(this.Value);
 
-        protected override void InternalDoRemove()
-        {
+        protected override void InternalDoRemove() =>
             // TODO --> prompt user with confirmation
             throw new NotImplementedException();
-        }
     }
 }

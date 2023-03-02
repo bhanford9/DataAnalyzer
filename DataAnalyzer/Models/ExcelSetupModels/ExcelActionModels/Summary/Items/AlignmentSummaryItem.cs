@@ -5,10 +5,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
 {
     internal class AlignmentSummaryItem : SummaryItem
     {
-        public override bool IsApplicable(IActionParameters actionParameters)
-        {
-            return actionParameters is AlignmentParameters;
-        }
+        public override bool IsApplicable(IActionParameters actionParameters) => actionParameters is AlignmentParameters;
 
         public override void SetDescription(IActionParameters actionParameters)
         {

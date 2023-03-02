@@ -14,9 +14,6 @@ namespace DataAnalyzer.Common.DataObjects.CsvStats
 
         public ComparableList CsvNames { get; set; } = new ComparableList();
 
-        public override T GetEnumeratedParameters<T>()
-        {
-            return (T)(object)StatType.CsvNames;
-        }
+        public override T GetEnumeratedParameters<T>() => (T)(object)StatType.CsvNames;
     }
 }

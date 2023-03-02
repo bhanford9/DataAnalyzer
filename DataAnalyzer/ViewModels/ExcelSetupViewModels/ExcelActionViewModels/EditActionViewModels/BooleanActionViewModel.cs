@@ -42,15 +42,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             return viewModel;
         }
 
-        protected override bool InternalIsApplicable(IActionParameters parameters)
-        {
-            return parameters is BooleanOperationParameters;
-        }
+        protected override bool InternalIsApplicable(IActionParameters parameters) => parameters is BooleanOperationParameters;
 
-        protected override void DoAct()
-        {
-            throw new NotImplementedException();
-        }
+        protected override void DoAct() => throw new NotImplementedException();
 
         protected override void InternalInit(IEditActionViewModel toCopy)
         {

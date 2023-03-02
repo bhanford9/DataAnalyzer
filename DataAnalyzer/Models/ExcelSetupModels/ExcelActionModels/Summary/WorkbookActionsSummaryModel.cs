@@ -10,10 +10,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
 {
     internal class WorkbookActionsSummaryModel : ActionsSummaryModel
     {
-        public override ObservableCollection<ExcelAction> GetActionCollection()
-        {
-            return this.excelSetupModel.AvailableWorkbookActions;
-        }
+        public override ObservableCollection<ExcelAction> GetActionCollection() => this.excelSetupModel.AvailableWorkbookActions;
 
         public override void LoadHierarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem)
         {

@@ -15,10 +15,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 
         public override ActionCategory ActionCategory => ActionCategory.BooleanOperation;
 
-        public override string ToString()
-        {
-            return $"Do Perform: {this.DoPerform}{Environment.NewLine}";
-        }
+        public override string ToString() => $"Do Perform: {this.DoPerform}{Environment.NewLine}";
 
         public override IActionParameters Clone() =>
             new BooleanOperationParameters

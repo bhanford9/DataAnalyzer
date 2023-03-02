@@ -227,20 +227,11 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             this.ExcelConfiguration.ApplyTypeParametersToConfig(this.WorkingParameterTypes);
         }
 
-        public void SaveWorkbookConfiguration(string configName)
-        {
-            this.ExcelConfiguration.SaveWorkbookConfiguration(configName);
-        }
+        public void SaveWorkbookConfiguration(string configName) => this.ExcelConfiguration.SaveWorkbookConfiguration(configName);
 
-        public void BroadcastExcelActionApplied(string actionAppliedKey)
-        {
-            this.NotifyPropertyChanged(actionAppliedKey);
-        }
+        public void BroadcastExcelActionApplied(string actionAppliedKey) => this.NotifyPropertyChanged(actionAppliedKey);
 
-        public void BroadcastExcelDataTypeUpdated(string dataName)
-        {
-            this.NotifyPropertyChanged($"{DATA_TYPE_UPDATE_KEY}{dataName}");
-        }
+        public void BroadcastExcelDataTypeUpdated(string dataName) => this.NotifyPropertyChanged($"{DATA_TYPE_UPDATE_KEY}{dataName}");
 
         private void ExcelConfigurationPropertyChanged(object sender, PropertyChangedEventArgs e)
         {

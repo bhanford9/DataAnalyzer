@@ -8,15 +8,10 @@ namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
     {
         private readonly ExcelConfigurationModel excelConfigurationModel = BaseSingleton<ExcelConfigurationModel>.Instance;
 
-        protected override void DoLoad()
-        {
-            this.excelConfigurationModel.LoadWorkbookConfigByName(this.Value);
-        }
+        protected override void DoLoad() => this.excelConfigurationModel.LoadWorkbookConfigByName(this.Value);
 
-        protected override void InternalDoRemove()
-        {
+        protected override void InternalDoRemove() =>
             // TODO --> prompt user with confirmation
             throw new NotImplementedException();
-        }
     }
 }

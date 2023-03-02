@@ -49,10 +49,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
         public abstract object[] GetParameterNameValuePairs();
 
-        public ICellDataFormat CreateCellDataFormat()
-        {
-            return this.createCellDataFormat(this);
-        }
+        public ICellDataFormat CreateCellDataFormat() => this.createCellDataFormat(this);
 
         public void CloneParameters(ITypeParameter other)
         {
@@ -62,17 +59,13 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
         public abstract void UpdateValues(IReadOnlyDictionary<string, object> namedValues);
 
-        public override bool Equals(object obj)
-        {
-            return
-                obj != null &&
+        public override bool Equals(object obj) => obj != null &&
                 obj.GetType() == this.GetType() &&
                 obj is ITypeParameter o &&
                 o.ExcelTypeName.Equals(this.ExcelTypeName) &&
                 o.DataName.Equals(this.DataName) &&
                 o.Example.Equals(this.Example) &&
                 o.Type.Equals(this.Type);
-        }
 
         protected abstract void InternalCloneParameters(ITypeParameter other);
     }

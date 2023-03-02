@@ -18,19 +18,10 @@ namespace DataAnalyzer.Common.DataConverters.TimeStatConverters.QueryableTimeSta
             outData.MethodName = inData.MethodName;
         }
 
-        public override bool IsValidData(IData timeData)
-        {
-            return timeData is QueryableTimeData;
-        }
+        public override bool IsValidData(IData timeData) => timeData is QueryableTimeData;
 
-        public override IStats InstantiateStats()
-        {
-            return new QueryableTimeStats();
-        }
+        public override IStats InstantiateStats() => new QueryableTimeStats();
 
-        public override IData InstantiateData()
-        {
-            return new QueryableTimeData();
-        }
+        public override IData InstantiateData() => new QueryableTimeData();
     }
 }

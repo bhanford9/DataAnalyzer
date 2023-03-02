@@ -23,13 +23,11 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             };
         }
 
-        public IEditActionViewModel GetEditAction(IActionParameters actionParameters, ExcelEntityType excelEntityType)
-        {
+        public IEditActionViewModel GetEditAction(IActionParameters actionParameters, ExcelEntityType excelEntityType) =>
             // this is expensive, but I don't really care. Only doing it this way to support 1-to-many relationship between
             // parameter type and view model. If that is not needed, then this can be simplified & optimized to a dictionary
-            return this.editActionViewModels
+            this.editActionViewModels
               .FirstOrDefault(x => x(excelEntityType).IsApplicable(actionParameters))
               .Invoke(excelEntityType).GetNewInstance(actionParameters); // GetNewInstance could probably just be moved into the constructor
-        }
     }
 }

@@ -68,16 +68,13 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
         public override ParameterType Type => ParameterType.IntegerInteger;
 
-        public override object[] GetParameterNameValuePairs()
-        {
-            return new object[]
+        public override object[] GetParameterNameValuePairs() => new object[]
             {
                 this.Integer1Name,
                 this.Integer1Value,
                 this.Integer2Name,
                 this.Integer2Value
             };
-        }
 
         public override void UpdateValues(IReadOnlyDictionary<string, object> namedValues)
         {

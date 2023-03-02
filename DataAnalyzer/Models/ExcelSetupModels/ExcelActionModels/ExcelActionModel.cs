@@ -17,15 +17,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
             set => this.NotifyPropertyChanged(ref this.loadedActionName, value);
         }
 
-        public void LoadAction(string name)
-        {
-            this.LoadedActionName = name;
-        }
+        public void LoadAction(string name) => this.LoadedActionName = name;
 
-        public ExcelAction GetLoadedAction()
-        {
-            return this.GetActionCollection().First(x => x.Name.Equals(this.loadedActionName)).Clone();
-        }
+        public ExcelAction GetLoadedAction() => this.GetActionCollection().First(x => x.Name.Equals(this.loadedActionName)).Clone();
 
         protected abstract ObservableCollection<ExcelAction> GetActionCollection();
     }

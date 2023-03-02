@@ -11,10 +11,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
     {
         private const string PATH_DELIMITER = "~~";
 
-        public override ObservableCollection<ExcelAction> GetActionCollection()
-        {
-            return this.excelSetupModel.AvailableRowActions;
-        }
+        public override ObservableCollection<ExcelAction> GetActionCollection() => this.excelSetupModel.AvailableRowActions;
 
         public override void LoadHierarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem)
         {

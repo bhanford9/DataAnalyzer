@@ -26,9 +26,6 @@ namespace DataAnalyzer.Common.DataConfigurations.GroupingConfigurations
             return groupByAggregate;
         }
 
-        public void AddCondition(Func<IStats, IComparable> propertyGetter)
-        {
-            this.propertyGetters.Add(propertyGetter);
-        }
+        public void AddCondition(Func<IStats, IComparable> propertyGetter) => this.propertyGetters.Add(propertyGetter);
     }
 }

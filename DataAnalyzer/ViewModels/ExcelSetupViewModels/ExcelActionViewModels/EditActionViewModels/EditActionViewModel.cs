@@ -66,10 +66,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             set => this.NotifyPropertyChanged(ref this.actionParameters, value);
         }
 
-        public bool IsApplicable(IActionParameters parameters)
-        {
-            return this.InternalIsApplicable(parameters) && this.ExcelEntityType.Equals(parameters.ExcelEntityType);
-        }
+        public bool IsApplicable(IActionParameters parameters) => this.InternalIsApplicable(parameters) && this.ExcelEntityType.Equals(parameters.ExcelEntityType);
 
         protected abstract bool InternalIsApplicable(IActionParameters parameters);
 
