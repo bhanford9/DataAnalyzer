@@ -10,9 +10,7 @@ using System.Collections.Generic;
 namespace DataScraper
 {
     public class ScraperExecutive
-    {
-        static ScraperExecutive() { }
-     
+    {     
         public ScraperLibrary Scrapers { get; } = new();
 
         public ICollection<IData> ScrapeOutData(
@@ -21,20 +19,7 @@ namespace DataScraper
             IScraperCategory category,
             IScraperFlavor flavor)
         {
-            IDataScraper scraper;
-
-            try
-            {
-                scraper = this.Scrapers[type, category, flavor];
-            }
-            catch
-            {
-                throw new ArgumentOutOfRangeException(
-                    "Failed to retrieve scraper with provided parameters. Make sure scraper library contains specified arguments." +
-                    $"{Environment.NewLine}\tType: {type}" +
-                    $"{Environment.NewLine}\tCategory: {category}" +
-                    $"{Environment.NewLine}\tFlavor: {flavor}");
-            }
+            IDataScraper scraper = this.Scrapers.GetData(type, category, flavor);
 
             if (scraper.IsValidSource(source))
             {
@@ -52,21 +37,14 @@ namespace DataScraper
             out ICollection<IData> data)
         {
             data = new List<IData>();
-            IDataScraper scraper;
 
-            try
+            if (this.Scrapers.TryGetData(type, category, flavor, out IDataScraper scraper))
             {
-                scraper = this.Scrapers[type, category, flavor];
-            }
-            catch
-            {
-                return false;
-            }
-
-            if (scraper.IsValidSource(source))
-            {
-                data = scraper.ScrapeFromSource(source);
-                return true;
+                if (scraper.IsValidSource(source))
+                {
+                    data = scraper.ScrapeFromSource(source);
+                    return true;
+                }
             }
 
             return false;

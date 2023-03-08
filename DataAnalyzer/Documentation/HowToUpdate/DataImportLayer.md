@@ -31,9 +31,9 @@ The next three things setup the *Keys* that will be used by the application to p
 
 The final class you may need to add is a new `IDataScraper` which does the work of scraping out data into your DTO. Many times a very similar *Data Scraper* already exists for what you're trying to do. Check to see if there are similar ones that you can copy or inherit from to limit the amount of work you need to do to extend the scrapers. For example, there are several CSV scrapers, but there are base CSV scrapers that do the majority of the work and the children only need to supply the mapping of the columns to the respective DTO parameters.
 
-The last update (and most often forgetten) you'll need to make is adding your *Keys* and and *Data Scraper* to the `ScraperLibrary`. Other examples should already exist, so just follow suit on what others have done. If it is confusing how it is working, it may be useful to better understand the nested dictionary structure.
+For the last update (and most often forgetten) you'll need to make is adding your *Keys* and and *Data Scraper* to the `ScraperLibrary`. Other examples should already exist, so just follow suit on what others have done. If it is confusing how it is working, it may be useful to better understand the nested dictionary structure.
 
-### Ordered Steps
+### Scrapers Ordered Steps
 
 1. Check if a `DataSource` already exists for the type of media you're trying to scrape from
 2. If the `IDataSource` you need does not exist already, create one.
@@ -47,9 +47,24 @@ The last update (and most often forgetten) you'll need to make is adding your *K
 
 ## Data Converters
 
-hello
+The *Data Converters* structure is very similar to the *Scrapers*. The *Scrapers* section can better explain some of the details within the structure. This layer takes the result from the *Scrapers* and converts it into a data structure within the application. Keeping a similar structure as the *Scrapers* allows us to have different *Scrapers* that can map to the same internal data sturcure to reduce the number of times we have to build up a new class. For example, if you create a *Scraper* for a database instance and a *Scraper* for an HTTP request that each hold the same type of data, then 2 different *Scrapers* can map to the same *Data Converter*.
 
-## User Interface
+Before creating a new *Data Converter*, you'll want to make sure a data object exists within the application that implements the `IStats` interface and contains the information you need. This object will be the data that is used within the rest of the application whenever the respective *Import Type*, *Category* and *Flavor* are selected. 
+
+When creating a new *Data Converter*, the first thing you'll want to do is make sure the necessary *Scraper* already exists for your needs (see the *Scrapers* section above for more information). Next you'll want to check if there is a *Data Converter* that already exists for your needs. If not, you'll need to create one and implement the abstract methods. Note, if you find yourself in a situation where you want to create a new *Data Converter* for an existing *Scraper* that already has a respective *Data Converter*, then you might need to create a new *Flavor* and populate the *ScraperLibrary* as described in the above *Scrapers* section. To hook up your *Data Converter* to the application, you'll need to insert it into the `DataConverterLibrary` in the same way described with the `ScraperLibrary` in the above *Scrapers* section (note, the same import types, categories and flavors are used between each library that is structured in this way, so you don't always have to create new versions of those).
+
+### Converters Ordered Steps
+
+1. Check if an `IDataScraper` already exists for your needs (if not, see the *Scrapers* section for how to set one up)
+2. Create a new object that implements the `IStats` interface if one does not already exist that fits your needs
+3. Check if an `IDataConverter` already exists for your needs and make one if one does not exist
+4. Add your *Data Converter* to the `DataConverterLibrary`
+
+## Model
+
+## View Model
+
+## View
 
 - might need a new UI
 - if new UI add boolean for executive commissioner

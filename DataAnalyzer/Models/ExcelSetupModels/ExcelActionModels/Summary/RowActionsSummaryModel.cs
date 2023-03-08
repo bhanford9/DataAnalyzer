@@ -1,4 +1,4 @@
-﻿using DataAnalyzer.Common.DataObjects;
+﻿using DataAnalyzer.DataImport.DataObjects;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ActionSummaryViewModels;
 using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿using DataAnalyzer.Common.DataObjects.TimeStats.QueryableTimeStats;
+﻿using DataAnalyzer.DataImport.DataObjects.TimeStats.QueryableTimeStats;
 using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzer.Common.DataParameters.TimeStatParameters

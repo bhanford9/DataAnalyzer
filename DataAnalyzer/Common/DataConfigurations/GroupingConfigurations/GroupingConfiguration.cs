@@ -1,4 +1,4 @@
-﻿using DataAnalyzer.Common.DataObjects;
+﻿using DataAnalyzer.DataImport.DataObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;

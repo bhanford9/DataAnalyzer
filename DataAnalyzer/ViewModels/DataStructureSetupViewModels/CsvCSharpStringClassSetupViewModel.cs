@@ -1,5 +1,5 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
-using DataAnalyzer.Common.DataObjects.CsvStats;
+using DataAnalyzer.DataImport.DataObjects.CsvStats;
 using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.Services;
 using System.Collections.Generic;

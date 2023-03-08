@@ -1,4 +1,4 @@
-﻿using DataAnalyzer.Common.DataObjects;
+﻿using DataAnalyzer.DataImport.DataObjects;
 using System;
 
 namespace DataAnalyzer.Common.DataParameters

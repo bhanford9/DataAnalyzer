@@ -1,4 +1,4 @@
-﻿using DataAnalyzer.Common.DataObjects;
+﻿using DataAnalyzer.DataImport.DataObjects;
 using DataAnalyzer.Services.Enums;
 using System;
 using System.Collections.Generic;

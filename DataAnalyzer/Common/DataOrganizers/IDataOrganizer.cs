@@ -1,5 +1,5 @@
 ﻿using DataAnalyzer.Common.DataConfigurations;
-using DataAnalyzer.Common.DataObjects;
+using DataAnalyzer.DataImport.DataObjects;
 using System.Collections.Generic;
 
 namespace DataAnalyzer.Common.DataOrganizers

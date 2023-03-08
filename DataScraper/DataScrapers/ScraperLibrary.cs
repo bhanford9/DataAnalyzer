@@ -26,5 +26,7 @@ namespace DataScraper.DataScrapers
             this.InitializeCategory(fileType, new CsvScraperCategory())
                 .ThenAdd(new CsvTestScraperFlavor(), new CsvTestScraper());
         }
+
+        public override string Name => "Scraper";
     }
 }

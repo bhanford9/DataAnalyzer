@@ -1,7 +1,7 @@
-﻿using DataAnalyzer.Common.DataConverters.ExcelConverters;
-using DataAnalyzer.Common.DataObjects;
-using DataAnalyzer.Common.DataObjects.TimeStats.QueryableTimeStats;
-using DataAnalyzer.Common.Mvvm;
+﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.DataImport.DataConverters.ExcelConverters;
+using DataAnalyzer.DataImport.DataObjects;
+using DataAnalyzer.DataImport.DataObjects.TimeStats.QueryableTimeStats;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;

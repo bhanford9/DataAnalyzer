@@ -5,15 +5,8 @@ using DataAnalyzer.Common.Mvvm;
 using System.IO;
 using System.Linq;
 using DataAnalyzer.Models;
-using System;
-using DataAnalyzer.Common.DataConverters;
 using System.Collections.Generic;
 using DataAnalyzer.ViewModels.Utilities;
-using DataScraper.DataScrapers.ScraperCategories;
-using DataAnalyzer.Services.Enums;
-using DataScraper.DataScrapers.ImportTypes;
-using DataScraper.DataSources;
-using DataScraper.DataScrapers.ScraperFlavors;
 
 namespace DataAnalyzer.ViewModels
 {
@@ -97,7 +90,7 @@ namespace DataAnalyzer.ViewModels
             //    .ForEach(file =>
             //    {
             //        //ConverterType currentType = this.scraperToConverterMap[Enum.Parse<Services.Enums.ScraperCategory>(this.selectedScraperCategory)];
-            //        //IDataConverter converter = this.dataConverterLibrary.GetConverter(currentType);
+            //        //IDataConverter converter = this.dataConverters.GetConverter(currentType);
 
             //        IScraperCategory category = null;
             //        IScraperFlavor flavor = null;

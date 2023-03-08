@@ -1,5 +1,5 @@
-﻿using DataAnalyzer.Common.DataObjects;
-using DataAnalyzer.Common.Mvvm;
+﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.DataImport.DataObjects;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ActionSummaryViewModels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

@@ -5,10 +5,9 @@ using System.Linq;
 using DataAnalyzer.Common.DataConfigurations;
 using DataAnalyzer.Common.DataConfigurations.CsvConfigurations;
 using DataAnalyzer.Common.DataConfigurations.ExcelConfiguration;
-using DataAnalyzer.Common.DataConverters;
-using DataAnalyzer.Common.DataObjects;
 using DataAnalyzer.Common.DataOrganizers;
 using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.DataImport.DataObjects;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
 using DataScraper.DataScrapers.ImportTypes;
@@ -24,7 +23,6 @@ namespace DataAnalyzer.Models
         private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
         private readonly ScraperService scraperService = new();
         private HeirarchalStats heirarchalStats;
-        private readonly DataConverterLibrary dataConverterLibrary = new();
 
         private IDataConfiguration activeConfiguration;
 
@@ -78,9 +76,8 @@ namespace DataAnalyzer.Models
             IImportType type = this.mainModel.ImportType;
             IScraperCategory category = this.mainModel.ScraperCategory;
             IScraperFlavor flavor = this.mainModel.ScraperFlavor;
-            IDataConverter converter = this.dataConverterLibrary[type][category][flavor];
 
-            this.scraperService.ScrapeFromSource(source, converter, type, category, flavor)
+            this.scraperService.ScrapeFromSource(source, type, category, flavor)
                 .ToList()
                 .ForEach(this.Stats.Add);
 

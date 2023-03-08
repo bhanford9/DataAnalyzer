@@ -1,8 +1,7 @@
 ﻿using DataAnalyzer.Common.DataConfigurations.CsvConfigurations;
-using DataAnalyzer.Common.DataObjects;
-using DataAnalyzer.Common.DataObjects.CsvStats;
+using DataAnalyzer.DataImport.DataObjects;
+using DataAnalyzer.DataImport.DataObjects.CsvStats;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace DataAnalyzer.Common.DataOrganizers
 {

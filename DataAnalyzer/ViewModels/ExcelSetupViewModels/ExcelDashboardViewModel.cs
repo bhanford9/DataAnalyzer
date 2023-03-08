@@ -1,5 +1,5 @@
-﻿using DataAnalyzer.Common.DataConverters.ExcelConverters;
-using DataAnalyzer.Common.Mvvm;
+﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.DataImport.DataConverters.ExcelConverters;
 using DataAnalyzer.Models.ExcelSetupModels;
 using DataAnalyzer.ViewModels.Utilities;
 using DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;

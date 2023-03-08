@@ -1,10 +1,11 @@
-﻿using DataAnalyzer.Common.DataConverters;
-using DataAnalyzer.Common.Mvvm;
+﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
+using DataAnalyzer.Models.ImportModels;
 using DataAnalyzer.ViewModels.Utilities;
 using DataScraper.DataSources;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -14,47 +15,26 @@ namespace DataAnalyzer.ViewModels.ImportViewModels
 {
     internal class ImportFromFileViewModel : ImportViewModel
     {
-        private string activeDirectory = "No Directory Selected Yet";
-        private string selectedScraperCategory = string.Empty;
+        private string activeDirectory = string.Empty;
 
         private readonly BaseCommand browseDirectory;
         private readonly BaseCommand importData;
 
         private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-        private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
-        private readonly DataConverterLibrary dataConverterLibrary = new();
+        private readonly ImportFromFileModel importModel = BaseSingleton<ImportFromFileModel>.Instance;
 
-        //private IReadOnlyDictionary<Services.Enums.ScraperCategory, ConverterType> scraperToConverterMap;
+        protected override IImportModel ImportModel => importModel;
 
         public ImportFromFileViewModel()
         {
             this.browseDirectory = new BaseCommand((object o) => this.DoBrowseDirectory());
             this.importData = new BaseCommand((object o) => this.DoImportData());
-
-            this.ActiveDirectory = Properties.Settings.Default.LastUsedDataDirectory;
-            this.SelectedScraperCategory = Properties.Settings.Default.LastSelectedScraperType;
-
-            if (this.ActiveDirectory != string.Empty)
-            {
-                this.ApplyActiveDirectory(this.ActiveDirectory);
-            }
-
-            // TODO --> put into a class. Scraper Service could use similar tools
-            //this.scraperToConverterMap = new Dictionary<Services.Enums.ScraperCategory, ConverterType>()
-            //{
-            //    { Services.Enums.ScraperCategory.Custom, ConverterType.Queryable },
-            //    { Services.Enums.ScraperCategory.CsvNames, ConverterType.CsvNames },
-            //    { Services.Enums.ScraperCategory.Csv, ConverterType.Csv }, // TODO --> this will need a sub dictionary (more reason to put in class)
-            //};
-
-            //this.EnumUtilities.LoadNames(typeof(ScraperCategory), this.ScraperCategories);
-
-            this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
+            
+            this.ActiveDirectory = this.importModel.ActiveDirectory;
+            this.importModel.PropertyChanged += this.ImportModelPropertyChanged;
         }
 
         public ObservableCollection<CheckableTreeViewItem> Files { get; } = new();
-
-        //public IReadOnlyCollection<IScraperCategory> ScraperCategories => this.statsModel.ScraperCategories;
 
         public ICommand BrowseDirectory => this.browseDirectory;
 
@@ -66,20 +46,16 @@ namespace DataAnalyzer.ViewModels.ImportViewModels
             set
             {
                 this.NotifyPropertyChanged(ref this.activeDirectory, value);
-                this.mainModel.LoadedInputFiles.DirectoryPath = value;
-            }
-        }
 
-        public string SelectedScraperCategory
-        {
-            get => this.selectedScraperCategory;
-            set
-            {
-                this.mainModel.LoadedInputFiles.DataType = value;
-                this.NotifyPropertyChanged(ref this.selectedScraperCategory, value);
+                this.Files.Clear();
 
-                Properties.Settings.Default.LastSelectedScraperType = value;
-                Properties.Settings.Default.Save();
+                this.Files.Add(new CheckableTreeViewItem
+                {
+                    Path = this.ActiveDirectory,
+                    Name = Path.GetFileName(this.ActiveDirectory)
+                });
+
+                this.LoadAllChildren(this.ActiveDirectory, this.Files[0]);
             }
         }
 
@@ -89,7 +65,7 @@ namespace DataAnalyzer.ViewModels.ImportViewModels
 
             if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                this.ApplyActiveDirectory(folderBrowserDialog.SelectedPath);
+                this.importModel.ApplyActiveDirectory(folderBrowserDialog.SelectedPath);
             }
         }
 
@@ -114,24 +90,6 @@ namespace DataAnalyzer.ViewModels.ImportViewModels
         {
             flattenedFiles.Add(root);
             root.Children.ToList().ForEach(x => this.AddChildren(x, flattenedFiles));
-        }
-
-        private void ApplyActiveDirectory(string path)
-        {
-            this.ActiveDirectory = path;
-
-            this.Files.Clear();
-
-            this.Files.Add(new CheckableTreeViewItem
-            {
-                Path = this.ActiveDirectory,
-                Name = Path.GetFileName(this.ActiveDirectory)
-            });
-
-            this.LoadAllChildren(this.ActiveDirectory, this.Files[0]);
-
-            Properties.Settings.Default.LastUsedDataDirectory = this.ActiveDirectory;
-            Properties.Settings.Default.Save();
         }
 
         private void LoadAllChildren(string pathRoot, CheckableTreeViewItem treeRoot)
@@ -167,15 +125,14 @@ namespace DataAnalyzer.ViewModels.ImportViewModels
             catch { }
         }
 
-        private void MainModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void ImportModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case nameof(this.mainModel.ScraperCategory):
-                    this.SelectedScraperCategory = this.mainModel.ScraperCategory.ToString();
+                case nameof(this.importModel.ActiveDirectory):
+                    this.ActiveDirectory = this.importModel.ActiveDirectory;
                     break;
             }
         }
-
     }
 }

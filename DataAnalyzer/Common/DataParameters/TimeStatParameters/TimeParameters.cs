@@ -1,4 +1,4 @@
-﻿using DataAnalyzer.Common.DataObjects.TimeStats;
+﻿using DataAnalyzer.DataImport.DataObjects.TimeStats;
 
 namespace DataAnalyzer.Common.DataParameters.TimeStatParameters
 {

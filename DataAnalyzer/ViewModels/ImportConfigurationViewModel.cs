@@ -1,5 +1,5 @@
-﻿using DataAnalyzer.Common.DataConverters;
-using DataAnalyzer.Common.Mvvm;
+﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.DataImport.DataConverters;
 using DataAnalyzer.Models;
 using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels.Utilities;
@@ -21,14 +21,12 @@ namespace DataAnalyzer.ViewModels
         private IReadOnlyCollection<IScraperCategory> scraperCategories = new List<IScraperCategory>();
         private IReadOnlyCollection<IScraperFlavor> scrpaerFlavors = new List<IScraperFlavor>();
 
-        private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
         private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
-        private readonly DataConverterLibrary dataConverterLibrary = new();
-        private readonly EnumUtilities enumUtils = new();
+        private readonly DataConverterLibrary dataConverters = BaseSingleton<DataConverterLibrary>.Instance;
 
         public ImportConfigurationViewModel()
         {
-            this.ImportTypes = this.dataConverterLibrary.GetImportTypes();
+            this.ImportTypes = this.dataConverters.GetImportTypes();
         }
 
         public ImportExecutiveCommissioner ExecutiveCommissioner { get; }
@@ -52,7 +50,7 @@ namespace DataAnalyzer.ViewModels
             set
             {
                 this.NotifyPropertyChanged(ref this.selectedImportType, value);
-                this.ScraperCategories = this.dataConverterLibrary.GetCategories(value);
+                this.ScraperCategories = this.dataConverters.GetCategories(value);
                 this.CategoryIsSelectable = true;
                 this.mainModel.ImportType = value;
                 // TODO (future) --> save last selected import type
@@ -66,7 +64,7 @@ namespace DataAnalyzer.ViewModels
             set
             {
                 this.NotifyPropertyChanged(ref this.selectedScraperCategory, value);
-                this.ScraperFlavors = this.dataConverterLibrary.GetFlavors(this.SelectedImportType, value);
+                this.ScraperFlavors = this.dataConverters.GetFlavors(this.SelectedImportType, value);
                 this.FlavorIsSelectable = true;
                 this.mainModel.ScraperCategory = value;
                 // TODO (future) --> save last selected category for import type

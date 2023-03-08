@@ -1,4 +1,4 @@
-﻿using DataAnalyzer.Common.DataObjects.CsvStats;
+﻿using DataAnalyzer.DataImport.DataObjects.CsvStats;
 using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzer.Common.DataParameters.CsvParameters

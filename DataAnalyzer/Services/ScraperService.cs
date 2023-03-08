@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DataAnalyzer.Common.DataConverters;
-using DataAnalyzer.Common.DataObjects;
+using DataAnalyzer.DataImport.DataConverters;
+using DataAnalyzer.DataImport.DataObjects;
 using DataScraper;
 using DataScraper.Data;
 using DataScraper.DataScrapers;
@@ -15,6 +15,7 @@ namespace DataAnalyzer.Services
     internal class ScraperService
     {
         private static readonly ScraperExecutive scraperExecutive = new();
+        private static readonly DataConverterExecutive dataConverterExecutive = new();
         private static readonly ScraperLibrary scraperLibrary;
 
         static ScraperService()
@@ -36,13 +37,14 @@ namespace DataAnalyzer.Services
 
         public ICollection<IStats> ScrapeFromSource(
             IDataSource source,
-            IDataConverter converter,
             IImportType type,
             IScraperCategory category,
             IScraperFlavor flavor)
-        {
-            return converter.ToAnalyzerStats(scraperExecutive.ScrapeOutData(source, type, category, flavor));
-        }
+            => dataConverterExecutive.Convert(
+                type,
+                category,
+                flavor,
+                scraperExecutive.ScrapeOutData(source, type, category, flavor));
 
         public bool TryScrapeFromSource(
             IDataSource source,
