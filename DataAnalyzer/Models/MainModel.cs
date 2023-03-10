@@ -1,14 +1,9 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.LoadedConfigurations;
-using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
-using DataAnalyzer.Services.Enums.ScraperFlavors;
-using DataScraper.DataScrapers.ScraperFlavors.CsvNamesFlavors;
-using DataScraper.DataScrapers.ScraperFlavors.QueryableFlavors;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using DataScraper.DataScrapers.ScraperFlavors;
 using DataAnalyzer.Models.Utilities;
@@ -26,12 +21,25 @@ namespace DataAnalyzer.Models
         private LoadedInputFiles loadedInputFiles = new();
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
 
-        //private IReadOnlyDictionary<InputExportKey, ExecutiveType> executiveMap;
         ExecutiveLibrary executiveLibrary = new();
 
         public MainModel()
         {
             loadedInputFiles.PropertyChanged += this.LoadedInputFilesPropertyChanged;
+
+            if (this.configurationModel.LoadConfiguration())
+            {
+                this.ImportType = this.configurationModel.ImportType;
+                this.ScraperCategory = this.configurationModel.Category;
+                this.ScraperFlavor = this.configurationModel.Flavor;
+
+                ExportType exportType = this.configurationModel.SelectedExportType;
+                this.ExecutiveType = this.executiveLibrary.GetExecutiveType(
+                    this.importType,
+                    this.scraperCategory,
+                    this.scraperFlavor,
+                    exportType);
+            }
         }
 
         public LoadedDataContent LoadedDataContent
@@ -55,19 +63,40 @@ namespace DataAnalyzer.Models
         public IImportType ImportType
         {
             get => this.importType;
-            set => this.NotifyPropertyChanged(ref this.importType, value);
+            set
+            {
+                this.NotifyPropertyChangedThen(ref this.importType, value, () =>
+                {
+                    this.configurationModel.ImportType = value;
+                    this.configurationModel.SaveConfiguration();
+                });
+            }
         }
 
         public IScraperCategory ScraperCategory
         {
             get => this.scraperCategory;
-            set => this.NotifyPropertyChanged(ref this.scraperCategory, value);
+            set
+            {
+                this.NotifyPropertyChangedThen(ref this.scraperCategory, value, () =>
+                {
+                    this.configurationModel.Category = value;
+                    this.configurationModel.SaveConfiguration();
+                });
+            }
         }
 
         public IScraperFlavor ScraperFlavor
         {
             get => this.scraperFlavor;
-            set => this.NotifyPropertyChanged(ref this.scraperFlavor, value);
+            set
+            {
+                this.NotifyPropertyChangedThen(ref this.scraperFlavor, value, () =>
+                {
+                    this.configurationModel.Flavor = value;
+                    this.configurationModel.SaveConfiguration();
+                });
+            }
         }
 
         public ExecutiveType ExecutiveType { get; private set; }
@@ -91,12 +120,16 @@ namespace DataAnalyzer.Models
         }
 
         public bool ApplyInputExportTypes()
-        {            
+        {
+            ExportType exportType = Enum.Parse<ExportType>(this.LoadedDataStructure.ExportType);
             this.ExecutiveType = this.executiveLibrary.GetExecutiveType(
                 this.importType,
                 this.ScraperCategory,
                 this.scraperFlavor,
-                Enum.Parse<ExportType>(this.LoadedDataStructure.ExportType));
+                exportType);
+
+            this.configurationModel.SelectedExportType = exportType;
+            this.configurationModel.SaveConfiguration();
 
             this.NotifyPropertyChanged(nameof(this.ExecutiveType));
 

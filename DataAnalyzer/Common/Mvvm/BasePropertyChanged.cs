@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace DataAnalyzer.Common.Mvvm
@@ -16,6 +17,16 @@ namespace DataAnalyzer.Common.Mvvm
             {
                 property = value;
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        protected void NotifyPropertyChangedThen<T>(ref T property, T value, Action then, [CallerMemberName] string propertyName = null)
+        {
+            if (property == null || !property.Equals(value))
+            {
+                property = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                then();
             }
         }
     }

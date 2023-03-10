@@ -50,18 +50,6 @@ namespace DataAnalyzer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastUsedConfigurationDirectory {
-            get {
-                return ((string)(this["LastUsedConfigurationDirectory"]));
-            }
-            set {
-                this["LastUsedConfigurationDirectory"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string LastUsedExcelConfigurationDirectory {
             get {
                 return ((string)(this["LastUsedExcelConfigurationDirectory"]));
@@ -92,6 +80,30 @@ namespace DataAnalyzer.Properties {
             }
             set {
                 this["LastUsedClassCreationConfigurationDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastUsedApplicationRootDirectory {
+            get {
+                return ((string)(this["LastUsedApplicationRootDirectory"]));
+            }
+            set {
+                this["LastUsedApplicationRootDirectory"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string LastUsedApplicationConfigurationName {
+            get {
+                return ((string)(this["LastUsedApplicationConfigurationName"]));
+            }
+            set {
+                this["LastUsedApplicationConfigurationName"] = value;
             }
         }
     }

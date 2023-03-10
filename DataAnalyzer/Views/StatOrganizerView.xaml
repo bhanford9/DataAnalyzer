@@ -9,10 +9,12 @@
   <Grid>
     <TabControl>
 
+      <TabItem Header="0. App Config Setup">
+        <local:ApplicationConfigurationView/>
+      </TabItem>
+
       <TabItem Header="1. Input Data">
-        <!-- This should support multiple differnt input data medias-->
-        <local:ImportConfigurationView Margin="2 5 0 2">
-        </local:ImportConfigurationView>
+        <local:ImportConfigurationView/>
       </TabItem>
 
       <TabItem Header="2. Structure">

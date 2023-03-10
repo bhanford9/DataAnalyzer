@@ -40,7 +40,7 @@ namespace DataAnalyzer.Models.DataStructureSetupModels
             this.serializationService.JsonSerializeToFile(this.DataConfiguration, fullFilePath);
         }
 
-        public void CreateNewDataConfiguration() => this.DataConfiguration = new TDataConfiguration();//this.NotifyPropertyChanged(nameof(this.DataConfiguration));
+        public void CreateNewDataConfiguration() => this.DataConfiguration = new TDataConfiguration();
 
         protected abstract void PrepareConfigurationForSaving(DateTime saveTime, string saveUid);
 

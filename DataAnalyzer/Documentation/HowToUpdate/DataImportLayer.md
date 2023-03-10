@@ -60,11 +60,17 @@ When creating a new *Data Converter*, the first thing you'll want to do is make 
 3. Check if an `IDataConverter` already exists for your needs and make one if one does not exist
 4. Add your *Data Converter* to the `DataConverterLibrary`
 
-## Model
+## Model Layer
 
-## View Model
+`TODO: There are three shared models across the application that need to be better defined and organized`
 
-## View
+- Configuration Model - Stores a representation of the application data that will be saved to configuration files in order to manage the state of the application to try to bring it back up where the user left off in a fluid way.
+- Main Model - Stores a representation of the application stateful data that all models/viewmodels need to access throughout the application
+- Stats Model - Stores a representation of the imported data that will be used by each layer of the application
+
+## View Model Layer
+
+## View Layer
 
 - might need a new UI
 - if new UI add boolean for executive commissioner

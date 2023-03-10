@@ -1,12 +1,12 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.DataImport.DataConverters;
 using DataAnalyzer.Models;
-using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels.Utilities;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DataAnalyzer.ViewModels
 {
@@ -23,10 +23,23 @@ namespace DataAnalyzer.ViewModels
 
         private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
         private readonly DataConverterLibrary dataConverters = BaseSingleton<DataConverterLibrary>.Instance;
+        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
 
         public ImportConfigurationViewModel()
         {
             this.ImportTypes = this.dataConverters.GetImportTypes();
+
+            if (!this.configurationModel.HasLoaded)
+            {
+                this.configurationModel.LoadConfiguration();
+            }
+
+            if (this.configurationModel.HasLoaded)
+            {
+                this.ApplyConfiguration();
+            }
+
+            this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
         }
 
         public ImportExecutiveCommissioner ExecutiveCommissioner { get; }
@@ -53,8 +66,6 @@ namespace DataAnalyzer.ViewModels
                 this.ScraperCategories = this.dataConverters.GetCategories(value);
                 this.CategoryIsSelectable = true;
                 this.mainModel.ImportType = value;
-                // TODO (future) --> save last selected import type
-                // TODO (future) --> load last used category for selected import type
             }
         }
 
@@ -67,8 +78,6 @@ namespace DataAnalyzer.ViewModels
                 this.ScraperFlavors = this.dataConverters.GetFlavors(this.SelectedImportType, value);
                 this.FlavorIsSelectable = true;
                 this.mainModel.ScraperCategory = value;
-                // TODO (future) --> save last selected category for import type
-                // TODO (future) --> load last used flavor for selected import-category combo type
             }
         }
 
@@ -79,7 +88,6 @@ namespace DataAnalyzer.ViewModels
             {
                 this.NotifyPropertyChanged(ref this.selectedScraperFlavor, value);
                 this.mainModel.ScraperFlavor = value;
-                // TODO (future) --> save last selected flavor for import-category combo type
             }
         }
 
@@ -95,6 +103,29 @@ namespace DataAnalyzer.ViewModels
         {
             get => this.scrpaerFlavors;
             private set => this.NotifyPropertyChanged(ref this.scrpaerFlavors, value);
+        }
+
+        private void ApplyConfiguration()
+        {
+            this.SelectedImportType = this.configurationModel.ImportType;
+            this.SelectedScraperCategory = this.configurationModel.Category;
+            this.SelectedScraperFlavor = this.configurationModel.Flavor;
+        }
+
+        private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(this.configurationModel.ImportType):
+                    this.SelectedImportType = this.configurationModel.ImportType;
+                    break;
+                case nameof(this.configurationModel.Category):
+                    this.SelectedScraperCategory = this.configurationModel.Category;
+                    break;
+                case nameof(this.configurationModel.Flavor):
+                    this.SelectedScraperFlavor = this.configurationModel.Flavor;
+                    break;
+            }
         }
     }
 }
