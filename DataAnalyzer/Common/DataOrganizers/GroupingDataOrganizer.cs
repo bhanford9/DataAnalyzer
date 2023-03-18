@@ -1,4 +1,4 @@
-﻿using DataAnalyzer.Common.DataConfigurations.GroupingConfigurations;
+﻿using DataAnalyzer.StatConfigurations.GroupingConfigurations;
 using DataAnalyzer.DataImport.DataObjects;
 using System;
 using System.Collections.Generic;

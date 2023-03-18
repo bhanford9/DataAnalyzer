@@ -1,4 +1,4 @@
-﻿using DataAnalyzer.Common.DataConfigurations.CsvConfigurations;
+﻿using DataAnalyzer.StatConfigurations.CsvConfigurations;
 using DataAnalyzer.DataImport.DataObjects;
 using DataAnalyzer.DataImport.DataObjects.CsvStats;
 using System.Collections.Generic;

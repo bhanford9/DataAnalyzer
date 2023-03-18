@@ -2,27 +2,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AppDataConfig = DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 
-namespace DataAnalyzer.Common.DataConfigurations.GroupingConfigurations
+namespace DataAnalyzer.StatConfigurations.GroupingConfigurations
 {
     internal abstract class GroupingDataConfiguration<T> : DataConfiguration<T>
-        where T : ApplicationConfigurations.DataConfigurations.IDataConfiguration
+        where T : AppDataConfig.IDataConfiguration
     {
         protected ICollection<IGroupingConfiguration> groupingConfigurations = new List<IGroupingConfiguration>();
 
         public virtual int GroupingLevels { get; protected set; }
 
-        public ICollection<IGroupingConfiguration> GroupingConfigurations => this.groupingConfigurations;
+        public ICollection<IGroupingConfiguration> GroupingConfigurations => groupingConfigurations;
 
         public void AddGroupingRule(int level, Func<IStats, IComparable> propertyGetter)
         {
-            if (level >= this.groupingConfigurations.Count)
+            if (level >= groupingConfigurations.Count)
             {
-                this.groupingConfigurations.Add(new GroupingConfiguration(propertyGetter));
+                groupingConfigurations.Add(new GroupingConfiguration(propertyGetter));
             }
             else
             {
-                this.groupingConfigurations.ElementAt(level).AddCondition(propertyGetter);
+                groupingConfigurations.ElementAt(level).AddCondition(propertyGetter);
             }
         }
     }

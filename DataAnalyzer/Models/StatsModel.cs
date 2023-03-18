@@ -2,14 +2,14 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using DataAnalyzer.Common.DataConfigurations;
-using DataAnalyzer.Common.DataConfigurations.CsvConfigurations;
-using DataAnalyzer.Common.DataConfigurations.ExcelConfiguration;
 using DataAnalyzer.Common.DataOrganizers;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.DataImport.DataObjects;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
+using DataAnalyzer.StatConfigurations;
+using DataAnalyzer.StatConfigurations.CsvConfigurations;
+using DataAnalyzer.StatConfigurations.ExcelConfiguration;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;

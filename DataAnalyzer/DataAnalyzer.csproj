@@ -31,8 +31,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\DataConfigurations\FilteringConfigurations\" />
-    <Folder Include="Common\DataConfigurations\SortingConfigurations\" />
+    <Folder Include="StatConfigurations\FilteringConfigurations\" />
+    <Folder Include="StatConfigurations\SortingConfigurations\" />
     <Folder Include="Documentation\" />
   </ItemGroup>
 
