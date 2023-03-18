@@ -7,6 +7,7 @@ namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
     {
         public string Name { get; set; } = string.Empty;
 
+        // TODO --> stat type is no longer a thing. Replace with import/category/flavor
         public StatType StatType { get; set; } = StatType.NotApplicable;
 
         public ExportType ExportType { get; set; } = ExportType.NotApplicable;

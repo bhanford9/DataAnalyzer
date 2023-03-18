@@ -122,18 +122,24 @@ namespace DataAnalyzer.Models
         public bool ApplyInputExportTypes()
         {
             ExportType exportType = Enum.Parse<ExportType>(this.LoadedDataStructure.ExportType);
-            this.ExecutiveType = this.executiveLibrary.GetExecutiveType(
-                this.importType,
-                this.ScraperCategory,
-                this.scraperFlavor,
-                exportType);
 
-            this.configurationModel.SelectedExportType = exportType;
-            this.configurationModel.SaveConfiguration();
+            if (exportType != ExportType.NotApplicable)
+            {
+                this.ExecutiveType = this.executiveLibrary.GetExecutiveType(
+                    this.importType,
+                    this.ScraperCategory,
+                    this.scraperFlavor,
+                    exportType);
 
-            this.NotifyPropertyChanged(nameof(this.ExecutiveType));
+                this.configurationModel.SelectedExportType = exportType;
+                this.configurationModel.SaveConfiguration();
 
-            return this.ExecutiveType != ExecutiveType.NotSupported;
+                this.NotifyPropertyChanged(nameof(this.ExecutiveType));
+
+                return true;
+            }
+
+            return false;
         }
 
         private void LoadedInputFilesPropertyChanged(object sender, PropertyChangedEventArgs e) => this.NotifyScraperTypeChange();

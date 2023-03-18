@@ -110,6 +110,7 @@ namespace DataAnalyzer.ViewModels
             this.SelectedImportType = this.configurationModel.ImportType;
             this.SelectedScraperCategory = this.configurationModel.Category;
             this.SelectedScraperFlavor = this.configurationModel.Flavor;
+            this.ExecutiveCommissioner.SetDisplay();
         }
 
         private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)

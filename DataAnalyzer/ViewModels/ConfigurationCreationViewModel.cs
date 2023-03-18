@@ -28,6 +28,7 @@ namespace DataAnalyzer.ViewModels
 
         public ConfigurationCreationViewModel()
         {
+            this.InitializeViewModel();
             this.createConfiguration = new BaseCommand(obj => this.DoCreateConfiguration());
             this.cancelChanges = new BaseCommand(obj => this.DoCancelChanges());
             this.applyWithoutSave = new BaseCommand(obj => this.DoApplyConfiguration());
@@ -125,6 +126,19 @@ namespace DataAnalyzer.ViewModels
             }
         }
 
+        private void InitializeViewModel()
+        {
+            this.ExecutiveType = this.mainModel.ExecutiveType;
+
+            if (this.ExecutiveType != ExecutiveType.NotSupported)
+            {
+                this.ActiveViewModel = this.ExecutiveCommissioner.GetInitializedViewModel();
+                this.ApplyConfigurationDirectory(this.ExecutiveCommissioner.GetConfigurationDirectory());
+            }
+
+            this.ExecutiveCommissioner.SetDisplay(this.ExecutiveType);
+        }
+
         private void MainModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
@@ -140,13 +154,7 @@ namespace DataAnalyzer.ViewModels
             switch (e.PropertyName)
             {
                 case nameof(this.ExecutiveCommissioner.SelectedExportType):
-                    if (this.ExecutiveType != ExecutiveType.NotSupported)
-                    {
-                        this.ActiveViewModel = this.ExecutiveCommissioner.GetInitializedViewModel();
-                        this.ApplyConfigurationDirectory(this.ExecutiveCommissioner.GetConfigurationDirectory());
-                    }
-
-                    this.ExecutiveCommissioner.SetDisplay(this.ExecutiveType);
+                    this.InitializeViewModel();
                     break;
             }
         }

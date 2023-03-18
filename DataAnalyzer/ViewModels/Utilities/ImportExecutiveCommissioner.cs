@@ -17,8 +17,8 @@ namespace DataAnalyzer.ViewModels.Utilities
 
         public ImportExecutiveCommissioner()
         {
-            this.SetDisplayFlags();
             this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
+            //this.SetDisplay();
 
             viewModelMap = new Dictionary<IImportType, IImportViewModel>()
             {
@@ -32,7 +32,7 @@ namespace DataAnalyzer.ViewModels.Utilities
             set => this.NotifyPropertyChanged(ref this.displayFileImport, value);
         }
 
-        private void SetDisplayFlags()
+        public void SetDisplay()
         {
             this.DisplayFileImport = false;
 
@@ -49,7 +49,7 @@ namespace DataAnalyzer.ViewModels.Utilities
                 case nameof(this.mainModel.ImportType):
                 case nameof(this.mainModel.ScraperCategory):
                 case nameof(this.mainModel.ScraperFlavor):
-                    this.SetDisplayFlags();
+                    this.SetDisplay();
                     break;
             }
         }

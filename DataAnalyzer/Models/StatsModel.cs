@@ -14,6 +14,7 @@ using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
 using DataScraper.DataSources;
+using AppDataConfig = DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 
 namespace DataAnalyzer.Models
 {
@@ -84,7 +85,7 @@ namespace DataAnalyzer.Models
             this.NotifyPropertyChanged(nameof(this.Stats));
         }
 
-        public void StructureStats(ApplicationConfigurations.DataConfigurations.IDataConfiguration applicationConfiguration)
+        public void StructureStats(AppDataConfig.IDataConfiguration applicationConfiguration)
         {
             this.activeConfiguration.Initialize(this.configurationModel.DataParameterCollection, applicationConfiguration);
 

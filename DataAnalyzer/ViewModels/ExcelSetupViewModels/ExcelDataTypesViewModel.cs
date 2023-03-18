@@ -228,11 +228,6 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 
         private void ConfigurationCreationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            switch (e.PropertyName)
-            {
-                case nameof(this.configurationCreationModel.SelectedDataType):
-                    break;
-            }
         }
     }
 }

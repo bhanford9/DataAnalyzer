@@ -3,6 +3,7 @@ using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Services;
 using System;
+using System.IO;
 
 namespace DataAnalyzer.Models.DataStructureSetupModels
 {
@@ -18,7 +19,9 @@ namespace DataAnalyzer.Models.DataStructureSetupModels
 
         public void LoadConfiguration(string configName)
         {
-            string filePath = this.configurationModel.ConfigurationDirectory + "/" + configName + FileProperties.CONFIGN_FILE_EXTENSION;
+            string filePath = Path.Combine(
+                this.configurationModel.ExecutiveConfigurationDirectory,
+                configName + FileProperties.CONFIGN_FILE_EXTENSION);
             this.InitializeDataConfigFromFile(filePath);
             this.NotifyPropertyChanged(nameof(this.DataConfiguration));
         }
@@ -32,7 +35,10 @@ namespace DataAnalyzer.Models.DataStructureSetupModels
 
             this.DataConfiguration.DateTime = saveTime;
             this.DataConfiguration.VersionUid = saveUid;
+
+            // TODO --> replace with import/category/flavor
             this.DataConfiguration.StatType = this.configurationModel.SelectedDataType;
+            
             this.DataConfiguration.ExportType = this.configurationModel.SelectedExportType;
 
             string fullFilePath = this.configurationModel.ConfigurationDirectory + "\\" + 

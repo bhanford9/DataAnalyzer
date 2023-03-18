@@ -53,7 +53,7 @@ namespace DataAnalyzer.Models.LoadedConfigurations
 
         public string DataTypeKey => this.dataTypeKey;
         public string DataTypeKeyValue => this.dataTypeKey + this.dataType;
-        public string DataType
+        public string DataType // TODO --> this should be import/category/flavor
         {
             get => this.dataType;
             set

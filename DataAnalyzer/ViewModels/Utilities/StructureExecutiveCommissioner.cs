@@ -71,6 +71,16 @@ namespace DataAnalyzer.ViewModels.Utilities
             {
                 viewModel.Value.PropertyChanged += GeneralViewModelPropertyChanged;
             }
+
+            if (!this.configurationModel.HasLoaded)
+            {
+                this.configurationModel.LoadConfiguration();
+            }
+
+            if (this.configurationModel.HasLoaded)
+            {
+                this.FetchConfiguration();
+            }
         }
 
         public ObservableCollection<string> DataTypes { get; } = new();
@@ -146,12 +156,14 @@ namespace DataAnalyzer.ViewModels.Utilities
             viewModel.SelectedDataType = dataConfiguration.StatType.ToString();
             viewModel.SelectedExportType = dataConfiguration.ExportType.ToString();
             
-            // why did this not get set?
+            // TODO --> this should be import/category/flavor
             this.configurationModel.SelectedDataType = StatType.CsvNames;
         }
 
         public IDataStructureSetupViewModel GetInitializedViewModel()
         {
+            FetchConfiguration();
+
             IDataStructureSetupViewModel viewModel = this.executiveViewModelMap[this.mainModel.ExecutiveType];
             viewModel.Initialize();
             viewModel.SelectedExportType = this.selectedExportType;
@@ -186,6 +198,12 @@ namespace DataAnalyzer.ViewModels.Utilities
             viewModel.SelectedDataType = dataConfiguration.StatType.ToString();
             viewModel.SelectedExportType = dataConfiguration.ExportType.ToString();
             this.DisplayNotSupported = false;
+        }
+
+        private void FetchConfiguration()
+        {
+            this.SelectedExportType = this.configurationModel.SelectedExportType.ToString();
+            this.ConfigurationDirectory = this.configurationModel.ConfigurationDirectory;
         }
 
         private void GeneralViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)

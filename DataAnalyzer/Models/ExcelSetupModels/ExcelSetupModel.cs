@@ -96,6 +96,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
                                 ITypeParameter defaultType = BaseSingleton<ExcelDataTypeLibrary>.Instance.GetParameterTypes().First();
 
                                 // don't like this, should find a better way to handle it
+                                // TODO --> change this to import/category/flavor (this might help bypass the switch ugliness)
                                 switch (this.configurationModel.SelectedDataType)
                                 {
                                     case StatType.Queryable:

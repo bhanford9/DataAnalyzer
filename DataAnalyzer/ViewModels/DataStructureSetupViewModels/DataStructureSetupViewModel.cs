@@ -40,6 +40,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         public IDataConfiguration DataConfiguration => this.dataStructureModel.DataConfiguration;
 
+        // TODO --> there should not be a selected data type (import/category/flavor instead)
         public string SelectedDataType
         {
             get => this.selectedDataType;
@@ -76,7 +77,9 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             set
             {
                 this.NotifyPropertyChanged(ref this.configurationDirectory, value);
-                this.configurationModel.ConfigurationDirectory = value;
+                this.configurationModel.ExecutiveConfigurationDirectory = value;
+
+                // TODO --> validate this is the right thing to set in the model
                 this.mainModel.LoadedDataStructure.DirectoryPath = value;
             }
         }
@@ -144,6 +147,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             {
                 switch (e.PropertyName)
                 {
+                    // TODO --> update to import/category/flavor
                     case nameof(this.configurationModel.SelectedDataType):
                         this.SelectedDataType = Enum.GetName(typeof(StatType), this.configurationModel.SelectedDataType);
                         break;

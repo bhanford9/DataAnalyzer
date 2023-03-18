@@ -94,6 +94,7 @@ namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels
         }
 
         public string GetCurrentConfigDirectoryPath() =>
+            // TODO --> change this to use import/category/flavor
             this.configurationDirectory + "\\" + this.configurationModel.SelectedDataType.ToString() + "\\" + CLASS_CREATION_KEY;
 
         public void AcquireConfigurations()

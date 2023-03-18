@@ -8,7 +8,6 @@
         xmlns:viewmodels="clr-namespace:DataAnalyzer.ViewModels"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        WindowState="Maximized"
         Title="Configurable Data Analyzer" Height="780" Width="1400">
   <Grid Background="{StaticResource LightBackground}">
     <Grid.Resources>
