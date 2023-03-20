@@ -97,99 +97,100 @@ namespace DataAnalyzer.Models.ExcelSetupModels
 
                                 // don't like this, should find a better way to handle it
                                 // TODO --> change this to import/category/flavor (this might help bypass the switch ugliness)
-                                switch (this.configurationModel.SelectedDataType)
-                                {
-                                    case StatType.Queryable:
-                                        QueryableTimeStats queryableTimeStats = rowStats as QueryableTimeStats;
-                                        rowModel.Cells = new List<CellModel>
-                                        {
-                                            new()
-                                            {
-                                                Value = queryableTimeStats.AverageTimeMillis,
-                                                DataMemberName = nameof(queryableTimeStats.AverageTimeMillis),
-                                                DataType = defaultType,
-                                                ColumnIndex = 0
-                                            },
-                                            new()
-                                            {
-                                                Value = queryableTimeStats.CategoryType,
-                                                DataMemberName = nameof(queryableTimeStats.CategoryType),
-                                                DataType = defaultType,
-                                                ColumnIndex = 1
-                                            },
-                                            new()
-                                            {
-                                                Value = queryableTimeStats.ContainerSize,
-                                                DataMemberName = nameof(queryableTimeStats.ContainerSize),
-                                                DataType = defaultType,
-                                                ColumnIndex = 2
-                                            },
-                                            new()
-                                            {
-                                                Value = queryableTimeStats.ContainerType,
-                                                DataMemberName = nameof(queryableTimeStats.ContainerType),
-                                                DataType = defaultType,
-                                                ColumnIndex = 3
-                                            },
-                                            new()
-                                            {
-                                                Value = queryableTimeStats.ExecuterName,
-                                                DataMemberName = nameof(queryableTimeStats.ExecuterName),
-                                                DataType = defaultType,
-                                                ColumnIndex = 4
-                                            },
-                                            new()
-                                            {
-                                                Value = queryableTimeStats.FastestTimeMillis,
-                                                DataMemberName = nameof(queryableTimeStats.FastestTimeMillis),
-                                                DataType = defaultType,
-                                                ColumnIndex = 5
-                                            },
-                                            new()
-                                            {
-                                                Value = queryableTimeStats.Iterations,
-                                                DataMemberName = nameof(queryableTimeStats.Iterations),
-                                                DataType = defaultType,
-                                                ColumnIndex = 6
-                                            },
-                                            new()
-                                            {
-                                                Value = queryableTimeStats.MethodName,
-                                                DataMemberName = nameof(queryableTimeStats.MethodName),
-                                                DataType = defaultType,
-                                                ColumnIndex = 7
-                                            },
-                                            new()
-                                            {
-                                                Value = queryableTimeStats.RangeTimeMillis,
-                                                DataMemberName = nameof(queryableTimeStats.RangeTimeMillis),
-                                                DataType = defaultType,
-                                                ColumnIndex = 8
-                                            },
-                                            new()
-                                            {
-                                                Value = queryableTimeStats.SlowestTimeMillis,
-                                                DataMemberName = nameof(queryableTimeStats.SlowestTimeMillis),
-                                                DataType = defaultType,
-                                                ColumnIndex = 9
-                                            },
-                                            new()
-                                            {
-                                                Value = queryableTimeStats.TotalTimeMillis,
-                                                DataMemberName = nameof(queryableTimeStats.TotalTimeMillis),
-                                                DataType = defaultType,
-                                                ColumnIndex = 10
-                                            },
-                                            new()
-                                            {
-                                                Value = queryableTimeStats.TriggerType,
-                                                DataMemberName = nameof(queryableTimeStats.TriggerType),
-                                                DataType = defaultType,
-                                                ColumnIndex = 11
-                                            }
-                                        };
-                                        break;
-                                }
+                                // TODO --> create dictionary of potential implementations with ImportExportKey
+                                //switch (this.configurationModel.SelectedDataType)
+                                //{
+                                //    case StatType.Queryable:
+                                //        QueryableTimeStats queryableTimeStats = rowStats as QueryableTimeStats;
+                                //        rowModel.Cells = new List<CellModel>
+                                //        {
+                                //            new()
+                                //            {
+                                //                Value = queryableTimeStats.AverageTimeMillis,
+                                //                DataMemberName = nameof(queryableTimeStats.AverageTimeMillis),
+                                //                DataType = defaultType,
+                                //                ColumnIndex = 0
+                                //            },
+                                //            new()
+                                //            {
+                                //                Value = queryableTimeStats.CategoryType,
+                                //                DataMemberName = nameof(queryableTimeStats.CategoryType),
+                                //                DataType = defaultType,
+                                //                ColumnIndex = 1
+                                //            },
+                                //            new()
+                                //            {
+                                //                Value = queryableTimeStats.ContainerSize,
+                                //                DataMemberName = nameof(queryableTimeStats.ContainerSize),
+                                //                DataType = defaultType,
+                                //                ColumnIndex = 2
+                                //            },
+                                //            new()
+                                //            {
+                                //                Value = queryableTimeStats.ContainerType,
+                                //                DataMemberName = nameof(queryableTimeStats.ContainerType),
+                                //                DataType = defaultType,
+                                //                ColumnIndex = 3
+                                //            },
+                                //            new()
+                                //            {
+                                //                Value = queryableTimeStats.ExecuterName,
+                                //                DataMemberName = nameof(queryableTimeStats.ExecuterName),
+                                //                DataType = defaultType,
+                                //                ColumnIndex = 4
+                                //            },
+                                //            new()
+                                //            {
+                                //                Value = queryableTimeStats.FastestTimeMillis,
+                                //                DataMemberName = nameof(queryableTimeStats.FastestTimeMillis),
+                                //                DataType = defaultType,
+                                //                ColumnIndex = 5
+                                //            },
+                                //            new()
+                                //            {
+                                //                Value = queryableTimeStats.Iterations,
+                                //                DataMemberName = nameof(queryableTimeStats.Iterations),
+                                //                DataType = defaultType,
+                                //                ColumnIndex = 6
+                                //            },
+                                //            new()
+                                //            {
+                                //                Value = queryableTimeStats.MethodName,
+                                //                DataMemberName = nameof(queryableTimeStats.MethodName),
+                                //                DataType = defaultType,
+                                //                ColumnIndex = 7
+                                //            },
+                                //            new()
+                                //            {
+                                //                Value = queryableTimeStats.RangeTimeMillis,
+                                //                DataMemberName = nameof(queryableTimeStats.RangeTimeMillis),
+                                //                DataType = defaultType,
+                                //                ColumnIndex = 8
+                                //            },
+                                //            new()
+                                //            {
+                                //                Value = queryableTimeStats.SlowestTimeMillis,
+                                //                DataMemberName = nameof(queryableTimeStats.SlowestTimeMillis),
+                                //                DataType = defaultType,
+                                //                ColumnIndex = 9
+                                //            },
+                                //            new()
+                                //            {
+                                //                Value = queryableTimeStats.TotalTimeMillis,
+                                //                DataMemberName = nameof(queryableTimeStats.TotalTimeMillis),
+                                //                DataType = defaultType,
+                                //                ColumnIndex = 10
+                                //            },
+                                //            new()
+                                //            {
+                                //                Value = queryableTimeStats.TriggerType,
+                                //                DataMemberName = nameof(queryableTimeStats.TriggerType),
+                                //                DataType = defaultType,
+                                //                ColumnIndex = 11
+                                //            }
+                                //        };
+                                //        break;
+                                //}
 
                                 dataClusterModel.Rows.Add(rowModel);
                             }

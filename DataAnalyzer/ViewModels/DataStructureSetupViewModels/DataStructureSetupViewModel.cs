@@ -2,6 +2,7 @@
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.DataStructureSetupModels;
+using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
 using System;
 using System.Collections.ObjectModel;
@@ -19,7 +20,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         protected readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
         protected readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
 
-        private string selectedDataType = string.Empty;
+        private ImportExportKey selectedDataType = ImportExportKey.Default;
         private string configurationName = string.Empty;
         private string configurationDirectory = string.Empty;
         private string selectedExportType = string.Empty;
@@ -41,14 +42,17 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         public IDataConfiguration DataConfiguration => this.dataStructureModel.DataConfiguration;
 
         // TODO --> there should not be a selected data type (import/category/flavor instead)
-        public string SelectedDataType
+        public ImportExportKey SelectedDataType
         {
             get => this.selectedDataType;
             set
             {
+                // TODO --> value coming into here while using the application is incorrect
                 this.NotifyPropertyChanged(ref this.selectedDataType, value);
-                this.configurationModel.SelectedDataType = Enum.Parse<StatType>(value);
-                this.mainModel.LoadedDataStructure.DataType = value;
+                this.configurationModel.ImportExportKey = value;
+
+                // TODO --> may need to make this more structured
+                this.mainModel.LoadedDataStructure.DataType = value.Name;
             }
         }
 
@@ -60,7 +64,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
                 this.NotifyPropertyChanged(ref this.configurationName, value);
 
                 // TODO --> make sure there is good rationale for having 3 different locations house this value
-                this.configurationModel.ConfigurationName = value;
+                this.configurationModel.ExecutiveConfigurationName = value;
                 this.mainModel.LoadedDataStructure.StructureName = value;
 
                 // The data structure model may not be initialized yet during import/export type switching
@@ -147,9 +151,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             {
                 switch (e.PropertyName)
                 {
-                    // TODO --> update to import/category/flavor
-                    case nameof(this.configurationModel.SelectedDataType):
-                        this.SelectedDataType = Enum.GetName(typeof(StatType), this.configurationModel.SelectedDataType);
+                    case nameof(this.configurationModel.ImportExportKey):
+                        this.SelectedDataType = this.configurationModel.ImportExportKey;
                         break;
                     case nameof(this.configurationModel.SelectedExportType):
                         this.SelectedExportType = Enum.GetName(typeof(ExportType), this.configurationModel.SelectedExportType);

@@ -7,24 +7,59 @@ namespace DataAnalyzer.Services
 {
     internal class ImportKey
     {
-        private int hashCode;
+        private IImportType type;
+        private IScraperCategory category;
+        private IScraperFlavor flavor;
+        private string name;
+
+        private readonly int hashCode;
+
+        public static ImportKey Default => new(
+            new NotApplicableImportType(),
+            new NotApplicableScraperCategory(),
+            new NotApplicableScraperFlavor());
+
+        public ImportKey() { }
 
         public ImportKey(IImportType type, IScraperCategory category, IScraperFlavor flavor)
         {
             this.Type = type;
             this.Category = category;
             this.Flavor = flavor;
-            this.Name = $"{this.Type} - {this.Category} - {this.Flavor}";
+            this.SetName();
             this.hashCode = HashCode.Combine(this.Type, this.Category, this.Flavor);
         }
 
-        public IImportType Type { get; }
+        public IImportType Type { get => this.type; init => this.type = value; }
 
-        public IScraperCategory Category { get; }
+        public IScraperCategory Category { get => this.category; init => this.category = value; }
 
-        public IScraperFlavor Flavor { get; }
+        public IScraperFlavor Flavor { get => this.flavor; init => this.flavor = value; }
 
-        public string Name { get; }
+        public string Name { get => this.name; init => this.name = value; }
+
+        public void Update(IImportType type)
+        {
+            this.type = type;
+            this.SetName();
+        }
+
+        public void Update(IScraperCategory category)
+        {
+            this.category = category;
+            this.SetName();
+        }
+
+        public void Update(IScraperFlavor flavor)
+        {
+            this.flavor = flavor;
+            this.SetName();
+        }
+
+        private void SetName()
+        {
+            this.name = $"{this.Type}_{this.Category}_{this.Flavor}";
+        }
 
         public override bool Equals(object obj) => obj is ImportKey key && key.Name.Equals(this.Name);
 

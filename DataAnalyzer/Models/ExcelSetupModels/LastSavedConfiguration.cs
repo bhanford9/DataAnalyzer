@@ -1,11 +1,11 @@
-﻿using DataAnalyzer.Services.Enums;
+﻿using DataAnalyzer.Services;
 
 namespace DataAnalyzer.Models.ExcelSetupModels
 {
     internal class LastSavedConfiguration
     {
-        public StatType StatType { get; set; }
+        public ImportExportKey ImportExportKey { get; set; } = ImportExportKey.Default;
 
-        public string FilePath { get; set; }
+        public string FilePath { get; set; } = string.Empty;
     }
 }

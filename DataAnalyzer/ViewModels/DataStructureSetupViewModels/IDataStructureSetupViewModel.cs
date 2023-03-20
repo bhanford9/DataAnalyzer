@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+using DataAnalyzer.Services;
 using System.ComponentModel;
 
 namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
@@ -6,7 +7,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
     internal interface IDataStructureSetupViewModel : INotifyPropertyChanged
     {
         string ConfigurationName { get; set; }
-        string SelectedDataType { get; set; }
+        ImportExportKey SelectedDataType { get; set; }
         string ConfigurationDirectory { get; set; }
         string SelectedExportType { get; set; }
         IDataConfiguration DataConfiguration { get; }

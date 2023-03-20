@@ -15,13 +15,14 @@ namespace DataAnalyzer.Models.DataStructureSetupModels
 
         protected DataStructureSetupModel() { }
 
-        public TDataConfiguration DataConfiguration { get; protected set; }
+        public TDataConfiguration DataConfiguration { get; protected set; } = new TDataConfiguration();
 
         public void LoadConfiguration(string configName)
         {
             string filePath = Path.Combine(
                 this.configurationModel.ExecutiveConfigurationDirectory,
                 configName + FileProperties.CONFIGN_FILE_EXTENSION);
+            this.configurationModel.ExecutiveConfigurationName = configName;
             this.InitializeDataConfigFromFile(filePath);
             this.NotifyPropertyChanged(nameof(this.DataConfiguration));
         }
@@ -37,12 +38,13 @@ namespace DataAnalyzer.Models.DataStructureSetupModels
             this.DataConfiguration.VersionUid = saveUid;
 
             // TODO --> replace with import/category/flavor
-            this.DataConfiguration.StatType = this.configurationModel.SelectedDataType;
+            this.DataConfiguration.ImportExportKey = this.configurationModel.ImportExportKey;
             
             this.DataConfiguration.ExportType = this.configurationModel.SelectedExportType;
 
-            string fullFilePath = this.configurationModel.ConfigurationDirectory + "\\" + 
-                this.configurationModel.ConfigurationName + FileProperties.CONFIGN_FILE_EXTENSION;
+            // TODO --> the configuration model should just supply this path
+            string fullFilePath = this.configurationModel.ExecutiveConfigurationDirectory + "\\" + 
+                this.configurationModel.ExecutiveConfigurationName + FileProperties.CONFIGN_FILE_EXTENSION;
             this.serializationService.JsonSerializeToFile(this.DataConfiguration, fullFilePath);
         }
 

@@ -1,7 +1,6 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.DataImport.DataObjects.CsvStats;
 using DataAnalyzer.Models.DataStructureSetupModels;
-using DataAnalyzer.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -47,7 +46,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         public override void ClearConfiguration()
         {
-            //this.SelectedDataType = StatType.NotApplicable.ToString();
+            //this.SelectedDataType = ImportExportKey.NotApplicable.ToString();
         }
 
         public override void LoadViewModelFromConfiguration()
@@ -83,14 +82,12 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         public override void Initialize()
         {
-            ICollection<CsvNamesStats> stats = this.statsModel.Stats.OfType<CsvNamesStats>().ToList();
+            List<CsvNamesStats> stats = this.statsModel.Stats.OfType<CsvNamesStats>().ToList();
             this.CsvPropertyRows.Clear();
 
             if (stats.Any())
             {
-                stats
-                    .First()
-                    .CsvNames
+                stats[0].CsvNames
                     .ToList()
                     .ForEach(name => this.CsvPropertyRows.Add(new StringPropertyRowViewModel()
                     {

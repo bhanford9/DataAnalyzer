@@ -46,8 +46,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
                 this.lastSavedDataTypeConfigs = this.serializationService
                     .JsonDeserializeFromFile<ICollection<LastSavedConfiguration>>(configFilePath);
 
-                // TODO --> update this to accommodate import/category/flavor
-                if (this.configurationModel.SelectedDataType != StatType.NotApplicable)
+                if (this.configurationModel.ImportExportKey.IsValid)
                 {
                     string dataTypeConfigPath = this.GetCurrentDataTypeConfigDirectoryPath();
                     this.LoadDataTypeConfigByPath(dataTypeConfigPath);
@@ -171,8 +170,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             bool found = false;
             foreach (LastSavedConfiguration config in this.lastSavedDataTypeConfigs)
             {
-                // TODO --> update this to accommodate import/category/flavor
-                if (config.StatType.Equals(this.configurationModel.SelectedDataType))
+                if (config.ImportExportKey.Equals(this.configurationModel.ImportExportKey))
                 {
                     found = true;
                     config.FilePath = filePath;
@@ -184,8 +182,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
                 this.lastSavedDataTypeConfigs.Add(new LastSavedConfiguration
                 {
                     FilePath = filePath,
-                    // TODO --> change to using some kind of combo of import/category/flavor
-                    StatType = this.configurationModel.SelectedDataType
+                    ImportExportKey = this.configurationModel.ImportExportKey
                 });
             }
 
@@ -240,23 +237,19 @@ namespace DataAnalyzer.Models.ExcelSetupModels
         public string GetDataTypeConfigPath() =>
             this.configurationDirectory + "\\" + DATA_TYPE_CONFIG_FILE_NAME;
 
-        public string GetCurrentDataTypeConfigDirectoryPath() => 
-            // TODO --> change selected data type to combination of import/category/flavor
-            this.configurationDirectory + "\\" + this.configurationModel.SelectedDataType.ToString() + "\\" + DATA_TYPES_CONFIG_PATH_KEY;
+        public string GetCurrentDataTypeConfigDirectoryPath() =>
+            this.configurationDirectory + "\\" + this.configurationModel.ImportExportKey.Name + "\\" + DATA_TYPES_CONFIG_PATH_KEY;
 
         public string GetCurrentWorkbookConfigDirectoryPath() =>
-            // TODO --> change selected data type to combination of import/category/flavor
-            this.configurationDirectory + "\\" + this.configurationModel.SelectedDataType.ToString() + "\\" + WORKBOOK_CONFIG_PATH_KEY;
+            this.configurationDirectory + "\\" + this.configurationModel.ImportExportKey.Name + "\\" + WORKBOOK_CONFIG_PATH_KEY;
 
         private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                // TODO --> change this to some kind of combination of import/category/flavor
-                case nameof(this.configurationModel.SelectedDataType):
+                case nameof(this.configurationModel.ImportExportKey):
                     LastSavedConfiguration lastSavedConfiguration = this.lastSavedDataTypeConfigs
-                        // TODO --> change this to some kind of combination of import/category/flavor
-                        .FirstOrDefault(x => x.StatType.Equals(this.configurationModel.SelectedDataType));
+                        .FirstOrDefault(x => x.ImportExportKey.Equals(this.configurationModel.ImportExportKey));
                     if (lastSavedConfiguration != default)
                     {
                         this.LoadDataTypesFromConfig();

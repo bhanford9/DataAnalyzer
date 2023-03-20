@@ -109,9 +109,9 @@ namespace DataAnalyzer.Models
             {
                 //this.configurationModel.SelectedDataType = this.ScraperType switch
                 //{
-                //    ScraperCategory.Custom => StatType.Queryable,
-                //    ScraperCategory.CsvNames => StatType.CsvNames,
-                //    _ => StatType.NotApplicable,
+                //    ScraperCategory.Custom => ImportExportKey.Queryable,
+                //    ScraperCategory.CsvNames => ImportExportKey.CsvNames,
+                //    _ => ImportExportKey.NotApplicable,
                 //};
 
                 //this.NotifyPropertyChanged(nameof(this.ScraperType));

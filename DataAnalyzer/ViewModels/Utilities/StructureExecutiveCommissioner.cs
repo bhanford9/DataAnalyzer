@@ -17,6 +17,7 @@ namespace DataAnalyzer.ViewModels.Utilities
     {
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
         private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
+        private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
         private EnumUtilities EnumUtilities = new();
 
         private bool displayGroupingSetup = false;
@@ -81,6 +82,8 @@ namespace DataAnalyzer.ViewModels.Utilities
             {
                 this.FetchConfiguration();
             }
+
+            this.statsModel.PropertyChanged += this.StatsModelPropertyChanged;
         }
 
         public ObservableCollection<string> DataTypes { get; } = new();
@@ -153,11 +156,13 @@ namespace DataAnalyzer.ViewModels.Utilities
             viewModel.LoadConfiguration(configName);
             
             IDataConfiguration dataConfiguration = this.GetDataConfiguration();
-            viewModel.SelectedDataType = dataConfiguration.StatType.ToString();
+
+            // TODO --> the data configuration importexportkey is its default right here.
+            // need to figure out why its not getting initialized properly
+            viewModel.SelectedDataType = dataConfiguration.ImportExportKey;
             viewModel.SelectedExportType = dataConfiguration.ExportType.ToString();
-            
-            // TODO --> this should be import/category/flavor
-            this.configurationModel.SelectedDataType = StatType.CsvNames;
+
+            this.configurationModel.ImportExportKey = dataConfiguration.ImportExportKey;
         }
 
         public IDataStructureSetupViewModel GetInitializedViewModel()
@@ -195,7 +200,7 @@ namespace DataAnalyzer.ViewModels.Utilities
 
             // This will update the model which will cause a propogation up to the grouping view models to populate their combo boxes
             IDataStructureSetupViewModel viewModel = this.executiveViewModelMap[this.mainModel.ExecutiveType];
-            viewModel.SelectedDataType = dataConfiguration.StatType.ToString();
+            viewModel.SelectedDataType = dataConfiguration.ImportExportKey;
             viewModel.SelectedExportType = dataConfiguration.ExportType.ToString();
             this.DisplayNotSupported = false;
         }
@@ -203,7 +208,7 @@ namespace DataAnalyzer.ViewModels.Utilities
         private void FetchConfiguration()
         {
             this.SelectedExportType = this.configurationModel.SelectedExportType.ToString();
-            this.ConfigurationDirectory = this.configurationModel.ConfigurationDirectory;
+            this.ConfigurationDirectory = this.configurationModel.ExecutiveConfigurationDirectory;
         }
 
         private void GeneralViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -219,6 +224,16 @@ namespace DataAnalyzer.ViewModels.Utilities
                     this.ConfigurationDirectory = viewModel.ConfigurationDirectory;
                     break;
             }
+        }
+
+        private void StatsModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(statsModel.Stats):
+                    this.executiveViewModelMap[this.mainModel.ExecutiveType].Initialize();
+                    break;
+            }    
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using DataAnalyzer.Services.Enums;
-using System;
+﻿using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
 {
@@ -7,8 +7,7 @@ namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
     {
         public string Name { get; set; } = string.Empty;
 
-        // TODO --> stat type is no longer a thing. Replace with import/category/flavor
-        public StatType StatType { get; set; } = StatType.NotApplicable;
+        public ImportExportKey ImportExportKey { get; set; } = ImportExportKey.Default;
 
         public ExportType ExportType { get; set; } = ExportType.NotApplicable;
 

@@ -1,5 +1,6 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.Models.DataStructureSetupModels;
+using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -46,8 +47,9 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         {
             reason = string.Empty;
 
-            if (string.IsNullOrEmpty(this.SelectedDataType))
+            if (!this.SelectedDataType.IsValid)
             {
+                // TODO --> create better reason
                 reason = "Must have selected Data Type";
                 return false;
             }
@@ -57,7 +59,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         public override void ClearConfiguration()
         {
-            this.SelectedDataType = StatType.NotApplicable.ToString();
+            this.SelectedDataType = ImportExportKey.Default;
             this.GroupingLayersCount = 0;
             this.ConfigurationGroupings.Clear();
         }

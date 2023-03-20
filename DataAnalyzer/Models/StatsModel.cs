@@ -25,13 +25,14 @@ namespace DataAnalyzer.Models
         private readonly ScraperService scraperService = new();
         private HeirarchalStats heirarchalStats;
 
-        private IDataConfiguration activeConfiguration;
+        private IDataConfiguration activeConfiguration = new NotSupportedDataConfiguration();
 
         private readonly IReadOnlyDictionary<ExecutiveType, IDataConfiguration> configurationMapping;
         private readonly IReadOnlyDictionary<ExecutiveType, IDataOrganizer> dataOrganizerMapping;
 
         public StatsModel()
         {
+            // TODO --> these should probably use an import/category/flavor/export dictionary instead
             this.configurationMapping = new Dictionary<ExecutiveType, IDataConfiguration>()
             {
                 { ExecutiveType.CreateQueryableExcelReport, new ExcelConfiguration() },
@@ -46,7 +47,8 @@ namespace DataAnalyzer.Models
                 { ExecutiveType.NotSupported, new NotSupportedDataOrganizer() },
             };
 
-            mainModel.PropertyChanged += this.MainModelPropertyChanged;
+            this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
+            this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
         }
 
         public ICollection<IStats> Stats { get; } = new List<IStats>();
@@ -62,7 +64,11 @@ namespace DataAnalyzer.Models
         public IDataConfiguration ActiveConfiguration
         {
             get => this.activeConfiguration;
-            set => this.NotifyPropertyChanged(ref this.activeConfiguration, value);
+            set
+            {
+                this.configurationModel.DataConfiguration = value;
+                this.NotifyPropertyChanged(ref this.activeConfiguration, value);
+            }
         }
 
         public void ClearLoadedStats()
@@ -77,6 +83,8 @@ namespace DataAnalyzer.Models
             IImportType type = this.mainModel.ImportType;
             IScraperCategory category = this.mainModel.ScraperCategory;
             IScraperFlavor flavor = this.mainModel.ScraperFlavor;
+
+            this.Stats.Clear();
 
             this.scraperService.ScrapeFromSource(source, type, category, flavor)
                 .ToList()
@@ -112,6 +120,15 @@ namespace DataAnalyzer.Models
             {
                 case nameof(this.mainModel.ExecutiveType):
                     this.ActiveConfiguration = this.configurationMapping[this.mainModel.ExecutiveType];
+                    break;
+            }
+        }
+
+        private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(this.configurationModel.ConfigurationFilePath):
                     break;
             }
         }

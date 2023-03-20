@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Common.DataParameters
 {
+    // TODO --> this whole class needs to be nested dictionaries
     internal class DataParameterLibrary
     {
         private readonly IReadOnlyDictionary<StatType, IDataParameterCollection> parameters;
