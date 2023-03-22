@@ -1,6 +1,7 @@
 ﻿using DataAnalyzer.ApplicationConfigurations;
 using DataAnalyzer.Common.DataParameters;
 using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.Models.ImportModels;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
 using DataAnalyzer.StatConfigurations;
@@ -14,6 +15,9 @@ namespace DataAnalyzer.Models
 {
     internal class ConfigurationModel : BasePropertyChanged
     {
+        private static string FILE_IMPORT_DIRECTORY = "FileImport";
+        private static string FILE_IMPORT_MAPPING_FILE = "DirectoryMappings.json";
+
         private readonly SerializationService serializer = new();
 
         // TODO --> I feel like these two don't belong here
@@ -62,7 +66,7 @@ namespace DataAnalyzer.Models
                 this.NotifyPropertyChanged(ref this.importExportKey, value);
 
                 // TODO --> the library needs to support import/category/flavor/export
-                this.DataParameterCollection = this.dataParameterLibrary.GetParameters(StatType.NotApplicable);
+                //this.DataParameterCollection = this.dataParameterLibrary.GetParameters(StatType.NotApplicable);
             }
         }
 
@@ -233,6 +237,25 @@ namespace DataAnalyzer.Models
             }
         }
 
+        public void UpdateFileImportMappings(FileMap fileMap)
+        {
+            string mappingFile = this.GetFileImportAppConfigPath();
+            Directory.CreateDirectory(Path.GetDirectoryName(mappingFile));
+            this.serializer.JsonSerializeToFile(fileMap, mappingFile);
+        }
+
+        public FileMap GetFileImportMappings()
+        {
+            string mappingFile = this.GetFileImportAppConfigPath();
+
+            if (File.Exists(mappingFile))
+            {
+                return this.serializer.JsonDeserializeFromFile<FileMap>(mappingFile);
+            }
+
+            return new FileMap();
+        }
+
         private void ApplyFilePath()
         {
             string filePath = Path.Combine(this.configurationDirectory, this.configurationName);
@@ -248,5 +271,8 @@ namespace DataAnalyzer.Models
                 this.LoadConfiguration();
             }
         }
+
+        private string GetFileImportAppConfigPath()
+            => Path.Combine(this.configurationDirectory, FILE_IMPORT_DIRECTORY, FILE_IMPORT_MAPPING_FILE);
     }
 }

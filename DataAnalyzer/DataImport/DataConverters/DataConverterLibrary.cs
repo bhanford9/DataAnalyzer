@@ -15,7 +15,7 @@ namespace DataAnalyzer.DataImport.DataConverters
     {
         public DataConverterLibrary()
         {
-            FileImportType fileType = new FileImportType();
+            FileImportType fileType = new();
             //DatabaseImportType databaseType = new DatabaseImportType();
             //HttpImportType httpType = new HttpImportType();
 

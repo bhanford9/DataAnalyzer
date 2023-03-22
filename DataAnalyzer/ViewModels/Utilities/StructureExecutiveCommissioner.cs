@@ -30,9 +30,12 @@ namespace DataAnalyzer.ViewModels.Utilities
 
         public StructureExecutiveCommissioner()
         {
+            // TODO --> I think DataTypes can go away
             this.EnumUtilities.LoadNames(typeof(StatType), this.DataTypes);
             this.EnumUtilities.LoadNames(typeof(ExportType), this.ExportTypes);
 
+            // TODO --> may want to be converting everything away from ExecutiveType and toward 
+            //    just using import/category/flavor/export to access everything
             this.viewDisplayMap = new Dictionary<ExecutiveType, Action>()
             {
                 {
@@ -160,7 +163,7 @@ namespace DataAnalyzer.ViewModels.Utilities
             // TODO --> the data configuration importexportkey is its default right here.
             // need to figure out why its not getting initialized properly
             viewModel.SelectedDataType = dataConfiguration.ImportExportKey;
-            viewModel.SelectedExportType = dataConfiguration.ExportType.ToString();
+            viewModel.SelectedExportType = dataConfiguration.ImportExportKey.ExportType.ToString();
 
             this.configurationModel.ImportExportKey = dataConfiguration.ImportExportKey;
         }
@@ -201,7 +204,7 @@ namespace DataAnalyzer.ViewModels.Utilities
             // This will update the model which will cause a propogation up to the grouping view models to populate their combo boxes
             IDataStructureSetupViewModel viewModel = this.executiveViewModelMap[this.mainModel.ExecutiveType];
             viewModel.SelectedDataType = dataConfiguration.ImportExportKey;
-            viewModel.SelectedExportType = dataConfiguration.ExportType.ToString();
+            viewModel.SelectedExportType = dataConfiguration.ImportExportKey.ExportType.ToString();
             this.DisplayNotSupported = false;
         }
 

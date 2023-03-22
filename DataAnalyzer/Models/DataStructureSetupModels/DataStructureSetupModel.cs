@@ -37,10 +37,8 @@ namespace DataAnalyzer.Models.DataStructureSetupModels
             this.DataConfiguration.DateTime = saveTime;
             this.DataConfiguration.VersionUid = saveUid;
 
-            // TODO --> replace with import/category/flavor
-            this.DataConfiguration.ImportExportKey = this.configurationModel.ImportExportKey;
-            
-            this.DataConfiguration.ExportType = this.configurationModel.SelectedExportType;
+            this.DataConfiguration.ImportExportKey = this.configurationModel.ImportExportKey;            
+            this.DataConfiguration.ImportExportKey.Update(this.configurationModel.SelectedExportType);
 
             // TODO --> the configuration model should just supply this path
             string fullFilePath = this.configurationModel.ExecutiveConfigurationDirectory + "\\" + 

@@ -1,5 +1,4 @@
 ﻿using DataAnalyzer.Services;
-using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
 {
@@ -8,8 +7,6 @@ namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
         public string Name { get; set; } = string.Empty;
 
         public ImportExportKey ImportExportKey { get; set; } = ImportExportKey.Default;
-
-        public ExportType ExportType { get; set; } = ExportType.NotApplicable;
 
         public string SavedDataFilePath { get; set; } = string.Empty;
     }

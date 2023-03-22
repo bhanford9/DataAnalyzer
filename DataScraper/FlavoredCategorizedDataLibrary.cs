@@ -17,6 +17,12 @@ namespace DataScraper
             source.Add(flavor, data);
             return source;
         }
+
+        public static IEnumerable<IScraperCategory> AppendNotApplicable(this IEnumerable<IScraperCategory> source)
+            => source.Append(new NotApplicableScraperCategory());
+
+        public static IEnumerable<IScraperFlavor> AppendNotApplicable(this IEnumerable<IScraperFlavor> source)
+            => source.Append(new NotApplicableScraperFlavor());
     }
 
     public abstract class FlavoredCategorizedDataLibrary<T>
@@ -64,15 +70,17 @@ namespace DataScraper
 
         public IReadOnlyCollection<string> GetImportTypeNames() => this.Keys.Select(x => x.Name).ToList();
 
-        public IReadOnlyCollection<IScraperCategory> GetCategories(IImportType type) => this[type].Keys.ToList();
+        public IReadOnlyCollection<IScraperCategory> GetCategories(IImportType type, bool appendNotApplicable = false)
+            => appendNotApplicable ? this[type].Keys.AppendNotApplicable().ToList() : this[type].Keys.ToList();
 
-        public IReadOnlyCollection<string> GetCategoryNames(IImportType type) => GetCategories(type).Select(x => x.Name).ToList();
+        public IReadOnlyCollection<string> GetCategoryNames(IImportType type, bool appendNotApplicable = false)
+            => GetCategories(type, appendNotApplicable).Select(x => x.Name).ToList();
 
-        public IReadOnlyCollection<IScraperFlavor> GetFlavors(IImportType type, IScraperCategory category)
-            => this[type][category].Keys.ToList();
+        public IReadOnlyCollection<IScraperFlavor> GetFlavors(IImportType type, IScraperCategory category, bool appendNotApplicable = false)
+            => appendNotApplicable ? this[type][category].Keys.AppendNotApplicable().ToList() : this[type][category].Keys.ToList();
 
-        public IReadOnlyCollection<string> GetFlavorNames(IImportType type, IScraperCategory category)
-            => this.GetFlavors(type, category).Select(x => x.Name).ToList();
+        public IReadOnlyCollection<string> GetFlavorNames(IImportType type, IScraperCategory category, bool appendNotApplicable = false)
+            => this.GetFlavors(type, category, appendNotApplicable).Select(x => x.Name).ToList();
 
         protected IDictionary<IScraperFlavor, T> InitializeCategory(IImportType type, IScraperCategory category)
         {

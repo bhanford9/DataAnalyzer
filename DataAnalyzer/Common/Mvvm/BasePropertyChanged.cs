@@ -15,8 +15,11 @@ namespace DataAnalyzer.Common.Mvvm
         {
             if (property == null || !property.Equals(value))
             {
-                property = value;
-                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                if (property != null || value != null)
+                {
+                    property = value;
+                    this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                }
             }
         }
 
@@ -24,9 +27,12 @@ namespace DataAnalyzer.Common.Mvvm
         {
             if (property == null || !property.Equals(value))
             {
-                property = value;
-                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-                then();
+                if (property != null || value != null)
+                {
+                    property = value;
+                    this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                    then();
+                }
             }
         }
     }

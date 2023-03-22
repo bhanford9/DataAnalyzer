@@ -63,7 +63,7 @@ namespace DataAnalyzer.ViewModels
             set
             {
                 this.NotifyPropertyChanged(ref this.selectedImportType, value);
-                this.ScraperCategories = this.dataConverters.GetCategories(value);
+                this.ScraperCategories = this.dataConverters.GetCategories(value, true);
                 this.CategoryIsSelectable = true;
                 this.mainModel.ImportType = value;
             }
@@ -75,7 +75,7 @@ namespace DataAnalyzer.ViewModels
             set
             {
                 this.NotifyPropertyChanged(ref this.selectedScraperCategory, value);
-                this.ScraperFlavors = this.dataConverters.GetFlavors(this.SelectedImportType, value);
+                this.ScraperFlavors = this.dataConverters.GetFlavors(this.SelectedImportType, value, true);
                 this.FlavorIsSelectable = true;
                 this.mainModel.ScraperCategory = value;
             }
