@@ -3,6 +3,7 @@ using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
 using System.ComponentModel;
+using System.Linq;
 
 namespace DataAnalyzer.Models.ImportModels
 {
@@ -15,6 +16,9 @@ namespace DataAnalyzer.Models.ImportModels
         public ImportFromFileModel()
         {
             this.ActiveDirectory = Properties.Settings.Default.LastUsedDataDirectory;
+            
+            // TODO --> Serialized map gets wiped on startup i think
+            this.fileMap = this.configurationModel.GetFileImportMappings();
 
             if (this.ActiveDirectory != string.Empty)
             {
@@ -34,6 +38,11 @@ namespace DataAnalyzer.Models.ImportModels
 
             Properties.Settings.Default.LastUsedDataDirectory = this.ActiveDirectory;
             Properties.Settings.Default.Save();
+
+            if (!this.fileMap.Keys.Any())
+            {
+                this.configurationModel.GetFileImportMappings();
+            }
 
             this.fileMap.MapFile(
                 this.mainModel.ImportType,

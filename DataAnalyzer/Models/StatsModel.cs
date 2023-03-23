@@ -2,14 +2,11 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using DataAnalyzer.Common.DataOrganizers;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.DataImport.DataObjects;
+using DataAnalyzer.Models.ExecutiveUtilities;
 using DataAnalyzer.Services;
-using DataAnalyzer.Services.Enums;
 using DataAnalyzer.StatConfigurations;
-using DataAnalyzer.StatConfigurations.CsvConfigurations;
-using DataAnalyzer.StatConfigurations.ExcelConfiguration;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
@@ -22,31 +19,14 @@ namespace DataAnalyzer.Models
     {
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
         private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
+        private readonly ExecutiveUtilitiesRepository executiveUtilities = BaseSingleton<ExecutiveUtilitiesRepository>.Instance;
         private readonly ScraperService scraperService = new();
         private HeirarchalStats heirarchalStats;
 
         private IDataConfiguration activeConfiguration = new NotSupportedDataConfiguration();
 
-        private readonly IReadOnlyDictionary<ExecutiveType, IDataConfiguration> configurationMapping;
-        private readonly IReadOnlyDictionary<ExecutiveType, IDataOrganizer> dataOrganizerMapping;
-
         public StatsModel()
         {
-            // TODO --> these should probably use an import/category/flavor/export dictionary instead
-            this.configurationMapping = new Dictionary<ExecutiveType, IDataConfiguration>()
-            {
-                { ExecutiveType.CreateQueryableExcelReport, new ExcelConfiguration() },
-                { ExecutiveType.CsvToCSharpClass, new ClassPropertiesConfiguration() },
-                { ExecutiveType.NotSupported, new NotSupportedDataConfiguration() },
-            };
-
-            this.dataOrganizerMapping = new Dictionary<ExecutiveType, IDataOrganizer>()
-            {
-                { ExecutiveType.CreateQueryableExcelReport, new ExcelDataOrganizer() },
-                { ExecutiveType.CsvToCSharpClass, new CsvDataOrganizer() },
-                { ExecutiveType.NotSupported, new NotSupportedDataOrganizer() },
-            };
-
             this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
         }
@@ -97,7 +77,12 @@ namespace DataAnalyzer.Models
         {
             this.activeConfiguration.Initialize(this.configurationModel.DataParameterCollection, applicationConfiguration);
 
-            this.HeirarchalStats = this.dataOrganizerMapping[this.mainModel.ExecutiveType].Organize(this.activeConfiguration, this.Stats);
+            this.HeirarchalStats = this.executiveUtilities
+                [this.mainModel.ImportType]
+                [this.mainModel.ScraperCategory]
+                [this.mainModel.ScraperFlavor]
+                [this.configurationModel.SelectedExportType]
+                .DataOrganizer.Organize(this.activeConfiguration, this.Stats);
 
             this.LoadStatNames(this.HeirarchalStats);
         }
@@ -119,7 +104,12 @@ namespace DataAnalyzer.Models
             switch (e.PropertyName)
             {
                 case nameof(this.mainModel.ExecutiveType):
-                    this.ActiveConfiguration = this.configurationMapping[this.mainModel.ExecutiveType];
+                    this.ActiveConfiguration = this.executiveUtilities
+                        [this.mainModel.ImportType]
+                        [this.mainModel.ScraperCategory]
+                        [this.mainModel.ScraperFlavor]
+                        [this.configurationModel.SelectedExportType]
+                        .DataConfiguration;
                     break;
             }
         }

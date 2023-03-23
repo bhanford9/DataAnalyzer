@@ -1,5 +1,4 @@
-﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
-using DataAnalyzer.Services.Enums;
+﻿using DataAnalyzer.Services.Enums;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;

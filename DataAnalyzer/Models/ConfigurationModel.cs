@@ -9,6 +9,7 @@ using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace DataAnalyzer.Models
@@ -241,7 +242,7 @@ namespace DataAnalyzer.Models
         {
             string mappingFile = this.GetFileImportAppConfigPath();
             Directory.CreateDirectory(Path.GetDirectoryName(mappingFile));
-            this.serializer.JsonSerializeToFile(fileMap, mappingFile);
+            this.serializer.JsonSerializeToFile(fileMap.ToSerializable(), mappingFile);
         }
 
         public FileMap GetFileImportMappings()
@@ -250,7 +251,10 @@ namespace DataAnalyzer.Models
 
             if (File.Exists(mappingFile))
             {
-                return this.serializer.JsonDeserializeFromFile<FileMap>(mappingFile);
+                var result = this.serializer.JsonDeserializeFromFile<List<KeyValuePair<IImportType, List<KeyValuePair<IScraperCategory, List<KeyValuePair<IScraperFlavor, string>>>>>>>(mappingFile);
+                var fileMap = new FileMap();
+                fileMap.FromSerializable(result);
+                return fileMap;
             }
 
             return new FileMap();

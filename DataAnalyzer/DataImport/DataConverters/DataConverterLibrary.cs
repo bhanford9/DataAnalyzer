@@ -21,11 +21,11 @@ namespace DataAnalyzer.DataImport.DataConverters
 
             this[fileType] = new Dictionary<IScraperCategory, IDictionary<IScraperFlavor, IDataConverter>>();
             InitializeCategory(fileType, new QueryableScraperCategory())
-                .ThenAdd(new QueryableStandardScraperFlavor(), new QueryableTimeStatsConverter());
+                .AddFlavoredData(new QueryableStandardScraperFlavor(), new QueryableTimeStatsConverter());
             InitializeCategory(fileType, new CsvNamesScraperCategory())
-                .ThenAdd(new CsvNamesStandardScraperFlavor(), new CsvToNameListConverter());
+                .AddFlavoredData(new CsvNamesStandardScraperFlavor(), new CsvToNameListConverter());
             InitializeCategory(fileType, new CsvScraperCategory())
-                .ThenAdd(new CsvTestScraperFlavor(), new CsvToTestConverter());
+                .AddFlavoredData(new CsvTestScraperFlavor(), new CsvToTestConverter());
         }
 
         public override string Name => "Data Converter";

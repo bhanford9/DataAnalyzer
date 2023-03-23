@@ -177,7 +177,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
                 //    this.ParameterSelections.Clear();
 
                 //    this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes.ToList()
-                //        .ForEach(typeParameters => this.ParameterSelections.Add(
+                //        .ForEach(typeParameters => this.ParameterSelections.AddExport(
                 //            this.typeParameterToViewModel[typeParameters.GetType()](typeParameters)));
                 //    break;
                 case nameof(this.excelSetupModel.ExcelConfiguration.DataTypeConfigurationPath):

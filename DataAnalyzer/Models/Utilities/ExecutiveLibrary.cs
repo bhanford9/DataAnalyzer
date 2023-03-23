@@ -1,6 +1,4 @@
-﻿using DataAnalyzer.Services;
-using DataAnalyzer.Services.Enums;
-using DataScraper.DataScrapers.ScraperFlavors.CsvFlavors;
+﻿using DataAnalyzer.Services.Enums;
 using DataScraper.DataScrapers.ScraperFlavors.QueryableFlavors;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;

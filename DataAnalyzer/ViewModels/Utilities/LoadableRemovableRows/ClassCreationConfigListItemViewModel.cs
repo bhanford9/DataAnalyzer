@@ -1,10 +1,6 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.ExecutionModels.ClassCreationModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {

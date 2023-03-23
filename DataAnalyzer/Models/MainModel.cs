@@ -99,6 +99,7 @@ namespace DataAnalyzer.Models
             }
         }
 
+        // TODO --> moving away from this enum and to using an executive utilities repository
         public ExecutiveType ExecutiveType { get; private set; }
 
         //public ScraperCategory ScraperType => Enum.Parse<ScraperCategory>(this.LoadedInputFiles.DataType);

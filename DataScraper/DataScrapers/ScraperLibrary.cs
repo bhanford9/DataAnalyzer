@@ -20,11 +20,11 @@ namespace DataScraper.DataScrapers
 
             this[fileType] = new Dictionary<IScraperCategory, IDictionary<IScraperFlavor, IDataScraper>>();
             this.InitializeCategory(fileType, new QueryableScraperCategory())
-                .ThenAdd(new QueryableStandardScraperFlavor(), new QueryableDataScraper());
+                .AddFlavoredData(new QueryableStandardScraperFlavor(), new QueryableDataScraper());
             this.InitializeCategory(fileType, new CsvNamesScraperCategory())
-                .ThenAdd(new CsvNamesStandardScraperFlavor(), new CsvNamesScraper());
+                .AddFlavoredData(new CsvNamesStandardScraperFlavor(), new CsvNamesScraper());
             this.InitializeCategory(fileType, new CsvScraperCategory())
-                .ThenAdd(new CsvTestScraperFlavor(), new CsvTestScraper());
+                .AddFlavoredData(new CsvTestScraperFlavor(), new CsvTestScraper());
         }
 
         public override string Name => "Scraper";
