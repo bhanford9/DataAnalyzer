@@ -1,9 +1,8 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
-using DataAnalyzer.Services;
 using System.Collections.Generic;
 using System;
-using DataAnalyzer.Services.Enums;
+using DataAnalyzer.Services.ExecutiveUtilities;
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
@@ -11,42 +10,20 @@ namespace DataAnalyzer.ViewModels.Utilities
     {
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
         private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
-        private EnumUtilities EnumUtilities = new();
+        private readonly ExecutiveUtilitiesRepository executiveUtilities = ExecutiveUtilitiesRepository.Instance;
 
         private bool displayExcelCreation = false;
         private bool displayClassCreation = false;
         private bool displayNotSupported = true;
-        private readonly IReadOnlyDictionary<ExecutiveType, Action> viewDisplayMap;
-        //private readonly IDictionary<ExecutiveType, IDataStructureSetupViewModel> executiveViewModelMap;
+        private readonly IReadOnlyDictionary<string, Action> viewDisplayMap;
 
         public ExecutionExecutiveCommissioner()
         {
-            this.viewDisplayMap = new Dictionary<ExecutiveType, Action>()
+            this.viewDisplayMap = new Dictionary<string, Action>()
             {
-                {
-                    ExecutiveType.CreateQueryableExcelReport,
-                    () =>
-                    {
-                        this.DisplayExcelCreation = true;
-                        //this.executiveViewModelMap[ExecutiveType.CreateQueryableExcelReport].StartListeners();
-                    }
-                },
-                {
-                    ExecutiveType.CsvToCSharpClass,
-                    () =>
-                    {
-                        this.DisplayClassCreation = true;
-                        //this.executiveViewModelMap[ExecutiveType.CsvToCSharpClass].StartListeners();
-                    }
-                },
-                {
-                    ExecutiveType.NotSupported,
-                    () =>
-                    {
-                        this.DisplayNotSupported = true;
-                        //this.executiveViewModelMap[ExecutiveType.NotSupported].StartListeners();
-                    }
-                },
+                { nameof(DisplayExcelCreation), () => this.DisplayExcelCreation = true },
+                { nameof(DisplayClassCreation), () => this.DisplayClassCreation = true },
+                { nameof(DisplayNotSupported), () => this.DisplayNotSupported = true },
             };
         }
 
@@ -74,10 +51,11 @@ namespace DataAnalyzer.ViewModels.Utilities
             this.DisplayClassCreation = false;
         }
 
-        public void SetDisplay(ExecutiveType type)
+        public void SetDisplay()
         {
             this.ClearDisplays();
-            this.viewDisplayMap[type]();
+            IAggregateExecutives executive = this.executiveUtilities.GetExecutive(this.configurationModel.ImportExportKey);
+            this.viewDisplayMap[executive.ExecutionDisplayKey]();
         }
     }
 }

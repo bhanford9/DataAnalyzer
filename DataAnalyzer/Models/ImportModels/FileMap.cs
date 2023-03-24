@@ -1,4 +1,5 @@
-﻿using DataScraper;
+﻿using DataAnalyzer.Services;
+using DataScraper;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
@@ -10,6 +11,9 @@ namespace DataAnalyzer.Models.ImportModels
     internal class FileMap : FlavoredCategorizedDataLibrary<string>
     {
         public override string Name => "Previous Directories Map";
+
+        public string MapFile(ImportKey key, string rootPath, string fileName = "")
+            => MapFile(key.Type, key.Category, key.Flavor, rootPath, fileName);
 
         public string MapFile(
             IImportType import,

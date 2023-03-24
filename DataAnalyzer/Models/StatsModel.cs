@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.DataImport.DataObjects;
-using DataAnalyzer.Models.ExecutiveUtilities;
 using DataAnalyzer.Services;
+using DataAnalyzer.Services.ExecutiveUtilities;
 using DataAnalyzer.StatConfigurations;
-using DataScraper.DataScrapers.ImportTypes;
-using DataScraper.DataScrapers.ScraperCategories;
-using DataScraper.DataScrapers.ScraperFlavors;
 using DataScraper.DataSources;
 using AppDataConfig = DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 
@@ -18,16 +16,16 @@ namespace DataAnalyzer.Models
     internal class StatsModel : BasePropertyChanged
     {
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-        private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
-        private readonly ExecutiveUtilitiesRepository executiveUtilities = BaseSingleton<ExecutiveUtilitiesRepository>.Instance;
         private readonly ScraperService scraperService = new();
         private HeirarchalStats heirarchalStats;
 
         private IDataConfiguration activeConfiguration = new NotSupportedDataConfiguration();
 
+        //  making this lazy because it instantiates classes that require this model already be in memory
+        private ExecutiveUtilitiesRepository executiveUtilities => ExecutiveUtilitiesRepository.Instance;
+
         public StatsModel()
         {
-            this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
         }
 
@@ -60,13 +58,9 @@ namespace DataAnalyzer.Models
 
         public void LoadStatsFromSource(IDataSource source)
         {
-            IImportType type = this.mainModel.ImportType;
-            IScraperCategory category = this.mainModel.ScraperCategory;
-            IScraperFlavor flavor = this.mainModel.ScraperFlavor;
-
             this.Stats.Clear();
 
-            this.scraperService.ScrapeFromSource(source, type, category, flavor)
+            this.scraperService.ScrapeFromSource(source, this.configurationModel.ImportExportKey.ImportKey)
                 .ToList()
                 .ForEach(this.Stats.Add);
 
@@ -78,10 +72,7 @@ namespace DataAnalyzer.Models
             this.activeConfiguration.Initialize(this.configurationModel.DataParameterCollection, applicationConfiguration);
 
             this.HeirarchalStats = this.executiveUtilities
-                [this.mainModel.ImportType]
-                [this.mainModel.ScraperCategory]
-                [this.mainModel.ScraperFlavor]
-                [this.configurationModel.SelectedExportType]
+                .GetExecutiveOrDefault(this.configurationModel.ImportExportKey)
                 .DataOrganizer.Organize(this.activeConfiguration, this.Stats);
 
             this.LoadStatNames(this.HeirarchalStats);
@@ -99,26 +90,14 @@ namespace DataAnalyzer.Models
             this.LoadStatNames(stats.Children.First());
         }
 
-        private void MainModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(this.mainModel.ExecutiveType):
-                    this.ActiveConfiguration = this.executiveUtilities
-                        [this.mainModel.ImportType]
-                        [this.mainModel.ScraperCategory]
-                        [this.mainModel.ScraperFlavor]
-                        [this.configurationModel.SelectedExportType]
-                        .DataConfiguration;
-                    break;
-            }
-        }
-
         private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case nameof(this.configurationModel.ConfigurationFilePath):
+                case nameof(this.configurationModel.ImportExportKey):
+                    this.ActiveConfiguration = this.executiveUtilities
+                        .GetExecutiveOrDefault(this.configurationModel.ImportExportKey)
+                        .DataConfiguration;
                     break;
             }
         }

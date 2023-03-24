@@ -21,7 +21,6 @@ namespace DataAnalyzer.ViewModels
         private IReadOnlyCollection<IScraperCategory> scraperCategories = new List<IScraperCategory>();
         private IReadOnlyCollection<IScraperFlavor> scrpaerFlavors = new List<IScraperFlavor>();
 
-        private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
         private readonly DataConverterLibrary dataConverters = BaseSingleton<DataConverterLibrary>.Instance;
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
 
@@ -65,7 +64,7 @@ namespace DataAnalyzer.ViewModels
                 this.NotifyPropertyChanged(ref this.selectedImportType, value);
                 this.ScraperCategories = this.dataConverters.GetCategories(value, true);
                 this.CategoryIsSelectable = true;
-                this.mainModel.ImportType = value;
+                this.configurationModel.ImportType = value;
             }
         }
 
@@ -77,7 +76,7 @@ namespace DataAnalyzer.ViewModels
                 this.NotifyPropertyChanged(ref this.selectedScraperCategory, value);
                 this.ScraperFlavors = this.dataConverters.GetFlavors(this.SelectedImportType, value, true);
                 this.FlavorIsSelectable = true;
-                this.mainModel.ScraperCategory = value;
+                this.configurationModel.Category = value;
             }
         }
 
@@ -87,7 +86,7 @@ namespace DataAnalyzer.ViewModels
             set
             {
                 this.NotifyPropertyChanged(ref this.selectedScraperFlavor, value);
-                this.mainModel.ScraperFlavor = value;
+                this.configurationModel.Flavor = value;
             }
         }
 

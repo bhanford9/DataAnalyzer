@@ -14,7 +14,7 @@ using System.IO;
 
 namespace DataAnalyzer.Models
 {
-    internal class ConfigurationModel : BasePropertyChanged
+    internal class ConfigurationModel : BasePropertyChanged, IConfigurationModel
     {
         private static string FILE_IMPORT_DIRECTORY = "FileImport";
         private static string FILE_IMPORT_MAPPING_FILE = "DirectoryMappings.json";
@@ -32,7 +32,7 @@ namespace DataAnalyzer.Models
         private string configurationFilePath = string.Empty;
 
         private string executiveConfigurationDirectory = string.Empty;
-        private string executiveConfigurationName= string.Empty;
+        private string executiveConfigurationName = string.Empty;
 
         private IImportType importType = null;
         private IScraperCategory category = null;
@@ -60,11 +60,15 @@ namespace DataAnalyzer.Models
             get => this.importExportKey;
             set
             {
-                if (value == null)
-                {
-                    string str = "hello";
-                }
                 this.NotifyPropertyChanged(ref this.importExportKey, value);
+                this.importType = value.ImportKey.Type;
+                this.category = value.ImportKey.Category;
+                this.flavor = value.ImportKey.Flavor;
+                this.selectedExportType = value.ExportType;
+                this.NotifyPropertyChanged(nameof(this.ImportType));
+                this.NotifyPropertyChanged(nameof(this.Category));
+                this.NotifyPropertyChanged(nameof(this.Flavor));
+                this.NotifyPropertyChanged(nameof(this.SelectedExportType));
 
                 // TODO --> the library needs to support import/category/flavor/export
                 //this.DataParameterCollection = this.dataParameterLibrary.GetParameters(StatType.NotApplicable);
@@ -76,9 +80,17 @@ namespace DataAnalyzer.Models
             get => this.selectedExportType;
             set
             {
-                this.ImportExportKey.Update(value);
-                this.NotifyPropertyChanged(nameof(this.ImportExportKey));
-                this.NotifyPropertyChanged(ref this.selectedExportType, value);
+                if (this.selectedExportType != value)
+                {
+                    this.selectedExportType = value;
+                    this.NotifyPropertyChanged(nameof(this.SelectedExportType));
+                }
+
+                if (this.ImportExportKey.ExportType != value)
+                {
+                    this.ImportExportKey.Update(value);
+                    this.NotifyPropertyChanged(nameof(this.ImportExportKey));
+                }                
             }
         }
 

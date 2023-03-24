@@ -4,6 +4,7 @@ using DataAnalyzer.Models;
 using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
+using DataAnalyzer.Services.ExecutiveUtilities;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 using System;
 using System.Collections.Generic;
@@ -13,68 +14,38 @@ using System.Linq;
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-    internal class StructureExecutiveCommissioner : BasePropertyChanged
+    internal class StructureExecutiveCommissioner : BasePropertyChanged, IStructureExecutiveCommissioner
     {
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
         private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
         private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-        private EnumUtilities EnumUtilities = new();
+        private readonly ExecutiveUtilitiesRepository executiveUtilities = ExecutiveUtilitiesRepository.Instance;
+        private EnumUtilities enumUtilities = new();
 
         private bool displayGroupingSetup = false;
         private bool displayCsvToClassSetup = false;
         private bool displayNotSupported = true;
         private string selectedExportType = string.Empty;
         private string configurationDirectory = string.Empty;
-        private readonly IReadOnlyDictionary<ExecutiveType, Action> viewDisplayMap;
-        private readonly IReadOnlyDictionary<ExecutiveType, IDataStructureSetupViewModel> executiveViewModelMap;
+        private readonly IReadOnlyDictionary<string, Action> viewDisplayMap;
 
         public StructureExecutiveCommissioner()
         {
-            // TODO --> I think DataTypes can go away
-            this.EnumUtilities.LoadNames(typeof(StatType), this.DataTypes);
-            this.EnumUtilities.LoadNames(typeof(ExportType), this.ExportTypes);
+            this.enumUtilities.LoadNames(typeof(ExportType), this.ExportTypes);
 
             // TODO --> may want to be converting everything away from ExecutiveType and toward 
             //    just using import/category/flavor/export to access everything
-            this.viewDisplayMap = new Dictionary<ExecutiveType, Action>()
+            this.viewDisplayMap = new Dictionary<string, Action>()
             {
-                {
-                    ExecutiveType.CreateQueryableExcelReport,
-                    () =>
-                    {
-                        this.DisplayGroupingSetup = true;
-                        this.executiveViewModelMap[ExecutiveType.CreateQueryableExcelReport].StartListeners();
-                    }
-                },
-                {
-                    ExecutiveType.CsvToCSharpClass,
-                    () =>
-                    {
-                        this.DisplayCsvToClassSetup = true;
-                        this.executiveViewModelMap[ExecutiveType.CsvToCSharpClass].StartListeners();
-                    }
-                },
-                {
-                    ExecutiveType.NotSupported,
-                    () =>
-                    {
-                        this.DisplayNotSupported = true;
-                        this.executiveViewModelMap[ExecutiveType.NotSupported].StartListeners();
-                    }
-                },
+                { nameof(DisplayGroupingSetup), () => this.DisplayGroupingSetup = true },
+                { nameof(DisplayCsvToClassSetup), () => this.DisplayCsvToClassSetup = true },
+                { nameof(DisplayNotSupported), () => this.DisplayNotSupported = true },
             };
 
-            this.executiveViewModelMap = new Dictionary<ExecutiveType, IDataStructureSetupViewModel>()
-            {
-                { ExecutiveType.CreateQueryableExcelReport, new GroupingSetupViewModel(this.DataTypes, new GroupingSetupModel()) },
-                { ExecutiveType.CsvToCSharpClass, new CsvCSharpStringClassSetupViewModel(this.DataTypes, new CsvCSharpStringClassSetupModel()) },
-                { ExecutiveType.NotSupported, new NotSupportedSetupViewModel(this.DataTypes, new NotSupportedSetupModel())},
-            };
-
-            foreach (var viewModel in this.executiveViewModelMap.Where(x => x.Value != null))
-            {
-                viewModel.Value.PropertyChanged += GeneralViewModelPropertyChanged;
-            }
+            //foreach (var viewModel in this.executiveViewModelMap.Where(x => x.Value != null))
+            //{
+            //    viewModel.Value.PropertyChanged += GeneralViewModelPropertyChanged;
+            //}
 
             if (!this.configurationModel.HasLoaded)
             {
@@ -89,8 +60,12 @@ namespace DataAnalyzer.ViewModels.Utilities
             this.statsModel.PropertyChanged += this.StatsModelPropertyChanged;
         }
 
-        public ObservableCollection<string> DataTypes { get; } = new();
         public ObservableCollection<string> ExportTypes { get; } = new();
+
+        public IDataStructureSetupViewModel ActiveViewModel
+            => this.executiveUtilities
+                .GetExecutiveOrDefault(this.configurationModel.ImportExportKey)
+                .DataStructureSetupViewModel;
 
         public bool DisplayNotSupported
         {
@@ -127,41 +102,40 @@ namespace DataAnalyzer.ViewModels.Utilities
             set => this.NotifyPropertyChanged(ref this.configurationDirectory, value);
         }
 
-        public void SetDisplay(ExecutiveType type)
+        public void SetDisplay()
         {
             this.ClearDisplays();
-            this.viewDisplayMap[type]();
+            this.ActiveViewModel.StartListeners();
+            this.viewDisplayMap[this.ActiveViewModel.GetDisplayStringName()]();
         }
 
-        public void SetConfigurationName(string name) => this.executiveViewModelMap[this.mainModel.ExecutiveType].ConfigurationName = name;
+        public void SetConfigurationName(string name) => this.ActiveViewModel.ConfigurationName = name;
 
-        public string GetConfigurationName() => this.executiveViewModelMap[this.mainModel.ExecutiveType].ConfigurationName;
+        public string GetConfigurationName() => this.ActiveViewModel.ConfigurationName;
 
-        public string GetConfigurationDirectory() => this.executiveViewModelMap[this.mainModel.ExecutiveType].ConfigurationDirectory;
+        public string GetConfigurationDirectory() => this.ActiveViewModel.ConfigurationDirectory;
 
-        public bool CanSave(out string reason) => this.executiveViewModelMap[this.mainModel.ExecutiveType].CanSave(out reason);
+        public bool CanSave(out string reason) => this.ActiveViewModel.CanSave(out reason);
 
-        public void ApplyConfiguration() => this.executiveViewModelMap[this.mainModel.ExecutiveType].ApplyConfiguration();
+        public void ApplyConfiguration() => this.ActiveViewModel.ApplyConfiguration();
 
-        public void SaveConfiguration() => this.executiveViewModelMap[this.mainModel.ExecutiveType].SaveConfiguration();        
+        public void SaveConfiguration() => this.ActiveViewModel.SaveConfiguration();
 
-        public IDataConfiguration GetDataConfiguration() => this.executiveViewModelMap[this.mainModel.ExecutiveType].DataConfiguration;
+        public IDataConfiguration GetDataConfiguration() => this.ActiveViewModel.DataConfiguration;
 
         public TDataConfiguration GetDataConfiguration<TDataConfiguration>()
             where TDataConfiguration : IDataConfiguration
             => (TDataConfiguration)GetDataConfiguration();
 
-        public void CreateNewDataConfiguration() => this.executiveViewModelMap[this.mainModel.ExecutiveType].CreateNewDataConfiguration();
+        public void CreateNewDataConfiguration() => this.ActiveViewModel.CreateNewDataConfiguration();
 
         public void LoadConfiguration(string configName)
         {
-            IDataStructureSetupViewModel viewModel = this.executiveViewModelMap[this.mainModel.ExecutiveType];
+            IDataStructureSetupViewModel viewModel = this.ActiveViewModel;
             viewModel.LoadConfiguration(configName);
-            
+
             IDataConfiguration dataConfiguration = this.GetDataConfiguration();
 
-            // TODO --> the data configuration importexportkey is its default right here.
-            // need to figure out why its not getting initialized properly
             viewModel.SelectedDataType = dataConfiguration.ImportExportKey;
             viewModel.SelectedExportType = dataConfiguration.ImportExportKey.ExportType.ToString();
 
@@ -172,7 +146,7 @@ namespace DataAnalyzer.ViewModels.Utilities
         {
             FetchConfiguration();
 
-            IDataStructureSetupViewModel viewModel = this.executiveViewModelMap[this.mainModel.ExecutiveType];
+            IDataStructureSetupViewModel viewModel = this.ActiveViewModel;
             viewModel.Initialize();
             viewModel.SelectedExportType = this.selectedExportType;
 
@@ -182,7 +156,7 @@ namespace DataAnalyzer.ViewModels.Utilities
         public void ClearConfiguration()
         {
             this.SetConfigurationName(string.Empty);
-            this.executiveViewModelMap[this.mainModel.ExecutiveType].ClearConfiguration();
+            this.ActiveViewModel.ClearConfiguration();
         }
 
         public void ClearDisplays()
@@ -190,8 +164,7 @@ namespace DataAnalyzer.ViewModels.Utilities
             this.DisplayGroupingSetup = false;
             this.DisplayCsvToClassSetup = false;
             this.DisplayNotSupported = false;
-
-            this.executiveViewModelMap.ToList().ForEach(x => x.Value.StopListeners());
+            this.executiveUtilities.StructureSetupViewModels.ToList().ForEach(viewModel => viewModel.StopListeners());
         }
 
         public void LoadViewModelFromConfiguration()
@@ -202,7 +175,7 @@ namespace DataAnalyzer.ViewModels.Utilities
             this.SetConfigurationName(dataConfiguration.Name);
 
             // This will update the model which will cause a propogation up to the grouping view models to populate their combo boxes
-            IDataStructureSetupViewModel viewModel = this.executiveViewModelMap[this.mainModel.ExecutiveType];
+            IDataStructureSetupViewModel viewModel = this.ActiveViewModel;
             viewModel.SelectedDataType = dataConfiguration.ImportExportKey;
             viewModel.SelectedExportType = dataConfiguration.ImportExportKey.ExportType.ToString();
             this.DisplayNotSupported = false;
@@ -234,9 +207,9 @@ namespace DataAnalyzer.ViewModels.Utilities
             switch (e.PropertyName)
             {
                 case nameof(statsModel.Stats):
-                    this.executiveViewModelMap[this.mainModel.ExecutiveType].Initialize();
+                    this.ActiveViewModel.Initialize();
                     break;
-            }    
+            }
         }
     }
 }

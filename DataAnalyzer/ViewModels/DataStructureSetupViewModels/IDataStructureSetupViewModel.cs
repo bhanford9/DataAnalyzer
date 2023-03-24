@@ -22,5 +22,6 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         void SaveConfiguration();
         void StartListeners();
         void StopListeners();
+        string GetDisplayStringName();
     }
 }

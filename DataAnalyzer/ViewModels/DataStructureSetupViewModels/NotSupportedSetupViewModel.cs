@@ -1,15 +1,13 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.Models.DataStructureSetupModels;
+using DataAnalyzer.ViewModels.Utilities;
 using System.Collections.ObjectModel;
 
 namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 {
     internal class NotSupportedSetupViewModel : DataStructureSetupViewModel<NotSupportedDataConfiguration>
     {
-        public NotSupportedSetupViewModel(
-            ObservableCollection<string> dataTypes,
-            NotSupportedSetupModel model)
-            : base(dataTypes, model) { }
+        public NotSupportedSetupViewModel(NotSupportedSetupModel model) : base(model) { }
 
         public override bool CanSave(out string reason)
         {
@@ -21,5 +19,6 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         public override void ApplyConfiguration() { }
         public override void SaveConfiguration() { }
         public override void Initialize() { }
+        public override string GetDisplayStringName() => nameof(StructureExecutiveCommissioner.DisplayNotSupported);
     }
 }

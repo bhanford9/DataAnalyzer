@@ -1,6 +1,5 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
-using DataAnalyzer.Services.Enums;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 using DataAnalyzer.ViewModels.Utilities;
 using DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;
@@ -15,27 +14,30 @@ namespace DataAnalyzer.ViewModels
 {
     internal class ConfigurationCreationViewModel : BasePropertyChanged
     {
-        //private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-        private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
+        private readonly IConfigurationModel configModel;
 
-        private ExecutiveType executiveType = ExecutiveType.NotSupported;
-        private IDataStructureSetupViewModel activeViewModel;
+        private IDataStructureSetupViewModel activeViewModel = new NotSupportedSetupViewModel(new());
 
         private readonly BaseCommand createConfiguration;
         private readonly BaseCommand cancelChanges;
         private readonly BaseCommand applyWithoutSave;
         private readonly BaseCommand saveConfiguration;
 
-        public ConfigurationCreationViewModel()
+        public ConfigurationCreationViewModel(
+            IConfigurationModel configModel,
+            IStructureExecutiveCommissioner executiveCommissioner)
         {
+            this.configModel = configModel;
+            this.ExecutiveCommissioner = executiveCommissioner;
+
             this.InitializeViewModel();
             this.createConfiguration = new BaseCommand(obj => this.DoCreateConfiguration());
             this.cancelChanges = new BaseCommand(obj => this.DoCancelChanges());
             this.applyWithoutSave = new BaseCommand(obj => this.DoApplyConfiguration());
             this.saveConfiguration = new BaseCommand(obj => this.DoSaveConfiguration());
 
-            this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
-            //this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
+            this.configModel.PropertyChanged += this.ConfigModelPropertyChanged;
+
             this.ExecutiveCommissioner.PropertyChanged += this.ExecutiveCommissionerPropertyChanged;
         }
 
@@ -44,18 +46,16 @@ namespace DataAnalyzer.ViewModels
         public ICommand ApplyWithoutSave => this.applyWithoutSave;
         public ICommand SaveConfiguration => this.saveConfiguration;
 
-        public ObservableCollection<string> DataTypes => this.ExecutiveCommissioner.DataTypes;
         public ObservableCollection<string> ExportTypes => this.ExecutiveCommissioner.ExportTypes;
         public ObservableCollection<LoadableRemovableRowViewModel> Configurations { get; } = new();
 
-        public StructureExecutiveCommissioner ExecutiveCommissioner { get; }
-            = BaseSingleton<StructureExecutiveCommissioner>.Instance;
+        public IStructureExecutiveCommissioner ExecutiveCommissioner { get; }
 
-        public ExecutiveType ExecutiveType
-        {
-            get => this.executiveType;
-            set => this.NotifyPropertyChanged(ref this.executiveType, value);
-        }
+        //public ExecutiveType ExecutiveType
+        //{
+        //    get => this.executiveType;
+        //    set => this.NotifyPropertyChanged(ref this.executiveType, value);
+        //}
 
         public IDataStructureSetupViewModel ActiveViewModel
         {
@@ -128,23 +128,24 @@ namespace DataAnalyzer.ViewModels
 
         private void InitializeViewModel()
         {
-            this.ExecutiveType = this.mainModel.ExecutiveType;
+            //this.ExecutiveType = this.mainModel.ExecutiveType;
 
-            if (this.ExecutiveType != ExecutiveType.NotSupported)
+            //if (this.ExecutiveType != ExecutiveType.NotSupported)
+            if (this.configModel.ImportExportKey.IsValid)
             {
                 this.ActiveViewModel = this.ExecutiveCommissioner.GetInitializedViewModel();
                 this.ApplyConfigurationDirectory(this.ExecutiveCommissioner.GetConfigurationDirectory());
             }
 
-            this.ExecutiveCommissioner.SetDisplay(this.ExecutiveType);
+            this.ExecutiveCommissioner.SetDisplay();
         }
 
-        private void MainModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ConfigModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case nameof(this.mainModel.ExecutiveType):
-                    this.ExecutiveType = this.mainModel.ExecutiveType;
+                case nameof(this.configModel.ImportExportKey):
+                    // TODO --> might need to update page
                     break;
             }
         }
@@ -158,17 +159,5 @@ namespace DataAnalyzer.ViewModels
                     break;
             }
         }
-
-        //private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        //{
-        //    switch (e.propertyName)
-        //    {
-        //        case nameof(this.configurationModel.ActiveModel.DataConfiguration):
-        //            this.executiveCommissioner.LoadViewModelFromConfiguration(this.ExecutiveType);
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
     }
 }

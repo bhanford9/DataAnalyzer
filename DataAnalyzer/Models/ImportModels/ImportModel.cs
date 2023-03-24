@@ -8,12 +8,13 @@ namespace DataAnalyzer.Models.ImportModels
         private string selectedScraperCategory = string.Empty;
 
         private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
+        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
 
         public ImportModel()
         {
             this.SelectedScraperCategory = Properties.Settings.Default.LastSelectedScraperType;
 
-            this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
+            this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
         }
 
         public string SelectedScraperCategory
@@ -29,12 +30,12 @@ namespace DataAnalyzer.Models.ImportModels
             }
         }
 
-        private void MainModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case nameof(this.mainModel.ScraperCategory):
-                    this.SelectedScraperCategory = this.mainModel.ScraperCategory.ToString();
+                case nameof(this.configurationModel.Category):
+                    this.SelectedScraperCategory = this.configurationModel.Category.ToString();
                     break;
             }
         }

@@ -3,6 +3,7 @@ using DataAnalyzer.Models;
 using DataAnalyzer.ViewModels.ImportViewModels;
 using DataScraper.DataScrapers.ImportTypes;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
@@ -10,14 +11,14 @@ namespace DataAnalyzer.ViewModels.Utilities
     {
         private bool displayFileImport = false;
 
-        private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
+        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
 
         // this may need to be dependent on more than just the import type
         private readonly IReadOnlyDictionary<IImportType, IImportViewModel> viewModelMap;
 
         public ImportExecutiveCommissioner()
         {
-            this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
+            this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
             //this.SetDisplay();
 
             viewModelMap = new Dictionary<IImportType, IImportViewModel>()
@@ -36,19 +37,19 @@ namespace DataAnalyzer.ViewModels.Utilities
         {
             this.DisplayFileImport = false;
 
-            if (this.mainModel.ImportType.Name.Equals(new FileImportType().Name))
+            if (this.configurationModel.ImportType.Name.Equals(new FileImportType().Name))
             {
                 this.DisplayFileImport = true;
             }
         }
 
-        private void MainModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case nameof(this.mainModel.ImportType):
-                case nameof(this.mainModel.ScraperCategory):
-                case nameof(this.mainModel.ScraperFlavor):
+                case nameof(this.configurationModel.ImportType):
+                case nameof(this.configurationModel.Category):
+                case nameof(this.configurationModel.Flavor):
                     this.SetDisplay();
                     break;
             }

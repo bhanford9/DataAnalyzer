@@ -5,7 +5,6 @@ using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
@@ -26,33 +25,32 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         private string selectedExportType = string.Empty;
         private bool isListening = true;
 
-        public DataStructureSetupViewModel(
-            ObservableCollection<string> dataTypes,
-            IDataStructureSetupModel<TDataConfiguration> dataStructureModel)
+        public DataStructureSetupViewModel(IDataStructureSetupModel<TDataConfiguration> dataStructureModel)
         {
             this.dataStructureModel = dataStructureModel;
-            this.DataTypes = dataTypes;
             this.dataStructureModel.PropertyChanged += this.DataStructureModelPropertyChanged;
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
             this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
-        }
 
-        public ObservableCollection<string> DataTypes { get; }
+            this.configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+            this.mainModel = BaseSingleton<MainModel>.Instance;
+            this.statsModel = BaseSingleton<StatsModel>.Instance;
+    }
 
         public IDataConfiguration DataConfiguration => this.dataStructureModel.DataConfiguration;
 
-        // TODO --> there should not be a selected data type (import/category/flavor instead)
         public ImportExportKey SelectedDataType
         {
             get => this.selectedDataType;
             set
             {
-                // TODO --> value coming into here while using the application is incorrect
-                this.NotifyPropertyChanged(ref this.selectedDataType, value);
-                this.configurationModel.ImportExportKey = value;
+                this.NotifyPropertyChangedThen(ref this.selectedDataType, value, () =>
+                {
+                    this.configurationModel.ImportExportKey = value;
+                    // TODO --> may need to make this more structured (data type may not be necessary)
+                    this.mainModel.LoadedDataStructure.DataType = value.Name;
+                });
 
-                // TODO --> may need to make this more structured
-                this.mainModel.LoadedDataStructure.DataType = value.Name;
             }
         }
 
@@ -63,7 +61,6 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             {
                 this.NotifyPropertyChanged(ref this.configurationName, value);
 
-                // TODO --> make sure there is good rationale for having 3 different locations house this value
                 this.configurationModel.ExecutiveConfigurationName = value;
                 this.mainModel.LoadedDataStructure.StructureName = value;
 
@@ -131,6 +128,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         public abstract void SaveConfiguration();
 
         public abstract void LoadViewModelFromConfiguration();
+
+        public abstract string GetDisplayStringName();
 
         private void DataStructureModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {

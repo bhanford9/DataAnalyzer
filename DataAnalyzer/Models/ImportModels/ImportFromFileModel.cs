@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.Services;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
@@ -17,7 +18,6 @@ namespace DataAnalyzer.Models.ImportModels
         {
             this.ActiveDirectory = Properties.Settings.Default.LastUsedDataDirectory;
             
-            // TODO --> Serialized map gets wiped on startup i think
             this.fileMap = this.configurationModel.GetFileImportMappings();
 
             if (this.ActiveDirectory != string.Empty)
@@ -25,7 +25,7 @@ namespace DataAnalyzer.Models.ImportModels
                 this.ApplyActiveDirectory(this.ActiveDirectory);
             }
 
-            this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
+            this.configurationModel.PropertyChanged += this.ConfigModelPropertyChanged;
         }
 
         public string ActiveDirectory { get; private set; } = "No Directory Selected Yet";
@@ -44,12 +44,7 @@ namespace DataAnalyzer.Models.ImportModels
                 this.configurationModel.GetFileImportMappings();
             }
 
-            this.fileMap.MapFile(
-                this.mainModel.ImportType,
-                this.mainModel.ScraperCategory,
-                this.mainModel.ScraperFlavor,
-                path);
-
+            this.fileMap.MapFile(this.configurationModel.ImportExportKey.ImportKey, path);
             this.configurationModel.UpdateFileImportMappings(this.fileMap);
         }
 
@@ -61,17 +56,14 @@ namespace DataAnalyzer.Models.ImportModels
             }
         }
 
-        private void MainModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        public void ApplyActiveDirectory(ImportKey key) => this.ApplyActiveDirectory(key.Type, key.Category, key.Flavor);
+
+        private void ConfigModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case nameof(this.mainModel.ImportType):
-                case nameof(this.mainModel.ScraperCategory):
-                case nameof(this.mainModel.ScraperFlavor):
-                    this.ApplyActiveDirectory(
-                        this.mainModel.ImportType,
-                        this.mainModel.ScraperCategory,
-                        this.mainModel.ScraperFlavor);
+                case nameof(this.configurationModel.ImportExportKey):
+                    this.ApplyActiveDirectory(this.configurationModel.ImportExportKey.ImportKey);
                     break;
             }
         }

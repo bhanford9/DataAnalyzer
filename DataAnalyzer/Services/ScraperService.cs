@@ -18,10 +18,9 @@ namespace DataAnalyzer.Services
         private static readonly DataConverterExecutive dataConverterExecutive = new();
         private static readonly ScraperLibrary scraperLibrary;
 
-        static ScraperService()
-        {
-            scraperLibrary = scraperExecutive.Scrapers;
-        }
+        static ScraperService() => scraperLibrary = scraperExecutive.Scrapers;
+
+        public IDataScraper GetScraper(ImportKey importKey) => scraperLibrary.GetData(importKey);
 
         public IDataScraper GetScraper(IImportType type, IScraperCategory category, IScraperFlavor flavor)
             => scraperLibrary[type, category, flavor];
@@ -34,6 +33,9 @@ namespace DataAnalyzer.Services
 
         public IReadOnlyCollection<IScraperFlavor> GetFlavorsForCategory(IImportType type, IScraperCategory category)
             => scraperLibrary[type][category].Keys.ToList();
+
+        public ICollection<IStats> ScrapeFromSource(IDataSource source, ImportKey key)
+            => ScrapeFromSource(source, key.Type, key.Category, key.Flavor);
 
         public ICollection<IStats> ScrapeFromSource(
             IDataSource source,

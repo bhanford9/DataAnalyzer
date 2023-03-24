@@ -35,7 +35,7 @@ namespace DataAnalyzer.ViewModels
                 this.ApplyActiveDirectory(this.ActiveDirectory);
             }
 
-            //this.EnumUtilities.LoadNames(typeof(ScraperCategory), this.ScraperCategories);
+            //this.enumUtilities.LoadNames(typeof(ScraperCategory), this.ScraperCategories);
         }
 
         public ObservableCollection<CheckableTreeViewItem> Files { get; } = new();

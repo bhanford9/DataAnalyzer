@@ -1,10 +1,19 @@
 ﻿using System;
+using DataScraper;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
 
 namespace DataAnalyzer.Services
 {
+    internal static class ImportKeyExtensions
+    {
+        public static T GetData<T>(this FlavoredCategorizedDataLibrary<T> library, ImportKey key)
+        {
+            return library[key.Type][key.Category][key.Flavor];
+        }
+    }
+
     internal class ImportKey
     {
         private IImportType type;

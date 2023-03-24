@@ -1,6 +1,7 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.Services;
+using DataAnalyzer.ViewModels.Utilities;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -13,8 +14,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         private int groupingLayersCount = 0;
 
-        public GroupingSetupViewModel(ObservableCollection<string> dataTypes, GroupingSetupModel model)
-            : base(dataTypes, model)
+        public GroupingSetupViewModel(GroupingSetupModel model) : base(model)
         {
             this.model = model;
             this.model.PropertyChanged += this.ModelPropertyChanged;
@@ -102,6 +102,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         public void RemoveGroupingConfiguration(int level) => this.model.RemoveGroupingConfiguration(level);
 
         public override void Initialize() { }
+
+        public override string GetDisplayStringName() => nameof(StructureExecutiveCommissioner.DisplayGroupingSetup);
 
         protected void ModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {

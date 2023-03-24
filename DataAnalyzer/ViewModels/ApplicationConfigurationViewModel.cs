@@ -14,10 +14,11 @@ namespace DataAnalyzer.ViewModels
         private string selectedDirectory = string.Empty;
         private string configName = string.Empty;
 
-        private ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+        private IConfigurationModel configurationModel;
 
-        public ApplicationConfigurationViewModel()
+        public ApplicationConfigurationViewModel(IConfigurationModel configurationModel)
         {
+            this.configurationModel = configurationModel;
             this.selectDirectory = new BaseCommand(_ => this.DoSelectDirectory());
             this.apply = new BaseCommand(_ => this.DoApply());
 

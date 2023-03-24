@@ -1,6 +1,7 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.DataImport.DataObjects.CsvStats;
 using DataAnalyzer.Models.DataStructureSetupModels;
+using DataAnalyzer.ViewModels.Utilities;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -14,10 +15,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         // optionally may want to move this into the parent as the interface
         private readonly CsvCSharpStringClassSetupModel model;
 
-        public CsvCSharpStringClassSetupViewModel(
-            ObservableCollection<string> dataTypes,
-            CsvCSharpStringClassSetupModel model)
-            : base(dataTypes, model)
+        public CsvCSharpStringClassSetupViewModel(CsvCSharpStringClassSetupModel model) : base(model)
         {
             this.model = model;
             this.model.PropertyChanged += this.ModelPropertyChanged;
@@ -97,6 +95,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
                     }));
             }
         }
+
+        public override string GetDisplayStringName() => nameof(StructureExecutiveCommissioner.DisplayCsvToClassSetup);
 
         private void ModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

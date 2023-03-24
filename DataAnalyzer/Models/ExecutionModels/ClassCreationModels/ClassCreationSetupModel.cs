@@ -11,7 +11,7 @@ namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels
     internal class ClassCreationSetupModel : BasePropertyChanged
     {
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-        private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
+        //private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
 
         private string configurationName = string.Empty;
 
