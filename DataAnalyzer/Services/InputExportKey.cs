@@ -6,7 +6,7 @@ using DataScraper.DataScrapers.ScraperFlavors;
 
 namespace DataAnalyzer.Services
 {
-    internal class ImportExportKey
+    internal class ImportExportKey : IImportExportKey
     {
         private ImportKey importKey = ImportKey.Default;
         private ExportType exportType = ExportType.NotApplicable;
@@ -15,7 +15,7 @@ namespace DataAnalyzer.Services
         private readonly int hashCode;
 
         public static ImportExportKey Default => new(ImportKey.Default, ExportType.NotApplicable);
-        
+
         public ImportExportKey() { }
 
         public ImportExportKey(ImportKey importKey, ExportType exportType)
@@ -33,7 +33,7 @@ namespace DataAnalyzer.Services
 
         public string Name { get => this.name; init => this.name = value; }
 
-        public bool IsValid => 
+        public bool IsValid =>
             ImportKey.Type is not NotApplicableImportType &&
             ImportKey.Category is not NotApplicableScraperCategory &&
             ImportKey.Flavor is not NotApplicableScraperFlavor &&
@@ -68,7 +68,7 @@ namespace DataAnalyzer.Services
             this.name = $"{ImportKey}_{ExportType}";
         }
 
-        public override bool Equals(object obj) => 
+        public override bool Equals(object obj) =>
             obj is ImportExportKey key &&
                 ImportKey.Equals(key.ImportKey) &&
                 ExportType.Equals(key.ExportType);

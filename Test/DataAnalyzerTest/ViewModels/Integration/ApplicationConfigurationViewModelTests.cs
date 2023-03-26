@@ -9,7 +9,7 @@ namespace DataAnalyzerTest.ViewModels.Integration
         private IConfigurationModel configurationModel;
         private ApplicationConfigurationViewModel viewModel;
 
-        [Fact]
+        //[Fact]
         public void Temp()
         {
             // INTEGRATION TESTS

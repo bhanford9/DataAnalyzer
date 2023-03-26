@@ -6,7 +6,7 @@ using DataAnalyzer.Services.ExecutiveUtilities;
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-    internal class ExecutionExecutiveCommissioner : BasePropertyChanged
+    internal class ExecutionExecutiveCommissioner : BasePropertyChanged, IExecutionExecutiveCommissioner
     {
         private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
         private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;

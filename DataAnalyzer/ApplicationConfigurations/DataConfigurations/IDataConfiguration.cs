@@ -8,6 +8,6 @@ namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
         
         string SavedDataFilePath { get; set; }
 
-        ImportExportKey ImportExportKey { get; set; }
+        IImportExportKey ImportExportKey { get; set; }
     }
 }

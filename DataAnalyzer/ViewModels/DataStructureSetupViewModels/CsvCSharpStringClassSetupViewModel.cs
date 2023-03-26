@@ -29,7 +29,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             set => this.NotifyPropertyChanged(ref this.className, value);
         }
 
-        public override bool CanSave(out string reason)
+        public override bool IsValidSetup(out string reason)
         {
             reason = string.Empty;
 

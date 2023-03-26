@@ -9,7 +9,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
     {
         public NotSupportedSetupViewModel(NotSupportedSetupModel model) : base(model) { }
 
-        public override bool CanSave(out string reason)
+        public override bool IsValidSetup(out string reason)
         {
             reason = "Configuration not supported";
             return false;

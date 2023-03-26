@@ -78,27 +78,30 @@ namespace DataAnalyzer.ViewModels
 
         private void ClearConfigurationData() => this.ExecutiveCommissioner.ClearConfiguration();
 
-        private void DoApplyConfiguration()
+        private bool DoApplyConfiguration()
         {
             if (string.IsNullOrEmpty(this.ExecutiveCommissioner.GetConfigurationName()))
             {
                 // TODO --> Display that there is a problem
-                return;
+                return false;
             }
 
-            if (!this.ExecutiveCommissioner.CanSave(out string reason))
+            if (!this.ExecutiveCommissioner.IsValidSetup(out string reason))
             {
                 // TODO --> Display that there is a problem
-                return;
+                return false;
             }
 
             this.ExecutiveCommissioner.ApplyConfiguration();
+            return true;
         }
 
         private void DoSaveConfiguration()
         {
-            this.DoApplyConfiguration();
-            this.ExecutiveCommissioner.SaveConfiguration();
+            if (this.DoApplyConfiguration())
+            {
+                this.ExecutiveCommissioner.SaveConfiguration();
+            }
         }
 
         private void ApplyConfigurationDirectory(string directoryPath)

@@ -40,16 +40,16 @@ namespace DataAnalyzer.Services.ExecutiveUtilities
             return source;
         }
 
-        public static IAggregateExecutives GetExecutive(this ExecutiveUtilitiesRepository source, ImportExportKey key)
+        public static IAggregateExecutives GetExecutive(this ExecutiveUtilitiesRepository source, IImportExportKey key)
             => source[key.ImportKey.Type][key.ImportKey.Category][key.ImportKey.Flavor][key.ExportType];
 
-        public static IAggregateExecutives GetExecutiveOrDefault(this ExecutiveUtilitiesRepository source, ImportExportKey key)
+        public static IAggregateExecutives GetExecutiveOrDefault(this ExecutiveUtilitiesRepository source, IImportExportKey key)
         {
             source.TryGetExecutive(key, out IAggregateExecutives executive);
             return executive;
         }
 
-        public static bool TryGetExecutive(this ExecutiveUtilitiesRepository source, ImportExportKey key, out IAggregateExecutives executive)
+        public static bool TryGetExecutive(this ExecutiveUtilitiesRepository source, IImportExportKey key, out IAggregateExecutives executive)
         {
             try
             {

@@ -19,7 +19,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         protected readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
         protected readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
 
-        private ImportExportKey selectedDataType = ImportExportKey.Default;
+        private IImportExportKey selectedDataType = Services.ImportExportKey.Default;
         private string configurationName = string.Empty;
         private string configurationDirectory = string.Empty;
         private string selectedExportType = string.Empty;
@@ -39,7 +39,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         public IDataConfiguration DataConfiguration => this.dataStructureModel.DataConfiguration;
 
-        public ImportExportKey SelectedDataType
+        public IImportExportKey SelectedDataType
         {
             get => this.selectedDataType;
             set
@@ -121,7 +121,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         public abstract void ClearConfiguration();
 
-        public abstract bool CanSave(out string reason);
+        public abstract bool IsValidSetup(out string reason);
 
         public abstract void ApplyConfiguration();
 

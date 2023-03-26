@@ -22,7 +22,7 @@ namespace DataAnalyzer.Models
         string ExecutiveConfigurationName { get; set; }
         IScraperFlavor Flavor { get; set; }
         bool HasLoaded { get; }
-        ImportExportKey ImportExportKey { get; set; }
+        IImportExportKey ImportExportKey { get; set; }
         IImportType ImportType { get; set; }
         string SavedDataFilePath { get; set; }
         ExportType SelectedExportType { get; set; }

@@ -42,7 +42,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             }
         }
 
-        public override bool CanSave(out string reason)
+        public override bool IsValidSetup(out string reason)
         {
             reason = string.Empty;
 

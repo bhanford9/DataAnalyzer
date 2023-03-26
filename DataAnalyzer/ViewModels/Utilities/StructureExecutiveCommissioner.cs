@@ -115,7 +115,7 @@ namespace DataAnalyzer.ViewModels.Utilities
 
         public string GetConfigurationDirectory() => this.ActiveViewModel.ConfigurationDirectory;
 
-        public bool CanSave(out string reason) => this.ActiveViewModel.CanSave(out reason);
+        public bool IsValidSetup(out string reason) => this.ActiveViewModel.IsValidSetup(out reason);
 
         public void ApplyConfiguration() => this.ActiveViewModel.ApplyConfiguration();
 

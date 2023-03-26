@@ -7,12 +7,12 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
     internal interface IDataStructureSetupViewModel : INotifyPropertyChanged
     {
         string ConfigurationName { get; set; }
-        ImportExportKey SelectedDataType { get; set; }
+        IImportExportKey SelectedDataType { get; set; }
         string ConfigurationDirectory { get; set; }
         string SelectedExportType { get; set; }
         IDataConfiguration DataConfiguration { get; }
 
-        bool CanSave(out string reason);
+        bool IsValidSetup(out string reason);
         void ClearConfiguration();
         void CreateNewDataConfiguration();
         void Initialize();

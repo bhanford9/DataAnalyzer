@@ -16,7 +16,7 @@ namespace DataAnalyzer.ViewModels.Utilities
         string SelectedExportType { get; set; }
 
         void ApplyConfiguration();
-        bool CanSave(out string reason);
+        bool IsValidSetup(out string reason);
         void ClearConfiguration();
         void ClearDisplays();
         void CreateNewDataConfiguration();
