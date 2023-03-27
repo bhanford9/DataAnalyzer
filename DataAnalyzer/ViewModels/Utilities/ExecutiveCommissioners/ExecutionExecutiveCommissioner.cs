@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System;
 using DataAnalyzer.Services.ExecutiveUtilities;
 
-namespace DataAnalyzer.ViewModels.Utilities
+namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 {
     internal class ExecutionExecutiveCommissioner : BasePropertyChanged, IExecutionExecutiveCommissioner
     {
@@ -19,43 +19,43 @@ namespace DataAnalyzer.ViewModels.Utilities
 
         public ExecutionExecutiveCommissioner()
         {
-            this.viewDisplayMap = new Dictionary<string, Action>()
+            viewDisplayMap = new Dictionary<string, Action>()
             {
-                { nameof(DisplayExcelCreation), () => this.DisplayExcelCreation = true },
-                { nameof(DisplayClassCreation), () => this.DisplayClassCreation = true },
-                { nameof(DisplayNotSupported), () => this.DisplayNotSupported = true },
+                { nameof(DisplayExcelCreation), () => DisplayExcelCreation = true },
+                { nameof(DisplayClassCreation), () => DisplayClassCreation = true },
+                { nameof(DisplayNotSupported), () => DisplayNotSupported = true },
             };
         }
 
         public bool DisplayNotSupported
         {
-            get => this.displayNotSupported;
-            set => this.NotifyPropertyChanged(ref this.displayNotSupported, value);
+            get => displayNotSupported;
+            set => NotifyPropertyChanged(ref displayNotSupported, value);
         }
 
         public bool DisplayExcelCreation
         {
-            get => this.displayExcelCreation;
-            set => this.NotifyPropertyChanged(ref this.displayExcelCreation, value);
+            get => displayExcelCreation;
+            set => NotifyPropertyChanged(ref displayExcelCreation, value);
         }
 
         public bool DisplayClassCreation
         {
-            get => this.displayClassCreation;
-            set => this.NotifyPropertyChanged(ref this.displayClassCreation, value);
+            get => displayClassCreation;
+            set => NotifyPropertyChanged(ref displayClassCreation, value);
         }
 
         public void ClearDisplays()
         {
-            this.DisplayExcelCreation = false;
-            this.DisplayClassCreation = false;
+            DisplayExcelCreation = false;
+            DisplayClassCreation = false;
         }
 
         public void SetDisplay()
         {
-            this.ClearDisplays();
-            IAggregateExecutives executive = this.executiveUtilities.GetExecutiveOrDefault(this.configurationModel.ImportExportKey);
-            this.viewDisplayMap[executive.ExecutionDisplayKey]();
+            ClearDisplays();
+            IAggregateExecutives executive = executiveUtilities.GetExecutiveOrDefault(configurationModel.ImportExportKey);
+            viewDisplayMap[executive.ExecutionDisplayKey]();
         }
     }
 }

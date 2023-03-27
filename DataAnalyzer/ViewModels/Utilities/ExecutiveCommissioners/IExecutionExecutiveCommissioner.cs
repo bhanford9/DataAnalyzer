@@ -1,4 +1,4 @@
-﻿namespace DataAnalyzer.ViewModels.Utilities
+﻿namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 {
     internal interface IExecutionExecutiveCommissioner
     {

@@ -1,7 +1,7 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.Services;
-using DataAnalyzer.ViewModels.Utilities;
+using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;

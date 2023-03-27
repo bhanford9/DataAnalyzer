@@ -6,7 +6,7 @@ using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary;
 using DataAnalyzer.Services.Enums;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels;
-using DataAnalyzer.ViewModels.Utilities;
+using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;

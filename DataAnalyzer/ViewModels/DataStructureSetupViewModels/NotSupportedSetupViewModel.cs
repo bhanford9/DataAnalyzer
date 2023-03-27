@@ -1,6 +1,6 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.Models.DataStructureSetupModels;
-using DataAnalyzer.ViewModels.Utilities;
+using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using System.Collections.ObjectModel;
 
 namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels

@@ -29,8 +29,9 @@ namespace DataScraper
             => source.Select(x => KeyValuePair.Create(x.Key, x.Value.ToList())).ToList();
     }
 
-    public abstract class FlavoredCategorizedDataLibrary<T>
-        : Dictionary<IImportType, IDictionary<IScraperCategory, IDictionary<IScraperFlavor, T>>>
+    public abstract class FlavoredCategorizedDataLibrary<T> :
+        Dictionary<IImportType, IDictionary<IScraperCategory, IDictionary<IScraperFlavor, T>>>,
+        IFlavoredCategorizedDataLibrary<T>
     {
 
         public abstract string Name { get; }

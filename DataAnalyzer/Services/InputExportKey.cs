@@ -8,7 +8,6 @@ namespace DataAnalyzer.Services
 {
     internal class ImportExportKey : IImportExportKey
     {
-        private ImportKey importKey = ImportKey.Default;
         private ExportType exportType = ExportType.NotApplicable;
         private string name;
 
@@ -27,7 +26,7 @@ namespace DataAnalyzer.Services
             this.hashCode = HashCode.Combine(this.ImportKey, this.ExportType);
         }
 
-        public ImportKey ImportKey { get => this.importKey; init => this.importKey = value; }
+        public ImportKey ImportKey { get; init; } = ImportKey.Default;
 
         public ExportType ExportType { get => this.exportType; init => this.exportType = value; }
 

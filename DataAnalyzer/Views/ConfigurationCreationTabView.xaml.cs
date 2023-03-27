@@ -1,7 +1,7 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.ViewModels;
-using DataAnalyzer.ViewModels.Utilities;
+using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using System.Windows.Controls;
 
 namespace DataAnalyzer.Views

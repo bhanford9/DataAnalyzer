@@ -5,9 +5,9 @@ using DataScraper.DataScrapers.ImportTypes;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace DataAnalyzer.ViewModels.Utilities
+namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 {
-    internal class ImportExecutiveCommissioner : BasePropertyChanged
+    internal class ImportExecutiveCommissioner : BasePropertyChanged, IImportExecutiveCommissioner
     {
         private bool displayFileImport = false;
 
@@ -18,8 +18,7 @@ namespace DataAnalyzer.ViewModels.Utilities
 
         public ImportExecutiveCommissioner()
         {
-            this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
-            //this.SetDisplay();
+            configurationModel.PropertyChanged += ConfigurationModelPropertyChanged;
 
             viewModelMap = new Dictionary<IImportType, IImportViewModel>()
             {
@@ -29,17 +28,17 @@ namespace DataAnalyzer.ViewModels.Utilities
 
         public bool DisplayFileImport
         {
-            get => this.displayFileImport;
-            set => this.NotifyPropertyChanged(ref this.displayFileImport, value);
+            get => displayFileImport;
+            set => NotifyPropertyChanged(ref displayFileImport, value);
         }
 
         public void SetDisplay()
         {
-            this.DisplayFileImport = false;
+            DisplayFileImport = false;
 
-            if (this.configurationModel.ImportType.Name.Equals(new FileImportType().Name))
+            if (configurationModel.ImportType.Name.Equals(new FileImportType().Name))
             {
-                this.DisplayFileImport = true;
+                DisplayFileImport = true;
             }
         }
 
@@ -47,10 +46,10 @@ namespace DataAnalyzer.ViewModels.Utilities
         {
             switch (e.PropertyName)
             {
-                case nameof(this.configurationModel.ImportType):
-                case nameof(this.configurationModel.Category):
-                case nameof(this.configurationModel.Flavor):
-                    this.SetDisplay();
+                case nameof(configurationModel.ImportType):
+                case nameof(configurationModel.Category):
+                case nameof(configurationModel.Flavor):
+                    SetDisplay();
                     break;
             }
         }

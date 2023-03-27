@@ -3,7 +3,7 @@ using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.StatConfigurations;
 using DataAnalyzer.StatConfigurations.ExcelConfiguration;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
-using DataAnalyzer.ViewModels.Utilities;
+using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 
 namespace DataAnalyzer.Services.ExecutiveUtilities.Executives
 {

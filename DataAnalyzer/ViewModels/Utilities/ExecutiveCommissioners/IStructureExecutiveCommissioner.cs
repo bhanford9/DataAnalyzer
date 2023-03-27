@@ -3,7 +3,7 @@ using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace DataAnalyzer.ViewModels.Utilities
+namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 {
     internal interface IStructureExecutiveCommissioner : INotifyPropertyChanged
     {

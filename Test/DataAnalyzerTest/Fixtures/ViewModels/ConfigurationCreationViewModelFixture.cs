@@ -1,7 +1,7 @@
 ﻿using DataAnalyzer.Models;
 using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels;
-using DataAnalyzer.ViewModels.Utilities;
+using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using Moq;
 using System.ComponentModel;
 

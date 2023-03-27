@@ -5,6 +5,7 @@ using DataAnalyzer.Models.ExecutionModels.ClassCreationModels;
 using DataAnalyzer.Models.ExecutionModels.ClassCreationModels.SerializationModels;
 using DataAnalyzer.Services.ClassGenerationServices;
 using DataAnalyzer.ViewModels.Utilities;
+using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;
 using System.Collections.ObjectModel;
 using System.ComponentModel;

@@ -1,7 +1,7 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.DataImport.DataConverters;
 using DataAnalyzer.Models;
-using DataAnalyzer.ViewModels.Utilities;
+using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
@@ -21,17 +21,18 @@ namespace DataAnalyzer.ViewModels
         private IReadOnlyCollection<IScraperCategory> scraperCategories = new List<IScraperCategory>();
         private IReadOnlyCollection<IScraperFlavor> scrpaerFlavors = new List<IScraperFlavor>();
 
-        private readonly DataConverterLibrary dataConverters = BaseSingleton<DataConverterLibrary>.Instance;
-        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+        private readonly IDataConverterLibrary dataConverters;
+        private readonly IConfigurationModel configurationModel;
 
-        public ImportConfigurationViewModel()
+        public ImportConfigurationViewModel(
+            IConfigurationModel configModel,
+            IImportExecutiveCommissioner executiveCommissioner,
+            IDataConverterLibrary dataConverters)
         {
+            this.configurationModel = configModel;
+            this.ExecutiveCommissioner = executiveCommissioner;
+            this.dataConverters = dataConverters;
             this.ImportTypes = this.dataConverters.GetImportTypes();
-
-            if (!this.configurationModel.HasLoaded)
-            {
-                this.configurationModel.LoadConfiguration();
-            }
 
             if (this.configurationModel.HasLoaded)
             {
@@ -41,8 +42,7 @@ namespace DataAnalyzer.ViewModels
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
         }
 
-        public ImportExecutiveCommissioner ExecutiveCommissioner { get; }
-            = BaseSingleton<ImportExecutiveCommissioner>.Instance;
+        public IImportExecutiveCommissioner ExecutiveCommissioner { get; }
 
         public bool CategoryIsSelectable
         {

@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using System;
 
 namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows

@@ -1,7 +1,7 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.DataImport.DataObjects.CsvStats;
 using DataAnalyzer.Models.DataStructureSetupModels;
-using DataAnalyzer.ViewModels.Utilities;
+using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;

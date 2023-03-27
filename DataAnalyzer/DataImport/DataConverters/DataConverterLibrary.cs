@@ -11,7 +11,7 @@ using DataScraper.DataScrapers.ScraperFlavors.CsvFlavors;
 
 namespace DataAnalyzer.DataImport.DataConverters
 {
-    internal class DataConverterLibrary : FlavoredCategorizedDataLibrary<IDataConverter>
+    internal class DataConverterLibrary : FlavoredCategorizedDataLibrary<IDataConverter>, IDataConverterLibrary
     {
         public DataConverterLibrary()
         {

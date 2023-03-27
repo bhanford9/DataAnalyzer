@@ -1,7 +1,7 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.DataImport.DataConverters.ExcelConverters;
 using DataAnalyzer.Models.ExcelSetupModels;
-using DataAnalyzer.ViewModels.Utilities;
+using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;
 using ExcelService;
 using System.Collections.Generic;
