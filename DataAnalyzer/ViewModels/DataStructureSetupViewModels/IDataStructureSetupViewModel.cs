@@ -11,6 +11,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         string ConfigurationDirectory { get; set; }
         string SelectedExportType { get; set; }
         IDataConfiguration DataConfiguration { get; }
+        IDataStructureSetupViewModel Default { get; }
+        bool IsDefault { get; }
 
         bool IsValidSetup(out string reason);
         void ClearConfiguration();

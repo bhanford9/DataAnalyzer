@@ -1,4 +1,5 @@
-﻿using DataAnalyzer.Services;
+﻿using DataAnalyzer.Models;
+using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 using DataAnalyzerTest.Fixtures.ViewModels;
@@ -43,22 +44,10 @@ namespace DataAnalyzerTest.ViewModels.Unit
             //this.shared.MockExecutiveCommissioner.VerifySet(x => x.DisplayNotSupported = true);
         }
 
-        // This test is overkill, but would be great for some integration tests
-        //[Theory]
-        //[ClassData(typeof(ImportExportKeyProvider))]
-        //public void ShouldSetActiveViewModelIfValidAtConstructionINTEGRATION(
-        //    IImportType importType,
-        //    IScraperCategory category,
-        //    IScraperFlavor flavor,
-        //    ExportType exportType)
-        //{
-        //    this.shared.MockConfigurationModel.Setup(x => x.ImportExportKey).Returns(new ImportExportKey(
-        //        new ImportKey(importType, category, flavor),
-        //        exportType));
-        //}
-
-        [Fact]
-        public void ShouldSetActiveViewModelIfValidAtConstruction()
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void ShouldSetActiveViewModelIfValidAtConstruction(bool isDefault)
         {
             var configDirectory = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
@@ -69,6 +58,7 @@ namespace DataAnalyzerTest.ViewModels.Unit
             this.shared.MockKey.Setup(x => x.IsValid).Returns(true);
 
             Mock<IDataStructureSetupViewModel> mockDataStructureSetupViewModel = new();
+            mockDataStructureSetupViewModel.Setup(x => x.IsDefault).Returns(isDefault);
 
             this.shared.MockExecutiveCommissioner
                 .Setup(x => x.GetConfigurationDirectory())
@@ -84,12 +74,13 @@ namespace DataAnalyzerTest.ViewModels.Unit
 
             this.shared.MockExecutiveCommissioner.Verify(x => x.GetInitializedViewModel(), Times.Once);
             Assert.Equal(mockDataStructureSetupViewModel.Object, this.shared.ViewModel.ActiveViewModel);
-            this.shared.MockExecutiveCommissioner.Verify(x => x.GetConfigurationDirectory(), Times.Once);
-            Assert.True(Directory.Exists(configDirectory));
 
-            // This doesn not happen because its mocked, good to do some checks in integration instead
-            //mockDataStructureSetupViewModel.Verify(x => x.Initialize(), Times.Once);
-            //mockDataStructureSetupViewModel.VerifySet(x => x.SelectedExportType = expectedExportType, Times.Once);
+            if (!isDefault)
+            {
+                this.shared.MockExecutiveCommissioner.Verify(x => x.GetConfigurationDirectory(), Times.Once);
+            }
+
+            Assert.True(Directory.Exists(configDirectory));
         }
 
         [Fact]
@@ -194,7 +185,22 @@ namespace DataAnalyzerTest.ViewModels.Unit
             this.shared.MockExecutiveCommissioner.Verify(x => x.SaveConfiguration(), Times.Once);
         }
 
-        // TODO --> test the event args prop from config model and executive commissioner
+        [Fact]
+        public void ShouldCatchConfigurationKeyChange()
+        {
+            this.CreateViewModel();
+            this.shared.MockKey.Invocations.Clear();
+            this.shared.MockExecutiveCommissioner.Invocations.Clear();
+            
+            this.shared.MockKey.Setup(x => x.IsValid).Returns(false);
+
+            this.shared.MockConfigurationModel.Raise(
+                this.shared.GetEventAction<IConfigurationModel>(),
+                this.shared.ConfigKeyChangeArgs);
+
+            this.shared.MockKey.Verify(x => x.IsValid, Times.Once);
+            this.shared.MockExecutiveCommissioner.Verify(x => x.SetDisplay(), Times.Once);
+        }
 
         private void CreateViewModel() =>
             this.shared.ViewModel = new(

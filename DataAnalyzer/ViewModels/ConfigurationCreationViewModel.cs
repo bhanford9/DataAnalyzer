@@ -37,8 +37,6 @@ namespace DataAnalyzer.ViewModels
             this.saveConfiguration = new BaseCommand(obj => this.DoSaveConfiguration());
 
             this.configModel.PropertyChanged += this.ConfigModelPropertyChanged;
-
-            this.ExecutiveCommissioner.PropertyChanged += this.ExecutiveCommissionerPropertyChanged;
         }
 
         public ICommand CreateConfiguration => this.createConfiguration;
@@ -50,12 +48,6 @@ namespace DataAnalyzer.ViewModels
         public ObservableCollection<LoadableRemovableRowViewModel> Configurations { get; } = new();
 
         public IStructureExecutiveCommissioner ExecutiveCommissioner { get; }
-
-        //public ExecutiveType ExecutiveType
-        //{
-        //    get => this.executiveType;
-        //    set => this.NotifyPropertyChanged(ref this.executiveType, value);
-        //}
 
         public IDataStructureSetupViewModel ActiveViewModel
         {
@@ -131,13 +123,14 @@ namespace DataAnalyzer.ViewModels
 
         private void InitializeViewModel()
         {
-            //this.ExecutiveType = this.mainModel.ExecutiveType;
-
-            //if (this.ExecutiveType != ExecutiveType.NotSupported)
             if (this.configModel.ImportExportKey.IsValid)
             {
                 this.ActiveViewModel = this.ExecutiveCommissioner.GetInitializedViewModel();
-                this.ApplyConfigurationDirectory(this.ExecutiveCommissioner.GetConfigurationDirectory());
+
+                if (!this.ActiveViewModel.IsDefault)
+                {
+                    this.ApplyConfigurationDirectory(this.ExecutiveCommissioner.GetConfigurationDirectory());
+                }
             }
 
             this.ExecutiveCommissioner.SetDisplay();
@@ -148,16 +141,6 @@ namespace DataAnalyzer.ViewModels
             switch (e.PropertyName)
             {
                 case nameof(this.configModel.ImportExportKey):
-                    // TODO --> might need to update page
-                    break;
-            }
-        }
-
-        private void ExecutiveCommissionerPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(this.ExecutiveCommissioner.SelectedExportType):
                     this.InitializeViewModel();
                     break;
             }

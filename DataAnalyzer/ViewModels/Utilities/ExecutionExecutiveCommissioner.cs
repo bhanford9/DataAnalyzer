@@ -54,7 +54,7 @@ namespace DataAnalyzer.ViewModels.Utilities
         public void SetDisplay()
         {
             this.ClearDisplays();
-            IAggregateExecutives executive = this.executiveUtilities.GetExecutive(this.configurationModel.ImportExportKey);
+            IAggregateExecutives executive = this.executiveUtilities.GetExecutiveOrDefault(this.configurationModel.ImportExportKey);
             this.viewDisplayMap[executive.ExecutionDisplayKey]();
         }
     }

@@ -1,10 +1,9 @@
 ﻿using DataAnalyzer.Models;
+using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DataAnalyzer.ViewModels.Utilities;
+using Moq;
+using System.ComponentModel;
 
 namespace DataAnalyzerTest.Fixtures.ViewModels
 {
@@ -12,9 +11,18 @@ namespace DataAnalyzerTest.Fixtures.ViewModels
     {
         public ConfigurationExecutionViewModelFixture()
         {
+            // one time setup
         }
 
-        internal IConfigurationModel ConfigurationModel { get; set; }
+        internal Mock<IConfigurationModel> MockConfigurationModel { get; set; }
+
+        internal Mock<IExecutionExecutiveCommissioner> MockExecutiveCommissioner { get; set; }
+
+        internal Mock<IImportExportKey> MockKey { get; set; }
+
+        internal string ConfigKeyPropName => nameof(this.MockConfigurationModel.Object.ImportExportKey);
+
+        internal PropertyChangedEventArgs ConfigKeyChangeArgs => this.GetNamedEventArgs(this.ConfigKeyPropName);
 
         internal ConfigurationExecutionViewModel ViewModel { get; set; }
     }

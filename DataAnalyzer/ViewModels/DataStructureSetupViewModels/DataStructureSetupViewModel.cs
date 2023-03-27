@@ -35,7 +35,11 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             this.configurationModel = BaseSingleton<ConfigurationModel>.Instance;
             this.mainModel = BaseSingleton<MainModel>.Instance;
             this.statsModel = BaseSingleton<StatsModel>.Instance;
-    }
+        }
+
+        public IDataStructureSetupViewModel Default => new NotSupportedSetupViewModel(new());
+
+        public bool IsDefault => this is NotSupportedSetupViewModel;
 
         public IDataConfiguration DataConfiguration => this.dataStructureModel.DataConfiguration;
 
