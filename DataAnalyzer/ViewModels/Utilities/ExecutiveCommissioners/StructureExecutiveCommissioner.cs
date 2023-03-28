@@ -1,7 +1,6 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
-using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
 using DataAnalyzer.Services.ExecutiveUtilities;
@@ -16,11 +15,11 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 {
     internal class StructureExecutiveCommissioner : BasePropertyChanged, IStructureExecutiveCommissioner
     {
-        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-        private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
-        private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-        private readonly ExecutiveUtilitiesRepository executiveUtilities = ExecutiveUtilitiesRepository.Instance;
-        private EnumUtilities enumUtilities = new();
+        private readonly IConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+        private readonly IMainModel mainModel = BaseSingleton<MainModel>.Instance;
+        private readonly IStatsModel statsModel = BaseSingleton<StatsModel>.Instance;
+        private readonly IExecutiveUtilitiesRepository executiveUtilities = ExecutiveUtilitiesRepository.Instance;
+        private readonly EnumUtilities enumUtilities = new();
 
         private bool displayGroupingSetup = false;
         private bool displayCsvToClassSetup = false;
@@ -33,19 +32,12 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
         {
             enumUtilities.LoadNames(typeof(ExportType), ExportTypes);
 
-            // TODO --> may want to be converting everything away from ExecutiveType and toward 
-            //    just using import/category/flavor/export to access everything
             viewDisplayMap = new Dictionary<string, Action>()
             {
                 { nameof(DisplayGroupingSetup), () => DisplayGroupingSetup = true },
                 { nameof(DisplayCsvToClassSetup), () => DisplayCsvToClassSetup = true },
                 { nameof(DisplayNotSupported), () => DisplayNotSupported = true },
             };
-
-            //foreach (var viewModel in this.executiveViewModelMap.Where(x => x.Value != null))
-            //{
-            //    viewModel.Value.PropertyChanged += GeneralViewModelPropertyChanged;
-            //}
 
             if (!configurationModel.HasLoaded)
             {

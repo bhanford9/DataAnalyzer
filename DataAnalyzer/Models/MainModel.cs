@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace DataAnalyzer.Models
 {
-    internal class MainModel : BasePropertyChanged
+    internal class MainModel : BasePropertyChanged, IMainModel
     {
         private LoadedDataContent loadedDataContent = new();
         private LoadedDataStructure loadedDataStructure = new();

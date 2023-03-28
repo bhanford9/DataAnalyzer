@@ -10,7 +10,6 @@ using System.Linq;
 using DataAnalyzer.Services.ExecutiveUtilities.Executives;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 using System;
-using System.Runtime.CompilerServices;
 
 namespace DataAnalyzer.Services.ExecutiveUtilities
 {
@@ -40,16 +39,16 @@ namespace DataAnalyzer.Services.ExecutiveUtilities
             return source;
         }
 
-        public static IAggregateExecutives GetExecutive(this ExecutiveUtilitiesRepository source, IImportExportKey key)
-            => source[key.ImportKey.Type][key.ImportKey.Category][key.ImportKey.Flavor][key.ExportType];
+        public static IAggregateExecutives GetExecutive(this IExecutiveUtilitiesRepository source, IImportExportKey key)
+            => source[key.ImportKey.Type, key.ImportKey.Category, key.ImportKey.Flavor, key.ExportType];
 
-        public static IAggregateExecutives GetExecutiveOrDefault(this ExecutiveUtilitiesRepository source, IImportExportKey key)
+        public static IAggregateExecutives GetExecutiveOrDefault(this IExecutiveUtilitiesRepository source, IImportExportKey key)
         {
             source.TryGetExecutive(key, out IAggregateExecutives executive);
             return executive;
         }
 
-        public static bool TryGetExecutive(this ExecutiveUtilitiesRepository source, IImportExportKey key, out IAggregateExecutives executive)
+        public static bool TryGetExecutive(this IExecutiveUtilitiesRepository source, IImportExportKey key, out IAggregateExecutives executive)
         {
             try
             {
@@ -70,7 +69,7 @@ namespace DataAnalyzer.Services.ExecutiveUtilities
                         .SelectMany(z => z.Values.Select(getter))));
     }
 
-    internal class ExecutiveUtilitiesRepository : FlavoredCategorizedDataLibrary<IDictionary<ExportType, IAggregateExecutives>>
+    internal class ExecutiveUtilitiesRepository : FlavoredCategorizedDataLibrary<IDictionary<ExportType, IAggregateExecutives>>, IExecutiveUtilitiesRepository
     {
         private static readonly Lazy<ExecutiveUtilitiesRepository> instance = new(() => new ExecutiveUtilitiesRepository());
 
@@ -86,7 +85,7 @@ namespace DataAnalyzer.Services.ExecutiveUtilities
 
             this.InitializeCategory(fileType, new QueryableScraperCategory())
                 .WithFlavoredExecutive(new QueryableStandardScraperFlavor(), ExportType.Excel, new QueryableExcelCreation());
-            
+
             this.InitializeCategory(fileType, new CsvNamesScraperCategory())
                 .WithFlavoredExecutive(new CsvNamesStandardScraperFlavor(), ExportType.CSharpStringProperties, new CsvCSharpClassCreation())
                 .WithFlavoredExecutive(new CsvNamesStandardScraperFlavor(), ExportType.CSharpStringProperties, new CsvTest());
@@ -101,5 +100,8 @@ namespace DataAnalyzer.Services.ExecutiveUtilities
             => GetExportTypes(import, category, flavor).Select(x => x.ToString()).ToList();
 
         public IEnumerable<IDataStructureSetupViewModel> StructureSetupViewModels => this.GetAll(x => x.DataStructureSetupViewModel);
+
+        public IAggregateExecutives this[IImportType type, IScraperCategory category, IScraperFlavor flavor, ExportType export]
+            => this[type][category][flavor][export];
     }
 }
