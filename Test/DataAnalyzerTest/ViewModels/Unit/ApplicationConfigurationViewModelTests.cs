@@ -1,6 +1,6 @@
 ﻿using DataAnalyzer.Models;
 using DataAnalyzer.ViewModels;
-using DataAnalyzerTest.Fixtures.ViewModels;
+using DataAnalyzerFixtures.ViewModels;
 using Xunit;
 
 namespace DataAnalyzerTest.ViewModels.Unit

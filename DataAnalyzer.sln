@@ -22,6 +22,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestFixtures", "TestFixtures", "{E89EED4A-FC6C-4006-847B-571D205678D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAnalyzerFixtures", "DataAnalyzerFixtures\DataAnalyzerFixtures.csproj", "{B41F641D-4CDE-457B-84BD-78090FB2FB70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +56,10 @@ Global
 		{2C05D393-DE67-41CD-B13D-2848C5DD9166}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C05D393-DE67-41CD-B13D-2848C5DD9166}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C05D393-DE67-41CD-B13D-2848C5DD9166}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B41F641D-4CDE-457B-84BD-78090FB2FB70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B41F641D-4CDE-457B-84BD-78090FB2FB70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B41F641D-4CDE-457B-84BD-78090FB2FB70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B41F641D-4CDE-457B-84BD-78090FB2FB70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +67,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{156EC01F-A0C4-4BCB-8497-7C82F2B285AC} = {FFB3B34C-865F-411E-B0FE-C15F43A4A217}
 		{2C05D393-DE67-41CD-B13D-2848C5DD9166} = {FFB3B34C-865F-411E-B0FE-C15F43A4A217}
+		{B41F641D-4CDE-457B-84BD-78090FB2FB70} = {E89EED4A-FC6C-4006-847B-571D205678D4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4B890BB9-0185-48C8-BAA7-C76619435917}

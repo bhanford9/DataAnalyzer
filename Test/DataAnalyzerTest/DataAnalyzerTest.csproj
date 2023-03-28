@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DataAnalyzerFixtures\DataAnalyzerFixtures.csproj" />
     <ProjectReference Include="..\..\DataAnalyzer\DataAnalyzer.csproj" />
   </ItemGroup>
 

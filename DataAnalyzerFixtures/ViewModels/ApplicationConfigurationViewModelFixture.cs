@@ -3,7 +3,7 @@ using DataAnalyzer.ViewModels;
 using Moq;
 using System.ComponentModel;
 
-namespace DataAnalyzerTest.Fixtures.ViewModels
+namespace DataAnalyzerFixtures.ViewModels
 {
     public class ApplicationConfigurationViewModelFixture : BaseFixture
     {

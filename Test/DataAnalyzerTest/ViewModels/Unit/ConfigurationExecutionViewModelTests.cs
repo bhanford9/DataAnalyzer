@@ -1,6 +1,6 @@
 ﻿using DataAnalyzer.Models;
 using DataAnalyzer.Services.Enums;
-using DataAnalyzerTest.Fixtures.ViewModels;
+using DataAnalyzerFixtures.ViewModels;
 using Moq;
 using Xunit;
 

@@ -5,18 +5,18 @@ using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using Moq;
 using System.ComponentModel;
 
-namespace DataAnalyzerTest.Fixtures.ViewModels
+namespace DataAnalyzerFixtures.ViewModels
 {
-    public class ConfigurationCreationViewModelFixture : BaseFixture
+    public class ConfigurationExecutionViewModelFixture : BaseFixture
     {
-        public ConfigurationCreationViewModelFixture()
+        public ConfigurationExecutionViewModelFixture()
         {
             // one time setup
         }
 
         internal Mock<IConfigurationModel> MockConfigurationModel { get; set; }
 
-        internal Mock<IStructureExecutiveCommissioner> MockExecutiveCommissioner { get; set; }
+        internal Mock<IExecutionExecutiveCommissioner> MockExecutiveCommissioner { get; set; }
 
         internal Mock<IImportExportKey> MockKey { get; set; }
 
@@ -24,6 +24,6 @@ namespace DataAnalyzerTest.Fixtures.ViewModels
 
         internal PropertyChangedEventArgs ConfigKeyChangeArgs => this.GetNamedEventArgs(this.ConfigKeyPropName);
 
-        internal ConfigurationCreationViewModel ViewModel { get; set; }
+        internal ConfigurationExecutionViewModel ViewModel { get; set; }
     }
 }

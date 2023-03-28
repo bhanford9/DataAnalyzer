@@ -15,9 +15,9 @@ namespace DataAnalyzer.ViewModels
         private bool categoryIsSelectable = false;
         private bool flavorIsSelectable = false;
 
-        private IImportType selectedImportType;
-        private IScraperCategory selectedScraperCategory;
-        private IScraperFlavor selectedScraperFlavor;
+        private IImportType selectedImportType = new NotApplicableImportType();
+        private IScraperCategory selectedScraperCategory = new NotApplicableScraperCategory();
+        private IScraperFlavor selectedScraperFlavor = new NotApplicableScraperFlavor();
         private IReadOnlyCollection<IScraperCategory> scraperCategories = new List<IScraperCategory>();
         private IReadOnlyCollection<IScraperFlavor> scrpaerFlavors = new List<IScraperFlavor>();
 

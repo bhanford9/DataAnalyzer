@@ -2,7 +2,7 @@
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
-using DataAnalyzerTest.Fixtures.ViewModels;
+using DataAnalyzerFixtures.ViewModels;
 using Moq;
 using System;
 using System.IO;
