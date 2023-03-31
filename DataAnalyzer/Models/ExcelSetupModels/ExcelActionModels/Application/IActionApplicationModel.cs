@@ -5,7 +5,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 {
     internal interface IActionApplicationModel : IExcelActionModel
     {
-        void ApplyAction(CheckableTreeViewItem item, IEditActionViewModel action);
-        void LoadWhereToApply(CheckableTreeViewItem baseItem);
+        void ApplyAction(ICheckableTreeViewItem item, IEditActionViewModel action);
+        void LoadWhereToApply(ICheckableTreeViewItem baseItem);
     }
 }

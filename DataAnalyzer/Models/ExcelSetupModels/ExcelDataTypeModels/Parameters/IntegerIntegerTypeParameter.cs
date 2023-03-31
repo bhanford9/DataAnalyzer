@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 {
-    internal class IntegerIntegerTypeParameter : TypeParameter
+    internal class IntegerIntegerTypeParameter : TypeParameter, IIntegerIntegerTypeParameter
     {
         private int integer1Value = 1;
         private int integer2Value = 1;
@@ -13,10 +13,10 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
         public IntegerIntegerTypeParameter(ITypeParameter typeParameter) : base(typeParameter)
         {
-            this.Integer1Name = (typeParameter as IntegerIntegerTypeParameter).Integer1Name;
-            this.Integer1Value = (typeParameter as IntegerIntegerTypeParameter).Integer1Value;
-            this.Integer2Name = (typeParameter as IntegerIntegerTypeParameter).Integer2Name;
-            this.Integer2Value = (typeParameter as IntegerIntegerTypeParameter).Integer2Value;
+            this.Integer1Name = (typeParameter as IIntegerIntegerTypeParameter).Integer1Name;
+            this.Integer1Value = (typeParameter as IIntegerIntegerTypeParameter).Integer1Value;
+            this.Integer2Name = (typeParameter as IIntegerIntegerTypeParameter).Integer2Name;
+            this.Integer2Value = (typeParameter as IIntegerIntegerTypeParameter).Integer2Value;
         }
 
         public IntegerIntegerTypeParameter(
@@ -91,7 +91,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
         protected override void InternalCloneParameters(ITypeParameter other)
         {
-            IntegerIntegerTypeParameter local = other as IntegerIntegerTypeParameter;
+            IIntegerIntegerTypeParameter local = other as IIntegerIntegerTypeParameter;
             this.Integer1Name = local.Integer1Name;
             this.Integer1Value = local.Integer1Value;
         }

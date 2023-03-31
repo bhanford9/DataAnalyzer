@@ -1,5 +1,6 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.DataImport.DataObjects.CsvStats;
+using DataAnalyzer.Models;
 using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using System.Collections.Generic;
@@ -8,20 +9,25 @@ using System.Linq;
 
 namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 {
-    internal class CsvCSharpStringClassSetupViewModel : DataStructureSetupViewModel<CsvNamesDataConfiguration>
+    internal class CsvCSharpStringClassSetupViewModel : DataStructureSetupViewModel<CsvNamesDataConfiguration>, ICsvCSharpStringClassSetupViewModel
     {
         private string className = string.Empty;
 
         // optionally may want to move this into the parent as the interface
         private readonly CsvCSharpStringClassSetupModel model;
 
-        public CsvCSharpStringClassSetupViewModel(CsvCSharpStringClassSetupModel model) : base(model)
+        public CsvCSharpStringClassSetupViewModel(
+            IConfigurationModel configurationModel,
+            IMainModel mainModel,
+            IStatsModel statsModel,
+            CsvCSharpStringClassSetupModel model)
+            : base(configurationModel, mainModel, statsModel, model)
         {
             this.model = model;
             this.model.PropertyChanged += this.ModelPropertyChanged;
         }
 
-        public ObservableCollection<StringPropertyRowViewModel> CsvPropertyRows { get; set; } = new();
+        public ObservableCollection<IStringPropertyRowViewModel> CsvPropertyRows { get; set; } = new();
 
         public string ClassName
         {

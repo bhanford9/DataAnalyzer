@@ -2,8 +2,6 @@
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.ExcelSetupModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application;
-using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
-using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary;
 using DataAnalyzer.Services.Enums;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels;
 using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
@@ -14,12 +12,11 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 {
-    internal class ExcelSetupViewModel : BasePropertyChanged
+    internal class ExcelSetupViewModel : BasePropertyChanged, IExcelSetupViewModel
     {
-        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-        private readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
-        private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-        private readonly StructureExecutiveCommissioner executiveCommissioner = BaseSingleton<StructureExecutiveCommissioner>.Instance;
+        private readonly IExcelSetupModel excelSetupModel;
+        private readonly IStatsModel statsModel;
+        private readonly IStructureExecutiveCommissioner executiveCommissioner;
 
         // If these never get used in this class, then they can be removed as private members
         //
@@ -29,78 +26,92 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         // 
         // For now... going with this route in case each model instance needs further independent
         //   implementations or data structures, understanding that this will mean 15+ different models
-        private readonly IActionCreationModel workbookActionCreationModel = new WorkbookActionCreationModel();
-        private readonly IActionCreationModel worksheetActionCreationModel = new WorksheetActionCreationModel();
-        private readonly IActionCreationModel dataClusterActionCreationModel = new DataClusterActionCreationModel();
-        private readonly IActionCreationModel rowActionCreationModel = new RowActionCreationModel();
+        //private readonly IActionCreationModel workbookActionCreationModel = new WorkbookActionCreationModel();
+        //private readonly IActionCreationModel worksheetActionCreationModel = new WorksheetActionCreationModel();
+        //private readonly IActionCreationModel dataClusterActionCreationModel = new DataClusterActionCreationModel();
+        //private readonly IActionCreationModel rowActionCreationModel = new RowActionCreationModel();
 
-        private readonly IActionApplicationModel workbookActionApplicationModel = new WorkbookActionApplicationModel();
-        private readonly IActionApplicationModel worksheetActionApplicationModel = new WorksheetActionApplicationModel();
-        private readonly IActionApplicationModel dataClusterActionApplicationModel = new DataClusterActionApplicationModel();
-        private readonly IActionApplicationModel rowActionApplicationModel = new RowActionApplicationModel();
+        //private readonly IActionApplicationModel workbookActionApplicationModel = new WorkbookActionApplicationModel();
+        //private readonly IActionApplicationModel worksheetActionApplicationModel = new WorksheetActionApplicationModel();
+        //private readonly IActionApplicationModel dataClusterActionApplicationModel = new DataClusterActionApplicationModel();
+        //private readonly IActionApplicationModel rowActionApplicationModel = new RowActionApplicationModel();
 
-        private readonly IActionsSummaryModel workbookActionsSummaryModel = new WorkbookActionsSummaryModel();
-        private readonly IActionsSummaryModel worksheetActionsSummaryModel = new WorksheetActionsSummaryModel();
-        private readonly IActionsSummaryModel dataClusterActionsSummaryModel = new DataClusterActionsSummaryModel();
-        private readonly IActionsSummaryModel rowActionSummaryModel = new RowActionsSummaryModel();
+        //private readonly IActionsSummaryModel workbookActionsSummaryModel = new WorkbookActionsSummaryModel();
+        //private readonly IActionsSummaryModel worksheetActionsSummaryModel = new WorksheetActionsSummaryModel();
+        //private readonly IActionsSummaryModel dataClusterActionsSummaryModel = new DataClusterActionsSummaryModel();
+        //private readonly IActionsSummaryModel rowActionSummaryModel = new RowActionsSummaryModel();
 
         private readonly BaseCommand loadDataIntoStructure;
 
         private DataLoadingState dataLoadingState = DataLoadingState.NoDataLoaded;
         private double loadingProgress = 0.0;
 
-        public ExcelSetupViewModel()
+        public ExcelSetupViewModel(
+            IStatsModel statsModel,
+            IStructureExecutiveCommissioner executiveCommissioner,
+            IExcelActionViewModel workbookActionViewModel,
+            IExcelActionViewModel worksheetActionViewModel,
+            IExcelActionViewModel dataClusterActionViewModel,
+            IExcelActionViewModel rowActionViewModel,
+            IExcelSetupModel excelSetupModel)
         {
+            this.statsModel = statsModel;
+            this.executiveCommissioner = executiveCommissioner;
+            this.excelSetupModel = excelSetupModel;
             this.loadDataIntoStructure = new BaseCommand(obj => this.DoLoadDataIntoStructure());
+            this.WorkbookActionViewModel = workbookActionViewModel;
+            this.WorksheetActionViewModel = worksheetActionViewModel;
+            this.DataClusterActionViewModel = dataClusterActionViewModel;
+            this.RowActionViewModel = rowActionViewModel;
 
-            this.WorkbookActionViewModel = new ExcelActionViewModel(
-                this.WorkbookActions,
-                this.workbookActionCreationModel,
-                this.workbookActionApplicationModel,
-                this.workbookActionsSummaryModel,
-                ExcelEntityType.Workbook);
+            //this.WorkbookActionViewModel = new ExcelActionViewModel(
+            //    this.WorkbookActions,
+            //    this.workbookActionCreationModel,
+            //    this.workbookActionApplicationModel,
+            //    this.workbookActionsSummaryModel,
+            //    ExcelEntityType.Workbook);
 
-            this.WorksheetActionViewModel = new ExcelActionViewModel(
-                this.WorksheetActions,
-                this.worksheetActionCreationModel,
-                this.worksheetActionApplicationModel,
-                this.worksheetActionsSummaryModel,
-                ExcelEntityType.Worksheet);
+            //this.WorksheetActionViewModel = new ExcelActionViewModel(
+            //    this.WorksheetActions,
+            //    this.worksheetActionCreationModel,
+            //    this.worksheetActionApplicationModel,
+            //    this.worksheetActionsSummaryModel,
+            //    ExcelEntityType.Worksheet);
 
-            this.DataClusterActionViewModel = new ExcelActionViewModel(
-                this.DataClusterActions,
-                this.dataClusterActionCreationModel,
-                this.dataClusterActionApplicationModel,
-                this.dataClusterActionsSummaryModel,
-                ExcelEntityType.DataCluster);
+            //this.DataClusterActionViewModel = new ExcelActionViewModel(
+            //    this.DataClusterActions,
+            //    this.dataClusterActionCreationModel,
+            //    this.dataClusterActionApplicationModel,
+            //    this.dataClusterActionsSummaryModel,
+            //    ExcelEntityType.DataCluster);
 
-            this.RowActionViewModel = new ExcelActionViewModel(
-                this.RowActions,
-                this.rowActionCreationModel,
-                this.rowActionApplicationModel,
-                this.rowActionSummaryModel,
-                ExcelEntityType.Row);
+            //this.RowActionViewModel = new ExcelActionViewModel(
+            //    this.RowActions,
+            //    this.rowActionCreationModel,
+            //    this.rowActionApplicationModel,
+            //    this.rowActionSummaryModel,
+            //    ExcelEntityType.Row);
 
             this.excelSetupModel.PropertyChanged += this.ExcelSetupModelPropertyChanged;
         }
 
-        public ExcelActionViewModel WorkbookActionViewModel { get; set; }
+        public IExcelActionViewModel WorkbookActionViewModel { get; set; }
 
-        public ExcelActionViewModel WorksheetActionViewModel { get; set; }
+        public IExcelActionViewModel WorksheetActionViewModel { get; set; }
 
-        public ExcelActionViewModel DataClusterActionViewModel { get; set; }
+        public IExcelActionViewModel DataClusterActionViewModel { get; set; }
 
-        public ExcelActionViewModel RowActionViewModel { get; set; }
+        public IExcelActionViewModel RowActionViewModel { get; set; }
 
-        public ObservableCollection<ExcelAction> WorkbookActions => this.excelSetupModel.AvailableWorkbookActions;
+        public ObservableCollection<IExcelAction> WorkbookActions => this.excelSetupModel.AvailableWorkbookActions;
 
-        public ObservableCollection<ExcelAction> WorksheetActions => this.excelSetupModel.AvailableWorksheetActions;
+        public ObservableCollection<IExcelAction> WorksheetActions => this.excelSetupModel.AvailableWorksheetActions;
 
-        public ObservableCollection<ExcelAction> DataClusterActions => this.excelSetupModel.AvailableDataClusterActions;
+        public ObservableCollection<IExcelAction> DataClusterActions => this.excelSetupModel.AvailableDataClusterActions;
 
-        public ObservableCollection<ExcelAction> RowActions => this.excelSetupModel.AvailableRowActions;
+        public ObservableCollection<IExcelAction> RowActions => this.excelSetupModel.AvailableRowActions;
 
-        public ObservableCollection<ExcelAction> CellActions => this.excelSetupModel.AvailableCellActions;
+        public ObservableCollection<IExcelAction> CellActions => this.excelSetupModel.AvailableCellActions;
 
         public ICommand LoadDataIntoStructure => this.loadDataIntoStructure;
 

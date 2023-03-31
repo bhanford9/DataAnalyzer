@@ -13,15 +13,16 @@ using System.Linq;
 
 namespace DataAnalyzer.Models.ExcelSetupModels
 {
-    internal class ExcelConfigurationModel : BasePropertyChanged
+    internal class ExcelConfigurationModel : BasePropertyChanged, IExcelConfigurationModel
     {
         private const string DATA_TYPE_CONFIG_FILE_NAME = "DataTypesConfiguration.cfg.json";
         private const string WORKBOOK_CONFIG_PATH_KEY = "WorkbookConfigs";
         private const string DATA_TYPES_CONFIG_PATH_KEY = "DataTypeConfigs";
 
+        // TODO --> several instances of classes being used in this class that should be their respective interface instead
         private readonly SerializationService serializationService = new();
-        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-        private readonly ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
+        private readonly IConfigurationModel configurationModel;
+        private readonly IExcelDataTypeLibrary excelDataTypeLibrary;
         private ICollection<WorkbookModel> workbookModels = new List<WorkbookModel>();
 
         private string configurationDirectory = string.Empty;
@@ -33,8 +34,13 @@ namespace DataAnalyzer.Models.ExcelSetupModels
         private IList<ITypeParameter> loadedParameterTypes = new List<ITypeParameter>();
         private readonly ICollection<LastSavedConfiguration> lastSavedDataTypeConfigs = new List<LastSavedConfiguration>();
 
-        public ExcelConfigurationModel()
+        public ExcelConfigurationModel(
+            IConfigurationModel configurationModel,
+            IExcelDataTypeLibrary excelDataTypeLibrary)
         {
+            this.configurationModel = configurationModel;
+            this.excelDataTypeLibrary = excelDataTypeLibrary;
+
             this.ConfigurationDirectory = Properties.Settings.Default.LastUsedExcelConfigurationDirectory;
             this.WorkbookOutputDirectory = Properties.Settings.Default.LastUsedExcelOutputDirectory;
 

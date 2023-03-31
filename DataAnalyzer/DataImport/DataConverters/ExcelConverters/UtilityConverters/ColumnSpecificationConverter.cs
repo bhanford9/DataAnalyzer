@@ -5,8 +5,8 @@ namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.UtilityConverte
 {
     internal class ColumnSpecificationConverter
     {
-        public static ColumnSpecificationParameters ToLocalColumnSpecification(IColumnSpecification spec) =>
-            new()
+        public static IColumnSpecificationParameters ToLocalColumnSpecification(IColumnSpecification spec) =>
+            new ColumnSpecificationParameters()
             {
                 AllColumns = spec.AllColumns,
                 ColumnName = spec.ColumnAddress,
@@ -17,7 +17,7 @@ namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.UtilityConverte
                 UseNthColumn = spec.UseNthColumn,
             };
 
-        public static IColumnSpecification ToExcelColumnSpecification(ColumnSpecificationParameters spec) =>
+        public static IColumnSpecification ToExcelColumnSpecification(IColumnSpecificationParameters spec) =>
             new ColumnSpecification
             {
                 AllColumns = spec.AllColumns,

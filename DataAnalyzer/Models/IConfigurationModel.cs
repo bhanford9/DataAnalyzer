@@ -28,9 +28,9 @@ namespace DataAnalyzer.Models
         ExportType SelectedExportType { get; set; }
 
         void ApplyConfiguration(IImportType import, IScraperCategory category, IScraperFlavor flavor);
-        FileMap GetFileImportMappings();
+        IFileMap GetFileImportMappings();
         bool LoadConfiguration();
         void SaveConfiguration();
-        void UpdateFileImportMappings(FileMap fileMap);
+        void UpdateFileImportMappings(IFileMap fileMap);
     }
 }

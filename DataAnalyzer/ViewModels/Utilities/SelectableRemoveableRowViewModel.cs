@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-    internal class SelectableRemoveableRowViewModel : RowViewModel
+    internal class SelectableRemoveableRowViewModel : RowViewModel, ISelectableRemoveableRowViewModel
     {
         private readonly BaseCommand remove;
         private readonly BaseCommand select;

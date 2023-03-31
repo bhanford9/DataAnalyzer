@@ -1,5 +1,4 @@
 ﻿using DataAnalyzer.Common.DataOrganizers;
-using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.StatConfigurations;
 using DataAnalyzer.StatConfigurations.ExcelConfiguration;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
@@ -14,7 +13,7 @@ namespace DataAnalyzer.Services.ExecutiveUtilities.Executives
         public override IDataOrganizer DataOrganizer { get; } = new ExcelDataOrganizer();
 
         public override IDataStructureSetupViewModel DataStructureSetupViewModel { get; }
-            = new GroupingSetupViewModel(new GroupingSetupModel());
+            = Resolver.Resolve<IGroupingSetupViewModel>();
 
         public override string ExecutionDisplayKey => nameof(ExecutionExecutiveCommissioner.DisplayExcelCreation);
     }

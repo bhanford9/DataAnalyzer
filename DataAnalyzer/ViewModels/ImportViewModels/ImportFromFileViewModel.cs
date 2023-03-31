@@ -13,28 +13,33 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.ImportViewModels
 {
-    internal class ImportFromFileViewModel : ImportViewModel
+    internal class ImportFromFileViewModel : ImportViewModel, IImportFromFileViewModel
     {
         private string activeDirectory = string.Empty;
 
         private readonly BaseCommand browseDirectory;
         private readonly BaseCommand importData;
 
-        private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-        private readonly ImportFromFileModel importModel = BaseSingleton<ImportFromFileModel>.Instance;
+        private readonly IStatsModel statsModel;
+        private readonly IImportFromFileModel importModel;
 
         protected override IImportModel ImportModel => importModel;
 
-        public ImportFromFileViewModel()
+        public ImportFromFileViewModel(
+            IStatsModel statsModel,
+            IImportFromFileModel importModel)
         {
+            this.statsModel = statsModel;
+            this.importModel = importModel;
             this.browseDirectory = new BaseCommand((object o) => this.DoBrowseDirectory());
             this.importData = new BaseCommand((object o) => this.DoImportData());
-            
+
             this.ActiveDirectory = this.importModel.ActiveDirectory;
+            this.importModel.PropertyChanged += this.LocalImportModelPropertyChanged;
             this.importModel.PropertyChanged += this.ImportModelPropertyChanged;
         }
 
-        public ObservableCollection<CheckableTreeViewItem> Files { get; } = new();
+        public ObservableCollection<ICheckableTreeViewItem> Files { get; } = new();
 
         public ICommand BrowseDirectory => this.browseDirectory;
 
@@ -79,20 +84,20 @@ namespace DataAnalyzer.ViewModels.ImportViewModels
                 .ForEach(file => this.statsModel.LoadStatsFromSource(new FileDataSource(file.Path)));
         }
 
-        private ICollection<CheckableTreeViewItem> FlattenFiles()
+        private ICollection<ICheckableTreeViewItem> FlattenFiles()
         {
-            ICollection<CheckableTreeViewItem> flattenedFiles = new List<CheckableTreeViewItem>();
+            ICollection<ICheckableTreeViewItem> flattenedFiles = new List<ICheckableTreeViewItem>();
             this.AddChildren(this.Files.First(), flattenedFiles);
             return flattenedFiles;
         }
 
-        private void AddChildren(CheckableTreeViewItem root, ICollection<CheckableTreeViewItem> flattenedFiles)
+        private void AddChildren(ICheckableTreeViewItem root, ICollection<ICheckableTreeViewItem> flattenedFiles)
         {
             flattenedFiles.Add(root);
             root.Children.ToList().ForEach(x => this.AddChildren(x, flattenedFiles));
         }
 
-        private void LoadAllChildren(string pathRoot, CheckableTreeViewItem treeRoot)
+        private void LoadAllChildren(string pathRoot, ICheckableTreeViewItem treeRoot)
         {
             try
             {
@@ -125,7 +130,7 @@ namespace DataAnalyzer.ViewModels.ImportViewModels
             catch { }
         }
 
-        private void ImportModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void LocalImportModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {

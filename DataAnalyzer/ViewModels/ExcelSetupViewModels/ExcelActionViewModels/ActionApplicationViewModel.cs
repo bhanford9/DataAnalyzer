@@ -15,10 +15,10 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
 {
-    internal class ActionApplicationViewModel : BasePropertyChanged
+    internal class ActionApplicationViewModel : BasePropertyChanged, IActionApplicationViewModel
     {
-        private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-        private readonly EditActionLibrary editActionLibrary = BaseSingleton<EditActionLibrary>.Instance;
+        private readonly IStatsModel statsModel;
+        private readonly IEditActionLibrary editActionLibrary;
 
         private readonly IActionApplicationModel actionApplicationModel;
 
@@ -27,12 +27,16 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
         private readonly BaseCommand applyAction;
 
         public ActionApplicationViewModel(
-          ICollection<ExcelAction> actions,
-          IActionApplicationModel actionApplicationModel,
-          ExcelEntityType excelEntityType)
+            IStatsModel statsModel,
+            ICollection<IExcelAction> actions,
+            IActionApplicationModel actionApplicationModel,
+            ExcelEntityType excelEntityType,
+            IEditActionLibrary editActionLibrary)
         {
+            this.statsModel = statsModel;
             this.actionApplicationModel = actionApplicationModel;
             this.ExcelEntityType = excelEntityType;
+            this.editActionLibrary = editActionLibrary;
 
             this.applyAction = new BaseCommand(obj => this.DoApplyAction());
 
@@ -54,9 +58,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             this.actionApplicationModel.PropertyChanged += this.ActionApplicationModelPropertyChanged;
         }
 
-        public ObservableCollection<CheckableTreeViewItem> WhereToApply { get; } = new();
+        public ObservableCollection<ICheckableTreeViewItem> WhereToApply { get; } = new();
 
-        public ObservableCollection<LoadableRemovableRowViewModel> Actions { get; } = new();
+        public ObservableCollection<ILoadableRemovableRowViewModel> Actions { get; } = new();
 
         public ICommand ApplyAction => this.applyAction;
 
@@ -68,9 +72,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
 
         public ExcelEntityType ExcelEntityType { get; }
 
-        private ICollection<CheckableTreeViewItem> GetFlattenedWhereToApply()
+        private ICollection<ICheckableTreeViewItem> GetFlattenedWhereToApply()
         {
-            ICollection<CheckableTreeViewItem> flattenedItems = new List<CheckableTreeViewItem>();
+            ICollection<ICheckableTreeViewItem> flattenedItems = new List<ICheckableTreeViewItem>();
 
             if (this.WhereToApply.Count > 0)
             {
@@ -80,9 +84,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             return flattenedItems;
         }
 
-        private void LoadIntoFlattened(CheckableTreeViewItem baseItem, ICollection<CheckableTreeViewItem> flattened)
+        private void LoadIntoFlattened(ICheckableTreeViewItem baseItem, ICollection<ICheckableTreeViewItem> flattened)
         {
-            foreach (CheckableTreeViewItem child in baseItem.Children)
+            foreach (ICheckableTreeViewItem child in baseItem.Children)
             {
                 if (child.Children != null && child.Children.Count > 0)
                 {
@@ -122,7 +126,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             switch (e.PropertyName)
             {
                 case nameof(this.actionApplicationModel.LoadedActionName):
-                    ExcelAction action = this.actionApplicationModel.GetLoadedAction();
+                    IExcelAction action = this.actionApplicationModel.GetLoadedAction();
                     this.CurrentAction = this.editActionLibrary.GetEditAction(action.ActionParameters, this.ExcelEntityType);
                     this.CurrentAction.ActionName = action.Name;
                     this.CurrentAction.Description = action.Description;

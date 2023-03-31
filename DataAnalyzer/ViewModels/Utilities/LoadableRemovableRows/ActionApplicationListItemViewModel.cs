@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {
-    internal class ActionApplicationListItemViewModel : LoadableRemovableRowViewModel
+    internal class ActionApplicationListItemViewModel : LoadableRemovableRowViewModel, IActionApplicationListItemViewModel
     {
         private readonly IActionApplicationModel actionApplicationModel;
 

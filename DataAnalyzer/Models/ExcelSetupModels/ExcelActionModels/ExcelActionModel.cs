@@ -8,8 +8,16 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
     {
         private string loadedActionName = string.Empty;
 
-        protected readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
-        protected readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
+        protected readonly IExcelSetupModel excelSetupModel;
+        protected readonly IStatsModel statsModel;
+
+        public ExcelActionModel(
+            IStatsModel statsModel,
+            IExcelSetupModel excelSetupModel)
+        {
+            this.statsModel = statsModel;
+            this.excelSetupModel = excelSetupModel;
+        }
 
         public string LoadedActionName
         {
@@ -19,8 +27,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
 
         public void LoadAction(string name) => this.LoadedActionName = name;
 
-        public ExcelAction GetLoadedAction() => this.GetActionCollection().First(x => x.Name.Equals(this.loadedActionName)).Clone();
+        public IExcelAction GetLoadedAction() => this.GetActionCollection().First(x => x.Name.Equals(this.loadedActionName)).Clone();
 
-        protected abstract ObservableCollection<ExcelAction> GetActionCollection();
+        protected abstract ObservableCollection<IExcelAction> GetActionCollection();
     }
 }

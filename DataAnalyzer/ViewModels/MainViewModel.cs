@@ -6,12 +6,14 @@ using System.Linq;
 
 namespace DataAnalyzer.ViewModels
 {
-    internal class MainViewModel : BasePropertyChanged
+    internal class MainViewModel : BasePropertyChanged, IMainViewModel
     {
-        private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
+        private readonly IMainModel mainModel;
 
-        public MainViewModel()
+        public MainViewModel(IMainModel mainModel)
         {
+            this.mainModel = mainModel;
+
             this.LoadedConfigs.Add(new LoadedConfigurationItemViewModel { Title = this.mainModel.LoadedInputFiles.Name });
             this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedInputFiles.DirectoryPathKeyValue);
             this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedInputFiles.DataTypeKeyValue);

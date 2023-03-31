@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.Common.DataOrganizers
 {
-    internal class ExcelDataOrganizer : GroupingDataOrganizer<GroupingDataConfiguration>
+    internal class ExcelDataOrganizer : GroupingDataOrganizer<GroupingDataConfiguration>, IExcelDataOrganizer
     {
     }
 }

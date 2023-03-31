@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.DataImport.DataObjects.TimeStats.QueryableTimeStats
 {
-    internal class QueryableTimeStats : TimeStats
+    internal class QueryableTimeStats : TimeStats, IQueryableTimeStats
     {
         private readonly List<string> parameterNames = new();
 

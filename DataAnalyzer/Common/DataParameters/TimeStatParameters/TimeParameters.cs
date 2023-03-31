@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.Common.DataParameters.TimeStatParameters
 {
-    internal abstract class TimeParameters : DataParameterCollection
+    internal abstract class TimeParameters : DataParameterCollection, ITimeParameters
     {
         protected override void InitializeParameters()
         {

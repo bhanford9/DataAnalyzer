@@ -1,13 +1,16 @@
-﻿using DataAnalyzer.Common.Mvvm;
-using DataAnalyzer.Models.ExecutionModels.ClassCreationModels;
+﻿using DataAnalyzer.Models.ExecutionModels.ClassCreationModels;
 using System;
 
 namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {
-    internal class ClassCreationConfigListItemViewModel : LoadableRemovableRowViewModel
+    internal class ClassCreationConfigListItemViewModel : LoadableRemovableRowViewModel, IClassCreationConfigListItemViewModel
     {
-        private readonly ClassCreationConfigurationModel classCreationConfigModel =
-            BaseSingleton<ClassCreationConfigurationModel>.Instance;
+        private readonly IClassCreationConfigurationModel classCreationConfigModel;
+
+        public ClassCreationConfigListItemViewModel(IClassCreationConfigurationModel classCreationConfigModel)
+        {
+            this.classCreationConfigModel = classCreationConfigModel;
+        }
 
         protected override void DoLoad() => this.classCreationConfigModel.LoadConfigByName(this.Value);
 

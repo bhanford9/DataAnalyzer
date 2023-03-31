@@ -1,6 +1,6 @@
 ﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCreators
 {
-    internal class DoubleCreator : TypeCreator
+    internal class DoubleCreator : TypeCreator, IDoubleCreator
     {
         public override string Create(string dataType) => "double";
 

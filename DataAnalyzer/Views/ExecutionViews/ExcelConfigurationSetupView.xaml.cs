@@ -5,12 +5,10 @@ namespace DataAnalyzer.Views.ExecutionViews
 {
     public partial class ExcelConfigurationSetupView : UserControl
     {
-        private readonly ExcelSetupViewModel excelSetupViewModel = new();
-
-        public ExcelConfigurationSetupView()
+        internal ExcelConfigurationSetupView(IExcelSetupViewModel viewModel)
         {
             this.InitializeComponent();
-            this.DataContext = this.excelSetupViewModel;
+            this.DataContext = viewModel;
         }
     }
 }

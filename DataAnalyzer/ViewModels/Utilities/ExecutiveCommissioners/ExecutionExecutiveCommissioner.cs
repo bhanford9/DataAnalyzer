@@ -8,17 +8,20 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 {
     internal class ExecutionExecutiveCommissioner : BasePropertyChanged, IExecutionExecutiveCommissioner
     {
-        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-        private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
-        private readonly ExecutiveUtilitiesRepository executiveUtilities = ExecutiveUtilitiesRepository.Instance;
+        private readonly IConfigurationModel configurationModel;
+        private readonly IExecutiveUtilitiesRepository executiveUtilities = ExecutiveUtilitiesRepository.Instance;
 
         private bool displayExcelCreation = false;
         private bool displayClassCreation = false;
         private bool displayNotSupported = true;
         private readonly IReadOnlyDictionary<string, Action> viewDisplayMap;
 
-        public ExecutionExecutiveCommissioner()
+        public ExecutionExecutiveCommissioner(
+            IConfigurationModel configModel)
         {
+            this.configurationModel = configModel;
+
+            // TODO --> might be able to inject
             viewDisplayMap = new Dictionary<string, Action>()
             {
                 { nameof(DisplayExcelCreation), () => DisplayExcelCreation = true },

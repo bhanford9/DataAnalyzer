@@ -10,10 +10,10 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 {
-    internal class ConfigurationGroupingViewModel : BasePropertyChanged
+    internal class ConfigurationGroupingViewModel : BasePropertyChanged, IConfigurationGroupingViewModel
     {
-        private readonly ConfigurationModel configurationCreationModel = BaseSingleton<ConfigurationModel>.Instance;
-        private readonly StructureExecutiveCommissioner executiveCommissioner = BaseSingleton<StructureExecutiveCommissioner>.Instance;
+        private readonly IConfigurationModel configurationModel;
+        private readonly IStructureExecutiveCommissioner executiveCommissioner;
 
         private readonly int level = 0;
         private string name = string.Empty;
@@ -24,21 +24,26 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         private readonly BaseCommand addParameter;
         private readonly BaseCommand removeParameter;
 
-        public ConfigurationGroupingViewModel(int level)
+        public ConfigurationGroupingViewModel(
+            IConfigurationModel configurationModel,
+            IStructureExecutiveCommissioner executiveCommissioner,
+            int level)
         {
+            this.configurationModel = configurationModel;
+            this.executiveCommissioner = executiveCommissioner;
             this.level = level;
 
             addParameter = new BaseCommand(obj => DoAddParameter());
             removeParameter = new BaseCommand(obj => DoRemoveParameter(obj.ToString()));
 
-            configurationCreationModel.PropertyChanged += ConfigurationCreationModelPropertyChanged;
+            configurationModel.PropertyChanged += ConfigurationCreationModelPropertyChanged;
 
             LoadParameters();
         }
 
-        public ObservableCollection<ConfigurationGroupingViewModel> Children { get; } = new();
+        public ObservableCollection<IConfigurationGroupingViewModel> Children { get; } = new();
 
-        public ConfigurationGroupingViewModel Parent { get; private set; } = null;
+        public IConfigurationGroupingViewModel Parent { get; private set; } = null;
 
         public ICommand AddParameter => addParameter;
         public ICommand RemoveParameter => removeParameter;
@@ -73,9 +78,16 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             set => NotifyPropertyChanged(ref parameterNames, value);
         }
 
+        public void RemoveChild(string uid) => Children.Remove(Children.First(x => x.Uid.Equals(uid)));
+
         private void DoAddParameter()
         {
-            Children.Add(new ConfigurationGroupingViewModel(level) { IsSubRule = true, Parent = this });
+            Children.Add(new ConfigurationGroupingViewModel(
+                this.configurationModel,
+                this.executiveCommissioner,
+                this.level)
+            { IsSubRule = true, Parent = this });
+
             NotifyPropertyChanged(nameof(HasChildren));
         }
 
@@ -93,13 +105,11 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             NotifyPropertyChanged(nameof(HasChildren));
         }
 
-        private void RemoveChild(string uid) => Children.Remove(Children.First(x => x.Uid.Equals(uid)));
-
         private void LoadParameters()
         {
-            if (configurationCreationModel.DataParameterCollection != null)
+            if (configurationModel.DataParameterCollection != null)
             {
-                ParameterNames = configurationCreationModel.DataParameterCollection.GetParameters()
+                ParameterNames = configurationModel.DataParameterCollection.GetParameters()
                   .Where(x => x.CanGroupBy)
                   .Select(x => x.Name)
                   .ToList();
@@ -110,7 +120,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         {
             switch (e.PropertyName)
             {
-                case nameof(configurationCreationModel.DataParameterCollection):
+                case nameof(configurationModel.DataParameterCollection):
                     LoadParameters();
                     break;
                 default:

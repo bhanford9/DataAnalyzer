@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
-    internal class BorderSettingsViewModel : BasePropertyChanged
+    internal class BorderSettingsViewModel : BasePropertyChanged, IBorderSettingsViewModel
     {
         private string selectedStyle = string.Empty;
         private string borderName = string.Empty;
@@ -20,7 +20,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 
         public ObservableCollection<string> BorderStyles { get; } = new();
 
-        public ColorsComboBoxViewModel ComboBoxColors { get; } = new();
+        public IColorsComboBoxViewModel ComboBoxColors { get; } = new ColorsComboBoxViewModel();
 
         public string SelectedStyle
         {

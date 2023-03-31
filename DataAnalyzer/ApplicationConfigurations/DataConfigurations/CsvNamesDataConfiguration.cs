@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
 {
-    internal class CsvNamesDataConfiguration : DataConfiguration
+    internal class CsvNamesDataConfiguration : DataConfiguration, ICsvNamesDataConfiguration
     {
         public string ClassName { get; set; }
 

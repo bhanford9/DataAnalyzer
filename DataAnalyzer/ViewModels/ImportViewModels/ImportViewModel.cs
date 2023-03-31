@@ -10,12 +10,11 @@ namespace DataAnalyzer.ViewModels.ImportViewModels
 
         public ImportViewModel()
         {
-            this.ImportModel.PropertyChanged += this.ImportModelPropertyChanged;
         }
 
         public string SelectedScraperCategory => this.ImportModel.SelectedScraperCategory;
 
-        private void ImportModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected void ImportModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {

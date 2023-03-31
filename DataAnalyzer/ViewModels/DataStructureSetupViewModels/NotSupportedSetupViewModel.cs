@@ -1,12 +1,18 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+using DataAnalyzer.Models;
 using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 
 namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 {
-    internal class NotSupportedSetupViewModel : DataStructureSetupViewModel<NotSupportedDataConfiguration>
+    internal class NotSupportedSetupViewModel : DataStructureSetupViewModel<NotSupportedDataConfiguration>, INotSupportedSetupViewModel
     {
-        public NotSupportedSetupViewModel(NotSupportedSetupModel model) : base(model) { }
+        public NotSupportedSetupViewModel(
+            IConfigurationModel configurationModel,
+            IMainModel mainModel,
+            IStatsModel statsModel,
+            NotSupportedSetupModel model)
+            : base(configurationModel, mainModel, statsModel, model) { }
 
         public override bool IsValidSetup(out string reason)
         {

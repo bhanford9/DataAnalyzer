@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.DataImport.DataObjects.CsvStats
 {
-    internal class CsvTestStats : Stats
+    internal class CsvTestStats : Stats, ICsvTestStats
     {
         public CsvTestStats()
         {

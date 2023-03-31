@@ -3,7 +3,7 @@ using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
 {
-    internal class BackgroundSummaryItem : SummaryItem
+    internal class BackgroundSummaryItem : SummaryItem, IBackgroundSummaryItem
     {
         public override bool IsApplicable(IActionParameters actionParameters) => actionParameters is BackgroundParameters;
 

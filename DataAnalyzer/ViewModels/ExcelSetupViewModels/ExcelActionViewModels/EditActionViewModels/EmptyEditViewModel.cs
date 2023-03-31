@@ -3,7 +3,7 @@ using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
-    internal class EmptyEditViewModel : EditActionViewModel
+    internal class EmptyEditViewModel : EditActionViewModel, IEmptyEditViewModel
     {
         public EmptyEditViewModel(ExcelEntityType excelEntityType)
             : base(excelEntityType)

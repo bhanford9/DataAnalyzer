@@ -12,13 +12,18 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
     // This might be the same for DataClusters, Rows and Cells because Rows and Cells will be
     // visualized by having the user specify the nthRow row and nthRow col.
     // Going to skip the inheritance for now, but may need to fix it later
-    internal class RowActionApplicationModel : ActionApplicationModel
+    internal class RowActionApplicationModel : ActionApplicationModel, IRowActionApplicationModel
     {
         private const string PATH_DELIMITER = "~~";
 
         public const string ACTION_APPLIED_KEY = "Row Action Applied";
 
-        protected override void InternalApplyAction(CheckableTreeViewItem item, IEditActionViewModel action)
+        public RowActionApplicationModel(IStatsModel statsModel, IExcelSetupModel excelSetupModel)
+            : base(statsModel, excelSetupModel)
+        {
+        }
+
+        protected override void InternalApplyAction(ICheckableTreeViewItem item, IEditActionViewModel action)
         {
             string[] pathSplit = item.Path.Split(PATH_DELIMITER);
             if (pathSplit.Length != 3)
@@ -26,16 +31,16 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
                 return;
             }
             string workbookName = pathSplit[0];
-            WorkbookModel workbook = this.excelSetupModel.ExcelConfiguration.WorkbookModels.FirstOrDefault(x => x.Name.Equals(workbookName));
+            IWorkbookModel workbook = this.excelSetupModel.ExcelConfiguration.WorkbookModels.FirstOrDefault(x => x.Name.Equals(workbookName));
 
             if (workbook != default)
             {
                 string worksheetName = pathSplit[1];
-                WorksheetModel worksheet = workbook.Worksheets.FirstOrDefault(x => x.WorksheetName.Equals(worksheetName));
+                IWorksheetModel worksheet = workbook.Worksheets.FirstOrDefault(x => x.WorksheetName.Equals(worksheetName));
 
                 if (worksheet != default)
                 {
-                    DataClusterModel dataCluster = worksheet.DataClusters.FirstOrDefault(x => x.Name.Equals(item.Name));
+                    IDataClusterModel dataCluster = worksheet.DataClusters.FirstOrDefault(x => x.Name.Equals(item.Name));
                     string dataClusterName = pathSplit[2];
 
                     if (dataCluster != default)
@@ -65,9 +70,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
             }
         }
 
-        protected override ObservableCollection<ExcelAction> GetActionCollection() => this.excelSetupModel.AvailableRowActions;
+        protected override ObservableCollection<IExcelAction> GetActionCollection() => this.excelSetupModel.AvailableRowActions;
 
-        protected override void InternalLoadWhereToApply(CheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
+        protected override void InternalLoadWhereToApply(ICheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
         {
             foreach (HeirarchalStats workbookStats in heirarchalStats)
             {

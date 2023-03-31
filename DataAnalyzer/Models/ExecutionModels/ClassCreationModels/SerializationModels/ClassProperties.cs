@@ -2,8 +2,8 @@
 
 namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels.SerializationModels
 {
-    internal class ClassProperties
+    internal class ClassProperties : IClassProperties
     {
-        public ICollection<ClassPropertyData> Properties { get; set; } = new List<ClassPropertyData>();
+        public ICollection<IClassPropertyData> Properties { get; set; } = new List<IClassPropertyData>();
     }
 }

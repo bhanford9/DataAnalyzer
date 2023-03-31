@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-    internal class ColorsComboBoxViewModel : BasePropertyChanged
+    internal class ColorsComboBoxViewModel : BasePropertyChanged, IColorsComboBoxViewModel
     {
         private string selectedColor;
 

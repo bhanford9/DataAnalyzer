@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.AccessibilityCreators
 {
-    internal class AccessibilityCreationExecutive
+    internal class AccessibilityCreationExecutive : IAccessibilityCreationExecutive
     {
         private readonly IReadOnlyDictionary<string, IAccessibilityCreator> creators = new Dictionary<string, IAccessibilityCreator>()
         {
@@ -13,6 +13,11 @@ namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.Accessi
             { ClassCreationConstants.READ_PROTECTED_WRITE, new ReadProtectedWriteCreator() },
             { ClassCreationConstants.READ_WRITE, new ReadWriteCreator() },
         };
+
+        public AccessibilityCreationExecutive(IReadOnlyDictionary<string, IAccessibilityCreator> creators)
+        {
+            this.creators = creators;
+        }
 
         public string Create(string accessibility)
         {

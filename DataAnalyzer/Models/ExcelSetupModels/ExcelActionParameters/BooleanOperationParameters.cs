@@ -3,7 +3,7 @@ using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
-    internal class BooleanOperationParameters : ActionParameters
+    internal class BooleanOperationParameters : ActionParameters, IBooleanOperationParameters
     {
         private bool doPerform = false;
 

@@ -5,8 +5,7 @@ namespace DataAnalyzer.Views.ExecutionViews
 {
     public partial class ClassCreationSetupView : UserControl
     {
-        private readonly ClassCreationSetupViewModel viewModel = new();
-        public ClassCreationSetupView()
+        internal ClassCreationSetupView(IClassCreationSetupViewModel viewModel)
         {
             this.InitializeComponent();
             this.DataContext = viewModel;

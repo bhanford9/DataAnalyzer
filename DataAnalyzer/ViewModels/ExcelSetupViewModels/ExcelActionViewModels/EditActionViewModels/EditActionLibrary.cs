@@ -6,21 +6,24 @@ using System.Linq;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
-    internal class EditActionLibrary
+    internal class EditActionLibrary : IEditActionLibrary
     {
         private readonly IReadOnlyCollection<Func<ExcelEntityType, IEditActionViewModel>> editActionViewModels;
 
         // TODO --> this is now a factory instead of a library
-        public EditActionLibrary()
+        public EditActionLibrary(ICollection<Func<ExcelEntityType, IEditActionViewModel>> editActionViewModels)
         {
-            editActionViewModels = new List<Func<ExcelEntityType, IEditActionViewModel>>
-            {
-                x => new EmptyEditViewModel(x),
-                x => new AlignmentEditViewModel(x),
-                x => new BackgroundEditViewModel(x),
-                x => new BorderEditViewModel(x),
-                x => new BooleanActionViewModel(x),
-            };
+            this.editActionViewModels = editActionViewModels.ToList();
+
+            // TODO --> this will need to go into the container
+            //    = new List<Func<ExcelEntityType, IEditActionViewModel>>
+            //{
+            //    x => new EmptyEditViewModel(x),
+            //    x => new AlignmentEditViewModel(x),
+            //    x => new BackgroundEditViewModel(x),
+            //    x => new BorderEditViewModel(x),
+            //    x => new BooleanActionViewModel(x),
+            //};
         }
 
         public IEditActionViewModel GetEditAction(IActionParameters actionParameters, ExcelEntityType excelEntityType) =>

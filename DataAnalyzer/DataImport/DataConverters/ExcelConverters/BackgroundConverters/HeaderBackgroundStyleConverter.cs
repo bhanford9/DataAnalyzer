@@ -2,14 +2,15 @@
 using ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters;
 using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
 using System;
+using ExcelParms = ExcelService.DataActions.ActionParameters;
 
 namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.BackgroundConverters
 {
-    internal class HeaderBackgroundStyleConverter : BackgroundStyleConverter
+    internal class HeaderBackgroundStyleConverter : BackgroundStyleConverter, IHeaderBackgroundStyleConverter
     {
         public HeaderBackgroundStyleConverter() : base(new HeaderBackgroundStyleParameters()) { }
 
-        public override IActionParameters FromExcel(ExcelService.DataActions.ActionParameters.IActionParameters input)
+        public override IActionParameters FromExcel(ExcelParms.IActionParameters input)
         {
             if (input is HeaderBackgroundStyleParameters backgroundParameters)
             {
@@ -19,7 +20,7 @@ namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.BackgroundConve
             throw new ArgumentException("Invalid type. Expected HeaderBackgroundStyleParameters.");
         }
 
-        public override ExcelService.DataActions.ActionParameters.IActionParameters ToExcel(IActionParameters input)
+        public override ExcelParms.IActionParameters ToExcel(IActionParameters input)
         {
             if (input is BackgroundParameters backgroundParameters)
             {

@@ -5,7 +5,7 @@ using DataScraper.Data.CsvData;
 
 namespace DataAnalyzer.DataImport.DataConverters.CsvConverters
 {
-    internal class CsvToTestConverter : DataConverter<CsvTestStats, CsvTestData>
+    internal class CsvToTestConverter : DataConverter<CsvTestStats, CsvTestData>, ICsvToTestConverter
     {
         public override bool IsValidData(IData data) => data is CsvTestData;
 

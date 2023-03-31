@@ -5,16 +5,16 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Sub
 {
     internal static class RowSpecificationConversion
     {
-        public static RowSpecificationParameters ToModel(RowSpecificationViewModel viewModel) =>
-            new()
+        public static IRowSpecificationParameters ToModel(IRowSpecificationViewModel viewModel) =>
+            new RowSpecificationParameters()
             {
                 AllRows = viewModel.AllRows,
                 NthRow = viewModel.NthRow,
                 UseNthRow = viewModel.UseNthRow
             };
 
-        public static RowSpecificationViewModel ToViewModel(RowSpecificationParameters model) =>
-            new()
+        public static IRowSpecificationViewModel ToViewModel(IRowSpecificationParameters model) =>
+            new RowSpecificationViewModel()
             {
                 AllRows = model.AllRows,
                 NthRow = model.NthRow,

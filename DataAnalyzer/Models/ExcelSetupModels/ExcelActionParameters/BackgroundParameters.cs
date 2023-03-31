@@ -4,13 +4,15 @@ using System.Drawing;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
-    internal class BackgroundParameters : ActionParameters
+    internal class BackgroundParameters : ActionParameters, IBackgroundParameters
     {
         private Color backgroundColor;
         private Color patternColor;
         private FillPattern fillPattern;
-        private ColumnSpecificationParameters columnSpecification = new();
-        private RowSpecificationParameters rowSpecification = new();
+
+        // TODO --> inject these
+        private IColumnSpecificationParameters columnSpecification = new ColumnSpecificationParameters ();
+        private IRowSpecificationParameters rowSpecification = new RowSpecificationParameters();
 
         public Color BackgroundColor
         {
@@ -30,13 +32,13 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
             set => this.NotifyPropertyChanged(ref this.fillPattern, value);
         }
 
-        public ColumnSpecificationParameters ColumnSpecification
+        public IColumnSpecificationParameters ColumnSpecification
         {
             get => this.columnSpecification;
             set => this.NotifyPropertyChanged(ref this.columnSpecification, value);
         }
 
-        public RowSpecificationParameters RowSpecification
+        public IRowSpecificationParameters RowSpecification
         {
             get => this.rowSpecification;
             set => this.NotifyPropertyChanged(ref this.rowSpecification, value);

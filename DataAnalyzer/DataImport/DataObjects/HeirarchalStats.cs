@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DataAnalyzer.DataImport.DataObjects
 {
-    internal class HeirarchalStats : Stats
+    internal class HeirarchalStats : Stats, IHeirarchalStats
     {
         public IComparable Key { get; set; }
 

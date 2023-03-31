@@ -1,12 +1,16 @@
-﻿using DataAnalyzer.Common.Mvvm;
-using DataAnalyzer.Models.ExcelSetupModels;
+﻿using DataAnalyzer.Models.ExcelSetupModels;
 using System;
 
 namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {
-    internal class WorkbookConfigListItemViewModel : LoadableRemovableRowViewModel
+    internal class WorkbookConfigListItemViewModel : LoadableRemovableRowViewModel, IWorkbookConfigListItemViewModel
     {
-        private readonly ExcelConfigurationModel excelConfigurationModel = BaseSingleton<ExcelConfigurationModel>.Instance;
+        private readonly IExcelConfigurationModel excelConfigurationModel;
+
+        public WorkbookConfigListItemViewModel(IExcelConfigurationModel excelConfigurationModel)
+        {
+            this.excelConfigurationModel = excelConfigurationModel;
+        }
 
         protected override void DoLoad() => this.excelConfigurationModel.LoadWorkbookConfigByName(this.Value);
 

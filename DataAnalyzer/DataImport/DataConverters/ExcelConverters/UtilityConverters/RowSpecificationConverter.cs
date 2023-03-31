@@ -5,15 +5,15 @@ namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.UtilityConverte
 {
     internal class RowSpecificationConverter
     {
-        public static RowSpecificationParameters ToLocalRowSpecification(IRowSpecification spec) =>
-            new()
+        public static IRowSpecificationParameters ToLocalRowSpecification(IRowSpecification spec) =>
+            new RowSpecificationParameters()
             {
                 AllRows = spec.AllRows,
                 NthRow = spec.NthRow,
                 UseNthRow = spec.UseNthRow,
             };
 
-        public static IRowSpecification ToExcelRowSpecification(RowSpecificationParameters spec) =>
+        public static IRowSpecification ToExcelRowSpecification(IRowSpecificationParameters spec) =>
             new RowSpecification
             {
                 AllRows = spec.AllRows,

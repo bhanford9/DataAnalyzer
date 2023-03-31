@@ -3,7 +3,7 @@ using DataAnalyzer.Common.Mvvm;
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-    internal class CheckableTreeViewItem : BasePropertyChanged
+    internal class CheckableTreeViewItem : BasePropertyChanged, ICheckableTreeViewItem
     {
         private bool isChecked = true;
         private bool isLeaf = true;
@@ -14,7 +14,7 @@ namespace DataAnalyzer.ViewModels.Utilities
         {
         }
 
-        public ObservableCollection<CheckableTreeViewItem> Children { get; } = new();
+        public ObservableCollection<ICheckableTreeViewItem> Children { get; } = new();
 
         public bool IsChecked
         {

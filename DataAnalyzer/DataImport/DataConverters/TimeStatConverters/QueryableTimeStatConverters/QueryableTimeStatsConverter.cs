@@ -5,7 +5,7 @@ using DataAnalyzer.DataImport.DataObjects;
 
 namespace DataAnalyzer.DataImport.DataConverters.TimeStatConverters.QueryableTimeStatConverters
 {
-    internal class QueryableTimeStatsConverter : TimeStatsConverter<QueryableTimeStats, QueryableTimeData>
+    internal class QueryableTimeStatsConverter : TimeStatsConverter<QueryableTimeStats, QueryableTimeData>, IQueryableTimeStatsConverter
     {
         protected override void InternalToAnalyzer(IData timeData, IStats timeStats)
         {

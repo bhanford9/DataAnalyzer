@@ -5,7 +5,7 @@ namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters
 {
     internal class FillPatternConverter
     {
-        public static FillPattern ToLocalFillPattern(ExcelService.Styles.Patterns.FillPattern fillPattern) => fillPattern switch
+        public static FillPattern ToLocalFillPattern(ServiceStyles.FillPattern fillPattern) => fillPattern switch
         {
             ServiceStyles.FillPattern.DarkDown => FillPattern.DarkDown,
             ServiceStyles.FillPattern.DarkGray => FillPattern.DarkGray,
@@ -29,7 +29,7 @@ namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters
             _ => FillPattern.None,
         };
 
-        public static ExcelService.Styles.Patterns.FillPattern ToExcelFillPattern(FillPattern fillPattern) => fillPattern switch
+        public static ServiceStyles.FillPattern ToExcelFillPattern(FillPattern fillPattern) => fillPattern switch
         {
             FillPattern.DarkDown => ServiceStyles.FillPattern.DarkDown,
             FillPattern.DarkGray => ServiceStyles.FillPattern.DarkGray,

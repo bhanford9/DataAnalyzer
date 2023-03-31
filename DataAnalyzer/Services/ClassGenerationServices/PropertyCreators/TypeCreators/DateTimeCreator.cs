@@ -1,6 +1,6 @@
 ﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCreators
 {
-    internal class DateTimeCreator : TypeCreator
+    internal class DateTimeCreator : TypeCreator, IDateTimeCreator
     {
         // TODO --> may need a way to handle importing a using statement
 

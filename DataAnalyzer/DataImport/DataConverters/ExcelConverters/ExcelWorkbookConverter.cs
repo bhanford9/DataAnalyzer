@@ -23,7 +23,7 @@ namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters
             return standardWorkbook;
         }
 
-        public static IWorksheet WorksheetModelToExcelWorksheet(WorksheetModel worksheetModel)
+        public static IWorksheet WorksheetModelToExcelWorksheet(IWorksheetModel worksheetModel)
         {
             Worksheet worksheet = new Worksheet(
               worksheetModel.WorksheetName,
@@ -33,7 +33,7 @@ namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters
             return worksheet;
         }
 
-        public static IDataCluster DataClusterModelToExcelDataCluster(DataClusterModel dataClusterModel)
+        public static IDataCluster DataClusterModelToExcelDataCluster(IDataClusterModel dataClusterModel)
         {
             if (dataClusterModel.Rows.Count == 0)
             {
@@ -63,7 +63,7 @@ namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters
             }
         }
 
-        public static IRow RowModelToExcelRow(RowModel rowModel)
+        public static IRow RowModelToExcelRow(IRowModel rowModel)
         {
             ICollection<ICell> cells = new List<ICell>();
             for (int i = 0; i < rowModel.Cells.Count; i++)
@@ -76,7 +76,7 @@ namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters
               ExcelActionParamConverters.ToExcelDefinitions(rowModel.RowActions.Select(x => x.ActionParameters).ToList()));
         }
 
-        public static ICell CellModelToExcelCell(CellModel cellModel, int rowIndex) => new Cell(
+        public static ICell CellModelToExcelCell(ICellModel cellModel, int rowIndex) => new Cell(
               cellModel.Value,
               rowIndex,
               cellModel.DataType.CreateCellDataFormat(),

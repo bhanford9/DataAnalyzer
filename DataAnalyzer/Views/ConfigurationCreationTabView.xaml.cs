@@ -1,21 +1,16 @@
-﻿using DataAnalyzer.Common.Mvvm;
-using DataAnalyzer.Models;
-using DataAnalyzer.ViewModels;
-using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
+﻿using DataAnalyzer.ViewModels;
 using System.Windows.Controls;
 
 namespace DataAnalyzer.Views
 {
     public partial class ConfigurationCreationTabView : UserControl
     {
-        private readonly ConfigurationCreationViewModel viewModel = new(
-            BaseSingleton<ConfigurationModel>.Instance,
-            BaseSingleton<StructureExecutiveCommissioner>.Instance);
+        public ConfigurationCreationTabView() : this(Resolver.Resolve<IConfigurationCreationViewModel>()) { }
 
-        public ConfigurationCreationTabView()
+        internal ConfigurationCreationTabView(IConfigurationCreationViewModel viewModel)
         {
             this.InitializeComponent();
-            this.DataContext = this.viewModel;
+            this.DataContext = viewModel;
         }
     }
 }

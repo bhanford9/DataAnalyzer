@@ -9,13 +9,18 @@ using System.Linq;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 {
-    internal class WorkbookActionApplicationModel : ActionApplicationModel
+    internal class WorkbookActionApplicationModel : ActionApplicationModel, IWorkbookActionApplicationModel
     {
         private const string PATH_DELIMITER = "~~";
 
         public const string ACTION_APPLIED_KEY = "Workbook Action Applied";
 
-        protected override void InternalApplyAction(CheckableTreeViewItem item, IEditActionViewModel action)
+        public WorkbookActionApplicationModel(IStatsModel statsModel, IExcelSetupModel excelSetupModel)
+            : base(statsModel, excelSetupModel)
+        {
+        }
+
+        protected override void InternalApplyAction(ICheckableTreeViewItem item, IEditActionViewModel action)
         {
             string[] pathSplit = item.Path.Split(PATH_DELIMITER);
             if (pathSplit.Length < 1 || pathSplit[0].Length == 0)
@@ -43,9 +48,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
             }
         }
 
-        protected override ObservableCollection<ExcelAction> GetActionCollection() => this.excelSetupModel.AvailableWorkbookActions;
+        protected override ObservableCollection<IExcelAction> GetActionCollection() => this.excelSetupModel.AvailableWorkbookActions;
 
-        protected override void InternalLoadWhereToApply(CheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
+        protected override void InternalLoadWhereToApply(ICheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
         {
             foreach (HeirarchalStats workbookStats in heirarchalStats)
             {

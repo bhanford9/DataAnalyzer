@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ActionSummaryViewModels
 {
-    internal class ActionSummaryTreeViewItem : BasePropertyChanged
+    internal class ActionSummaryTreeViewItem : BasePropertyChanged, IActionSummaryTreeViewItem
     {
         private bool isLeaf = true;
         private string id = string.Empty;
@@ -14,9 +14,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Act
         {
         }
 
-        public ObservableCollection<ActionSummaryTreeViewItem> Children { get; } = new();
+        public ObservableCollection<IActionSummaryTreeViewItem> Children { get; } = new();
 
-        public ObservableCollection<ActionSummaryExpandableViewModel> SummaryViewModels { get; } = new();
+        public ObservableCollection<IActionSummaryExpandableViewModel> SummaryViewModels { get; } = new();
 
         public bool IsLeaf
         {

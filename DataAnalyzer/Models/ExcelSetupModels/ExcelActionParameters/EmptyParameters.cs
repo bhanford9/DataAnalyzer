@@ -3,7 +3,7 @@ using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
-    internal class EmptyParameters : ActionParameters
+    internal class EmptyParameters : ActionParameters, IEmptyParameters
     {
         public override ActionCategory ActionCategory => ActionCategory.Unknown;
 

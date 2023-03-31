@@ -41,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="7.0.0" />
     <PackageReference Include="MahApps.Metro.IconPacks.MaterialDesign" Version="4.11.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
   </ItemGroup>

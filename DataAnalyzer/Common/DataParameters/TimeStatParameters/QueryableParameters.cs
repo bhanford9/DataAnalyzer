@@ -3,7 +3,7 @@ using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzer.Common.DataParameters.TimeStatParameters
 {
-    class QueryableParameters : TimeParameters
+    class QueryableParameters : TimeParameters, IQueryableParameters
     {
         public override StatType StatType => StatType.Queryable;
 

@@ -6,7 +6,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
     {
         string LoadedActionName { get; set; }
 
-        ExcelAction GetLoadedAction();
+        IExcelAction GetLoadedAction();
         void LoadAction(string name);
     }
 }

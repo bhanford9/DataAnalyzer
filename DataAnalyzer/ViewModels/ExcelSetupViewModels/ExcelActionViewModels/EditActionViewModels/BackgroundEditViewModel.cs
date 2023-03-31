@@ -10,12 +10,12 @@ using System.Drawing;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
-    internal class BackgroundEditViewModel : EditActionViewModel
+    internal class BackgroundEditViewModel : EditActionViewModel, IBackgroundEditViewModel
     {
         private string selectedPattern = string.Empty;
         private readonly EnumUtilities enumUtilities = new();
-        private RowSpecificationViewModel rowSpecification = new();
-        private ColumnSpecificationViewModel columnSpecification = new();
+        private IRowSpecificationViewModel rowSpecification;
+        private IColumnSpecificationViewModel columnSpecification;
 
         public BackgroundEditViewModel(ExcelEntityType excelEntityType)
             : base(excelEntityType)
@@ -25,16 +25,20 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
         public BackgroundEditViewModel(
             IActionCreationModel actionCreationModel,
             IEditActionViewModel toCopy,
-            ExcelEntityType excelEntityType)
+            ExcelEntityType excelEntityType,
+            IRowSpecificationViewModel rowSpecification,
+            IColumnSpecificationViewModel columnSpecification)
           : base(actionCreationModel, toCopy, excelEntityType)
         {
+            this.rowSpecification = rowSpecification;
+            this.columnSpecification = columnSpecification;
         }
 
         public ObservableCollection<string> Patterns { get; } = new();
 
-        public ColorsComboBoxViewModel BackgroundColors { get; } = new();
+        public IColorsComboBoxViewModel BackgroundColors { get; } = new ColorsComboBoxViewModel();
 
-        public ColorsComboBoxViewModel PatternColors { get; } = new();
+        public IColorsComboBoxViewModel PatternColors { get; } = new ColorsComboBoxViewModel();
 
         public string SelectedPattern
         {
@@ -42,13 +46,13 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             set => this.NotifyPropertyChanged(ref this.selectedPattern, value);
         }
 
-        public RowSpecificationViewModel RowSpecification
+        public IRowSpecificationViewModel RowSpecification
         {
             get => this.rowSpecification;
             set => this.NotifyPropertyChanged(ref this.rowSpecification, value);
         }
 
-        public ColumnSpecificationViewModel ColumnSpecification
+        public IColumnSpecificationViewModel ColumnSpecification
         {
             get => this.columnSpecification;
             set => this.NotifyPropertyChanged(ref this.columnSpecification, value);
@@ -66,7 +70,13 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 
         public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
         {
-            BackgroundEditViewModel viewModel = new(this.actionCreationModel, this, this.ExcelEntityType);
+            BackgroundEditViewModel viewModel = new(
+                this.actionCreationModel,
+                this,
+                this.ExcelEntityType,
+                this.rowSpecification,
+                this.columnSpecification);
+
             BackgroundParameters backgroundParameters = parameters as BackgroundParameters;
             viewModel.BackgroundColors.SelectedColor = backgroundParameters.BackgroundColor.Name;
             viewModel.PatternColors.SelectedColor = backgroundParameters.PatternColor.Name;

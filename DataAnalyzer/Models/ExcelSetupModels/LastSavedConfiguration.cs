@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.Models.ExcelSetupModels
 {
-    internal class LastSavedConfiguration
+    internal class LastSavedConfiguration : ILastSavedConfiguration
     {
         public IImportExportKey ImportExportKey { get; set; } = Services.ImportExportKey.Default;
 

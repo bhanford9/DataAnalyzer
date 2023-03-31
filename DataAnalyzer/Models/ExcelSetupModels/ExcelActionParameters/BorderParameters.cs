@@ -4,7 +4,7 @@ using System.Drawing;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
-    internal class BorderParameters : ActionParameters
+    internal class BorderParameters : ActionParameters, IBorderParameters
     {
         private Color leftColor = Color.Transparent;
         private Color topColor = Color.Transparent;
@@ -22,8 +22,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
         private BorderStyle diagonalUpStyle = BorderStyle.None;
         private BorderStyle diagonalDownStyle = BorderStyle.None;
 
-        private ColumnSpecificationParameters columnSpecification = new();
-        private RowSpecificationParameters rowSpecification = new();
+        // TODO --> inject these
+        private IColumnSpecificationParameters columnSpecification = new ColumnSpecificationParameters();
+        private IRowSpecificationParameters rowSpecification = new RowSpecificationParameters();
 
         public Color LeftColor
         {
@@ -109,13 +110,13 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
             set => this.NotifyPropertyChanged(ref this.diagonalDownStyle, value);
         }
 
-        public ColumnSpecificationParameters ColumnSpecification
+        public IColumnSpecificationParameters ColumnSpecification
         {
             get => this.columnSpecification;
             set => this.NotifyPropertyChanged(ref this.columnSpecification, value);
         }
 
-        public RowSpecificationParameters RowSpecification
+        public IRowSpecificationParameters RowSpecification
         {
             get => this.rowSpecification;
             set => this.NotifyPropertyChanged(ref this.rowSpecification, value);

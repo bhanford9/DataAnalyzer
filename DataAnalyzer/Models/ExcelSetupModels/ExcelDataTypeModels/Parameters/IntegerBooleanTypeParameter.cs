@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 {
-    internal class IntegerBooleanTypeParameter : IntegerTypeParameter
+    internal class IntegerBooleanTypeParameter : IntegerTypeParameter, IIntegerBooleanTypeParameter
     {
         private bool booleanValue = true;
 
@@ -12,8 +12,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
         public IntegerBooleanTypeParameter(ITypeParameter typeParameter) : base(typeParameter)
         {
-            this.BooleanName = (typeParameter as IntegerBooleanTypeParameter).BooleanName;
-            this.BooleanValue = (typeParameter as IntegerBooleanTypeParameter).BooleanValue;
+            this.BooleanName = (typeParameter as IIntegerBooleanTypeParameter).BooleanName;
+            this.BooleanValue = (typeParameter as IIntegerBooleanTypeParameter).BooleanValue;
         }
 
         public IntegerBooleanTypeParameter(
@@ -69,7 +69,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
         protected override void InternalCloneParameters(ITypeParameter other)
         {
-            IntegerBooleanTypeParameter local = other as IntegerBooleanTypeParameter;
+            IIntegerBooleanTypeParameter local = other as IIntegerBooleanTypeParameter;
             this.IntegerName = local.IntegerName;
             this.IntegerValue = local.IntegerValue;
             this.BooleanName = local.BooleanName;

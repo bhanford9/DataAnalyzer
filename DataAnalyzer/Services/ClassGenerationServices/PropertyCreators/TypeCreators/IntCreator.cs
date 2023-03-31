@@ -1,6 +1,6 @@
 ﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCreators
 {
-    internal class IntCreator : TypeCreator
+    internal class IntCreator : TypeCreator, IIntCreator
     {
         public override string Create(string dataType) => "int";
 

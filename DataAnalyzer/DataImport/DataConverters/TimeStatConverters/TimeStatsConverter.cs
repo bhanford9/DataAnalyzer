@@ -5,8 +5,7 @@ using DataAnalyzer.DataImport.DataObjects;
 
 namespace DataAnalyzer.DataImport.DataConverters.TimeStatConverters
 {
-    internal abstract class TimeStatsConverter<TTimeStats, TTimeData> : DataConverter<TTimeStats, TTimeData>
-        where TTimeStats : ITimeStats, new()
+    internal abstract class TimeStatsConverter<TTimeStats, TTimeData> : DataConverter<TTimeStats, TTimeData>, ITimeStatsConverter where TTimeStats : ITimeStats, new()
         where TTimeData : ITimeData, new()
     {
         protected abstract void InternalToAnalyzer(IData data, IStats stats);

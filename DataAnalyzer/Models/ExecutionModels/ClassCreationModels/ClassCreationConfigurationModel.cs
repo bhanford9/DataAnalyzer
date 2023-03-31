@@ -15,20 +15,22 @@ namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels
     //   DTO as a type parameter and then many of the required methods could be made abstract and work similarly
     //   to the other layers
     // The more I go, the more duplicate code I am seeing, so this is going to be more desirable
-    internal class ClassCreationConfigurationModel : BasePropertyChanged
+    internal class ClassCreationConfigurationModel : BasePropertyChanged, IClassCreationConfigurationModel
     {
         private const string CLASS_CREATION_KEY = "ClassCreation";
 
         private readonly SerializationService serializationService = new();
-        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+        private readonly IConfigurationModel configurationModel;
 
         private string configurationDirectory = string.Empty;
         private string currentConfigName = string.Empty;
 
-        private ClassProperties classProperties = new();
+        // TODO --> inject
+        private IClassProperties classProperties = new ClassProperties();
 
-        public ClassCreationConfigurationModel()
+        public ClassCreationConfigurationModel(IConfigurationModel configurationModel)
         {
+            this.configurationModel = configurationModel;
             ConfigurationDirectory = Properties.Settings.Default.LastUsedClassCreationConfigurationDirectory;
         }
 
@@ -46,7 +48,7 @@ namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels
             }
         }
 
-        public ClassProperties ClassProperties
+        public IClassProperties ClassProperties
         {
             get => this.classProperties;
             set => this.NotifyPropertyChanged(ref this.classProperties, value);

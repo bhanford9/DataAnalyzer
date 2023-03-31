@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-    internal class RowViewModel : BasePropertyChanged
+    internal class RowViewModel : BasePropertyChanged, IRowViewModel
     {
         private string value = string.Empty;
 

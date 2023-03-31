@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {
-    internal abstract class LoadableRemovableRowViewModel : RowViewModel
+    internal abstract class LoadableRemovableRowViewModel : RowViewModel, ILoadableRemovableRowViewModel
     {
         private string toolTipText = string.Empty;
         private bool isRemovable = true;

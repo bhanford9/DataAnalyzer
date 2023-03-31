@@ -7,11 +7,15 @@ namespace DataAnalyzer.Models.ImportModels
     {
         private string selectedScraperCategory = string.Empty;
 
-        private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
-        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+        protected readonly IMainModel mainModel;
+        protected readonly IConfigurationModel configurationModel;
 
-        public ImportModel()
+        public ImportModel(
+            IConfigurationModel configurationModel,
+            IMainModel mainModel)
         {
+            this.configurationModel = configurationModel;
+            this.mainModel = mainModel;
             this.SelectedScraperCategory = Properties.Settings.Default.LastSelectedScraperType;
 
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;

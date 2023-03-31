@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
-    class RowSpecificationParameters : BasePropertyChanged
+    internal class RowSpecificationParameters : BasePropertyChanged, IRowSpecificationParameters
     {
         private bool allRows = true;
         private bool useNthRow = false;
@@ -42,8 +42,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
             return message;
         }
 
-        public RowSpecificationParameters Clone() =>
-            new()
+        public IRowSpecificationParameters Clone() =>
+            new RowSpecificationParameters()
             {
                 AllRows = this.allRows,
                 UseNthRow = this.useNthRow,

@@ -5,12 +5,12 @@ namespace DataAnalyzer.Views
 {
     public partial class CheckableTreeView : UserControl
     {
-        private readonly CheckableTreeViewItem viewModel = new();
+        public CheckableTreeView() : this(Resolver.Resolve<ICheckableTreeViewItem>()) { }
 
-        public CheckableTreeView()
+        internal CheckableTreeView(ICheckableTreeViewItem viewModel)
         {
             this.InitializeComponent();
-            this.DataContext = this.viewModel;
+            this.DataContext = viewModel;
         }
     }
 }

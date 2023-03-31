@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Common.DataOrganizers
 {
-    internal class CsvDataOrganizer : DataOrganizer<ClassPropertiesConfiguration>
+    internal class CsvDataOrganizer : DataOrganizer<ClassPropertiesConfiguration>, ICsvDataOrganizer
     {
         protected override HeirarchalStats InternalOrganize(ClassPropertiesConfiguration configuration, ICollection<IStats> data) => new HeirarchalStats()
         {

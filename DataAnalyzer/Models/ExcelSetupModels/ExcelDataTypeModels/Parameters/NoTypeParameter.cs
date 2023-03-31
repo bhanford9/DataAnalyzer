@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 {
-    internal class NoTypeParameter : TypeParameter
+    internal class NoTypeParameter : TypeParameter, INoTypeParameter
     {
         public NoTypeParameter() : base() { }
 

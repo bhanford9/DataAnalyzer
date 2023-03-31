@@ -7,7 +7,7 @@ using System.ComponentModel;
 
 namespace DataAnalyzer.ViewModels
 {
-    internal class ConfigurationExecutionViewModel : BasePropertyChanged
+    internal class ConfigurationExecutionViewModel : BasePropertyChanged, IConfigurationExecutionViewModel
     {
         private readonly IConfigurationModel configurationModel;
         private string selectedExportType = string.Empty;

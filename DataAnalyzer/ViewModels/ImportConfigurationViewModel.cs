@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace DataAnalyzer.ViewModels
 {
-    internal class ImportConfigurationViewModel : BasePropertyChanged
+    internal class ImportConfigurationViewModel : BasePropertyChanged, IImportConfigurationViewModel
     {
         private bool categoryIsSelectable = false;
         private bool flavorIsSelectable = false;

@@ -15,9 +15,9 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 {
     internal class StructureExecutiveCommissioner : BasePropertyChanged, IStructureExecutiveCommissioner
     {
-        private readonly IConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-        private readonly IMainModel mainModel = BaseSingleton<MainModel>.Instance;
-        private readonly IStatsModel statsModel = BaseSingleton<StatsModel>.Instance;
+        private readonly IConfigurationModel configurationModel;
+        private readonly IMainModel mainModel;
+        private readonly IStatsModel statsModel;
         private readonly IExecutiveUtilitiesRepository executiveUtilities = ExecutiveUtilitiesRepository.Instance;
         private readonly EnumUtilities enumUtilities = new();
 
@@ -28,8 +28,14 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
         private string configurationDirectory = string.Empty;
         private readonly IReadOnlyDictionary<string, Action> viewDisplayMap;
 
-        public StructureExecutiveCommissioner()
+        public StructureExecutiveCommissioner(
+            IConfigurationModel configurationModel,
+            IMainModel mainModel,
+            IStatsModel statsModel)
         {
+            this.configurationModel = configurationModel;
+            this.mainModel = mainModel;
+            this.statsModel = statsModel;
             enumUtilities.LoadNames(typeof(ExportType), ExportTypes);
 
             viewDisplayMap = new Dictionary<string, Action>()
@@ -38,11 +44,6 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
                 { nameof(DisplayCsvToClassSetup), () => DisplayCsvToClassSetup = true },
                 { nameof(DisplayNotSupported), () => DisplayNotSupported = true },
             };
-
-            if (!configurationModel.HasLoaded)
-            {
-                configurationModel.LoadConfiguration();
-            }
 
             if (configurationModel.HasLoaded)
             {

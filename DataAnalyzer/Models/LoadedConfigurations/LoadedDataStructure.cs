@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.Models.LoadedConfigurations
 {
-    internal class LoadedDataStructure : BasePropertyChanged
+    internal class LoadedDataStructure : BasePropertyChanged, ILoadedDataStructure
     {
         private readonly string directoryPathKey = "Directory:   ";
         private string directoryPath = "Not set";

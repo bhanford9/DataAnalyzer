@@ -7,12 +7,17 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 {
     internal abstract class ActionApplicationModel : ExcelActionModel, IActionApplicationModel
     {
-        public void LoadWhereToApply(CheckableTreeViewItem baseItem) => this.InternalLoadWhereToApply(baseItem, this.statsModel.HeirarchalStats.Children);
+        protected ActionApplicationModel(IStatsModel statsModel, IExcelSetupModel excelSetupModel)
+            : base(statsModel, excelSetupModel)
+        {
+        }
 
-        public void ApplyAction(CheckableTreeViewItem item, IEditActionViewModel action) => this.InternalApplyAction(item, action);
+        public void LoadWhereToApply(ICheckableTreeViewItem baseItem) => this.InternalLoadWhereToApply(baseItem, this.statsModel.HeirarchalStats.Children);
 
-        protected abstract void InternalApplyAction(CheckableTreeViewItem item, IEditActionViewModel action);
+        public void ApplyAction(ICheckableTreeViewItem item, IEditActionViewModel action) => this.InternalApplyAction(item, action);
 
-        protected abstract void InternalLoadWhereToApply(CheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats);
+        protected abstract void InternalApplyAction(ICheckableTreeViewItem item, IEditActionViewModel action);
+
+        protected abstract void InternalLoadWhereToApply(ICheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats);
     }
 }

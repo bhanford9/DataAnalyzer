@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels
 {
-    internal class ApplicationConfigurationViewModel : BasePropertyChanged
+    internal class ApplicationConfigurationViewModel : BasePropertyChanged, IApplicationConfigurationViewModel
     {
         private readonly BaseCommand selectDirectory;
         private readonly BaseCommand apply;

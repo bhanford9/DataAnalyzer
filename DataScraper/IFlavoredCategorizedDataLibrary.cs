@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace DataScraper
 {
-    public interface IFlavoredCategorizedDataLibrary<T>
+    public interface IFlavoredCategorizedDataLibrary<T> : IDictionary<IImportType, IDictionary<IScraperCategory, IDictionary<IScraperFlavor, T>>>
     {
         T this[IImportType type, IScraperCategory category, IScraperFlavor flavor] { get; }
 

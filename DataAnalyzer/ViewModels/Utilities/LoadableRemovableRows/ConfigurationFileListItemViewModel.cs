@@ -1,14 +1,16 @@
-﻿using DataAnalyzer.Common.Mvvm;
-using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
+﻿using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using System;
 
 namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {
-    class ConfigurationFileListItemViewModel : LoadableRemovableRowViewModel
+    class ConfigurationFileListItemViewModel : LoadableRemovableRowViewModel, IConfigurationFileListItemViewModel
     {
-        private readonly StructureExecutiveCommissioner executiveCommissioner = BaseSingleton<StructureExecutiveCommissioner>.Instance;
+        private readonly IStructureExecutiveCommissioner executiveCommissioner;
 
-        public ConfigurationFileListItemViewModel() { }
+        public ConfigurationFileListItemViewModel(IStructureExecutiveCommissioner executiveCommissioner)
+        {
+            this.executiveCommissioner = executiveCommissioner;
+        }
 
         protected override void DoLoad() => this.executiveCommissioner.LoadConfiguration(this.Value);
 

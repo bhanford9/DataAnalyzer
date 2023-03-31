@@ -2,8 +2,8 @@
 
 namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
 {
-    internal class GroupingDataConfiguration : DataConfiguration
+    internal class GroupingDataConfiguration : DataConfiguration, IGroupingDataConfiguration
     {
-        public ICollection<GroupingConfiguration> GroupingConfiguration { get; set; } = new List<GroupingConfiguration>();
+        public ICollection<IGroupingConfiguration> GroupingConfiguration { get; set; } = new List<IGroupingConfiguration>();
     }
 }

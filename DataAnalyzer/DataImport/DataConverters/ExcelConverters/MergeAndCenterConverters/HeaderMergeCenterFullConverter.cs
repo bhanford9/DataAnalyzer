@@ -1,14 +1,15 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters;
 using System;
+using ExcelParms = ExcelService.DataActions.ActionParameters;
 
 namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.MergeAndCenterConverters
 {
-    internal class HeaderMergeCenterFullConverter : ExcelActionParamConverter
+    internal class HeaderMergeCenterFullConverter : ExcelActionParamConverter, IHeaderMergeCenterFullConverter
     {
         public HeaderMergeCenterFullConverter() : base(new HeaderMergeCenterFullParameters()) { }
 
-        public override IActionParameters FromExcel(ExcelService.DataActions.ActionParameters.IActionParameters input)
+        public override IActionParameters FromExcel(ExcelParms.IActionParameters input)
         {
             if (input is HeaderMergeCenterFullParameters mergeAndCenterParams)
             {
@@ -22,7 +23,7 @@ namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.MergeAndCenterC
             throw new ArgumentException("Invalid type. Expected HeaderMergeCenterFullParameters.");
         }
 
-        public override ExcelService.DataActions.ActionParameters.IActionParameters ToExcel(IActionParameters input)
+        public override ExcelParms.IActionParameters ToExcel(IActionParameters input)
         {
             if (input is BooleanOperationParameters booleanParams)
             {

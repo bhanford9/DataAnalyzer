@@ -3,7 +3,7 @@ using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
 {
-    internal class AlignmentSummaryItem : SummaryItem
+    internal class AlignmentSummaryItem : SummaryItem, IAlignmentSummaryItem
     {
         public override bool IsApplicable(IActionParameters actionParameters) => actionParameters is AlignmentParameters;
 

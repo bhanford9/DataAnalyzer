@@ -13,22 +13,28 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
 {
-    internal class ActionsSummaryViewModel : BasePropertyChanged
+    internal class ActionsSummaryViewModel : BasePropertyChanged, IActionsSummaryViewModel
     {
         // Stats model probably isn't the right way to do this. Instead...
         //   1. The Application side ViewModel should push down to its Model
         //   2. The Summary side Model should react to those changes and update itself
         //   3. The Summary side View Model should react to its Model's changes
-        private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-        private readonly StructureExecutiveCommissioner executiveCommissioner = BaseSingleton<StructureExecutiveCommissioner>.Instance;
+        private readonly IStatsModel statsModel;
+        private readonly IStructureExecutiveCommissioner executiveCommissioner;
         private readonly IActionsSummaryModel actionsSummaryModel;
 
         private string configName = string.Empty;
 
         private readonly BaseCommand saveConfiguration;
 
-        public ActionsSummaryViewModel(IActionsSummaryModel actionsSummaryModel, ExcelEntityType excelEntityType)
+        public ActionsSummaryViewModel(
+            IStatsModel statsModel,
+            IStructureExecutiveCommissioner structureExecutiveCommissioner,
+            IActionsSummaryModel actionsSummaryModel,
+            ExcelEntityType excelEntityType)
         {
+            this.statsModel = statsModel;
+            this.executiveCommissioner = structureExecutiveCommissioner;
             this.actionsSummaryModel = actionsSummaryModel;
             this.ExcelEntityType = excelEntityType;
 
@@ -38,7 +44,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             this.actionsSummaryModel.PropertyChanged += this.ActionsSummaryModelPropertyChanged;
         }
 
-        public ObservableCollection<ActionSummaryTreeViewItem> HierarchicalSummaries { get; } = new();
+        public ObservableCollection<IActionSummaryTreeViewItem> HierarchicalSummaries { get; } = new();
 
         public ICommand SaveConfiguration => this.saveConfiguration;
 
@@ -57,7 +63,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
                 this.statsModel.StructureStats(configuration);
                 this.InitializeFromStats();
             }
-            
+
             this.actionsSummaryModel.LoadHierarchicalSummariesFromModel(this.HierarchicalSummaries.First());
         }
 

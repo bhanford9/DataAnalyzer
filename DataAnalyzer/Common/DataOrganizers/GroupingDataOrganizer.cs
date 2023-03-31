@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DataAnalyzer.Common.DataOrganizers
 {
-    internal class GroupingDataOrganizer<T> : DataOrganizer<GroupingDataConfiguration<T>>
+    internal class GroupingDataOrganizer<T> : DataOrganizer<GroupingDataConfiguration<T>>, IGroupingDataOrganizer
         where T : ApplicationConfigurations.DataConfigurations.IDataConfiguration
     {
         protected override HeirarchalStats InternalOrganize(GroupingDataConfiguration<T> configuration, ICollection<IStats> data)

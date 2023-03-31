@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace DataAnalyzer.DataImport.DataConverters
 {
-    internal class DataConverterExecutive
+    internal class DataConverterExecutive : IDataConverterExecutive
     {
         private readonly DataConverterLibrary converters = BaseSingleton<DataConverterLibrary>.Instance;
 
@@ -38,7 +38,7 @@ namespace DataAnalyzer.DataImport.DataConverters
 
             if (converter.IsValidData(data))
             {
-                return converter.ToAnalyzerStats(data);             
+                return converter.ToAnalyzerStats(data);
             }
 
             throw new ArgumentException("Invalid data supplied");

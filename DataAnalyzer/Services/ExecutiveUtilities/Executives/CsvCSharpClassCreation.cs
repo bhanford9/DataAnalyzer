@@ -1,5 +1,4 @@
 ﻿using DataAnalyzer.Common.DataOrganizers;
-using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.StatConfigurations;
 using DataAnalyzer.StatConfigurations.CsvConfigurations;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
@@ -14,7 +13,7 @@ namespace DataAnalyzer.Services.ExecutiveUtilities.Executives
         public override IDataOrganizer DataOrganizer { get; } = new CsvDataOrganizer();
 
         public override IDataStructureSetupViewModel DataStructureSetupViewModel { get; }
-            = new CsvCSharpStringClassSetupViewModel(new CsvCSharpStringClassSetupModel());
+            = Resolver.Resolve<CsvCSharpStringClassSetupViewModel>();// new CsvCSharpStringClassSetupViewModel(new CsvCSharpStringClassSetupModel());
 
         public override string ExecutionDisplayKey => nameof(ExecutionExecutiveCommissioner.DisplayClassCreation);
     }

@@ -11,9 +11,12 @@ namespace DataAnalyzer.Models.DataStructureSetupModels
         where TDataConfiguration : IDataConfiguration, new()
     {
         protected readonly SerializationService serializationService = new();
-        protected readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+        protected readonly IConfigurationModel configurationModel;
 
-        protected DataStructureSetupModel() { }
+        protected DataStructureSetupModel(IConfigurationModel configurationModel)
+        {
+            this.configurationModel = configurationModel;
+        }
 
         public TDataConfiguration DataConfiguration { get; protected set; } = new TDataConfiguration();
 

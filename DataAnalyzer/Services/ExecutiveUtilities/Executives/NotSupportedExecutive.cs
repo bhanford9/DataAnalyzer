@@ -1,5 +1,4 @@
 ﻿using DataAnalyzer.Common.DataOrganizers;
-using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.StatConfigurations;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
@@ -12,8 +11,8 @@ namespace DataAnalyzer.Services.ExecutiveUtilities.Executives
 
         public override IDataOrganizer DataOrganizer { get; } = new NotSupportedDataOrganizer();
 
-        public override IDataStructureSetupViewModel DataStructureSetupViewModel { get; } 
-            = new NotSupportedSetupViewModel(new NotSupportedSetupModel());
+        public override IDataStructureSetupViewModel DataStructureSetupViewModel { get; }
+            = Resolver.Resolve<NotSupportedSetupViewModel>();//  new NotSupportedSetupViewModel(new NotSupportedSetupModel());
 
         public override string ExecutionDisplayKey => nameof(ExecutionExecutiveCommissioner.DisplayNotSupported);
     }

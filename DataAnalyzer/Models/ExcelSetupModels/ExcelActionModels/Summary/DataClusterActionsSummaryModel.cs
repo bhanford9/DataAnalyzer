@@ -8,34 +8,40 @@ using System.Linq;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
 {
-    internal class DataClusterActionsSummaryModel : ActionsSummaryModel
+    internal class DataClusterActionsSummaryModel : ActionsSummaryModel, IDataClusterActionsSummaryModel
     {
         private const string PATH_DELIMITER = "~~";
-        public override ObservableCollection<ExcelAction> GetActionCollection() => this.excelSetupModel.AvailableDataClusterActions;
 
-        public override void LoadHierarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem)
+        public DataClusterActionsSummaryModel(IStatsModel statsModel, IExcelSetupModel excelSetupModel)
+            : base(statsModel, excelSetupModel)
         {
-            foreach (ActionSummaryTreeViewItem workbookItem in baseItem.Children)
+        }
+
+        public override ObservableCollection<IExcelAction> GetActionCollection() => this.excelSetupModel.AvailableDataClusterActions;
+
+        public override void LoadHierarchicalSummariesFromModel(IActionSummaryTreeViewItem baseItem)
+        {
+            foreach (IActionSummaryTreeViewItem workbookItem in baseItem.Children)
             {
-                WorkbookModel workbook = this.excelSetupModel.ExcelConfiguration.WorkbookModels.FirstOrDefault(x => x.Name.Equals(workbookItem.Name));
+                IWorkbookModel workbook = this.excelSetupModel.ExcelConfiguration.WorkbookModels.FirstOrDefault(x => x.Name.Equals(workbookItem.Name));
 
                 if (workbook != default)
                 {
-                    foreach (ActionSummaryTreeViewItem worksheetItem in workbookItem.Children)
+                    foreach (IActionSummaryTreeViewItem worksheetItem in workbookItem.Children)
                     {
-                        WorksheetModel worksheet = workbook.Worksheets.FirstOrDefault(x => x.WorksheetName.Equals(worksheetItem.Name));
+                        IWorksheetModel worksheet = workbook.Worksheets.FirstOrDefault(x => x.WorksheetName.Equals(worksheetItem.Name));
 
                         if (worksheet != default)
                         {
-                            foreach (ActionSummaryTreeViewItem dataClusterItem in worksheetItem.Children)
+                            foreach (IActionSummaryTreeViewItem dataClusterItem in worksheetItem.Children)
                             {
-                                DataClusterModel dataCluster = worksheet.DataClusters.FirstOrDefault(x => x.Name.Equals(dataClusterItem.Name));
+                                IDataClusterModel dataCluster = worksheet.DataClusters.FirstOrDefault(x => x.Name.Equals(dataClusterItem.Name));
 
                                 if (dataCluster != default && dataCluster.DataClusterActions.Count > 0)
                                 {
                                     dataClusterItem.SummaryViewModels.Clear();
 
-                                    foreach (ExcelAction action in dataCluster.DataClusterActions)
+                                    foreach (IExcelAction action in dataCluster.DataClusterActions)
                                     {
                                         dataClusterItem.SummaryViewModels.Add(new ActionSummaryExpandableViewModel
                                         {
@@ -56,7 +62,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
             }
         }
 
-        protected override void InternalLoadWhereToApply(ActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
+        protected override void InternalLoadWhereToApply(IActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
         {
             foreach (HeirarchalStats workbookStats in heirarchalStats)
             {

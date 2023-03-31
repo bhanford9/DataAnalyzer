@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCreators
 {
-    internal class TypeCreationExecutive
+    internal class TypeCreationExecutive : ITypeCreationExecutive
     {
         private readonly IReadOnlyDictionary<string, ITypeCreator> creators = new Dictionary<string, ITypeCreator>()
         {
@@ -13,6 +13,11 @@ namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCre
             { ClassCreationConstants.STRING_TYPE, new StringCreator() },
             { ClassCreationConstants.DATE_TIME_TYPE, new DateTimeCreator() },
         };
+
+        public TypeCreationExecutive(IReadOnlyDictionary<string, ITypeCreator> creators)
+        {
+            this.creators = creators;
+        }
 
         public string Create(string dataType)
         {

@@ -3,7 +3,7 @@ using DataAnalyzer.Common.Mvvm;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ActionSummaryViewModels
 {
-    internal class ActionSummaryExpandableViewModel : BasePropertyChanged
+    internal class ActionSummaryExpandableViewModel : BasePropertyChanged, IActionSummaryExpandableViewModel
     {
         private string pathId = string.Empty;
         private string actionName = string.Empty;
@@ -27,9 +27,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Act
         }
 
         public ICommand RemoveOccurrence => this.removeOccurrence;
-        
+
         public ICommand RemoveAllOccurrences => this.removeAllOccurrences;
-        
+
         public ICommand CancelRemove => this.cancelRemove;
 
         public ICommand PreviewRemove => this.previewRemove;

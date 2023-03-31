@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-    class PropertyData : BasePropertyChanged
+    class PropertyData : BasePropertyChanged, IPropertyData
     {
         private string name = string.Empty;
         private string selectedType = string.Empty;

@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-    internal class ColumnSpecificationViewModel : BasePropertyChanged
+    internal class ColumnSpecificationViewModel : BasePropertyChanged, IColumnSpecificationViewModel
     {
         private bool allColumns = true;
         private bool useColumnName = false;

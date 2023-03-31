@@ -14,7 +14,7 @@ namespace DataAnalyzer.Models
 {
     internal class StatsModel : BasePropertyChanged, IStatsModel
     {
-        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+        private readonly IConfigurationModel configurationModel;
         private readonly ScraperService scraperService = new();
         private HeirarchalStats heirarchalStats;
 
@@ -23,8 +23,9 @@ namespace DataAnalyzer.Models
         //  making this lazy because it instantiates classes that require this model already be in memory
         private ExecutiveUtilitiesRepository executiveUtilities => ExecutiveUtilitiesRepository.Instance;
 
-        public StatsModel()
+        public StatsModel(IConfigurationModel configModel)
         {
+            this.configurationModel = configModel;
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
         }
 

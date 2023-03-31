@@ -5,8 +5,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Sub
 {
     internal static class ColumnSpecificationConversion
     {
-        public static ColumnSpecificationParameters ToModel(ColumnSpecificationViewModel viewModel) =>
-            new()
+        public static IColumnSpecificationParameters ToModel(IColumnSpecificationViewModel viewModel) =>
+            new ColumnSpecificationParameters()
             {
                 AllColumns = viewModel.AllColumns,
                 ColumnName = viewModel.ColumnName,
@@ -17,8 +17,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Sub
                 UseNthColumn = viewModel.UseNthColumn
             };
 
-        public static ColumnSpecificationViewModel ToViewModel(ColumnSpecificationParameters model) =>
-            new()
+        public static IColumnSpecificationViewModel ToViewModel(IColumnSpecificationParameters model) =>
+            new ColumnSpecificationViewModel()
             {
                 AllColumns = model.AllColumns,
                 ColumnName = model.ColumnName,

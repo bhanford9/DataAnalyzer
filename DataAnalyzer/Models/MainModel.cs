@@ -11,10 +11,11 @@ namespace DataAnalyzer.Models
         private LoadedDataContent loadedDataContent = new();
         private LoadedDataStructure loadedDataStructure = new();
         private LoadedInputFiles loadedInputFiles = new();
-        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+        private readonly IConfigurationModel configurationModel;
 
-        public MainModel()
+        public MainModel(IConfigurationModel configurationModel)
         {
+            this.configurationModel = configurationModel;
             loadedInputFiles.PropertyChanged += this.LoadedInputFilesPropertyChanged;
         }
 

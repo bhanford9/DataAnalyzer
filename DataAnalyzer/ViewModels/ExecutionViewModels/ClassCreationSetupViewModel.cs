@@ -15,12 +15,11 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.ExecutionViewModels
 {
-    internal class ClassCreationSetupViewModel : BasePropertyChanged
+    internal class ClassCreationSetupViewModel : BasePropertyChanged, IClassCreationSetupViewModel
     {
-        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-        private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-        private readonly StructureExecutiveCommissioner executiveCommissioner = BaseSingleton<StructureExecutiveCommissioner>.Instance;
-        private readonly ClassCreationSetupModel setupModel = BaseSingleton<ClassCreationSetupModel>.Instance;
+        private readonly IStatsModel statsModel;
+        private readonly IStructureExecutiveCommissioner executiveCommissioner;
+        private readonly IClassCreationSetupModel setupModel;
 
         private string className = string.Empty;
         private string selectedConfigDirectory = string.Empty;
@@ -38,8 +37,15 @@ namespace DataAnalyzer.ViewModels.ExecutionViewModels
         private readonly BaseCommand closePreview;
         private readonly BaseCommand copyAllText;
 
-        public ClassCreationSetupViewModel()
+        public ClassCreationSetupViewModel(
+            IStatsModel statsModel,
+            IStructureExecutiveCommissioner executiveCommissioner,
+            IClassCreationSetupModel setupModel)
         {
+            this.statsModel = statsModel;
+            this.executiveCommissioner = executiveCommissioner;
+            this.setupModel = setupModel;
+
             this.loadInData = new BaseCommand(obj => this.DoLoadInData());
             this.selectConfigDirectory = new BaseCommand(obj => this.DoSelectConfigDirectory());
             this.setAllPropertiesToStrings = new BaseCommand(obj => this.DoSetAllPropertiesToStrings());
@@ -65,8 +71,8 @@ namespace DataAnalyzer.ViewModels.ExecutionViewModels
         public ICommand ClosePreview => this.closePreview;
         public ICommand CopyAllText => this.copyAllText;
 
-        public ObservableCollection<PropertyData> PropertyItems { get; } = new();
-        public ObservableCollection<ClassCreationConfigListItemViewModel> SavedConfigs { get; } = new();
+        public ObservableCollection<IPropertyData> PropertyItems { get; } = new();
+        public ObservableCollection<IClassCreationConfigListItemViewModel> SavedConfigs { get; } = new();
 
         public string ClassName
         {
@@ -187,7 +193,7 @@ namespace DataAnalyzer.ViewModels.ExecutionViewModels
             this.SavedConfigs.Clear();
             foreach (var config in this.setupModel.ClassCreationConfigModel.Configurations)
             {
-                this.SavedConfigs.Add(new ClassCreationConfigListItemViewModel()
+                this.SavedConfigs.Add(new ClassCreationConfigListItemViewModel(this.setupModel.ClassCreationConfigModel)
                 {
                     IsRemovable = true,
                     Value = config

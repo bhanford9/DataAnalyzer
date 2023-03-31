@@ -3,7 +3,7 @@ using System.IO;
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-    internal class FilePathAndNamePair : BasePropertyChanged
+    internal class FilePathAndNamePair : BasePropertyChanged, IFilePathAndNamePair
     {
         private string filePath = string.Empty;
 

@@ -8,7 +8,7 @@ namespace DataAnalyzer.ApplicationConfigurations
     /// <summary>
     /// Holds the last used state of the application to be serialized and saved to file and loaded in on application startup
     /// </summary>
-    internal class ApplicationConfiguration : VersionedConfiguration
+    internal class ApplicationConfiguration : VersionedConfiguration, IApplicationConfiguration
     {
         public IImportType SelectedImport { get; set; }
 

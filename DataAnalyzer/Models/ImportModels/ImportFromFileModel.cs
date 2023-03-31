@@ -1,5 +1,4 @@
-﻿using DataAnalyzer.Common.Mvvm;
-using DataAnalyzer.Services;
+﻿using DataAnalyzer.Services;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
@@ -8,16 +7,17 @@ using System.Linq;
 
 namespace DataAnalyzer.Models.ImportModels
 {
-    internal class ImportFromFileModel : ImportModel
+    internal class ImportFromFileModel : ImportModel, IImportFromFileModel
     {
-        private readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
-        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-        private readonly FileMap fileMap = new();
+        private readonly IFileMap fileMap;
 
-        public ImportFromFileModel()
+        public ImportFromFileModel(
+            IConfigurationModel configurationModel,
+            IMainModel mainModel)
+            : base(configurationModel, mainModel)
         {
             this.ActiveDirectory = Properties.Settings.Default.LastUsedDataDirectory;
-            
+
             this.fileMap = this.configurationModel.GetFileImportMappings();
 
             if (this.ActiveDirectory != string.Empty)

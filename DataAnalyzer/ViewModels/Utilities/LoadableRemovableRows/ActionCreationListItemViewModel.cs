@@ -3,7 +3,7 @@ using System;
 
 namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
 {
-    internal class ActionCreationListItemViewModel : LoadableRemovableRowViewModel
+    internal class ActionCreationListItemViewModel : LoadableRemovableRowViewModel, IActionCreationListItemViewModel
     {
         private readonly IActionCreationModel actionCreationModel;
 

@@ -6,8 +6,9 @@ using System.Linq;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels
 {
-    internal class ExcelDataTypeLibrary
+    internal class ExcelDataTypeLibrary : IExcelDataTypeLibrary
     {
+        // TODO --> inject this
         private readonly ICollection<ITypeParameter> typeParameters = new List<ITypeParameter>();
 
         public ExcelDataTypeLibrary()

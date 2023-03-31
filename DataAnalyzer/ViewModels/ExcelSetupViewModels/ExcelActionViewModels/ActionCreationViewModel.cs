@@ -12,23 +12,24 @@ using System.Linq;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
 {
-    internal class ActionCreationViewModel : BasePropertyChanged
+    internal class ActionCreationViewModel : BasePropertyChanged, IActionCreationViewModel
     {
         private readonly IActionCreationModel actionCreationModel;
-        private readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
-        private readonly EditActionLibrary editActionLibrary = BaseSingleton<EditActionLibrary>.Instance;
+        private readonly IEditActionLibrary editActionLibrary;
 
         private IEditActionViewModel currentAction;
 
         public ActionCreationViewModel(
-          ICollection<ExcelAction> actions,
-          IActionCreationModel actionCreationModel,
-          ExcelEntityType excelEntityType)
+            ICollection<IExcelAction> actions,
+            IActionCreationModel actionCreationModel,
+            ExcelEntityType excelEntityType,
+            IEditActionLibrary editActionLibrary)
         {
             this.actionCreationModel = actionCreationModel;
             this.ExcelEntityType = excelEntityType;
+            this.editActionLibrary = editActionLibrary;
 
-            EmptyParameters empty = new EmptyParameters();
+            EmptyParameters empty = new();
             this.currentAction = this.editActionLibrary.GetEditAction(new EmptyParameters { ExcelEntityType = excelEntityType }, this.ExcelEntityType);
             this.currentAction.ActionParameters = empty;
 
@@ -45,7 +46,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             this.actionCreationModel.PropertyChanged += this.ActionCreationModelPropertyChanged;
         }
 
-        public ObservableCollection<LoadableRemovableRowViewModel> Actions { get; } = new();
+        public ObservableCollection<ILoadableRemovableRowViewModel> Actions { get; } = new();
 
         public IEditActionViewModel CurrentAction
         {
@@ -60,7 +61,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels
             switch (e.PropertyName)
             {
                 case nameof(this.actionCreationModel.LoadedActionName):
-                    ExcelAction action = this.actionCreationModel.GetLoadedAction();
+                    IExcelAction action = this.actionCreationModel.GetLoadedAction();
                     this.CurrentAction = this.editActionLibrary.GetEditAction(action.ActionParameters, this.ExcelEntityType);
                     this.CurrentAction.ActionName = action.Name;
                     this.CurrentAction.Description = action.Description;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.DataImport.DataObjects.CsvStats
 {
-    internal class CsvNamesStats : Stats
+    internal class CsvNamesStats : Stats, ICsvNamesStats
     {
         public CsvNamesStats()
         {

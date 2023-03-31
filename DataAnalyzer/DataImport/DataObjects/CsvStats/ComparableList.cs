@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace DataAnalyzer.DataImport.DataObjects.CsvStats
 {
-    internal class ComparableList : List<string>, IComparable
+    internal class ComparableList : List<string>, IComparable, IComparableList
     {
         public ComparableList() { }
         public ComparableList(List<string> other) : base(other) { }

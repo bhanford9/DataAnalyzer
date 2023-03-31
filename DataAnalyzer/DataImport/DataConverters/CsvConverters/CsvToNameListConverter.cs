@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace DataAnalyzer.DataImport.DataConverters.CsvConverters
 {
-    internal class CsvToNameListConverter : DataConverter<CsvNamesStats, CsvNamesData>
+    internal class CsvToNameListConverter : DataConverter<CsvNamesStats, CsvNamesData>, ICsvToNameListConverter
     {
         public override bool IsValidData(IData data) => data is CsvNamesData;
 

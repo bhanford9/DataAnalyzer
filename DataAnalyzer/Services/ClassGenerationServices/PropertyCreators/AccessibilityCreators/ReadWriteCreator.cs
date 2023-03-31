@@ -1,6 +1,6 @@
 ﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.AccessibilityCreators
 {
-    internal class ReadWriteCreator : AccessibilityCreator
+    internal class ReadWriteCreator : AccessibilityCreator, IReadWriteCreator
     {
         public override string Create(string accessibility) => "{ get; set; }";
 

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations
 {
-    internal class DataClusterModel : BasePropertyChanged
+    internal class DataClusterModel : BasePropertyChanged, IDataClusterModel
     {
-        public ICollection<RowModel> Rows { get; set; } = new List<RowModel>();
+        public ICollection<IRowModel> Rows { get; set; } = new List<IRowModel>();
 
-        public RowModel TitleRow { get; set; } = new();
+        public IRowModel TitleRow { get; set; } = new RowModel();
 
-        public ICollection<ExcelAction> DataClusterActions { get; set; } = new List<ExcelAction>();
+        public ICollection<IExcelAction> DataClusterActions { get; set; } = new List<IExcelAction>();
 
         public string Name { get; set; } = string.Empty;
 

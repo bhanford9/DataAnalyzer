@@ -4,9 +4,9 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations
 {
-    internal class CellModel : BasePropertyChanged
+    internal class CellModel : BasePropertyChanged, ICellModel
     {
-        public ICollection<ExcelAction> CellActions { get; set; } = new List<ExcelAction>();
+        public ICollection<IExcelAction> CellActions { get; set; } = new List<IExcelAction>();
 
         public object Value { get; set; } = new();
 

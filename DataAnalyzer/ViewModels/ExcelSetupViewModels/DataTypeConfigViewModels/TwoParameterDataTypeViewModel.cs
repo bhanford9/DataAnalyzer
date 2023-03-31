@@ -1,9 +1,10 @@
-﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
+﻿using DataAnalyzer.Models.ExcelSetupModels;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using System.Collections.Generic;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
 {
-    internal class TwoParameterDataTypeViewModel<T1, T2> : DataTypeConfigViewModel
+    internal class TwoParameterDataTypeViewModel<T1, T2> : DataTypeConfigViewModel, ITwoParameterDataTypeViewModel<T1, T2>
     {
         private string parameter1Name = string.Empty;
         private string parameter2Name = string.Empty;
@@ -11,7 +12,10 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
         private T1 parameter1Value = default;
         private T2 parameter2Value = default;
 
-        public TwoParameterDataTypeViewModel(ITypeParameter typeParameter) : base(typeParameter)
+        public TwoParameterDataTypeViewModel(
+            ITypeParameter typeParameter,
+            IExcelSetupModel excelSetupModel)
+            : base(typeParameter, excelSetupModel)
         {
             switch (typeParameter)
             {
@@ -29,7 +33,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
                     break;
             }
         }
-         
+
         public string Parameter1Name
         {
             get => this.parameter1Name;

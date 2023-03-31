@@ -3,7 +3,7 @@ using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
 {
-    internal class BorderSummaryItem : SummaryItem
+    internal class BorderSummaryItem : SummaryItem, IBorderSummaryItem
     {
         public override bool IsApplicable(IActionParameters actionParameters) => actionParameters is BorderParameters;
 

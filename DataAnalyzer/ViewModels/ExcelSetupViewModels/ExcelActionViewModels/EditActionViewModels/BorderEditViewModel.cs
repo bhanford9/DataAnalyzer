@@ -9,10 +9,10 @@ using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
-    internal class BorderEditViewModel : EditActionViewModel
+    internal class BorderEditViewModel : EditActionViewModel, IBorderEditViewModel
     {
-        private RowSpecificationViewModel rowSpecification = new();
-        private ColumnSpecificationViewModel columnSpecification = new();
+        private IRowSpecificationViewModel rowSpecification;
+        private IColumnSpecificationViewModel columnSpecification;
 
         public BorderEditViewModel(ExcelEntityType excelEntityType) : base(excelEntityType)
         {
@@ -21,28 +21,32 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
         public BorderEditViewModel(
             IActionCreationModel actionCreationModel,
             IEditActionViewModel toCopy,
-            ExcelEntityType excelEntityType)
+            ExcelEntityType excelEntityType,
+            IRowSpecificationViewModel rowSpecification,
+            IColumnSpecificationViewModel columnSpecification)
           : base(actionCreationModel, toCopy, excelEntityType)
         {
+            this.rowSpecification = rowSpecification;
+            this.columnSpecification = columnSpecification;
         }
 
-        public ObservableCollection<BorderSettingsViewModel> BorderSettings { get; } = new();
+        public ObservableCollection<IBorderSettingsViewModel> BorderSettings { get; } = new();
 
-        public BorderSettingsViewModel LeftBorderSettings { get; } = new();
-        public BorderSettingsViewModel TopBorderSettings { get; } = new();
-        public BorderSettingsViewModel RightBorderSettings { get; } = new();
-        public BorderSettingsViewModel BottomBorderSettings { get; } = new();
-        public BorderSettingsViewModel AllBorderSettings { get; } = new();
-        public BorderSettingsViewModel DiagonalUpBorderSettings { get; } = new();
-        public BorderSettingsViewModel DiagonalDownBorderSettings { get; } = new();
+        public IBorderSettingsViewModel LeftBorderSettings { get; } = new BorderSettingsViewModel();
+        public IBorderSettingsViewModel TopBorderSettings { get; } = new BorderSettingsViewModel();
+        public IBorderSettingsViewModel RightBorderSettings { get; } = new BorderSettingsViewModel();
+        public IBorderSettingsViewModel BottomBorderSettings { get; } = new BorderSettingsViewModel();
+        public IBorderSettingsViewModel AllBorderSettings { get; } = new BorderSettingsViewModel();
+        public IBorderSettingsViewModel DiagonalUpBorderSettings { get; } = new BorderSettingsViewModel();
+        public IBorderSettingsViewModel DiagonalDownBorderSettings { get; } = new BorderSettingsViewModel();
 
-        public RowSpecificationViewModel RowSpecification
+        public IRowSpecificationViewModel RowSpecification
         {
             get => this.rowSpecification;
             set => this.NotifyPropertyChanged(ref this.rowSpecification, value);
         }
 
-        public ColumnSpecificationViewModel ColumnSpecification
+        public IColumnSpecificationViewModel ColumnSpecification
         {
             get => this.columnSpecification;
             set => this.NotifyPropertyChanged(ref this.columnSpecification, value);
@@ -74,7 +78,13 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 
         public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
         {
-            BorderEditViewModel viewModel = new(this.actionCreationModel, this, this.ExcelEntityType);
+            BorderEditViewModel viewModel = new(
+                this.actionCreationModel,
+                this,
+                this.ExcelEntityType,
+                this.rowSpecification,
+                this.columnSpecification);
+
             BorderParameters borderParameters = parameters as BorderParameters;
             viewModel.LeftBorderSettings.ComboBoxColors.SelectedColor = borderParameters.LeftColor.Name;
             viewModel.TopBorderSettings.ComboBoxColors.SelectedColor = borderParameters.TopColor.Name;

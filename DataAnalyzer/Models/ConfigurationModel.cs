@@ -250,14 +250,14 @@ namespace DataAnalyzer.Models
             }
         }
 
-        public void UpdateFileImportMappings(FileMap fileMap)
+        public void UpdateFileImportMappings(IFileMap fileMap)
         {
             string mappingFile = this.GetFileImportAppConfigPath();
             Directory.CreateDirectory(Path.GetDirectoryName(mappingFile));
             this.serializer.JsonSerializeToFile(fileMap.ToSerializable(), mappingFile);
         }
 
-        public FileMap GetFileImportMappings()
+        public IFileMap GetFileImportMappings()
         {
             string mappingFile = this.GetFileImportAppConfigPath();
 

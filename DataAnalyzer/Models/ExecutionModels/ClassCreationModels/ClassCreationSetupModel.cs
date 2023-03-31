@@ -8,21 +8,19 @@ using System.Linq;
 
 namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels
 {
-    internal class ClassCreationSetupModel : BasePropertyChanged
+    internal class ClassCreationSetupModel : BasePropertyChanged, IClassCreationSetupModel
     {
-        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-        //private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
-
         private string configurationName = string.Empty;
 
-        public ClassCreationSetupModel()
+        public ClassCreationSetupModel(IClassCreationConfigurationModel classCreationConfigModel)
         {
+            this.ClassCreationConfigModel = classCreationConfigModel;
             this.ClassCreationConfigModel.PropertyChanged += ClassCreationConfigModelPropertyChanged;
         }
 
-        public ClassCreationConfigurationModel ClassCreationConfigModel => BaseSingleton<ClassCreationConfigurationModel>.Instance;
+        public IClassCreationConfigurationModel ClassCreationConfigModel { get; }
 
-        public ObservableCollection<PropertyData> DataItems = new();
+        public ObservableCollection<IPropertyData> DataItems { get; } = new();
 
         public string ConfigurationName
         {
@@ -30,7 +28,7 @@ namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels
             set => this.NotifyPropertyChanged(ref this.configurationName, value);
         }
 
-        public string GetClassString(string className, ICollection<PropertyData> propertyData)
+        public string GetClassString(string className, ICollection<IPropertyData> propertyData)
         {
             // TODO --> create radio button or combo box for class accessibility
             ClassCreator classCreator = new ClassCreator(

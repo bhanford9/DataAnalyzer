@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace DataAnalyzer.ViewModels
 {
-    internal class LoadedConfigurationItemViewModel : BasePropertyChanged
+    internal class LoadedConfigurationItemViewModel : BasePropertyChanged, ILoadedConfigurationItemViewModel
     {
         private string title = string.Empty;
 

@@ -5,12 +5,10 @@ namespace DataAnalyzer
 {
     public partial class MainWindow : Window
     {
-        private readonly MainViewModel viewModel = new();
-
-        public MainWindow()
+        internal MainWindow(IMainViewModel viewModel)
         {
             this.InitializeComponent();
-            this.DataContext = this.viewModel;
+            this.DataContext = viewModel;
         }
     }
 }

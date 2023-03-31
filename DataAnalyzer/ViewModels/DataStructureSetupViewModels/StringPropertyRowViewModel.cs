@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 {
-    internal class StringPropertyRowViewModel : BasePropertyChanged
+    internal class StringPropertyRowViewModel : BasePropertyChanged, IStringPropertyRowViewModel
     {
         private bool include = true;
         private string csvName = string.Empty;

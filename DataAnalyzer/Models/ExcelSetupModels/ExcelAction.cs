@@ -3,7 +3,7 @@ using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 
 namespace DataAnalyzer.Models.ExcelSetupModels
 {
-    internal class ExcelAction : BasePropertyChanged
+    internal class ExcelAction : BasePropertyChanged, IExcelAction
     {
         private string name = string.Empty;
         private string description = string.Empty;
@@ -41,8 +41,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             set => this.NotifyPropertyChanged(ref this.actionParameterType, value);
         }
 
-        public ExcelAction Clone() =>
-            new()
+        public IExcelAction Clone() =>
+            new ExcelAction()
             {
                 Name = this.name,
                 Description = this.description,

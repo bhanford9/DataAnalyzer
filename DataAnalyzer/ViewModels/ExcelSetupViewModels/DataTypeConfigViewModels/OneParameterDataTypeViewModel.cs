@@ -1,16 +1,20 @@
-﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
+﻿using DataAnalyzer.Models.ExcelSetupModels;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using System.Collections.Generic;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
 {
-    internal class OneParameterDataTypeViewModel<T> : DataTypeConfigViewModel
+    internal class OneParameterDataTypeViewModel<T> : DataTypeConfigViewModel, IOneParameterDataTypeViewModel<T>
     {
         private string parameterName = string.Empty;
         private T parameterValue = default;
 
-        public OneParameterDataTypeViewModel(ITypeParameter typeParameter) : base(typeParameter)
+        public OneParameterDataTypeViewModel(
+            ITypeParameter typeParameter,
+            IExcelSetupModel excelSetupModel)
+            : base(typeParameter, excelSetupModel)
         {
-            switch(typeParameter)
+            switch (typeParameter)
             {
                 case IntegerTypeParameter integerType:
                     this.ParameterName = integerType.DataName;
@@ -31,7 +35,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
             set
             {
                 this.NotifyPropertyChanged(ref this.parameterValue, value);
-                
+
                 (this.TypeParameter as IntegerTypeParameter).IntegerValue = (int)(object)value;
                 this.TypeParameter.CreateCellDataFormat();
                 this.Example = this.TypeParameter.Example;

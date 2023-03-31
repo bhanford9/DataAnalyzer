@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
-    internal class ColumnSpecificationParameters : BasePropertyChanged
+    internal class ColumnSpecificationParameters : BasePropertyChanged, IColumnSpecificationParameters
     {
         private bool allColumns = true;
         private bool useColumnName = false;
@@ -78,8 +78,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
             return message;
         }
 
-        public ColumnSpecificationParameters Clone() =>
-            new()
+        public IColumnSpecificationParameters Clone() =>
+            new ColumnSpecificationParameters()
             {
                 AllColumns = this.allColumns,
                 UseColumnName = this.useColumnName,

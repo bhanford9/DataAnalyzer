@@ -2,15 +2,16 @@
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
 using System;
+using ExcelParms = ExcelService.DataActions.ActionParameters;
 
 namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.BackgroundConverters
 {
-    internal class BackgroundStyleConverter : ExcelActionParamConverter
+    internal class BackgroundStyleConverter : ExcelActionParamConverter, IBackgroundStyleConverter
     {
         public BackgroundStyleConverter() : base(new BackgroundStyleParameters()) { }
-        protected BackgroundStyleConverter(ExcelService.DataActions.ActionParameters.IActionParameters excelParams) : base(excelParams) { }
+        protected BackgroundStyleConverter(ExcelParms.IActionParameters excelParams) : base(excelParams) { }
 
-        public override IActionParameters FromExcel(ExcelService.DataActions.ActionParameters.IActionParameters input)
+        public override IActionParameters FromExcel(ExcelParms.IActionParameters input)
         {
             if (input is BackgroundStyleParameters backgroundParameters)
             {
@@ -28,7 +29,7 @@ namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.BackgroundConve
             throw new ArgumentException("Invalid type. Expected BackgroundStyleParameters.");
         }
 
-        public override ExcelService.DataActions.ActionParameters.IActionParameters ToExcel(IActionParameters input)
+        public override ExcelParms.IActionParameters ToExcel(IActionParameters input)
         {
             if (input is BackgroundParameters backgroundParameters)
             {

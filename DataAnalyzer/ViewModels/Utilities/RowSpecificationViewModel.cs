@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.ViewModels.Utilities
 {
-    class RowSpecificationViewModel : BasePropertyChanged
+    class RowSpecificationViewModel : BasePropertyChanged, IRowSpecificationViewModel
     {
         private bool allRows = true;
         private bool useNthRow = false;

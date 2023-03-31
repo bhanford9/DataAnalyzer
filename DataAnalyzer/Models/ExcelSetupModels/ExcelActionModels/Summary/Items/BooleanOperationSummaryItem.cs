@@ -3,7 +3,7 @@ using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
 {
-    internal class BooleanOperationSummaryItem : SummaryItem
+    internal class BooleanOperationSummaryItem : SummaryItem, IBooleanOperationSummaryItem
     {
         public override bool IsApplicable(IActionParameters actionParameters) => actionParameters is BooleanOperationParameters;
 

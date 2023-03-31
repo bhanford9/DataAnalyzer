@@ -3,7 +3,7 @@ using DataAnalyzer.Services.Enums;
 
 namespace DataAnalyzer.Common.DataParameters.CsvParameters
 {
-    internal class CsvClassParameters : DataParameterCollection
+    internal class CsvClassParameters : DataParameterCollection, ICsvClassParameters
     {
         public override StatType StatType => StatType.CsvNames;
 

@@ -5,7 +5,7 @@ using System;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
-    internal class BooleanActionViewModel : EditActionViewModel
+    internal class BooleanActionViewModel : EditActionViewModel, IBooleanActionViewModel
     {
         private bool doPerform = false;
 

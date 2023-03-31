@@ -15,9 +15,9 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         // TODO --> if this isn't used here, it can be removed
         private readonly IDataStructureSetupModel<TDataConfiguration> dataStructureModel;
 
-        protected readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-        protected readonly MainModel mainModel = BaseSingleton<MainModel>.Instance;
-        protected readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
+        protected readonly IConfigurationModel configurationModel;
+        protected readonly IMainModel mainModel;
+        protected readonly IStatsModel statsModel;
 
         private IImportExportKey selectedDataType = Services.ImportExportKey.Default;
         private string configurationName = string.Empty;
@@ -25,19 +25,28 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         private string selectedExportType = string.Empty;
         private bool isListening = true;
 
-        public DataStructureSetupViewModel(IDataStructureSetupModel<TDataConfiguration> dataStructureModel)
+        public DataStructureSetupViewModel(
+            IConfigurationModel configurationModel,
+            IMainModel mainModel,
+            IStatsModel statsModel,
+            IDataStructureSetupModel<TDataConfiguration> dataStructureModel)
         {
+            this.configurationModel = configurationModel;
+            this.mainModel = mainModel;
+            this.statsModel = statsModel;
             this.dataStructureModel = dataStructureModel;
+
             this.dataStructureModel.PropertyChanged += this.DataStructureModelPropertyChanged;
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
             this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
-
-            this.configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-            this.mainModel = BaseSingleton<MainModel>.Instance;
-            this.statsModel = BaseSingleton<StatsModel>.Instance;
         }
 
-        public IDataStructureSetupViewModel Default => new NotSupportedSetupViewModel(new());
+        // TODO --> this could be resolved instead
+        public IDataStructureSetupViewModel Default => new NotSupportedSetupViewModel(
+            this.configurationModel,
+            this.mainModel,
+            this.statsModel,
+            new(this.configurationModel));
 
         public bool IsDefault => this is NotSupportedSetupViewModel;
 

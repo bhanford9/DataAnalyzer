@@ -2,8 +2,13 @@
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation
 {
-    internal class RowActionCreationModel : ActionCreationModel
+    internal class RowActionCreationModel : ActionCreationModel, IRowActionCreationModel
     {
-        protected override ObservableCollection<ExcelAction> GetActionCollection() => this.excelSetupModel.AvailableRowActions;
+        public RowActionCreationModel(IStatsModel statsModel, IExcelSetupModel excelSetupModel)
+            : base(statsModel, excelSetupModel)
+        {
+        }
+
+        protected override ObservableCollection<IExcelAction> GetActionCollection() => this.excelSetupModel.AvailableRowActions;
     }
 }

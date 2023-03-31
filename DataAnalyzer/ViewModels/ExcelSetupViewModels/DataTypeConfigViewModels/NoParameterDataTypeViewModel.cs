@@ -1,11 +1,15 @@
-﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
+﻿using DataAnalyzer.Models.ExcelSetupModels;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using System.Collections.Generic;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
 {
-    internal class NoParameterDataTypeViewModel : DataTypeConfigViewModel
+    internal class NoParameterDataTypeViewModel : DataTypeConfigViewModel, INoParameterDataTypeViewModel
     {
-        public NoParameterDataTypeViewModel(ITypeParameter typeParameter) : base(typeParameter)
+        public NoParameterDataTypeViewModel(
+            ITypeParameter typeParameter,
+            IExcelSetupModel excelSetupModel)
+            : base(typeParameter, excelSetupModel)
         {
         }
 

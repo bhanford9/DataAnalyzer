@@ -8,7 +8,7 @@ using System.IO;
 
 namespace DataAnalyzer.Models.ImportModels
 {
-    internal class FileMap : FlavoredCategorizedDataLibrary<string>
+    internal class FileMap : FlavoredCategorizedDataLibrary<string>, IFileMap
     {
         public override string Name => "Previous Directories Map";
 
@@ -23,7 +23,7 @@ namespace DataAnalyzer.Models.ImportModels
             string fileName = "")
         {
             string fullPath = Path.Combine(rootPath, fileName);
-            
+
             if (!this.ContainsKey(import))
             {
                 this[import] = new Dictionary<IScraperCategory, IDictionary<IScraperFlavor, string>>();
@@ -35,7 +35,7 @@ namespace DataAnalyzer.Models.ImportModels
             }
 
             this[import][category][flavor] = fullPath;
-            
+
             return fullPath;
         }
     }

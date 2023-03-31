@@ -3,12 +3,14 @@ using System;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
-    internal class AlignmentParameters : ActionParameters
+    internal class AlignmentParameters : ActionParameters, IAlignmentParameters
     {
         private HorizontalAlignment horizontalAlignment = HorizontalAlignment.General;
         private VerticalAlignment verticalAlignment = VerticalAlignment.Top;
-        private ColumnSpecificationParameters columnSpecification = new();
-        private RowSpecificationParameters rowSpecification = new();
+
+        // TODO --> inject these
+        private IColumnSpecificationParameters columnSpecification = new ColumnSpecificationParameters ();
+        private IRowSpecificationParameters rowSpecification = new RowSpecificationParameters();
 
         public HorizontalAlignment HorizontalAlignment
         {
@@ -22,13 +24,13 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
             set => this.NotifyPropertyChanged(ref this.verticalAlignment, value);
         }
 
-        public ColumnSpecificationParameters ColumnSpecification
+        public IColumnSpecificationParameters ColumnSpecification
         {
             get => this.columnSpecification;
             set => this.NotifyPropertyChanged(ref this.columnSpecification, value);
         }
 
-        public RowSpecificationParameters RowSpecification
+        public IRowSpecificationParameters RowSpecification
         {
             get => this.rowSpecification;
             set => this.NotifyPropertyChanged(ref this.rowSpecification, value);
@@ -42,7 +44,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
             $"{this.ColumnSpecification}{Environment.NewLine}" +
             $"{this.RowSpecification}{Environment.NewLine}";
 
-        public override IActionParameters Clone() => 
+        public override IActionParameters Clone() =>
             new AlignmentParameters
             {
                 ExcelEntityType = this.ExcelEntityType,

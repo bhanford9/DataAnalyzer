@@ -14,10 +14,10 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 {
-    internal class ExcelDashboardViewModel : BasePropertyChanged
+    internal class ExcelDashboardViewModel : BasePropertyChanged, IExcelDashboardViewModel
     {
-        private readonly ExcelSetupModel excelSetupModel = BaseSingleton<ExcelSetupModel>.Instance;
-        private readonly StructureExecutiveCommissioner executiveCommissioner = BaseSingleton<StructureExecutiveCommissioner>.Instance;
+        private readonly IExcelSetupModel excelSetupModel;
+        private readonly IStructureExecutiveCommissioner executiveCommissioner;
 
         private readonly BaseCommand startNewConfiguration;
         private readonly BaseCommand saveConfiguration;
@@ -27,8 +27,13 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         private string configName = string.Empty;
         private string outputDirectory = string.Empty;
 
-        public ExcelDashboardViewModel()
+        public ExcelDashboardViewModel(
+            IExcelSetupModel excelSetupModel,
+            IStructureExecutiveCommissioner executiveCommissioner)
         {
+            this.excelSetupModel = excelSetupModel;
+            this.executiveCommissioner = executiveCommissioner;
+
             this.startNewConfiguration = new BaseCommand(obj => this.DoStartNewConfiguration());
             this.saveConfiguration = new BaseCommand(obj => this.DoSaveConfiguration());
             this.browseOutputDirectory = new BaseCommand(obj => this.DoBrowseOutputDirectory());
@@ -37,7 +42,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
             this.excelSetupModel.ExcelConfiguration.PropertyChanged += this.ExcelConfigurationPropertyChanged;
         }
 
-        public ObservableCollection<WorkbookConfigListItemViewModel> SavedWorkbookConfigs { get; } = new();
+        public ObservableCollection<IWorkbookConfigListItemViewModel> SavedWorkbookConfigs { get; } = new();
 
         public ICommand StartNewConfiguration => this.startNewConfiguration;
 
@@ -117,7 +122,11 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
                         displayText = Path.GetFileNameWithoutExtension(displayText);
                     }
 
-                    this.SavedWorkbookConfigs.Add(new WorkbookConfigListItemViewModel { Value = displayText, ToolTipText = configFile });
+                    this.SavedWorkbookConfigs.Add(new WorkbookConfigListItemViewModel(this.excelSetupModel.ExcelConfiguration)
+                    { 
+                        Value = displayText, 
+                        ToolTipText = configFile 
+                    });
                 });
             }
         }

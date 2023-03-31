@@ -13,18 +13,24 @@ using System.Linq;
 
 namespace DataAnalyzer.Models.ExcelSetupModels
 {
-    internal class ExcelSetupModel : BasePropertyChanged
+    internal class ExcelSetupModel : BasePropertyChanged, IExcelSetupModel
     {
-        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
-        private readonly ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
-        private readonly StatsModel statsModel = BaseSingleton<StatsModel>.Instance;
+        private readonly IExcelDataTypeLibrary excelDataTypeLibrary;
+        private readonly IStatsModel statsModel;
 
         public const string DATA_TYPE_UPDATE_KEY = "DATA_TYPE_UPDATE-";
 
         private IList<ITypeParameter> workingParameterTypes = new List<ITypeParameter>();
 
-        public ExcelSetupModel()
+        public ExcelSetupModel(
+            IStatsModel statsModel,
+            IExcelConfigurationModel excelConfigModel,
+            IExcelDataTypeLibrary excelDataTypeLibrary)
         {
+            this.statsModel = statsModel;
+            this.ExcelConfiguration = excelConfigModel;
+            this.excelDataTypeLibrary = excelDataTypeLibrary;
+
             ActionLibrary actionLibrary = new ActionLibrary();
 
             actionLibrary.GetWorkbookActionInfo()
@@ -57,17 +63,17 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             this.ExcelConfiguration.PropertyChanged += this.ExcelConfigurationPropertyChanged;
         }
 
-        public ExcelConfigurationModel ExcelConfiguration => BaseSingleton<ExcelConfigurationModel>.Instance;
+        public IExcelConfigurationModel ExcelConfiguration { get; }
 
-        public ObservableCollection<ExcelAction> AvailableWorkbookActions { get; } = new();
+        public ObservableCollection<IExcelAction> AvailableWorkbookActions { get; } = new();
 
-        public ObservableCollection<ExcelAction> AvailableWorksheetActions { get; } = new();
+        public ObservableCollection<IExcelAction> AvailableWorksheetActions { get; } = new();
 
-        public ObservableCollection<ExcelAction> AvailableDataClusterActions { get; } = new();
+        public ObservableCollection<IExcelAction> AvailableDataClusterActions { get; } = new();
 
-        public ObservableCollection<ExcelAction> AvailableRowActions { get; } = new();
+        public ObservableCollection<IExcelAction> AvailableRowActions { get; } = new();
 
-        public ObservableCollection<ExcelAction> AvailableCellActions { get; } = new();
+        public ObservableCollection<IExcelAction> AvailableCellActions { get; } = new();
 
         public IList<ITypeParameter> WorkingParameterTypes
         {
@@ -242,7 +248,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
                     this.NotifyPropertyChanged(nameof(this.ExcelConfiguration));
                     break;
                 case nameof(this.ExcelConfiguration.LoadedParameterTypes):
-                    
+
                     this.WorkingParameterTypes.Clear();
 
                     foreach (ITypeParameter param in this.ExcelConfiguration.LoadedParameterTypes)

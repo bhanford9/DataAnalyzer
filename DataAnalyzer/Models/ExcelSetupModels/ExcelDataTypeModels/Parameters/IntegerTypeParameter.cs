@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 {
-    internal class IntegerTypeParameter : TypeParameter
+    internal class IntegerTypeParameter : TypeParameter, IIntegerTypeParameter
     {
         private int integerValue = 1;
 
@@ -12,8 +12,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
         public IntegerTypeParameter(ITypeParameter typeParameter) : base(typeParameter)
         {
-            this.IntegerName = (typeParameter as IntegerTypeParameter).IntegerName;
-            this.IntegerValue = (typeParameter as IntegerTypeParameter).IntegerValue;
+            this.IntegerName = (typeParameter as IIntegerTypeParameter).IntegerName;
+            this.IntegerValue = (typeParameter as IIntegerTypeParameter).IntegerValue;
         }
 
         public IntegerTypeParameter(
@@ -55,7 +55,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
 
         protected override void InternalCloneParameters(ITypeParameter other)
         {
-            IntegerTypeParameter local = other as IntegerTypeParameter;
+            IIntegerTypeParameter local = other as IIntegerTypeParameter;
             this.IntegerName = local.IntegerName;
             this.IntegerValue = local.IntegerValue;
         }

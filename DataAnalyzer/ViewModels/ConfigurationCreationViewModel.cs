@@ -12,11 +12,11 @@ using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels
 {
-    internal class ConfigurationCreationViewModel : BasePropertyChanged
+    internal class ConfigurationCreationViewModel : BasePropertyChanged, IConfigurationCreationViewModel
     {
         private readonly IConfigurationModel configModel;
 
-        private IDataStructureSetupViewModel activeViewModel = new NotSupportedSetupViewModel(new());
+        private IDataStructureSetupViewModel activeViewModel;
 
         private readonly BaseCommand createConfiguration;
         private readonly BaseCommand cancelChanges;
@@ -25,10 +25,15 @@ namespace DataAnalyzer.ViewModels
 
         public ConfigurationCreationViewModel(
             IConfigurationModel configModel,
+            IMainModel mainModel,
+            IStatsModel statsModel,
             IStructureExecutiveCommissioner executiveCommissioner)
         {
             this.configModel = configModel;
             this.ExecutiveCommissioner = executiveCommissioner;
+
+            // TODO --> get this as resolved default
+            this.activeViewModel = new NotSupportedSetupViewModel(configModel, mainModel, statsModel, new(configModel));
 
             this.InitializeViewModel();
             this.createConfiguration = new BaseCommand(obj => this.DoCreateConfiguration());
@@ -45,7 +50,7 @@ namespace DataAnalyzer.ViewModels
         public ICommand SaveConfiguration => this.saveConfiguration;
 
         public ObservableCollection<string> ExportTypes => this.ExecutiveCommissioner.ExportTypes;
-        public ObservableCollection<LoadableRemovableRowViewModel> Configurations { get; } = new();
+        public ObservableCollection<ILoadableRemovableRowViewModel> Configurations { get; } = new();
 
         public IStructureExecutiveCommissioner ExecutiveCommissioner { get; }
 
@@ -112,7 +117,11 @@ namespace DataAnalyzer.ViewModels
                     displayText = Path.GetFileNameWithoutExtension(displayText);
                 }
 
-                this.Configurations.Add(new ConfigurationFileListItemViewModel { Value = displayText, ToolTipText = configFile });
+                this.Configurations.Add(new ConfigurationFileListItemViewModel(this.ExecutiveCommissioner)
+                {
+                    Value = displayText,
+                    ToolTipText = configFile
+                });
             });
 
             if (!this.Configurations.Any())

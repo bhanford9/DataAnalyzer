@@ -1,5 +1,6 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
+using DataAnalyzer.Models.ImportModels;
 using DataAnalyzer.ViewModels.ImportViewModels;
 using DataScraper.DataScrapers.ImportTypes;
 using System.Collections.Generic;
@@ -11,18 +12,22 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
     {
         private bool displayFileImport = false;
 
-        private readonly ConfigurationModel configurationModel = BaseSingleton<ConfigurationModel>.Instance;
+        private readonly IConfigurationModel configurationModel;
 
         // this may need to be dependent on more than just the import type
         private readonly IReadOnlyDictionary<IImportType, IImportViewModel> viewModelMap;
 
-        public ImportExecutiveCommissioner()
+        public ImportExecutiveCommissioner(
+            IConfigurationModel configurationModel,
+            IStatsModel statsModel,
+            IImportFromFileModel importFromFileModel)
         {
+            this.configurationModel = configurationModel;
             configurationModel.PropertyChanged += ConfigurationModelPropertyChanged;
 
             viewModelMap = new Dictionary<IImportType, IImportViewModel>()
             {
-                { new FileImportType(), new ImportFromFileViewModel() },
+                { new FileImportType(), new ImportFromFileViewModel(statsModel, importFromFileModel) },
             };
         }
 

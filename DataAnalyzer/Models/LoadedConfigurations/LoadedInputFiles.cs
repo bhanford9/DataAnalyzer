@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.Models.LoadedConfigurations
 {
-    internal class LoadedInputFiles : BasePropertyChanged
+    internal class LoadedInputFiles : BasePropertyChanged, ILoadedInputFiles
     {
         private readonly string directoryPathKey = "Directory: ";
         private string directoryPath = "Not set";

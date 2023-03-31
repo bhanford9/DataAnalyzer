@@ -2,15 +2,16 @@
 using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
 using System;
 using DataAnalyzer.DataImport.DataConverters.ExcelConverters.UtilityConverters;
+using ExcelParms = ExcelService.DataActions.ActionParameters;
 
 namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.AlignmentConverters
 {
-    internal class AlignmentStyleConverter : ExcelActionParamConverter
+    internal class AlignmentStyleConverter : ExcelActionParamConverter, IAlignmentStyleConverter
     {
         public AlignmentStyleConverter() : base(new AlignmentStyleParameters()) { }
-        protected AlignmentStyleConverter(ExcelService.DataActions.ActionParameters.IActionParameters excelParams) : base(excelParams) { }
+        protected AlignmentStyleConverter(ExcelParms.IActionParameters excelParams) : base(excelParams) { }
 
-        public override IActionParameters FromExcel(ExcelService.DataActions.ActionParameters.IActionParameters input)
+        public override IActionParameters FromExcel(ExcelParms.IActionParameters input)
         {
             if (input is AlignmentStyleParameters excelAlignmentParams)
             {
@@ -27,7 +28,7 @@ namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.AlignmentConver
             throw new ArgumentException("Invalid type. Expected AlignmentStyleParameters.");
         }
 
-        public override ExcelService.DataActions.ActionParameters.IActionParameters ToExcel(IActionParameters input)
+        public override ExcelParms.IActionParameters ToExcel(IActionParameters input)
         {
             if (input is AlignmentParameters alignmentParameters)
             {

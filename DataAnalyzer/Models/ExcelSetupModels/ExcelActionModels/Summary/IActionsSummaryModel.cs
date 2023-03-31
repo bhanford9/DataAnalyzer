@@ -5,8 +5,8 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
 {
     internal interface IActionsSummaryModel : INotifyPropertyChanged
     {
-        void LoadHierarchicalSummariesFromModel(ActionSummaryTreeViewItem baseItem);
-        void LoadHierarchicalSummariesFromStats(ActionSummaryTreeViewItem baseItem);
+        void LoadHierarchicalSummariesFromModel(IActionSummaryTreeViewItem baseItem);
+        void LoadHierarchicalSummariesFromStats(IActionSummaryTreeViewItem baseItem);
         void SaveConfiguration(string configName);
     }
 }

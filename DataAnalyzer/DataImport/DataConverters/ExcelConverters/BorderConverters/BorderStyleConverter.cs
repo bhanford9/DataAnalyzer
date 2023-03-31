@@ -2,15 +2,16 @@
 using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
 using System;
 using DataAnalyzer.DataImport.DataConverters.ExcelConverters.UtilityConverters;
+using ExcelParms = ExcelService.DataActions.ActionParameters;
 
 namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.BorderConverters
 {
-    internal class BorderStyleConverter : ExcelActionParamConverter
+    internal class BorderStyleConverter : ExcelActionParamConverter, IBorderStyleConverter
     {
         public BorderStyleConverter() : base(new BorderStyleParameters()) { }
-        protected BorderStyleConverter(ExcelService.DataActions.ActionParameters.IActionParameters excelParams) : base(excelParams) { }
+        protected BorderStyleConverter(ExcelParms.IActionParameters excelParams) : base(excelParams) { }
 
-        public override IActionParameters FromExcel(ExcelService.DataActions.ActionParameters.IActionParameters input)
+        public override IActionParameters FromExcel(ExcelParms.IActionParameters input)
         {
             if (input is BorderStyleParameters excelBorderParams)
             {
@@ -47,7 +48,7 @@ namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.BorderConverter
             throw new ArgumentException("Invalid type. Expected BorderStyleParameters.");
         }
 
-        public override ExcelService.DataActions.ActionParameters.IActionParameters ToExcel(IActionParameters input)
+        public override ExcelParms.IActionParameters ToExcel(IActionParameters input)
         {
             if (input is BorderParameters borderParameters)
             {

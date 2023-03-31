@@ -3,15 +3,17 @@ using System;
 
 namespace DataAnalyzer.Models.DataStructureSetupModels
 {
-    internal class GroupingSetupModel : DataStructureSetupModel<GroupingDataConfiguration>
+    internal class GroupingSetupModel : DataStructureSetupModel<GroupingDataConfiguration>, IGroupingSetupModel
     {
-        public GroupingSetupModel()
+        public GroupingSetupModel(IConfigurationModel configurationModel)
+            : base(configurationModel)
         {
         }
 
         public int RemoveLevel { get; private set; } = -1;
 
-        public void AddGroupingConfiguration(GroupingConfiguration groupingConfig) => this.DataConfiguration.GroupingConfiguration.Add(groupingConfig);
+        public void AddGroupingConfiguration(IGroupingConfiguration groupingConfig)
+            => this.DataConfiguration.GroupingConfiguration.Add(groupingConfig);
 
         public void RemoveGroupingConfiguration(int level)
         {
@@ -23,7 +25,7 @@ namespace DataAnalyzer.Models.DataStructureSetupModels
 
         protected override void PrepareConfigurationForSaving(DateTime saveTime, string saveUid)
         {
-            foreach (GroupingConfiguration groupConfig in this.DataConfiguration.GroupingConfiguration)
+            foreach (IGroupingConfiguration groupConfig in this.DataConfiguration.GroupingConfiguration)
             {
                 groupConfig.DateTime = saveTime;
                 groupConfig.VersionUid = saveUid;

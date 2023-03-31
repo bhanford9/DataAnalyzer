@@ -32,7 +32,13 @@ namespace DataAnalyzerTest.ViewModels.Unit
 
             this.CreateViewModel();
 
-            Assert.IsType(new NotSupportedSetupViewModel(new()).GetType(), this.shared.ViewModel.ActiveViewModel);
+            Assert.IsType(
+                new NotSupportedSetupViewModel(
+                    this.shared.MockConfigurationModel.Object,
+                    this.shared.MockMainModel.Object,
+                    this.shared.MockStatsModel.Object,
+                    new(this.shared.MockConfigurationModel.Object)).GetType(),
+                this.shared.ViewModel.ActiveViewModel);
             Assert.Empty(this.shared.ViewModel.Configurations);
             this.shared.MockExecutiveCommissioner.Verify(x => x.GetInitializedViewModel(), Times.Never);
             this.shared.MockExecutiveCommissioner.Verify(x => x.GetConfigurationDirectory(), Times.Never);
@@ -205,6 +211,8 @@ namespace DataAnalyzerTest.ViewModels.Unit
         private void CreateViewModel() =>
             this.shared.ViewModel = new(
                 this.shared.MockConfigurationModel.Object,
+                this.shared.MockMainModel.Object,
+                this.shared.MockStatsModel.Object,
                 this.shared.MockExecutiveCommissioner.Object);
     }
 }

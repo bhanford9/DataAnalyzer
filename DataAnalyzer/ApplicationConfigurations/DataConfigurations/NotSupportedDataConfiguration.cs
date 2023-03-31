@@ -1,6 +1,6 @@
 ﻿namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
 {
-    internal class NotSupportedDataConfiguration : DataConfiguration
+    internal class NotSupportedDataConfiguration : DataConfiguration, INotSupportedDataConfiguration
     {
     }
 }

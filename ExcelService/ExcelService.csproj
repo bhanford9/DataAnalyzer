@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="7.0.0" />
     <PackageReference Include="ClosedXML" Version="0.95.4" />
     <PackageReference Include="DocumentFormat.OpenXml" Version="2.13.1" />
   </ItemGroup>

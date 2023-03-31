@@ -9,14 +9,14 @@ using System.Collections.ObjectModel;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
-    internal class AlignmentEditViewModel : EditActionViewModel
+    internal class AlignmentEditViewModel : EditActionViewModel, IAlignmentEditViewModel
     {
         private string selectedHorizontalAlignment = string.Empty;
         private string selectedVerticalAlignment = string.Empty;
-        private RowSpecificationViewModel rowSpecification = new();
-        private ColumnSpecificationViewModel columnSpecification = new();
+        private IRowSpecificationViewModel rowSpecification;
+        private IColumnSpecificationViewModel columnSpecification;
 
-        private readonly EnumUtilities enumUtilities = new ();
+        private readonly EnumUtilities enumUtilities = new();
 
         public AlignmentEditViewModel(ExcelEntityType excelEntityType)
             : base(excelEntityType)
@@ -26,9 +26,13 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
         public AlignmentEditViewModel(
             IActionCreationModel actionCreationModel,
             IEditActionViewModel toCopy,
-            ExcelEntityType excelEntityType)
+            ExcelEntityType excelEntityType,
+            IRowSpecificationViewModel rowSpecification,
+            IColumnSpecificationViewModel columnSpecification)
           : base(actionCreationModel, toCopy, excelEntityType)
         {
+            this.rowSpecification = rowSpecification;
+            this.columnSpecification = columnSpecification;
         }
 
         public ObservableCollection<string> HorizontalAlignments { get; } = new();
@@ -47,13 +51,13 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             set => this.NotifyPropertyChanged(ref this.selectedVerticalAlignment, value);
         }
 
-        public RowSpecificationViewModel RowSpecification
+        public IRowSpecificationViewModel RowSpecification
         {
             get => this.rowSpecification;
             set => this.NotifyPropertyChanged(ref this.rowSpecification, value);
         }
 
-        public ColumnSpecificationViewModel ColumnSpecification
+        public IColumnSpecificationViewModel ColumnSpecification
         {
             get => this.columnSpecification;
             set => this.NotifyPropertyChanged(ref this.columnSpecification, value);
@@ -61,7 +65,13 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 
         public override IEditActionViewModel GetNewInstance(IActionParameters parameters)
         {
-            AlignmentEditViewModel viewModel = new(this.actionCreationModel, this, this.ExcelEntityType);
+            AlignmentEditViewModel viewModel = new(
+                this.actionCreationModel,
+                this,
+                this.ExcelEntityType,
+                this.rowSpecification,
+                this.columnSpecification);
+
             AlignmentParameters alignmentParameters = parameters as AlignmentParameters;
             viewModel.SelectedHorizontalAlignment = alignmentParameters.HorizontalAlignment.ToString();
             viewModel.SelectedVerticalAlignment = alignmentParameters.VerticalAlignment.ToString();

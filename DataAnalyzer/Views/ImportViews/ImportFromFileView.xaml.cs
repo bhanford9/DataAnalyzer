@@ -4,13 +4,11 @@ using System.Windows.Controls;
 namespace DataAnalyzer.Views.ImportViews
 {
     public partial class ImportFromFileView : UserControl
-    {
-        private ImportFromFileViewModel viewModel = new();
-        
-        public ImportFromFileView()
+    {        
+        internal ImportFromFileView(IImportFromFileViewModel viewModel)
         {
             this.InitializeComponent();
-            this.DataContext = this.viewModel;
+            this.DataContext = viewModel;
         }
     }
 }

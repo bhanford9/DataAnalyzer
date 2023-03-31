@@ -1,6 +1,6 @@
 ﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCreators
 {
-    internal class BoolCreator : TypeCreator
+    internal class BoolCreator : TypeCreator, IBoolCreator
     {
         public override string Create(string dataType) => "bool";
 

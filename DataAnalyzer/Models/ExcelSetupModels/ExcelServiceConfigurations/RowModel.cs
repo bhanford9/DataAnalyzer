@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations
 {
-    internal class RowModel : BasePropertyChanged
+    internal class RowModel : BasePropertyChanged, IRowModel
     {
-        public ICollection<CellModel> Cells { get; set; } = new List<CellModel>();
+        public ICollection<ICellModel> Cells { get; set; } = new List<ICellModel>();
 
-        public ICollection<ExcelAction> RowActions { get; set; } = new List<ExcelAction>();
+        public ICollection<IExcelAction> RowActions { get; set; } = new List<IExcelAction>();
     }
 }
