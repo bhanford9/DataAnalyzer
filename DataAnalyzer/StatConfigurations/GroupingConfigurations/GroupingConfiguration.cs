@@ -9,9 +9,8 @@ namespace DataAnalyzer.StatConfigurations.GroupingConfigurations
     {
         private readonly ICollection<Func<IStats, IComparable>> propertyGetters = new List<Func<IStats, IComparable>>();
 
-        public GroupingConfiguration(Func<IStats, IComparable> propertyGetter)
+        public GroupingConfiguration()
         {
-            propertyGetters.Add(propertyGetter);
         }
 
         public IComparable GetProperty(IStats stats)

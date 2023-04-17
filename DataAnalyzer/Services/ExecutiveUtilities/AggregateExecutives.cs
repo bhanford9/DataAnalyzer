@@ -1,16 +1,21 @@
 ﻿using DataAnalyzer.Common.DataOrganizers;
 using DataAnalyzer.StatConfigurations;
-using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 
 namespace DataAnalyzer.Services.ExecutiveUtilities
 {
     internal abstract class AggregateExecutives : IAggregateExecutives
     {
-        public abstract IDataConfiguration DataConfiguration { get; }
+        public AggregateExecutives(
+            IDataConfiguration dataConfiguration,
+            IDataOrganizer dataOrganizer)
+        {
+            this.DataConfiguration = dataConfiguration;
+            this.DataOrganizer = dataOrganizer;
+        }
 
-        public abstract IDataOrganizer DataOrganizer { get; }
+        public IDataConfiguration DataConfiguration { get; }
 
-        public abstract IDataStructureSetupViewModel DataStructureSetupViewModel { get; }
+        public IDataOrganizer DataOrganizer { get; }
 
         public abstract string ExecutionDisplayKey { get; }
     }

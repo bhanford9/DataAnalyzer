@@ -1,9 +1,8 @@
 ﻿using Autofac;
-using DataAnalyzer.Services.Enums;
+using DataAnalyzer.Services.ExcelUtilities;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels;
-using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ActionSummaryViewModels;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels;
 using DataAnalyzer.ViewModels.ExecutionViewModels;
@@ -13,6 +12,10 @@ using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;
 using System;
 using System.Collections.Generic;
+using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Application;
+using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Creation;
+using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Summary;
+using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels;
 
 namespace DataAnalyzer.ViewModels
 {
@@ -45,7 +48,7 @@ namespace DataAnalyzer.ViewModels
             builder.RegisterTypeAncestors<IEditActionViewModel, IEmptyEditViewModel, EmptyEditViewModel>();
             // not sure if autofac could do this, so just doing it myself
             builder.RegisterInstance<IEditActionLibrary, EditActionLibrary>(x =>
-                new EditActionLibrary(new List<Func<ExcelEntityType, IEditActionViewModel>>
+                new EditActionLibrary(new List<Func<IExcelEntitySpecification, IEditActionViewModel>>
                 {
                     x => new EmptyEditViewModel(x),
                     x => new AlignmentEditViewModel(x),
@@ -60,6 +63,34 @@ namespace DataAnalyzer.ViewModels
             builder.RegisterType<IActionsSummaryViewModel, ActionsSummaryViewModel>();
             builder.RegisterType<IExcelActionViewModel, ExcelActionViewModel>();
 
+            // ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Application
+            builder.RegisterTypeAncestors<IActionApplicationViewModel, ICellActionApplicationViewModel, CellActionApplicationViewModel>();
+            builder.RegisterTypeAncestors<IActionApplicationViewModel, IDataClusterActionApplicationViewModel, DataClusterActionApplicationViewModel>();
+            builder.RegisterTypeAncestors<IActionApplicationViewModel, IRowActionApplicationViewModel, RowActionApplicationViewModel>();
+            builder.RegisterTypeAncestors<IActionApplicationViewModel, IWorkbookActionApplicationViewModel, WorkbookActionApplicationViewModel>();
+            builder.RegisterTypeAncestors<IActionApplicationViewModel, IWorksheetActionApplicationViewModel, WorksheetActionApplicationViewModel>();
+
+            // ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Creation
+            builder.RegisterTypeAncestors<IActionCreationViewModel, ICellActionCreationViewModel, CellActionCreationViewModel>();
+            builder.RegisterTypeAncestors<IActionCreationViewModel, IDataClusterActionCreationViewModel, DataClusterActionCreationViewModel>();
+            builder.RegisterTypeAncestors<IActionCreationViewModel, IRowActionCreationViewModel, RowActionCreationViewModel>();
+            builder.RegisterTypeAncestors<IActionCreationViewModel, IWorkbookActionCreationViewModel, WorkbookActionCreationViewModel>();
+            builder.RegisterTypeAncestors<IActionCreationViewModel, IWorksheetActionCreationViewModel, WorksheetActionCreationViewModel>();
+
+            // ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Summary
+            builder.RegisterTypeAncestors<IActionsSummaryViewModel, ICellActionsSummaryViewModel, CellActionsSummaryViewModel>();
+            builder.RegisterTypeAncestors<IActionsSummaryViewModel, IDataClusterActionsSummaryViewModel, DataClusterActionsSummaryViewModel>();
+            builder.RegisterTypeAncestors<IActionsSummaryViewModel, IRowActionsSummaryViewModel, RowActionsSummaryViewModel>();
+            builder.RegisterTypeAncestors<IActionsSummaryViewModel, IWorkbookActionsSummaryViewModel, WorkbookActionsSummaryViewModel>();
+            builder.RegisterTypeAncestors<IActionsSummaryViewModel, IWorksheetActionsSummaryViewModel, WorksheetActionsSummaryViewModel>();
+
+            // ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels
+            builder.RegisterTypeAncestors<IExcelActionViewModel, ICellActionViewModel, CellActionViewModel>();
+            builder.RegisterTypeAncestors<IExcelActionViewModel, IDataClusterActionViewModel, DataClusterActionViewModel>();
+            builder.RegisterTypeAncestors<IExcelActionViewModel, IRowActionViewModel, RowActionViewModel>();
+            builder.RegisterTypeAncestors<IExcelActionViewModel, IWorkbookActionViewModel, WorkbookActionViewModel>();
+            builder.RegisterTypeAncestors<IExcelActionViewModel, IWorksheetActionViewModel, WorksheetActionViewModel>();
+
             // ViewModels.ExcelSetupViewModels
             builder.RegisterType<IExcelDashboardViewModel, ExcelDashboardViewModel>();
             builder.RegisterType<IExcelDataTypesViewModel, ExcelDataTypesViewModel>();
@@ -72,9 +103,15 @@ namespace DataAnalyzer.ViewModels
             builder.RegisterType<IImportFromFileViewModel, ImportFromFileViewModel>();
 
             // ViewModels.Utilities.ExecutiveCommissioners
-            builder.RegisterType<IExecutionExecutiveCommissioner, ExecutionExecutiveCommissioner>();
-            builder.RegisterType<IImportExecutiveCommissioner, ImportExecutiveCommissioner>();
-            builder.RegisterType<IStructureExecutiveCommissioner, StructureExecutiveCommissioner>();
+            builder.RegisterTypeInstance<IExecutionExecutiveCommissioner, ExecutionExecutiveCommissioner>();
+            builder.RegisterTypeInstance<IImportExecutiveCommissioner, ImportExecutiveCommissioner>();
+            builder.RegisterTypeInstance<IStructureExecutiveCommissioner, StructureExecutiveCommissioner>();
+            builder.RegisterInstance<IDataStructureSetupViewModelRepository, DataStructureSetupViewModelRepository>(x =>
+            {
+                DataStructureSetupViewModelRepository repo = new();
+                repo.Initialize();
+                return repo;
+            });
 
             // ViewModels.Utilities.LoadableRemovableRows
             builder.RegisterTypeAncestors<IRowViewModel, ILoadableRemovableRowViewModel, IActionApplicationListItemViewModel, ActionApplicationListItemViewModel>();

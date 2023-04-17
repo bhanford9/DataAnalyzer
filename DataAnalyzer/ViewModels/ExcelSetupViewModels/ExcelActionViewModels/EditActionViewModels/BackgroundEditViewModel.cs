@@ -2,6 +2,7 @@
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
+using DataAnalyzer.Services.ExcelUtilities;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.SubModelConversions;
 using DataAnalyzer.ViewModels.Utilities;
 using System;
@@ -17,7 +18,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
         private IRowSpecificationViewModel rowSpecification;
         private IColumnSpecificationViewModel columnSpecification;
 
-        public BackgroundEditViewModel(ExcelEntityType excelEntityType)
+        public BackgroundEditViewModel(IExcelEntitySpecification excelEntityType)
             : base(excelEntityType)
         {
         }
@@ -25,7 +26,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
         public BackgroundEditViewModel(
             IActionCreationModel actionCreationModel,
             IEditActionViewModel toCopy,
-            ExcelEntityType excelEntityType,
+            IExcelEntitySpecification excelEntityType,
             IRowSpecificationViewModel rowSpecification,
             IColumnSpecificationViewModel columnSpecification)
           : base(actionCreationModel, toCopy, excelEntityType)

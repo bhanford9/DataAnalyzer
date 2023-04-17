@@ -3,13 +3,11 @@ using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
-using DataAnalyzer.Services.ExecutiveUtilities;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 
 namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 {
@@ -18,7 +16,7 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
         private readonly IConfigurationModel configurationModel;
         private readonly IMainModel mainModel;
         private readonly IStatsModel statsModel;
-        private readonly IExecutiveUtilitiesRepository executiveUtilities = ExecutiveUtilitiesRepository.Instance;
+        //private readonly IExecutiveUtilitiesRepository executiveUtilities;
         private readonly EnumUtilities enumUtilities = new();
 
         private bool displayGroupingSetup = false;
@@ -28,14 +26,22 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
         private string configurationDirectory = string.Empty;
         private readonly IReadOnlyDictionary<string, Action> viewDisplayMap;
 
+        // TODO --> doing this to bypass some DI circular dependency. need to figure out better solution
+        private readonly Lazy<IDataStructureSetupViewModelRepository> setupViewModelRepository
+            = new (() => Resolver.Resolve<IDataStructureSetupViewModelRepository>());
+
         public StructureExecutiveCommissioner(
             IConfigurationModel configurationModel,
             IMainModel mainModel,
             IStatsModel statsModel)
+            //IExecutiveUtilitiesRepository executiveUtilities,
+            //IDataStructureSetupViewModelRepository setupViewModelRepository)
         {
             this.configurationModel = configurationModel;
             this.mainModel = mainModel;
             this.statsModel = statsModel;
+            //this.executiveUtilities = executiveUtilities;
+            //this.setupViewModelRepository = setupViewModelRepository;
             enumUtilities.LoadNames(typeof(ExportType), ExportTypes);
 
             viewDisplayMap = new Dictionary<string, Action>()
@@ -55,10 +61,12 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 
         public ObservableCollection<string> ExportTypes { get; } = new();
 
+        // TODO --> must track this locally so the executive utilities doesn't need to
+        //   circular dependency in dependency injection
         public IDataStructureSetupViewModel ActiveViewModel
-            => executiveUtilities
-                .GetExecutiveOrDefault(configurationModel.ImportExportKey)
-                .DataStructureSetupViewModel;
+            => this.setupViewModelRepository.Value.GetDataOr(
+                configurationModel.ImportExportKey,
+                _ => Resolver.Resolve<INotSupportedSetupViewModel>());
 
         public bool DisplayNotSupported
         {
@@ -157,7 +165,8 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
             DisplayGroupingSetup = false;
             DisplayCsvToClassSetup = false;
             DisplayNotSupported = false;
-            executiveUtilities.StructureSetupViewModels.ToList().ForEach(viewModel => viewModel.StopListeners());
+            // TODO --> removed due to circular dependency injection
+            //executiveUtilities.StructureSetupViewModels.ToList().ForEach(viewModel => viewModel.StopListeners());
         }
 
         public void LoadViewModelFromConfiguration()

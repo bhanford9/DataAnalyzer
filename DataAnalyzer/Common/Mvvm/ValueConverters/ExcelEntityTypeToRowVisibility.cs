@@ -1,4 +1,4 @@
-﻿using DataAnalyzer.Services.Enums;
+﻿using DataAnalyzer.Services.ExcelUtilities;
 using System;
 using System.Globalization;
 using System.Windows;
@@ -8,7 +8,7 @@ namespace DataAnalyzer.Common.Mvvm.ValueConverters
 {
     internal class ExcelEntityTypeToRowVisibility : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value is ExcelEntityType type && (type.Equals(ExcelEntityType.Worksheet) || type.Equals(ExcelEntityType.DataCluster)) ?
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) => value is IExcelEntitySpecification type && (type.Equals(IExcelEntitySpecification.Worksheet) || type.Equals(IExcelEntitySpecification.DataCluster)) ?
                 Visibility.Visible : Visibility.Collapsed;
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => default;

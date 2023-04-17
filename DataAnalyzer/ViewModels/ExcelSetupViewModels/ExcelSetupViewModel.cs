@@ -3,7 +3,7 @@ using DataAnalyzer.Models;
 using DataAnalyzer.Models.ExcelSetupModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application;
 using DataAnalyzer.Services.Enums;
-using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels;
+using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels;
 using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using System;
 using System.Collections.ObjectModel;
@@ -49,49 +49,20 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         public ExcelSetupViewModel(
             IStatsModel statsModel,
             IStructureExecutiveCommissioner executiveCommissioner,
-            IExcelActionViewModel workbookActionViewModel,
-            IExcelActionViewModel worksheetActionViewModel,
-            IExcelActionViewModel dataClusterActionViewModel,
-            IExcelActionViewModel rowActionViewModel,
-            IExcelSetupModel excelSetupModel)
+            IExcelSetupModel excelSetupModel,
+            IWorkbookActionViewModel workbookActionViewModel,
+            IWorksheetActionViewModel worksheetActionViewModel,
+            IDataClusterActionViewModel dataClusterActionViewModel,
+            IRowActionViewModel rowActionViewModel)
         {
             this.statsModel = statsModel;
             this.executiveCommissioner = executiveCommissioner;
             this.excelSetupModel = excelSetupModel;
-            this.loadDataIntoStructure = new BaseCommand(obj => this.DoLoadDataIntoStructure());
             this.WorkbookActionViewModel = workbookActionViewModel;
             this.WorksheetActionViewModel = worksheetActionViewModel;
             this.DataClusterActionViewModel = dataClusterActionViewModel;
             this.RowActionViewModel = rowActionViewModel;
-
-            //this.WorkbookActionViewModel = new ExcelActionViewModel(
-            //    this.WorkbookActions,
-            //    this.workbookActionCreationModel,
-            //    this.workbookActionApplicationModel,
-            //    this.workbookActionsSummaryModel,
-            //    ExcelEntityType.Workbook);
-
-            //this.WorksheetActionViewModel = new ExcelActionViewModel(
-            //    this.WorksheetActions,
-            //    this.worksheetActionCreationModel,
-            //    this.worksheetActionApplicationModel,
-            //    this.worksheetActionsSummaryModel,
-            //    ExcelEntityType.Worksheet);
-
-            //this.DataClusterActionViewModel = new ExcelActionViewModel(
-            //    this.DataClusterActions,
-            //    this.dataClusterActionCreationModel,
-            //    this.dataClusterActionApplicationModel,
-            //    this.dataClusterActionsSummaryModel,
-            //    ExcelEntityType.DataCluster);
-
-            //this.RowActionViewModel = new ExcelActionViewModel(
-            //    this.RowActions,
-            //    this.rowActionCreationModel,
-            //    this.rowActionApplicationModel,
-            //    this.rowActionSummaryModel,
-            //    ExcelEntityType.Row);
-
+            this.loadDataIntoStructure = new BaseCommand(obj => this.DoLoadDataIntoStructure());
             this.excelSetupModel.PropertyChanged += this.ExcelSetupModelPropertyChanged;
         }
 

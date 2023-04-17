@@ -5,28 +5,21 @@ using System.Linq;
 
 namespace DataAnalyzer.Services.ClassGenerationServices
 {
-    internal class ClassCreator
+    internal class ClassCreator : IClassCreator
     {
-        private readonly string classAccessibility = string.Empty;
-        private readonly string className = string.Empty;
-        private readonly IReadOnlyCollection<(string Name, string Type, string Accessibility)> propertyData = null;
+        private IPropertyCreator propertyCreator;
 
-        public ClassCreator(
-            string classAccessibility,
-            string className,
-            IReadOnlyCollection<(string Name, string Type, string Accessibility)> propertyData)
+        public ClassCreator(IPropertyCreator propertyCreator)
         {
-            this.classAccessibility = classAccessibility;
-            this.className = className;
-            this.propertyData = propertyData;
+            this.propertyCreator = propertyCreator;
         }
 
-        public string Create()
+        public string Create(string classAccessibility, string className, IReadOnlyCollection<(string Name, string Type, string Accessibility)> propertyData)
         {
-            string classHeader = $"{this.classAccessibility} class {this.className}";
-            string properties = this.propertyData.Aggregate(
+            string classHeader = $"{classAccessibility} class {className}";
+            string properties = propertyData.Aggregate(
                 "",
-                (result, current) => result + new PropertyCreator(current.Name, current.Type, current.Accessibility).Create());
+                (result, current) => result + this.propertyCreator.Create(current.Name, current.Type, current.Accessibility));
             string nl = Environment.NewLine;
             return $"{classHeader}{nl}{{{nl}{properties}{nl}}}";
         }

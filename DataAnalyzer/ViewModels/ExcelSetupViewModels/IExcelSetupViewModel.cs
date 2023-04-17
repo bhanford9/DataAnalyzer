@@ -1,5 +1,5 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels;
-using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels;
+using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;

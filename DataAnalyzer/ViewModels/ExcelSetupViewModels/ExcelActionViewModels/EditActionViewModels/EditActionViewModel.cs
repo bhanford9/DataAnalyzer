@@ -1,7 +1,7 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
-using DataAnalyzer.Services.Enums;
+using DataAnalyzer.Services.ExcelUtilities;
 using System.Windows.Input;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
@@ -16,7 +16,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 
         private readonly BaseCommand act;
 
-        public EditActionViewModel(IActionCreationModel actionCreationModel, ExcelEntityType excelEntityType)
+        public EditActionViewModel(IActionCreationModel actionCreationModel, IExcelEntitySpecification excelEntityType)
             : this(excelEntityType)
         {
             this.actionCreationModel = actionCreationModel;
@@ -27,7 +27,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
         public EditActionViewModel(
           IActionCreationModel actionCreationModel,
           IEditActionViewModel toCopy,
-          ExcelEntityType excelEntityType)
+          IExcelEntitySpecification excelEntityType)
           : this(actionCreationModel, excelEntityType)
         {
             this.ActionName = toCopy.ActionName;
@@ -39,14 +39,14 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             //   This will make sure the original does not have events, but children do
         }
 
-        protected EditActionViewModel(ExcelEntityType excelEntityType)
+        protected EditActionViewModel(IExcelEntitySpecification excelEntityType)
         {
             this.ExcelEntityType = excelEntityType;
         }
 
         public ICommand Act => this.act;
 
-        public ExcelEntityType ExcelEntityType { get; }
+        public IExcelEntitySpecification ExcelEntityType { get; }
 
         public string ActionName
         {

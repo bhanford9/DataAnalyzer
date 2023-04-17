@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.SubModelConversions;
 using DataAnalyzer.Services.Enums;
+using DataAnalyzer.Services.ExcelUtilities;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
@@ -14,14 +15,14 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
         private IRowSpecificationViewModel rowSpecification;
         private IColumnSpecificationViewModel columnSpecification;
 
-        public BorderEditViewModel(ExcelEntityType excelEntityType) : base(excelEntityType)
+        public BorderEditViewModel(IExcelEntitySpecification excelEntityType) : base(excelEntityType)
         {
         }
 
         public BorderEditViewModel(
             IActionCreationModel actionCreationModel,
             IEditActionViewModel toCopy,
-            ExcelEntityType excelEntityType,
+            IExcelEntitySpecification excelEntityType,
             IRowSpecificationViewModel rowSpecification,
             IColumnSpecificationViewModel columnSpecification)
           : base(actionCreationModel, toCopy, excelEntityType)

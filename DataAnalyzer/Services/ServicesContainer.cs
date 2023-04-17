@@ -1,7 +1,11 @@
 ﻿using Autofac;
 using DataAnalyzer.Services.ClassGenerationServices;
+using DataAnalyzer.Services.ClassGenerationServices.PropertyCreators;
 using DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.AccessibilityCreators;
 using DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCreators;
+using DataAnalyzer.Services.ExcelUtilities;
+using DataAnalyzer.Services.ExecutiveUtilities;
+using DataAnalyzer.Services.ExecutiveUtilities.Executives;
 using System.Collections.Generic;
 
 namespace DataAnalyzer.Services
@@ -41,10 +45,36 @@ namespace DataAnalyzer.Services
             builder.RegisterTypeAncestors<ITypeCreator, IStringCreator, StringCreator>();
 
             // Services.ClassGenerationServices.PropertyCreators
+            builder.RegisterType<IPropertyCreator, PropertyCreator>();
+
             // Services.ClassGenerationServices
-            // Services.ExecutiveUtilities
+            builder.RegisterType<IClassCreator, ClassCreator>();
+
+            // Services.ExcelUtilities
+            builder.RegisterTypeAncestors<IExcelEntitySpecification, IExcelWorkbookSpecification, ExcelWorkbookSpecification>();
+            builder.RegisterTypeAncestors<IExcelEntitySpecification, IExcelWorksheetSpecification, ExcelWorksheetSpecification>();
+            builder.RegisterTypeAncestors<IExcelEntitySpecification, IExcelDataClusterSpecification, ExcelDataClusterSpecification>();
+            builder.RegisterTypeAncestors<IExcelEntitySpecification, IExcelRowSpecification, ExcelRowSpecification>();
+            builder.RegisterTypeAncestors<IExcelEntitySpecification, IExcelCellSpecification, ExcelCellSpecification>();
+
             // Services.ExecutiveUtilities.Executives
+            builder.RegisterTypeAncestors<IAggregateExecutives, ICsvCSharpClassCreation, CsvCSharpClassCreation>();
+            builder.RegisterTypeAncestors<IAggregateExecutives, ICsvTest, CsvTest>();
+            builder.RegisterTypeAncestors<IAggregateExecutives, INotSupportedExecutive, NotSupportedExecutive>();
+            builder.RegisterTypeAncestors<IAggregateExecutives, IQueryableExcelCreation, QueryableExcelCreation>();
+
+            // Services.ExecutiveUtilities
+            builder.RegisterInstance<IExecutiveUtilitiesRepository, ExecutiveUtilitiesRepository>(x =>
+            {
+                ExecutiveUtilitiesRepository repo = new();
+                repo.Initialize();
+                return repo;
+            });
+
             // Services
+            builder.RegisterType<IImportExportKey, ImportExportKey>();
+            builder.RegisterType<IImportKey, ImportKey>();
+            builder.RegisterType<ISerializationService, SerializationService>();
         }
     }
 }

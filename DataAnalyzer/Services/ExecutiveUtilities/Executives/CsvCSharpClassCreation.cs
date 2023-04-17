@@ -1,19 +1,17 @@
 ﻿using DataAnalyzer.Common.DataOrganizers;
-using DataAnalyzer.StatConfigurations;
 using DataAnalyzer.StatConfigurations.CsvConfigurations;
-using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 
 namespace DataAnalyzer.Services.ExecutiveUtilities.Executives
 {
-    internal class CsvCSharpClassCreation : AggregateExecutives
+    internal class CsvCSharpClassCreation : AggregateExecutives, ICsvCSharpClassCreation
     {
-        public override IDataConfiguration DataConfiguration { get; } = new ClassPropertiesConfiguration();
-
-        public override IDataOrganizer DataOrganizer { get; } = new CsvDataOrganizer();
-
-        public override IDataStructureSetupViewModel DataStructureSetupViewModel { get; }
-            = Resolver.Resolve<CsvCSharpStringClassSetupViewModel>();// new CsvCSharpStringClassSetupViewModel(new CsvCSharpStringClassSetupModel());
+        public CsvCSharpClassCreation()
+            : base(
+                  Resolver.Resolve<IClassPropertiesConfiguration>(),
+                  Resolver.Resolve<ICsvDataOrganizer>())
+        {
+        }
 
         public override string ExecutionDisplayKey => nameof(ExecutionExecutiveCommissioner.DisplayClassCreation);
     }

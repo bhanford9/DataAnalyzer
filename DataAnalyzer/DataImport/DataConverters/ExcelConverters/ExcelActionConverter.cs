@@ -1,12 +1,12 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels;
-using DataAnalyzer.Services.Enums;
+using DataAnalyzer.Services.ExcelUtilities;
 using ExcelService.DataActions;
 
 namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters
 {
     internal class ExcelActionConverter
     {
-        public static ExcelAction FromExcelActionInfo(ActionInfo actionInfo, ExcelEntityType excelEntityType)
+        public static ExcelAction FromExcelActionInfo(ActionInfo actionInfo, IExcelEntitySpecification excelEntityType)
             => new()
             {
                 Description = actionInfo.Description,

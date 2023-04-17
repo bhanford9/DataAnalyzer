@@ -3,13 +3,14 @@ using DataAnalyzer.Models;
 using System.Collections.Generic;
 using System;
 using DataAnalyzer.Services.ExecutiveUtilities;
+using DataAnalyzer.Services;
 
 namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 {
     internal class ExecutionExecutiveCommissioner : BasePropertyChanged, IExecutionExecutiveCommissioner
     {
         private readonly IConfigurationModel configurationModel;
-        private readonly IExecutiveUtilitiesRepository executiveUtilities = ExecutiveUtilitiesRepository.Instance;
+        private readonly IExecutiveUtilitiesRepository executiveUtilities;
 
         private bool displayExcelCreation = false;
         private bool displayClassCreation = false;
@@ -17,9 +18,11 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
         private readonly IReadOnlyDictionary<string, Action> viewDisplayMap;
 
         public ExecutionExecutiveCommissioner(
-            IConfigurationModel configModel)
+            IConfigurationModel configModel,
+            IExecutiveUtilitiesRepository executiveUtilities)
         {
             this.configurationModel = configModel;
+            this.executiveUtilities = executiveUtilities;
 
             // TODO --> might be able to inject
             viewDisplayMap = new Dictionary<string, Action>()
@@ -57,7 +60,7 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
         public void SetDisplay()
         {
             ClearDisplays();
-            IAggregateExecutives executive = executiveUtilities.GetExecutiveOrDefault(configurationModel.ImportExportKey);
+            IAggregateExecutives executive = executiveUtilities.GetDataOrDefault(configurationModel.ImportExportKey);
             viewDisplayMap[executive.ExecutionDisplayKey]();
         }
     }

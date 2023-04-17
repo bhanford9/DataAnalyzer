@@ -10,7 +10,7 @@ namespace DataAnalyzerTest.DataProviders
     {
         public override IEnumerator<object[]> GetEnumerator()
         {
-            ExecutiveUtilitiesRepository repository = ExecutiveUtilitiesRepository.Instance;
+            IExecutiveUtilitiesRepository repository = new ExecutiveUtilitiesRepository();
 
             var importTypes = repository.GetImportTypes();
             var importCategoryCombos = importTypes.SelectMany(

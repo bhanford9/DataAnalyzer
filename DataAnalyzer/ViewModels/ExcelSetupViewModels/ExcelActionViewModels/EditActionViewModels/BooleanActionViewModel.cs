@@ -1,6 +1,6 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
-using DataAnalyzer.Services.Enums;
+using DataAnalyzer.Services.ExcelUtilities;
 using System;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
@@ -9,14 +9,14 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
     {
         private bool doPerform = false;
 
-        public BooleanActionViewModel(ExcelEntityType excelEntityType) : base(excelEntityType)
+        public BooleanActionViewModel(IExcelEntitySpecification excelEntityType) : base(excelEntityType)
         {
         }
 
         public BooleanActionViewModel(
             IActionCreationModel actionCreationModel,
             IEditActionViewModel toCopy,
-            ExcelEntityType excelEntityType)
+            IExcelEntitySpecification excelEntityType)
           : base(actionCreationModel, toCopy, excelEntityType)
         {
         }

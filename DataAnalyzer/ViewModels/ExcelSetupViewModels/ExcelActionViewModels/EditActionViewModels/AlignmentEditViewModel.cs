@@ -2,6 +2,7 @@
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
+using DataAnalyzer.Services.ExcelUtilities;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.SubModelConversions;
 using DataAnalyzer.ViewModels.Utilities;
 using System;
@@ -18,7 +19,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
 
         private readonly EnumUtilities enumUtilities = new();
 
-        public AlignmentEditViewModel(ExcelEntityType excelEntityType)
+        public AlignmentEditViewModel(IExcelEntitySpecification excelEntityType)
             : base(excelEntityType)
         {
         }
@@ -26,7 +27,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
         public AlignmentEditViewModel(
             IActionCreationModel actionCreationModel,
             IEditActionViewModel toCopy,
-            ExcelEntityType excelEntityType,
+            IExcelEntitySpecification excelEntityType,
             IRowSpecificationViewModel rowSpecification,
             IColumnSpecificationViewModel columnSpecification)
           : base(actionCreationModel, toCopy, excelEntityType)

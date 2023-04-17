@@ -4,29 +4,28 @@ using System;
 
 namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators
 {
-    internal class PropertyCreator
+    internal class PropertyCreator : IPropertyCreator
     {
-        private readonly TypeCreationExecutive typeCreationExecutive = new();
-        private readonly AccessibilityCreationExecutive accessibilityCreationExecutive = new();
-        private string propertyName = string.Empty;
-        private string dataType = string.Empty;
-        private string accessibility = string.Empty;
+        private readonly ITypeCreationExecutive typeCreationExecutive;
+        private readonly IAccessibilityCreationExecutive accessibilityCreationExecutive;
 
-        public PropertyCreator(string name, string dataType, string accessibility)
+        public PropertyCreator(
+            ITypeCreationExecutive typeCreationExecutive,
+            IAccessibilityCreationExecutive accessibilityCreationExecutive)
         {
-            this.propertyName = name;
-            this.dataType = dataType;
-            this.accessibility = accessibility;
+            this.typeCreationExecutive = typeCreationExecutive;
+            this.accessibilityCreationExecutive = accessibilityCreationExecutive;
         }
 
-        public string Create()
+        // this should just be static and pass parameters into the method instead
+        public string Create(string propertyName, string dataType, string accessibility)
         {
-            string typeString = this.typeCreationExecutive.Create(this.dataType);
-            string accessibilityString = this.accessibilityCreationExecutive.Create(this.accessibility);
+            string typeString = this.typeCreationExecutive.Create(dataType);
+            string accessibilityString = this.accessibilityCreationExecutive.Create(accessibility);
             string lineStart = $"{Environment.NewLine}    ";
             string lineEnd = $"{Environment.NewLine}";
 
-            return $"{lineStart}public {typeString} {this.propertyName} {accessibilityString}{lineEnd}";
+            return $"{lineStart}public {typeString} {propertyName} {accessibilityString}{lineEnd}";
         }
     }
 }

@@ -6,8 +6,7 @@ using AppDataConfig = DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 
 namespace DataAnalyzer.StatConfigurations.GroupingConfigurations
 {
-    internal abstract class GroupingDataConfiguration<T> : DataConfiguration<T>
-        where T : AppDataConfig.IDataConfiguration
+    internal abstract class GroupingDataConfiguration<T> : DataConfiguration<T>, IGroupingDataConfiguration where T : AppDataConfig.IDataConfiguration
     {
         protected ICollection<IGroupingConfiguration> groupingConfigurations = new List<IGroupingConfiguration>();
 
@@ -19,7 +18,9 @@ namespace DataAnalyzer.StatConfigurations.GroupingConfigurations
         {
             if (level >= groupingConfigurations.Count)
             {
-                groupingConfigurations.Add(new GroupingConfiguration(propertyGetter));
+                GroupingConfiguration config = new();
+                config.AddCondition(propertyGetter);
+                groupingConfigurations.Add(config);
             }
             else
             {

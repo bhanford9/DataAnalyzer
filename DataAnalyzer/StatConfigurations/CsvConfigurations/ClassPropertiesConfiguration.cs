@@ -5,7 +5,7 @@ using AppDataConfig = DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 
 namespace DataAnalyzer.StatConfigurations.CsvConfigurations
 {
-    internal class ClassPropertiesConfiguration : DataConfiguration<AppDataConfig.CsvNamesDataConfiguration>
+    internal class ClassPropertiesConfiguration : DataConfiguration<AppDataConfig.CsvNamesDataConfiguration>, IClassPropertiesConfiguration
     {
         public string ClassName = string.Empty;
 

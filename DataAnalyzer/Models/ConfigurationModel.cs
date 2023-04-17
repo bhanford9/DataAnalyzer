@@ -1,5 +1,6 @@
 ﻿using DataAnalyzer.ApplicationConfigurations;
 using DataAnalyzer.Common.DataParameters;
+using DataAnalyzer.Common.DataParameters.CsvParameters;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.ImportModels;
 using DataAnalyzer.Services;
@@ -23,7 +24,7 @@ namespace DataAnalyzer.Models
 
         // TODO --> I feel like these two don't belong here
         private readonly DataParameterLibrary dataParameterLibrary = new();
-        private IDataParameterCollection dataParameterCollection = null;
+        private IDataParameterCollection dataParameterCollection = new CsvClassParameters();//  null;
 
         // These fields are set on page zero and allow the user to have different application configurations
         // This can help compartmentalize if the application grows to be large

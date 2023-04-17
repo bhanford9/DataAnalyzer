@@ -5,6 +5,7 @@ namespace DataAnalyzer.Views.ExecutionViews
 {
     public partial class ClassCreationSetupView : UserControl
     {
+        public ClassCreationSetupView() : this(Resolver.Resolve<IClassCreationSetupViewModel>()) { }
         internal ClassCreationSetupView(IClassCreationSetupViewModel viewModel)
         {
             this.InitializeComponent();

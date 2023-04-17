@@ -28,12 +28,14 @@ namespace DataAnalyzer.Models
             builder.RegisterType<INotSupportedSetupModel, NotSupportedSetupModel>();
 
             // Models.ExcelSetupModels.ExcelActionModels.Application
+            builder.RegisterTypeAncestors<IExcelActionModel, IActionApplicationModel, ICellActionApplicationModel, CellActionApplicationModel>();
             builder.RegisterTypeAncestors<IExcelActionModel, IActionApplicationModel, IDataClusterActionApplicationModel, DataClusterActionApplicationModel>();
             builder.RegisterTypeAncestors<IExcelActionModel, IActionApplicationModel, IRowActionApplicationModel, RowActionApplicationModel>();
             builder.RegisterTypeAncestors<IExcelActionModel, IActionApplicationModel, IWorkbookActionApplicationModel, WorkbookActionApplicationModel>();
             builder.RegisterTypeAncestors<IExcelActionModel, IActionApplicationModel, IWorksheetActionApplicationModel, WorksheetActionApplicationModel>();
 
             // Models.ExcelSetupModels.ExcelActionModels.Creation
+            builder.RegisterTypeAncestors<IExcelActionModel, IActionCreationModel, ICellActionCreationModel, CellActionCreationModel>();
             builder.RegisterTypeAncestors<IExcelActionModel, IActionCreationModel, IDataClusterActionCreationModel, DataClusterActionCreationModel>();
             builder.RegisterTypeAncestors<IExcelActionModel, IActionCreationModel, IRowActionCreationModel, RowActionCreationModel>();
             builder.RegisterTypeAncestors<IExcelActionModel, IActionCreationModel, IWorkbookActionCreationModel, WorkbookActionCreationModel>();
@@ -46,6 +48,7 @@ namespace DataAnalyzer.Models
             builder.RegisterTypeAncestors<ISummaryItem, IBorderSummaryItem, BorderSummaryItem>();
 
             // Models.ExcelSetupModels.ExcelActionModels.Summary
+            builder.RegisterTypeAncestors<IActionsSummaryModel, ICellActionsSummaryModel, CellActionsSummaryModel>();
             builder.RegisterTypeAncestors<IActionsSummaryModel, IDataClusterActionsSummaryModel, DataClusterActionsSummaryModel>();
             builder.RegisterTypeAncestors<IActionsSummaryModel, IRowActionsSummaryModel, RowActionsSummaryModel>();
             builder.RegisterTypeAncestors<IActionsSummaryModel, IWorkbookActionsSummaryModel, WorkbookActionsSummaryModel>();

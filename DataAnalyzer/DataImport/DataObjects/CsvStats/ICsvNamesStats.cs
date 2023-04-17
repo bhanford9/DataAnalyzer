@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DataAnalyzer.DataImport.DataObjects.CsvStats
+﻿namespace DataAnalyzer.DataImport.DataObjects.CsvStats
 {
     internal interface ICsvNamesStats : IStats
     {

@@ -1,11 +1,11 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
-using DataAnalyzer.Services.Enums;
+using DataAnalyzer.Services.ExcelUtilities;
 
 namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
 {
     internal class EmptyEditViewModel : EditActionViewModel, IEmptyEditViewModel
     {
-        public EmptyEditViewModel(ExcelEntityType excelEntityType)
+        public EmptyEditViewModel(IExcelEntitySpecification excelEntityType)
             : base(excelEntityType)
         {
         }

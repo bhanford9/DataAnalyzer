@@ -14,6 +14,7 @@ namespace DataAnalyzer.Services
 {
     internal class ScraperService
     {
+        // TODO --> get these injected and register as singleton
         private static readonly ScraperExecutive scraperExecutive = new();
         private static readonly DataConverterExecutive dataConverterExecutive = new();
         private static readonly ScraperLibrary scraperLibrary;

@@ -1,6 +1,9 @@
 ﻿using DataAnalyzer.Models;
 using DataAnalyzer.ViewModels;
 using DataAnalyzerFixtures.ViewModels;
+using DocumentFormat.OpenXml.Office2010.Drawing;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace DataAnalyzerTest.ViewModels.Unit
@@ -21,6 +24,7 @@ namespace DataAnalyzerTest.ViewModels.Unit
         [Fact]
         public void ShouldHaveConfigurationModelInformationOnCreation()
         {
+            string value = 4.0005.ToString("0.###");
             this.shared.MockConfigurationModel = new();
             this.shared.MockConfigurationModel.Setup(x => x.ConfigurationDirectory).Returns(this.shared.ExpectedDirectory);
             this.shared.MockConfigurationModel.Setup(x => x.ConfigurationName).Returns(this.shared.ExpectedName);

@@ -14,13 +14,13 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         private string className = string.Empty;
 
         // optionally may want to move this into the parent as the interface
-        private readonly CsvCSharpStringClassSetupModel model;
+        private readonly ICsvCSharpStringClassSetupModel model;
 
         public CsvCSharpStringClassSetupViewModel(
             IConfigurationModel configurationModel,
             IMainModel mainModel,
             IStatsModel statsModel,
-            CsvCSharpStringClassSetupModel model)
+            ICsvCSharpStringClassSetupModel model)
             : base(configurationModel, mainModel, statsModel, model)
         {
             this.model = model;

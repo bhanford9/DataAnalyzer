@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Services.Enums;
+using DataAnalyzer.Services.ExcelUtilities;
 using System.ComponentModel;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
@@ -9,11 +10,11 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 
         ActionCategory ActionCategory { get; }
 
-        ExcelEntityType ExcelEntityType { get; set; }
+        IExcelEntitySpecification ExcelEntityType { get; set; }
 
         string ToString();
 
-        IActionParameters WithExcelEntity(ExcelEntityType excelEntityType);
+        IActionParameters WithExcelEntity(IExcelEntitySpecification excelEntityType);
 
         IActionParameters Clone();
     }

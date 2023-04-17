@@ -13,12 +13,15 @@ namespace DataAnalyzer.Common.DataOrganizers
         {
             HeirarchalStats heirarchalStats = new();
 
-            LinkedGroupingConfiguration groupingConfigurations = new (configuration.GroupingConfigurations.First().GetProperty);
+            ILinkedGroupingConfiguration groupingConfigurations = new LinkedGroupingConfiguration();
+            groupingConfigurations.AddCondition(configuration.GroupingConfigurations.First().GetProperty);
 
-            LinkedGroupingConfiguration temp = groupingConfigurations;
+            ILinkedGroupingConfiguration temp = groupingConfigurations;
             for (int i = 1; i < configuration.GroupingConfigurations.Count; i++)
             {
-                temp.Next = new LinkedGroupingConfiguration(configuration.GroupingConfigurations.ElementAt(i).GetProperty);
+                ILinkedGroupingConfiguration linkedGroupConfig = new LinkedGroupingConfiguration();
+                linkedGroupConfig.AddCondition(configuration.GroupingConfigurations.ElementAt(i).GetProperty);
+                temp.Next = linkedGroupConfig;
                 temp = temp.Next;
             }
 
@@ -30,7 +33,7 @@ namespace DataAnalyzer.Common.DataOrganizers
         private void ApplyNestedGrouping(
           HeirarchalStats heirarchalStats,
           ICollection<IStats> stats,
-          LinkedGroupingConfiguration groupingConfigurations)
+          ILinkedGroupingConfiguration groupingConfigurations)
         {
             heirarchalStats.Values.Clear();
 

@@ -1,6 +1,5 @@
 ﻿using DataAnalyzer.Common.DataOrganizers;
 using DataAnalyzer.StatConfigurations;
-using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 
 namespace DataAnalyzer.Services.ExecutiveUtilities
 {
@@ -8,7 +7,6 @@ namespace DataAnalyzer.Services.ExecutiveUtilities
     {
         IDataConfiguration DataConfiguration { get; }
         IDataOrganizer DataOrganizer { get; }
-        IDataStructureSetupViewModel DataStructureSetupViewModel { get; }
         string ExecutionDisplayKey { get; }
     }
 }

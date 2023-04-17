@@ -1,15 +1,11 @@
-﻿using DataAnalyzer.DataImport.DataObjects;
-using System;
-
-namespace DataAnalyzer.StatConfigurations.GroupingConfigurations
+﻿namespace DataAnalyzer.StatConfigurations.GroupingConfigurations
 {
-    internal class LinkedGroupingConfiguration : GroupingConfiguration
+    internal class LinkedGroupingConfiguration : GroupingConfiguration, ILinkedGroupingConfiguration
     {
-        public LinkedGroupingConfiguration(Func<IStats, IComparable> propertyGetter)
-          : base(propertyGetter)
+        public LinkedGroupingConfiguration() : base()
         {
         }
 
-        public LinkedGroupingConfiguration Next { get; set; } = null;
+        public ILinkedGroupingConfiguration Next { get; set; } = null;
     }
 }

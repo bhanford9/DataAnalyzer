@@ -21,11 +21,14 @@ namespace DataAnalyzer.Models
         private IDataConfiguration activeConfiguration = new NotSupportedDataConfiguration();
 
         //  making this lazy because it instantiates classes that require this model already be in memory
-        private ExecutiveUtilitiesRepository executiveUtilities => ExecutiveUtilitiesRepository.Instance;
+        private IExecutiveUtilitiesRepository executiveUtilities;
 
-        public StatsModel(IConfigurationModel configModel)
+        public StatsModel(
+            IConfigurationModel configModel,
+            IExecutiveUtilitiesRepository executiveUtilities)
         {
             this.configurationModel = configModel;
+            this.executiveUtilities = executiveUtilities;
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
         }
 
@@ -72,7 +75,7 @@ namespace DataAnalyzer.Models
             this.activeConfiguration.Initialize(this.configurationModel.DataParameterCollection, applicationConfiguration);
 
             this.HeirarchalStats = this.executiveUtilities
-                .GetExecutiveOrDefault(this.configurationModel.ImportExportKey)
+                .GetDataOrDefault(this.configurationModel.ImportExportKey)
                 .DataOrganizer.Organize(this.activeConfiguration, this.Stats);
 
             this.LoadStatNames(this.HeirarchalStats);
@@ -96,7 +99,7 @@ namespace DataAnalyzer.Models
             {
                 case nameof(this.configurationModel.ImportExportKey):
                     this.ActiveConfiguration = this.executiveUtilities
-                        .GetExecutiveOrDefault(this.configurationModel.ImportExportKey)
+                        .GetDataOrDefault(this.configurationModel.ImportExportKey)
                         .DataConfiguration;
                     break;
             }

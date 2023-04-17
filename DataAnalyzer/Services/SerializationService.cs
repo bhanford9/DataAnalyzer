@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.Services
 {
-    internal class SerializationService
+    internal class SerializationService : ISerializationService
     {
         private readonly SerializationExecutive serializer = new();
 

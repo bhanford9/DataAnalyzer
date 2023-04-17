@@ -5,6 +5,7 @@ namespace DataAnalyzer.Views.ExecutionViews
 {
     public partial class ExcelConfigurationSetupView : UserControl
     {
+        public ExcelConfigurationSetupView() : this(Resolver.Resolve<IExcelSetupViewModel>()) { }
         internal ExcelConfigurationSetupView(IExcelSetupViewModel viewModel)
         {
             this.InitializeComponent();

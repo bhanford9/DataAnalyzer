@@ -14,7 +14,7 @@ namespace DataAnalyzer.Services
         }
     }
 
-    internal class ImportKey
+    internal class ImportKey : IImportKey
     {
         private IImportType type;
         private IScraperCategory category;

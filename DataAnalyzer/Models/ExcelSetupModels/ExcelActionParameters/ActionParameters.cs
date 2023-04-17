@@ -1,16 +1,17 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Services.Enums;
+using DataAnalyzer.Services.ExcelUtilities;
 
 namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
 {
     internal abstract class ActionParameters : BasePropertyChanged, IActionParameters
     {
-        private ExcelEntityType excelEntityType;
+        private IExcelEntitySpecification excelEntityType;
         private string name = string.Empty;
 
         public abstract ActionCategory ActionCategory { get; }
 
-        public ExcelEntityType ExcelEntityType
+        public IExcelEntitySpecification ExcelEntityType
         {
             get => this.excelEntityType;
             set => this.NotifyPropertyChanged(ref this.excelEntityType, value);
@@ -22,7 +23,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
             set => this.NotifyPropertyChanged(ref this.name, value);
         }
 
-        public IActionParameters WithExcelEntity(ExcelEntityType excelEntityType)
+        public IActionParameters WithExcelEntity(IExcelEntitySpecification excelEntityType)
         {
             this.excelEntityType = excelEntityType;
             return this;

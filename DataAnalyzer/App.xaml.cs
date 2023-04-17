@@ -4,6 +4,7 @@ using DataAnalyzer.Common;
 using DataAnalyzer.DataImport;
 using DataAnalyzer.Models;
 using DataAnalyzer.Services;
+using DataAnalyzer.StatConfigurations;
 using DataAnalyzer.ViewModels;
 using System.Windows;
 
@@ -25,6 +26,7 @@ namespace DataAnalyzer
             ViewModelsContainer.Register(builder);
             DataImportContainer.Register(builder);
             ServicesContainer.Register(builder);
+            StatConfigurationsContainer.Register(builder);
 
             this.container = builder.Build();
 

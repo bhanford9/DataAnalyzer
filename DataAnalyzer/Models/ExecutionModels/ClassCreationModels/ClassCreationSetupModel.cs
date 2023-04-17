@@ -11,11 +11,15 @@ namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels
     internal class ClassCreationSetupModel : BasePropertyChanged, IClassCreationSetupModel
     {
         private string configurationName = string.Empty;
+        private readonly IClassCreator classCreator;
 
-        public ClassCreationSetupModel(IClassCreationConfigurationModel classCreationConfigModel)
+        public ClassCreationSetupModel(
+            IClassCreationConfigurationModel classCreationConfigModel,
+            IClassCreator classCreator)
         {
             this.ClassCreationConfigModel = classCreationConfigModel;
             this.ClassCreationConfigModel.PropertyChanged += ClassCreationConfigModelPropertyChanged;
+            this.classCreator = classCreator;
         }
 
         public IClassCreationConfigurationModel ClassCreationConfigModel { get; }
@@ -31,14 +35,12 @@ namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels
         public string GetClassString(string className, ICollection<IPropertyData> propertyData)
         {
             // TODO --> create radio button or combo box for class accessibility
-            ClassCreator classCreator = new ClassCreator(
+            return this.classCreator.Create(
                 "public",
                 className,
                 propertyData
                     .Select(x => (x.Name, x.SelectedType, x.SelectedAccessibility))
                     .ToList());
-
-            return classCreator.Create();
         }
 
         public void LoadDataFromConfiguration()

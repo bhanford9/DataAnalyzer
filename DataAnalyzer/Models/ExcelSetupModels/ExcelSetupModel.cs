@@ -4,7 +4,7 @@ using DataAnalyzer.DataImport.DataObjects;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;
-using DataAnalyzer.Services.Enums;
+using DataAnalyzer.Services.ExcelUtilities;
 using ExcelService.DataActions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -34,27 +34,27 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             ActionLibrary actionLibrary = new ActionLibrary();
 
             actionLibrary.GetWorkbookActionInfo()
-              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, ExcelEntityType.Workbook))
+              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, IExcelEntitySpecification.Workbook))
               .ToList()
               .ForEach(x => this.AvailableWorkbookActions.Add(x));
 
             actionLibrary.GetWorksheetActionInfo()
-              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, ExcelEntityType.Worksheet))
+              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, IExcelEntitySpecification.Worksheet))
               .ToList()
               .ForEach(x => this.AvailableWorksheetActions.Add(x));
 
             actionLibrary.GetDataClusterActionInfo()
-              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, ExcelEntityType.DataCluster))
+              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, IExcelEntitySpecification.DataCluster))
               .ToList()
               .ForEach(x => this.AvailableDataClusterActions.Add(x));
 
             actionLibrary.GetRowActionInfo()
-              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, ExcelEntityType.Row))
+              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, IExcelEntitySpecification.Row))
               .ToList()
               .ForEach(x => this.AvailableRowActions.Add(x));
 
             actionLibrary.GetCellActionInfo()
-              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, ExcelEntityType.Cell))
+              .Select(x => ExcelActionConverter.FromExcelActionInfo(x, IExcelEntitySpecification.Cell))
               .ToList()
               .ForEach(x => this.AvailableCellActions.Add(x));
 

@@ -5,6 +5,7 @@ namespace DataAnalyzer.Views.ExcelSetupViews
 {
     public partial class ExcelDataTypeSetupView : UserControl
     {
+        public ExcelDataTypeSetupView() : this(Resolver.Resolve<IExcelDataTypesViewModel>()) { }
         internal ExcelDataTypeSetupView(IExcelDataTypesViewModel viewModel)
         {
             this.InitializeComponent();
