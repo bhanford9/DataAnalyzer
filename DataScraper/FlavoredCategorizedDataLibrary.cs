@@ -1,9 +1,6 @@
 ﻿using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace DataScraper
 {

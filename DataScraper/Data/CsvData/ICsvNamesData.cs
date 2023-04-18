@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace DataScraper.Data.CsvData
+﻿namespace DataScraper.Data.CsvData
 {
     public interface ICsvNamesData : IData
     {

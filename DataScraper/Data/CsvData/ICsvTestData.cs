@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DataScraper.Data.CsvData
+﻿namespace DataScraper.Data.CsvData
 {
     public interface ICsvTestData : IData
     {

@@ -1,6 +1,5 @@
 ﻿using DataScraper.Data;
 using DataScraper.DataSources;
-using System.Collections.Generic;
 
 namespace DataScraper.DataScrapers
 {

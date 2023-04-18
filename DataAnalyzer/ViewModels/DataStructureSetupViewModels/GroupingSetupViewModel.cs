@@ -3,6 +3,7 @@ using DataAnalyzer.Models;
 using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.Services;
 using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 {
     internal class GroupingSetupViewModel : DataStructureSetupViewModel<GroupingDataConfiguration>, IGroupingSetupViewModel
     {
-        private readonly IStructureExecutiveCommissioner structureExecutiveCommissioner;
+        private readonly Lazy<IStructureExecutiveCommissioner> structureExecutiveCommissioner
+            = new(() => Resolver.Resolve<IStructureExecutiveCommissioner>());
         private readonly IGroupingSetupModel model;
 
         private int groupingLayersCount = 0;
@@ -20,11 +22,11 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             IConfigurationModel configurationModel,
             IMainModel mainModel,
             IStatsModel statsModel,
-            IStructureExecutiveCommissioner structureExecutiveCommissioner,
+            //IStructureExecutiveCommissioner structureExecutiveCommissioner,
             IGroupingSetupModel model)
             : base(configurationModel, mainModel, statsModel, model)
         {
-            this.structureExecutiveCommissioner = structureExecutiveCommissioner;
+            //this.structureExecutiveCommissioner = structureExecutiveCommissioner;
             this.model = model;
             this.model.PropertyChanged += this.ModelPropertyChanged;
         }
@@ -44,7 +46,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
                     this.ConfigurationGroupings.Add(
                         new ConfigurationGroupingViewModel(
                             this.configurationModel,
-                            this.structureExecutiveCommissioner,
+                            this.structureExecutiveCommissioner.Value,
                             this.ConfigurationGroupings.Count()));
                 }
 
@@ -87,7 +89,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             {
                 this.ConfigurationGroupings.Add(new ConfigurationGroupingViewModel(
                     this.configurationModel,
-                    this.structureExecutiveCommissioner,
+                    this.structureExecutiveCommissioner.Value,
                     level++)
                 {
                     Name = groupingConfig.GroupName,

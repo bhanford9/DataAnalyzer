@@ -15,20 +15,18 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
         private readonly IConfigurationModel configurationModel;
 
         // this may need to be dependent on more than just the import type
-        private readonly IReadOnlyDictionary<IImportType, IImportViewModel> viewModelMap;
+        //private readonly IReadOnlyDictionary<IImportType, IImportViewModel> viewModelMap;
 
         public ImportExecutiveCommissioner(
-            IConfigurationModel configurationModel,
-            IStatsModel statsModel,
-            IImportFromFileModel importFromFileModel)
+            IConfigurationModel configurationModel)
         {
             this.configurationModel = configurationModel;
             configurationModel.PropertyChanged += ConfigurationModelPropertyChanged;
 
-            viewModelMap = new Dictionary<IImportType, IImportViewModel>()
-            {
-                { new FileImportType(), new ImportFromFileViewModel(statsModel, importFromFileModel) },
-            };
+            //viewModelMap = new Dictionary<IImportType, IImportViewModel>()
+            //{
+            //    { new FileImportType(), new ImportFromFileViewModel(statsModel, importFromFileModel) },
+            //};
         }
 
         public bool DisplayFileImport

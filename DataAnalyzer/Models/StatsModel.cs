@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -21,14 +22,13 @@ namespace DataAnalyzer.Models
         private IDataConfiguration activeConfiguration = new NotSupportedDataConfiguration();
 
         //  making this lazy because it instantiates classes that require this model already be in memory
-        private IExecutiveUtilitiesRepository executiveUtilities;
+        private Lazy<IExecutiveUtilitiesRepository> executiveUtilities =
+            new(() => Resolver.Resolve<IExecutiveUtilitiesRepository>());
 
         public StatsModel(
-            IConfigurationModel configModel,
-            IExecutiveUtilitiesRepository executiveUtilities)
+            IConfigurationModel configModel)
         {
             this.configurationModel = configModel;
-            this.executiveUtilities = executiveUtilities;
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
         }
 
@@ -74,7 +74,7 @@ namespace DataAnalyzer.Models
         {
             this.activeConfiguration.Initialize(this.configurationModel.DataParameterCollection, applicationConfiguration);
 
-            this.HeirarchalStats = this.executiveUtilities
+            this.HeirarchalStats = this.executiveUtilities.Value
                 .GetDataOrDefault(this.configurationModel.ImportExportKey)
                 .DataOrganizer.Organize(this.activeConfiguration, this.Stats);
 
@@ -98,7 +98,7 @@ namespace DataAnalyzer.Models
             switch (e.PropertyName)
             {
                 case nameof(this.configurationModel.ImportExportKey):
-                    this.ActiveConfiguration = this.executiveUtilities
+                    this.ActiveConfiguration = this.executiveUtilities.Value
                         .GetDataOrDefault(this.configurationModel.ImportExportKey)
                         .DataConfiguration;
                     break;

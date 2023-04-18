@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DataScraper.Data.CsvData
+﻿namespace DataScraper.Data.CsvData
 {
     public class CsvTestData : ICsvTestData
     {

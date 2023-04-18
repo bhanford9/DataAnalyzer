@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DataScraper.DataScrapers
+﻿namespace DataScraper.DataScrapers
 {
     public abstract class ScraperKey<T> : IScraperKey where T : IScraperKey, new()
     {

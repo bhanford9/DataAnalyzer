@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using DataScraper.DataScrapers.CsvDataScrapers;
+﻿using DataScraper.DataScrapers.CsvDataScrapers;
 using DataScraper.DataScrapers.ScraperFlavors;
 using DataScraper.DataScrapers.ScraperFlavors.CsvFlavors;
 using DataScraper.DataScrapers.ScraperFlavors.CsvNamesFlavors;

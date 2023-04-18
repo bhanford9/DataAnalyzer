@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using DataScraper.Data.TimeData.QueryableData;
+﻿using DataScraper.Data.TimeData.QueryableData;
 using DataScraper.DataKeyValues.TimeKeyValues.StandardValues;
 using DataScraper.DataKeyValues.TimeKeyValues.TimeValues;
 

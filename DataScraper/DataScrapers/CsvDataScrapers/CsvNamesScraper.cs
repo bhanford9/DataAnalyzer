@@ -1,12 +1,10 @@
 ﻿using DataScraper.Data;
 using DataScraper.Data.CsvData;
 using DataScraper.DataSources;
-using System.Collections.Generic;
-using System.IO;
 
 namespace DataScraper.DataScrapers.CsvDataScrapers
 {
-    public class CsvNamesScraper : IDataScraper
+    public class CsvNamesScraper : ICsvNamesScraper
     {
         public string Name => "CSV Names Scraper";
 

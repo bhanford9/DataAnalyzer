@@ -1,10 +1,10 @@
 ﻿using DataScraper.Data;
-using System;
 
 namespace DataScraper.DataScrapers.DataPropertySetters
 {
-    internal class DataIntPropertySetter<TData> : DataPropertySetter<TData, int>
-        where TData : IData, new()
+    internal interface IDataIntPropertySetter : IDataPropertySetter { }
+    internal class DataIntPropertySetter<TData> : DataPropertySetter<TData, int>, IDataIntPropertySetter
+        where TData : IData
     {
         public DataIntPropertySetter(Action<TData, int> todo) : base(todo) { }
 

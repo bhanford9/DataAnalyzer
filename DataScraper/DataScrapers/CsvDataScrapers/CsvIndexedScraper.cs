@@ -1,14 +1,14 @@
 ﻿using DataScraper.Data;
 using DataScraper.DataScrapers.DataPropertySetters;
 using DataScraper.DataSources;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace DataScraper.DataScrapers.CsvDataScrapers
 {
-    public abstract class CsvIndexedScraper<T> : IDataScraper where T : IData, new()
+    public abstract class CsvIndexedScraper<T> : ICsvIndexedScraper where T : IData
     {
+        private Func<T> getNewInstance;
+        public CsvIndexedScraper(Func<T> getNewInstance) => this.getNewInstance = getNewInstance;
+
         public abstract string Name { get; }
 
         public abstract List<IDataPropertySetter> DataSetters { get; }
@@ -38,7 +38,7 @@ namespace DataScraper.DataScrapers.CsvDataScrapers
 
                 string[] values = line.Split(',');
 
-                T item = new();
+                T item = this.getNewInstance();
 
                 // Leaving it up to the developer to fix the data if number of setters is not the same as the number of values
                 for (int i = 0; i < values.Length; i++)

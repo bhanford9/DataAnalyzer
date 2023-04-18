@@ -1,4 +1,5 @@
-﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+﻿using Autofac;
+using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Services;
@@ -28,7 +29,7 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 
         // TODO --> doing this to bypass some DI circular dependency. need to figure out better solution
         private readonly Lazy<IDataStructureSetupViewModelRepository> setupViewModelRepository
-            = new (() => Resolver.Resolve<IDataStructureSetupViewModelRepository>());
+            = new(() => Resolver.Resolve<IDataStructureSetupViewModelRepository>());
 
         public StructureExecutiveCommissioner(
             IConfigurationModel configurationModel,
@@ -61,9 +62,11 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
         // TODO --> must track this locally so the executive utilities doesn't need to
         //   circular dependency in dependency injection
         public IDataStructureSetupViewModel ActiveViewModel
-            => this.setupViewModelRepository.Value.GetDataOr(
-                configurationModel.ImportExportKey,
-                _ => Resolver.Resolve<INotSupportedSetupViewModel>());
+            => Resolver.Container.IsRegistered<IDataStructureSetupViewModelRepository>() ?
+                this.setupViewModelRepository.Value.GetDataOr(
+                    configurationModel.ImportExportKey,
+                    _ => Resolver.Resolve<INotSupportedSetupViewModel>()) :
+                Resolver.Resolve<INotSupportedSetupViewModel>();
 
         public bool DisplayNotSupported
         {
@@ -143,7 +146,7 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
         public IDataStructureSetupViewModel GetInitializedViewModel()
         {
             FetchConfiguration();
-
+            return Resolver.Resolve<INotSupportedSetupViewModel>();
             IDataStructureSetupViewModel viewModel = ActiveViewModel;
             viewModel.Initialize();
             viewModel.SelectedExportType = selectedExportType;
