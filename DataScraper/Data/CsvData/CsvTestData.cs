@@ -2,7 +2,7 @@
 
 namespace DataScraper.Data.CsvData
 {
-    public class CsvTestData : IData
+    public class CsvTestData : ICsvTestData
     {
         public DateTime Date { get; set; }
 

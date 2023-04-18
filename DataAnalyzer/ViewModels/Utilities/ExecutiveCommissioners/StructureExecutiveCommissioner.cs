@@ -34,14 +34,11 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
             IConfigurationModel configurationModel,
             IMainModel mainModel,
             IStatsModel statsModel)
-            //IExecutiveUtilitiesRepository executiveUtilities,
-            //IDataStructureSetupViewModelRepository setupViewModelRepository)
         {
             this.configurationModel = configurationModel;
             this.mainModel = mainModel;
             this.statsModel = statsModel;
-            //this.executiveUtilities = executiveUtilities;
-            //this.setupViewModelRepository = setupViewModelRepository;
+
             enumUtilities.LoadNames(typeof(ExportType), ExportTypes);
 
             viewDisplayMap = new Dictionary<string, Action>()

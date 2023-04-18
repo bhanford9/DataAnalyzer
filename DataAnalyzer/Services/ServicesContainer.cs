@@ -6,6 +6,7 @@ using DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCreator
 using DataAnalyzer.Services.ExcelUtilities;
 using DataAnalyzer.Services.ExecutiveUtilities;
 using DataAnalyzer.Services.ExecutiveUtilities.Executives;
+using DependencyInjectionUtilities;
 using System.Collections.Generic;
 
 namespace DataAnalyzer.Services
