@@ -21,7 +21,7 @@ namespace DataAnalyzer.Models
         private IDataConfiguration activeConfiguration = new NotSupportedDataConfiguration();
 
         //  making this lazy because it instantiates classes that require this model already be in memory
-        private IExecutiveUtilitiesRepository executiveUtilities;
+        private readonly IExecutiveUtilitiesRepository executiveUtilities;
 
         public StatsModel(
             IConfigurationModel configModel,

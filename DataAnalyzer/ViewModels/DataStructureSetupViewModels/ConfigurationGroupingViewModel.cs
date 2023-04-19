@@ -99,6 +99,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             }
             else
             {
+                // TODO --> I don't think this was doing anything 
                 (executiveCommissioner.GetInitializedViewModel() as GroupingSetupViewModel).RemoveGroupingConfiguration(level);
             }
 
