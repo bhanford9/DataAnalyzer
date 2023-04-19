@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+using DependencyInjectionUtilities;
 
 namespace DataAnalyzer.ApplicationConfigurations
 {

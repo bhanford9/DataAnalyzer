@@ -2,6 +2,7 @@
 using DataAnalyzer.StatConfigurations.CsvConfigurations;
 using DataAnalyzer.StatConfigurations.ExcelConfigurations;
 using DataAnalyzer.StatConfigurations.GroupingConfigurations;
+using DependencyInjectionUtilities;
 
 namespace DataAnalyzer.StatConfigurations
 {

@@ -24,7 +24,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestFixtures", "TestFixtures", "{E89EED4A-FC6C-4006-847B-571D205678D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAnalyzerFixtures", "DataAnalyzerFixtures\DataAnalyzerFixtures.csproj", "{B41F641D-4CDE-457B-84BD-78090FB2FB70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataAnalyzerFixtures", "DataAnalyzerFixtures\DataAnalyzerFixtures.csproj", "{B41F641D-4CDE-457B-84BD-78090FB2FB70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyInjectionUtilities", "DependencyInjectionUtilities\DependencyInjectionUtilities.csproj", "{34A39E49-8700-4753-9534-161DE15E1587}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -60,6 +62,10 @@ Global
 		{B41F641D-4CDE-457B-84BD-78090FB2FB70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B41F641D-4CDE-457B-84BD-78090FB2FB70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B41F641D-4CDE-457B-84BD-78090FB2FB70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34A39E49-8700-4753-9534-161DE15E1587}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34A39E49-8700-4753-9534-161DE15E1587}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34A39E49-8700-4753-9534-161DE15E1587}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34A39E49-8700-4753-9534-161DE15E1587}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

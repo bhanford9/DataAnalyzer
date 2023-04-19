@@ -14,6 +14,7 @@ using DataAnalyzer.DataImport.DataObjects.CsvStats;
 using DataAnalyzer.DataImport.DataObjects.TimeStats;
 using DataAnalyzer.DataImport.DataObjects.TimeStats.QueryableTimeStats;
 using System;
+using DependencyInjectionUtilities;
 
 namespace DataAnalyzer.DataImport
 {

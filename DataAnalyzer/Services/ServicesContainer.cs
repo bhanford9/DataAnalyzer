@@ -6,6 +6,7 @@ using DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCreator
 using DataAnalyzer.Services.ExcelUtilities;
 using DataAnalyzer.Services.ExecutiveUtilities;
 using DataAnalyzer.Services.ExecutiveUtilities.Executives;
+using DependencyInjectionUtilities;
 using System.Collections.Generic;
 
 namespace DataAnalyzer.Services
@@ -15,7 +16,7 @@ namespace DataAnalyzer.Services
         public static void Register(ContainerBuilder builder)
         {
             // Services.ClassGenerationServices.PropertyCreators.AccessibilityCreators
-            builder.Register<IAccessibilityCreationExecutive, AccessibilityCreationExecutive>(_ =>
+            builder.RegisterInstance<IAccessibilityCreationExecutive, AccessibilityCreationExecutive>(_ =>
                 new AccessibilityCreationExecutive(new Dictionary<string, IAccessibilityCreator>()
                 {
                     { ClassCreationConstants.READ_ONLY, new ReadOnlyCreator() },
@@ -29,7 +30,7 @@ namespace DataAnalyzer.Services
             builder.RegisterTypeAncestors<IAccessibilityCreator, IReadProtectedWriteCreator, ReadProtectedWriteCreator>();
 
             // Services.ClassGenerationServices.PropertyCreators.TypeCreators
-            builder.Register<ITypeCreationExecutive, TypeCreationExecutive>(_ =>
+            builder.RegisterInstance<ITypeCreationExecutive, TypeCreationExecutive>(_ =>
                 new TypeCreationExecutive(new Dictionary<string, ITypeCreator>()
                 {
                     { ClassCreationConstants.BOOL_TYPE, new BoolCreator() },

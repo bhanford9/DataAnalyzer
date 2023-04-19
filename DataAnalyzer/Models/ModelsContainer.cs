@@ -15,6 +15,7 @@ using DataAnalyzer.Models.ExecutionModels.ClassCreationModels.SerializationModel
 using DataAnalyzer.Models.ImportModels;
 using DataAnalyzer.Models.LoadedConfigurations;
 using DataScraper;
+using DependencyInjectionUtilities;
 
 namespace DataAnalyzer.Models
 {
