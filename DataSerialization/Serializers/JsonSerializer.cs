@@ -2,7 +2,7 @@
 
 namespace DataSerialization.Serializers
 {
-    internal class JsonSerializer<T> : Serializer<T>
+    internal class JsonSerializer<T> : Serializer<T>, IJsonSerializer<T>
     {
         private readonly JsonSerializerSettings options = new JsonSerializerSettings
         {

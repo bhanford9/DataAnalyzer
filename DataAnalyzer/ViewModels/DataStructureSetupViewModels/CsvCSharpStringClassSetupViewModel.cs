@@ -15,15 +15,19 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         // optionally may want to move this into the parent as the interface
         private readonly ICsvCSharpStringClassSetupModel model;
+        private readonly IStatsModel statsModel;
 
         public CsvCSharpStringClassSetupViewModel(
             IConfigurationModel configurationModel,
             IMainModel mainModel,
             IStatsModel statsModel,
+            INotSupportedSetupViewModel defaultViewModel,
             ICsvCSharpStringClassSetupModel model)
-            : base(configurationModel, mainModel, statsModel, model)
+            : base(configurationModel, mainModel, model)
         {
             this.model = model;
+            this.statsModel = statsModel;
+            this.Default = defaultViewModel;
             this.model.PropertyChanged += this.ModelPropertyChanged;
         }
 
@@ -34,6 +38,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             get => this.className;
             set => this.NotifyPropertyChanged(ref this.className, value);
         }
+
+        public override IDataStructureSetupViewModel Default { get; }
 
         public override bool IsValidSetup(out string reason)
         {

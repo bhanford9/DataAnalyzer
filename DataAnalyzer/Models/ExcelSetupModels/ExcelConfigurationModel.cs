@@ -20,7 +20,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
         private const string DATA_TYPES_CONFIG_PATH_KEY = "DataTypeConfigs";
 
         // TODO --> several instances of classes being used in this class that should be their respective interface instead
-        private readonly SerializationService serializationService = new();
+        private readonly ISerializationService serializationService;
         private readonly IConfigurationModel configurationModel;
         private readonly IExcelDataTypeLibrary excelDataTypeLibrary;
         private ICollection<WorkbookModel> workbookModels = new List<WorkbookModel>();
@@ -35,9 +35,11 @@ namespace DataAnalyzer.Models.ExcelSetupModels
         private readonly ICollection<LastSavedConfiguration> lastSavedDataTypeConfigs = new List<LastSavedConfiguration>();
 
         public ExcelConfigurationModel(
+            ISerializationService serializationService,
             IConfigurationModel configurationModel,
             IExcelDataTypeLibrary excelDataTypeLibrary)
         {
+            this.serializationService = serializationService;
             this.configurationModel = configurationModel;
             this.excelDataTypeLibrary = excelDataTypeLibrary;
 

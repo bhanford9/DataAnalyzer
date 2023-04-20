@@ -4,7 +4,12 @@ namespace DataAnalyzer.Services
 {
     internal class SerializationService : ISerializationService
     {
-        private readonly SerializationExecutive serializer = new();
+        private readonly ISerializationExecutive serializer;
+
+        public SerializationService(ISerializationExecutive serializer)
+        {
+            this.serializer = serializer;
+        }
 
         public string JsonSerialize<T>(T data) => this.serializer.JsonSerialize(data);
 

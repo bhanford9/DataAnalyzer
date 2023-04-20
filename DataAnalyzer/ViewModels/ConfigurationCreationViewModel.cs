@@ -25,15 +25,12 @@ namespace DataAnalyzer.ViewModels
 
         public ConfigurationCreationViewModel(
             IConfigurationModel configModel,
-            IMainModel mainModel,
-            IStatsModel statsModel,
-            IStructureExecutiveCommissioner executiveCommissioner)
+            IStructureExecutiveCommissioner executiveCommissioner,
+            INotSupportedSetupViewModel defaultActiveView)
         {
             this.configModel = configModel;
             this.ExecutiveCommissioner = executiveCommissioner;
-
-            // TODO --> get this as resolved default
-            this.activeViewModel = new NotSupportedSetupViewModel(configModel, mainModel, statsModel, new(configModel));
+            this.activeViewModel = defaultActiveView;
 
             this.InitializeViewModel();
             this.createConfiguration = new BaseCommand(obj => this.DoCreateConfiguration());

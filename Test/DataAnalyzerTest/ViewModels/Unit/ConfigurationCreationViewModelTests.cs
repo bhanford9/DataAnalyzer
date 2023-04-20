@@ -17,12 +17,15 @@ namespace DataAnalyzerTest.ViewModels.Unit
         public ConfigurationCreationViewModelTests(ConfigurationCreationViewModelFixture shared)
         {
             this.shared = shared;
+            this.shared.MockMainModel = new();
             this.shared.MockConfigurationModel = new();
             this.shared.MockExecutiveCommissioner = new();
             this.shared.MockKey = new();
             this.shared.MockConfigurationModel
                 .Setup(x => x.ImportExportKey)
                 .Returns(this.shared.MockKey.Object);
+            this.shared.MockDefaultView = new();
+            this.shared.MockNotSupportedSetupModel = new();
         }
 
         [Fact]
@@ -32,13 +35,10 @@ namespace DataAnalyzerTest.ViewModels.Unit
 
             this.CreateViewModel();
 
-            Assert.IsType(
-                new NotSupportedSetupViewModel(
-                    this.shared.MockConfigurationModel.Object,
-                    this.shared.MockMainModel.Object,
-                    this.shared.MockStatsModel.Object,
-                    new(this.shared.MockConfigurationModel.Object)).GetType(),
-                this.shared.ViewModel.ActiveViewModel);
+            Assert.True(this.shared.ViewModel.ActiveViewModel
+                .GetType()
+                .IsAssignableTo(typeof(INotSupportedSetupViewModel)));
+
             Assert.Empty(this.shared.ViewModel.Configurations);
             this.shared.MockExecutiveCommissioner.Verify(x => x.GetInitializedViewModel(), Times.Never);
             this.shared.MockExecutiveCommissioner.Verify(x => x.GetConfigurationDirectory(), Times.Never);
@@ -211,8 +211,7 @@ namespace DataAnalyzerTest.ViewModels.Unit
         private void CreateViewModel() =>
             this.shared.ViewModel = new(
                 this.shared.MockConfigurationModel.Object,
-                this.shared.MockMainModel.Object,
-                this.shared.MockStatsModel.Object,
-                this.shared.MockExecutiveCommissioner.Object);
+                this.shared.MockExecutiveCommissioner.Object,
+                this.shared.MockDefaultView.Object);
     }
 }

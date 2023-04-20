@@ -1,6 +1,6 @@
 ﻿namespace DataSerialization.Serializers
 {
-    internal abstract class Serializer<T>
+    internal abstract class Serializer<T> : ISerializer<T>
     {
         public abstract T Deserialize(string content);
 

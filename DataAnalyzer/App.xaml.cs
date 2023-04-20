@@ -7,6 +7,7 @@ using DataAnalyzer.Services;
 using DataAnalyzer.StatConfigurations;
 using DataAnalyzer.ViewModels;
 using DataScraper;
+using DataSerialization;
 using System.Windows;
 
 namespace DataAnalyzer
@@ -21,6 +22,8 @@ namespace DataAnalyzer
 
             ContainerBuilder builder = new();
 
+            DataSerializationContainer.Register(builder);
+            
             DataScraperContainer.Register(builder);
 
             ApplicationConfigurationContainer.Register(builder);

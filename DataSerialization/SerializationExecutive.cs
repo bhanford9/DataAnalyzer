@@ -1,9 +1,8 @@
 ﻿using DataSerialization.Serializers;
-using System.IO;
 
 namespace DataSerialization
 {
-    public class SerializationExecutive
+    public class SerializationExecutive : ISerializationExecutive
     {
         public string JsonSerialize<T>(T data)
         {

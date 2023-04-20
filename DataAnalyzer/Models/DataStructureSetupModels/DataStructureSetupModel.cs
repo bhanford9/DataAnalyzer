@@ -10,11 +10,14 @@ namespace DataAnalyzer.Models.DataStructureSetupModels
     internal abstract class DataStructureSetupModel<TDataConfiguration> : BasePropertyChanged, IDataStructureSetupModel<TDataConfiguration>
         where TDataConfiguration : IDataConfiguration, new()
     {
-        protected readonly SerializationService serializationService = new();
+        protected readonly ISerializationService serializationService;
         protected readonly IConfigurationModel configurationModel;
 
-        protected DataStructureSetupModel(IConfigurationModel configurationModel)
+        protected DataStructureSetupModel(
+            ISerializationService serializationService,
+            IConfigurationModel configurationModel)
         {
+            this.serializationService = serializationService;
             this.configurationModel = configurationModel;
         }
 

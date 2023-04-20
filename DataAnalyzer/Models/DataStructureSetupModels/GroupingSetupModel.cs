@@ -1,12 +1,15 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+using DataAnalyzer.Services;
 using System;
 
 namespace DataAnalyzer.Models.DataStructureSetupModels
 {
     internal class GroupingSetupModel : DataStructureSetupModel<GroupingDataConfiguration>, IGroupingSetupModel
     {
-        public GroupingSetupModel(IConfigurationModel configurationModel)
-            : base(configurationModel)
+        public GroupingSetupModel(
+            ISerializationService serializationService,
+            IConfigurationModel configurationModel)
+            : base(serializationService, configurationModel)
         {
         }
 

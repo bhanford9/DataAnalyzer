@@ -19,12 +19,13 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         public GroupingSetupViewModel(
             IConfigurationModel configurationModel,
             IMainModel mainModel,
-            IStatsModel statsModel,
-            IStructureExecutiveCommissioner structureExecutiveCommissioner,
-            IGroupingSetupModel model)
-            : base(configurationModel, mainModel, statsModel, model)
+            INotSupportedSetupViewModel defaultViewModel,
+            IGroupingSetupModel model,
+            IStructureExecutiveCommissioner structureExecutiveCommissioner)
+            : base(configurationModel, mainModel, model)
         {
             this.structureExecutiveCommissioner = structureExecutiveCommissioner;
+            this.Default = defaultViewModel;
             this.model = model;
             this.model.PropertyChanged += this.ModelPropertyChanged;
         }
@@ -54,6 +55,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
                 }
             }
         }
+
+        public override IDataStructureSetupViewModel Default { get; }
 
         public override bool IsValidSetup(out string reason)
         {

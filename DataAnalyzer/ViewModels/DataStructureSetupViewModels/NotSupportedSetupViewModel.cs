@@ -10,15 +10,17 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         public NotSupportedSetupViewModel(
             IConfigurationModel configurationModel,
             IMainModel mainModel,
-            IStatsModel statsModel,
-            NotSupportedSetupModel model)
-            : base(configurationModel, mainModel, statsModel, model) { }
+            INotSupportedSetupModel model)
+            : base(configurationModel, mainModel, model) { }
+
+        public override IDataStructureSetupViewModel Default => this;
 
         public override bool IsValidSetup(out string reason)
         {
             reason = "Configuration not supported";
             return false;
         }
+
         public override void ClearConfiguration() { }
         public override void LoadViewModelFromConfiguration() { }
         public override void ApplyConfiguration() { }

@@ -17,9 +17,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         protected readonly IConfigurationModel configurationModel;
         protected readonly IMainModel mainModel;
-        protected readonly IStatsModel statsModel;
 
-        private IImportExportKey selectedDataType = Services.ImportExportKey.Default;
+        private IImportExportKey selectedDataType = ImportExportKey.Default;
         private string configurationName = string.Empty;
         private string configurationDirectory = string.Empty;
         private string selectedExportType = string.Empty;
@@ -28,12 +27,10 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         public DataStructureSetupViewModel(
             IConfigurationModel configurationModel,
             IMainModel mainModel,
-            IStatsModel statsModel,
             IDataStructureSetupModel<TDataConfiguration> dataStructureModel)
         {
             this.configurationModel = configurationModel;
             this.mainModel = mainModel;
-            this.statsModel = statsModel;
             this.dataStructureModel = dataStructureModel;
 
             this.dataStructureModel.PropertyChanged += this.DataStructureModelPropertyChanged;
@@ -41,12 +38,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             this.mainModel.PropertyChanged += this.MainModelPropertyChanged;
         }
 
-        // TODO --> this could be resolved instead
-        public IDataStructureSetupViewModel Default => new NotSupportedSetupViewModel(
-            this.configurationModel,
-            this.mainModel,
-            this.statsModel,
-            new(this.configurationModel));
+        public abstract IDataStructureSetupViewModel Default { get; }
 
         public bool IsDefault => this is NotSupportedSetupViewModel;
 

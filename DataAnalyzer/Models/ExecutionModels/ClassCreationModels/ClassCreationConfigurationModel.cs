@@ -19,7 +19,7 @@ namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels
     {
         private const string CLASS_CREATION_KEY = "ClassCreation";
 
-        private readonly SerializationService serializationService = new();
+        private readonly ISerializationService serializationService;
         private readonly IConfigurationModel configurationModel;
 
         private string configurationDirectory = string.Empty;
@@ -28,8 +28,11 @@ namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels
         // TODO --> inject
         private IClassProperties classProperties = new ClassProperties();
 
-        public ClassCreationConfigurationModel(IConfigurationModel configurationModel)
+        public ClassCreationConfigurationModel(
+            ISerializationService serializationService,
+            IConfigurationModel configurationModel)
         {
+            this.serializationService = serializationService;
             this.configurationModel = configurationModel;
             ConfigurationDirectory = Properties.Settings.Default.LastUsedClassCreationConfigurationDirectory;
         }
