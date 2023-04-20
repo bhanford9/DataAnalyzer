@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat
 {
-    public class FloatingSeparatorParensCellDataFormat : ICellDataFormat
+    public class FloatingSeparatorParensCellDataFormat : IFloatingSeparatorParensCellDataFormat
     {
         private readonly bool colorRed = false;
         private readonly int precisionCount = 1;

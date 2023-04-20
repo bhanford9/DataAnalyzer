@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat
 {
-    public class ScientificFloatingPrecisionCellDataFormat : ICellDataFormat
+    public class ScientificFloatingPrecisionCellDataFormat : IScientificFloatingPrecisionCellDataFormat
     {
         private readonly int precisionCount = 1;
 

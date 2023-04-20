@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat
 {
-    public class FloatingPrecisionWithSeparatorCellDataFormat : ICellDataFormat
+    public class FloatingPrecisionWithSeparatorCellDataFormat : IFloatingPrecisionWithSeparatorCellDataFormat
     {
         private readonly int precisionCount = 0;
 

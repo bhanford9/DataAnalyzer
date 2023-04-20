@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat
 {
-    public class NumericAsStringCellDataFormat : ICellDataFormat
+    public class NumericAsStringCellDataFormat : INumericAsStringCellDataFormat
     {
         public string Example => "42";
 

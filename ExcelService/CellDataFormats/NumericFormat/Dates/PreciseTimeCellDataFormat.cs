@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat.Dates
 {
-    public class PreciseTimeCellDataFormat : ICellDataFormat
+    public class PreciseTimeCellDataFormat : IPreciseTimeCellDataFormat
     {
         public string Example => "12:00:00";
 

@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat
 {
-    public class IntegerSeparatorParensCellDataFormat : ICellDataFormat
+    public class IntegerSeparatorParensCellDataFormat : IIntegerSeparatorParensCellDataFormat
     {
         private readonly bool colorRed = false;
 

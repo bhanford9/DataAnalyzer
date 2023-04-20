@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat
 {
-    public class ZeroPrependIntegerCellDataFormat : ICellDataFormat
+    public class ZeroPrependIntegerCellDataFormat : IZeroPrependIntegerCellDataFormat
     {
         private readonly int zerosPrependedCount = 0;
 

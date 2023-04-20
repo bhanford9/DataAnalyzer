@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat.Dates
 {
-    public class TimeMeridiemCellDataFormat : ICellDataFormat
+    public class TimeMeridiemCellDataFormat : ITimeMeridiemCellDataFormat
     {
         public string Example => "12:00 AM";
 

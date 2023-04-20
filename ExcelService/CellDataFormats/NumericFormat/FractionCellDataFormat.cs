@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat
 {
-    public class FractionCellDataFormat : ICellDataFormat
+    public class FractionCellDataFormat : IFractionCellDataFormat
     {
         private readonly int precisionCount = 1;
 

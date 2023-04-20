@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.CellDataFormats
 {
-    public class TextCellDataFormat : ICellDataFormat
+    public class TextCellDataFormat : ITextCellDataFormat
     {
         public string Example => "Text Data";
 

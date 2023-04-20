@@ -10,8 +10,8 @@ namespace ExcelService.Cells
         public Cell(
           object value,
           int columnIndex,
-          ICellDataFormat format = null,
-          IActionDefinitions cellActions = null)
+          ICellDataFormat? format = null,
+          IActionDefinitions? cellActions = null)
           : this(value, ColumnConversions.NumberToName(columnIndex + 1), format, cellActions)
         {
         }
@@ -19,8 +19,8 @@ namespace ExcelService.Cells
         public Cell(
           object value,
           string columnId,
-          ICellDataFormat format = null,
-          IActionDefinitions cellActions = null)
+          ICellDataFormat? format = null,
+          IActionDefinitions? cellActions = null)
         {
             this.Value = value;
             this.ColumnId = columnId;

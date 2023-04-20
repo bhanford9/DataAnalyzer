@@ -1,6 +1,6 @@
-﻿namespace ExcelService.CellDataFormats.Numeric.Dates
+﻿namespace ExcelService.CellDataFormats.NumericFormat.Dates
 {
-    public class DashDateCellDataFormat : ICellDataFormat
+    public class DashDateCellDataFormat : IDashDateCellDataFormat
     {
         public string Example => "1-Jan-00";
 

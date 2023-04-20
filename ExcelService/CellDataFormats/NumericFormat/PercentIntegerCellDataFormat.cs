@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat
 {
-    public class PercentIntegerCellDataFormat : ICellDataFormat
+    public class PercentIntegerCellDataFormat : IPercentIntegerCellDataFormat
     {
         public string Example => "23%";
 

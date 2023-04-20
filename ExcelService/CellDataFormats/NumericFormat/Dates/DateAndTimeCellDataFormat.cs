@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat.Dates
 {
-    public class DateAndTimeCellDataFormat : ICellDataFormat
+    public class DateAndTimeCellDataFormat : IDateAndTimeCellDataFormat
     {
         public string Example => "1/1/2001 12:00";
 

@@ -1,6 +1,6 @@
-﻿namespace ExcelService.CellDataFormats.Numeric.Dates
+﻿namespace ExcelService.CellDataFormats.NumericFormat.Dates
 {
-    public class DayOfWeekCellDataFormat : ICellDataFormat
+    public class DayOfWeekCellDataFormat : IDayOfWeekCellDataFormat
     {
         public string Example => "Monday";
 

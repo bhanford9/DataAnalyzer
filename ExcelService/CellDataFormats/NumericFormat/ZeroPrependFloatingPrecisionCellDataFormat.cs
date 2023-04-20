@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.CellDataFormats.NumericFormat
 {
-    public class ZeroPrependFloatingPrecisionCellDataFormat : ICellDataFormat
+    public class ZeroPrependFloatingPrecisionCellDataFormat : IZeroPrependFloatingPrecisionCellDataFormat
     {
         private readonly int zerosPrependedCount = 0;
         private readonly int precisionCount = 0;
