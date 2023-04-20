@@ -6,7 +6,7 @@ namespace DataSerialization.Serializers
     {
         private readonly JsonSerializerSettings options = new JsonSerializerSettings
         {
-            TypeNameHandling = TypeNameHandling.All,
+            TypeNameHandling = TypeNameHandling.Auto,
             Formatting = Formatting.Indented,
         };
 

@@ -3,8 +3,9 @@ using System;
 
 namespace DataScraper.DataScrapers.DataPropertySetters
 {
-    internal class DataBoolPropertySetter<TData> : DataPropertySetter<TData, bool>
-        where TData : IData, new()
+    internal interface IDataBoolPropertySetter : IDataPropertySetter { }
+    internal class DataBoolPropertySetter<TData> : DataPropertySetter<TData, bool>, IDataBoolPropertySetter
+        where TData : IData
     {
         public DataBoolPropertySetter(Action<TData, bool> todo) : base(todo) { }
 

@@ -4,7 +4,7 @@ using System;
 namespace DataScraper.DataScrapers.DataPropertySetters
 {
     internal abstract class DataPropertySetter<TData, TProperty> : IDataPropertySetter
-        where TData : IData, new()
+        where TData : IData
     {
         private Action<TData, TProperty> setProperty;
 

@@ -8,7 +8,7 @@ namespace DataAnalyzer.Services
 {
     internal static class ImportKeyExtensions
     {
-        public static T GetData<T>(this FlavoredCategorizedDataLibrary<T> library, ImportKey key)
+        public static T GetData<T>(this IFlavoredCategorizedDataLibrary<T> library, ImportKey key)
         {
             return library[key.Type][key.Category][key.Flavor];
         }
@@ -64,6 +64,9 @@ namespace DataAnalyzer.Services
             this.flavor = flavor;
             this.SetName();
         }
+
+        public (IImportType Import, IScraperCategory Category, IScraperFlavor Flavor) AsTuple() =>
+            (this.Type, this.Category, this.Flavor);
 
         private void SetName()
         {

@@ -7,26 +7,29 @@ using DataScraper.DataScrapers.ScraperFlavors.QueryableFlavors;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.TimeDataScrapers;
+using DependencyInjectionUtilities;
 
 namespace DataScraper.DataScrapers
 {
-    public class ScraperLibrary : FlavoredCategorizedDataLibrary<IDataScraper>
+    public class ScraperLibrary : FlavoredCategorizedDataLibrary<IDataScraper>, IScraperLibrary
     {
         public ScraperLibrary()
         {
-            FileImportType fileType = new FileImportType();
+            IFileImportType fileType = Get<IFileImportType>(); // new FileImportType();
             //DatabaseImportType databaseType = new DatabaseImportType();
             //HttpImportType httpType = new HttpImportType();
 
             this[fileType] = new Dictionary<IScraperCategory, IDictionary<IScraperFlavor, IDataScraper>>();
-            this.InitializeCategory(fileType, new QueryableScraperCategory())
-                .AddFlavoredData(new QueryableStandardScraperFlavor(), new QueryableDataScraper());
-            this.InitializeCategory(fileType, new CsvNamesScraperCategory())
-                .AddFlavoredData(new CsvNamesStandardScraperFlavor(), new CsvNamesScraper());
-            this.InitializeCategory(fileType, new CsvScraperCategory())
-                .AddFlavoredData(new CsvTestScraperFlavor(), new CsvTestScraper());
+            this.InitializeCategory(fileType, Get<IQueryableScraperCategory>())
+                .AddFlavoredData(Get<IQueryableStandardScraperFlavor>(), Get<IQueryableDataScraper>());
+            this.InitializeCategory(fileType, Get<ICsvNamesScraperCategory>())
+                .AddFlavoredData(Get<ICsvNamesStandardScraperFlavor>(), Get<ICsvNamesScraper>());
+            this.InitializeCategory(fileType, Get<ICsvScraperCategory>())
+                .AddFlavoredData(Get<ICsvTestScraperFlavor>(), Get<ICsvTestScraper>());
         }
 
         public override string Name => "Scraper";
+
+        private static T Get<T>() => Resolver.Resolve<T>();
     }
 }

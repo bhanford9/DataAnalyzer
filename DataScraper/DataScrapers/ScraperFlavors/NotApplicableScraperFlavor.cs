@@ -2,7 +2,8 @@
 
 namespace DataScraper.DataScrapers.ScraperFlavors
 {
-    public class NotApplicableScraperFlavor : ScraperFlavor<CsvTestScraperFlavor>
+    public interface INotApplicableScraperFlavor : IScraperFlavor { }
+    public class NotApplicableScraperFlavor : ScraperFlavor<CsvTestScraperFlavor>, INotApplicableScraperFlavor
     {
         public override string Name => "Not Applicable";
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using DataAnalyzer.DataImport.DataConverters;
 using DataAnalyzer.DataImport.DataObjects;
 using DataScraper;
@@ -12,14 +13,18 @@ using DataScraper.DataSources;
 
 namespace DataAnalyzer.Services
 {
-    internal class ScraperService
+    internal class ScraperService : IScraperService
     {
-        // TODO --> get these injected and register as singleton
-        private static readonly ScraperExecutive scraperExecutive = new();
-        private static readonly DataConverterExecutive dataConverterExecutive = new();
-        private static readonly ScraperLibrary scraperLibrary;
+        private readonly IScraperExecutive scraperExecutive;
+        private readonly IDataConverterExecutive dataConverterExecutive;
+        private readonly IScraperLibrary scraperLibrary;
 
-        static ScraperService() => scraperLibrary = scraperExecutive.Scrapers;
+        public ScraperService(IScraperExecutive scraperExecutive, IDataConverterExecutive dataConverterExecutive)
+        {
+            this.scraperExecutive = scraperExecutive;
+            this.dataConverterExecutive = dataConverterExecutive;
+            this.scraperLibrary = this.scraperExecutive.Scrapers;
+        }
 
         public IDataScraper GetScraper(ImportKey importKey) => scraperLibrary.GetData(importKey);
 

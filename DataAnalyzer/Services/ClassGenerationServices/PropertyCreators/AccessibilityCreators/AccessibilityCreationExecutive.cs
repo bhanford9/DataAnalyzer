@@ -5,14 +5,7 @@ namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.Accessi
 {
     internal class AccessibilityCreationExecutive : IAccessibilityCreationExecutive
     {
-        private readonly IReadOnlyDictionary<string, IAccessibilityCreator> creators = new Dictionary<string, IAccessibilityCreator>()
-        {
-            { ClassCreationConstants.READ_ONLY, new ReadOnlyCreator() },
-            { ClassCreationConstants.READ_INIT, new ReadInitCreator() },
-            { ClassCreationConstants.READ_PRIVATE_WRITE, new ReadPrivateWriteCreator() },
-            { ClassCreationConstants.READ_PROTECTED_WRITE, new ReadProtectedWriteCreator() },
-            { ClassCreationConstants.READ_WRITE, new ReadWriteCreator() },
-        };
+        private readonly IReadOnlyDictionary<string, IAccessibilityCreator> creators;
 
         public AccessibilityCreationExecutive(IReadOnlyDictionary<string, IAccessibilityCreator> creators)
         {

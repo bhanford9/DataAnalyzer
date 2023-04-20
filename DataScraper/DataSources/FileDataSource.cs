@@ -1,6 +1,6 @@
 ﻿namespace DataScraper.DataSources
 {
-    public class FileDataSource : DataSource
+    public class FileDataSource : DataSource, IFileDataSource
     {
         public FileDataSource(string filePath)
         {

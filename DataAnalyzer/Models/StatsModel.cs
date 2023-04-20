@@ -15,7 +15,7 @@ namespace DataAnalyzer.Models
     internal class StatsModel : BasePropertyChanged, IStatsModel
     {
         private readonly IConfigurationModel configurationModel;
-        private readonly ScraperService scraperService = new();
+        private readonly IScraperService scraperService;
         private HeirarchalStats heirarchalStats;
 
         private IDataConfiguration activeConfiguration = new NotSupportedDataConfiguration();
@@ -25,9 +25,11 @@ namespace DataAnalyzer.Models
 
         public StatsModel(
             IConfigurationModel configModel,
+            IScraperService scraperService,
             IExecutiveUtilitiesRepository executiveUtilities)
         {
             this.configurationModel = configModel;
+            this.scraperService = scraperService;
             this.executiveUtilities = executiveUtilities;
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
         }

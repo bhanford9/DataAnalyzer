@@ -3,8 +3,9 @@ using System;
 
 namespace DataScraper.DataScrapers.DataPropertySetters
 {
-    internal class DataDoublePropertySetter<TData> : DataPropertySetter<TData, double>
-        where TData : IData, new()
+    internal interface IDataDoublePropertySetter : IDataPropertySetter { }
+    internal class DataDoublePropertySetter<TData> : DataPropertySetter<TData, double>, IDataDoublePropertySetter
+        where TData : IData
     {
         public DataDoublePropertySetter(Action<TData, double> todo) : base(todo) { }
 

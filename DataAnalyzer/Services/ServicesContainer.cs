@@ -23,6 +23,7 @@ namespace DataAnalyzer.Services
                     { ClassCreationConstants.READ_INIT, new ReadInitCreator() },
                     { ClassCreationConstants.READ_PRIVATE_WRITE, new ReadPrivateWriteCreator() },
                     { ClassCreationConstants.READ_PROTECTED_WRITE, new ReadProtectedWriteCreator() },
+                    { ClassCreationConstants.READ_WRITE, new ReadWriteCreator() },
                 }));
             builder.RegisterTypeAncestors<IAccessibilityCreator, IReadInitCreator, ReadInitCreator>();
             builder.RegisterTypeAncestors<IAccessibilityCreator, IReadOnlyCreator, ReadOnlyCreator>();
@@ -75,7 +76,8 @@ namespace DataAnalyzer.Services
             // Services
             builder.RegisterType<IImportExportKey, ImportExportKey>();
             builder.RegisterType<IImportKey, ImportKey>();
-            builder.RegisterType<ISerializationService, SerializationService>();
+            builder.RegisterTypeInstance<IScraperService, ScraperService>();
+            builder.RegisterTypeInstance<ISerializationService, SerializationService>();
         }
     }
 }

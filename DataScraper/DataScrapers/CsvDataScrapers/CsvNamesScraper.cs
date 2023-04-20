@@ -6,7 +6,7 @@ using System.IO;
 
 namespace DataScraper.DataScrapers.CsvDataScrapers
 {
-    public class CsvNamesScraper : IDataScraper
+    public class CsvNamesScraper : ICsvNamesScraper
     {
         public string Name => "CSV Names Scraper";
 

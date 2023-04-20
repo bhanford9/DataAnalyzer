@@ -6,6 +6,7 @@ using DataAnalyzer.Models;
 using DataAnalyzer.Services;
 using DataAnalyzer.StatConfigurations;
 using DataAnalyzer.ViewModels;
+using DataScraper;
 using System.Windows;
 
 namespace DataAnalyzer
@@ -20,6 +21,8 @@ namespace DataAnalyzer
 
             ContainerBuilder builder = new();
 
+            DataScraperContainer.Register(builder);
+
             ApplicationConfigurationContainer.Register(builder);
             CommonContainer.Register(builder);
             ModelsContainer.Register(builder);
@@ -32,6 +35,9 @@ namespace DataAnalyzer
 
             // Give access to XAML for DI
             Resolver.Container = container;
+
+            // Give solution wide access to DI Resolution
+            DependencyInjectionUtilities.Resolver.Container = container;
 
             MainWindow mainWindow = new(container.Resolve<IMainViewModel>());
             mainWindow.Show();

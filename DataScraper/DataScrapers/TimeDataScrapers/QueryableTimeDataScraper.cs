@@ -7,7 +7,7 @@ using DataScraper.DataSources;
 
 namespace DataScraper.DataScrapers.TimeDataScrapers
 {
-    public class QueryableDataScraper : IDataScraper
+    public class QueryableDataScraper : IQueryableDataScraper
     {
         private const string STD_LIB_NAME = "Standard Library";
         private const string QUERYABLE_LIB_NAME = "Queryable Library";

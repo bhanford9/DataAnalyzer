@@ -5,8 +5,10 @@ using System.Collections.Generic;
 namespace DataScraper.DataScrapers.CsvDataScrapers
 {
     // TODO --> make this a generic CSV scraper such that children only need to map column number to property
-    public class CsvTestScraper : CsvIndexedScraper<CsvTestData>, IDataScraper
+    public class CsvTestScraper : CsvIndexedScraper<CsvTestData>, ICsvTestScraper
     {
+        public CsvTestScraper() : base(() => new CsvTestData()) { }
+
         public override string Name => "Test CSV Scraper";
 
         public override List<IDataPropertySetter> DataSetters => new()

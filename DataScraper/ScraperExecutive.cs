@@ -9,9 +9,14 @@ using System.Collections.Generic;
 
 namespace DataScraper
 {
-    public class ScraperExecutive
-    {     
-        public ScraperLibrary Scrapers { get; } = new();
+    public class ScraperExecutive : IScraperExecutive
+    {
+        public ScraperExecutive(IScraperLibrary scraperLibrary)
+        {
+            this.Scrapers = scraperLibrary;
+        }
+
+        public IScraperLibrary Scrapers { get; }
 
         public ICollection<IData> ScrapeOutData(
             IDataSource source,

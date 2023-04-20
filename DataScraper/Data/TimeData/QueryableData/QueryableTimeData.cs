@@ -1,6 +1,6 @@
 ﻿namespace DataScraper.Data.TimeData.QueryableData
 {
-    public class QueryableTimeData : TimeData
+    public class QueryableTimeData : TimeData, IQueryableTimeData
     {
         public CategoryType CategoryType { get; set; } = CategoryType.Other;
 
