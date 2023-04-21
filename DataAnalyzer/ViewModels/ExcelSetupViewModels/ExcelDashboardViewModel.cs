@@ -18,6 +18,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     {
         private readonly IExcelSetupModel excelSetupModel;
         private readonly IStructureExecutiveCommissioner executiveCommissioner;
+        private readonly IExcelExecutive excelExecutive;
 
         private readonly BaseCommand startNewConfiguration;
         private readonly BaseCommand saveConfiguration;
@@ -29,7 +30,8 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 
         public ExcelDashboardViewModel(
             IExcelSetupModel excelSetupModel,
-            IStructureExecutiveCommissioner executiveCommissioner)
+            IStructureExecutiveCommissioner executiveCommissioner,
+            IExcelExecutive excelExecutive)
         {
             this.excelSetupModel = excelSetupModel;
             this.executiveCommissioner = executiveCommissioner;
@@ -40,6 +42,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
             this.executeExcelExport = new BaseCommand(obj => this.DoExecuteExcelExport());
 
             this.excelSetupModel.ExcelConfiguration.PropertyChanged += this.ExcelConfigurationPropertyChanged;
+            this.excelExecutive = excelExecutive;
         }
 
         public ObservableCollection<IWorkbookConfigListItemViewModel> SavedWorkbookConfigs { get; } = new();
@@ -95,10 +98,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 
         private void DoExecuteExcelExport()
         {
-            ExcelExecutive excelExecutive = new ExcelExecutive();
             // This apears to have not converted things correctly
             this.excelSetupModel.ApplyTypeParametersToConfig();
-            excelExecutive.GenerateWorkbooks(
+            this.excelExecutive.GenerateWorkbooks(
               this.excelSetupModel.ExcelConfiguration.WorkbookModels
                 .Select(x => ExcelWorkbookConverter.WorkbookModelToExcelWorkbook(x))
                 .ToList());

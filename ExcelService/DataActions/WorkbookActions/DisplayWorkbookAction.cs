@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace ExcelService.DataActions.WorkbookActions
 {
-    public class DisplayWorkbookAction : DataAction
+    public class DisplayWorkbookAction : DataAction, IDisplayWorkbookAction
     {
         public override string GetName()
         {

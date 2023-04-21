@@ -1,8 +1,6 @@
 ﻿using ExcelService.Cells;
 using ExcelService.DataActions.ActionParameters;
 using ExcelService.Rows;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ExcelService.DataClusters
 {

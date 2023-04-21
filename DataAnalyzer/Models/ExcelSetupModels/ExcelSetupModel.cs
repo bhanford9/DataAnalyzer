@@ -17,6 +17,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
     {
         private readonly IExcelDataTypeLibrary excelDataTypeLibrary;
         private readonly IStatsModel statsModel;
+        private readonly IActionLibrary actionLibrary;
 
         public const string DATA_TYPE_UPDATE_KEY = "DATA_TYPE_UPDATE-";
 
@@ -25,13 +26,13 @@ namespace DataAnalyzer.Models.ExcelSetupModels
         public ExcelSetupModel(
             IStatsModel statsModel,
             IExcelConfigurationModel excelConfigModel,
-            IExcelDataTypeLibrary excelDataTypeLibrary)
+            IExcelDataTypeLibrary excelDataTypeLibrary,
+            IActionLibrary actionLibrary)
         {
             this.statsModel = statsModel;
             this.ExcelConfiguration = excelConfigModel;
             this.excelDataTypeLibrary = excelDataTypeLibrary;
-
-            ActionLibrary actionLibrary = new ActionLibrary();
+            this.actionLibrary = actionLibrary;
 
             actionLibrary.GetWorkbookActionInfo()
               .Select(x => ExcelActionConverter.FromExcelActionInfo(x, IExcelEntitySpecification.Workbook))

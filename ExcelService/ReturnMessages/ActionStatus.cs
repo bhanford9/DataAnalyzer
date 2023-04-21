@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace ExcelService.ReturnMessages
+﻿namespace ExcelService.ReturnMessages
 {
-    public class ActionStatus
+    public class ActionStatus : IActionStatus
     {
         private string message = "Success";
 

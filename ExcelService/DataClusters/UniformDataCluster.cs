@@ -1,11 +1,9 @@
 ﻿using ExcelService.DataActions.ActionParameters;
 using ExcelService.Rows;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ExcelService.DataClusters
 {
-    public class UniformDataCluster : DataCluster
+    public class UniformDataCluster : DataCluster, IUniformDataCluster
     {
         public UniformDataCluster(
           ICollection<IRow> rows,

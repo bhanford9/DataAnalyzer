@@ -8,9 +8,9 @@
     {
         public int NthColumn { get; set; }
 
-        public string ColumnAddress { get; set; }
+        public string ColumnAddress { get; set; } = string.Empty;
 
-        public string ColumnHeader { get; set; }
+        public string ColumnHeader { get; set; } = string.Empty;
 
         public bool AllColumns { get; set; } = true;
 

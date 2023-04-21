@@ -5,7 +5,7 @@ namespace DependencyInjectionUtilities
 {
     public static class ContainerExtensions
     {
-        public static IRegistrationBuilder<TClass, SimpleActivatorData, SingleRegistrationStyle> Register<TInterface, TClass>(
+        public static IRegistrationBuilder<TClass, SimpleActivatorData, SingleRegistrationStyle> RegisterAs<TInterface, TClass>(
             this ContainerBuilder builder,
             Func<IComponentContext, TClass> creator)
             where TClass : TInterface
@@ -38,11 +38,11 @@ namespace DependencyInjectionUtilities
             this ContainerBuilder builder,
             Func<IComponentContext, TClass> creator)
             where TClass : TInterface
-            => Register<TInterface, TClass>(builder, creator).SingleInstance();
+            => RegisterAs<TInterface, TClass>(builder, creator).SingleInstance();
 
         public static IRegistrationBuilder<TClass, SimpleActivatorData, SingleRegistrationStyle> RegisterDefaultInstance<TInterface, TClass>(
             this ContainerBuilder builder)
             where TClass : class, TInterface, new()
-            => Register<TInterface, TClass>(builder, x => new TClass()).SingleInstance();
+            => RegisterAs<TInterface, TClass>(builder, x => new TClass()).SingleInstance();
     }
 }

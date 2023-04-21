@@ -1,6 +1,5 @@
 ﻿using ClosedXML.Excel;
 using ExcelService.Utilities;
-using System;
 
 namespace ExcelService.DataActions.SharedActions
 {
@@ -34,7 +33,7 @@ namespace ExcelService.DataActions.SharedActions
             }
             else
             {
-                IXLRangeColumn column = null;
+                IXLRangeColumn? column = default;
 
                 if (spec.ColumnSpecification.UseNthColumn)
                 {
@@ -50,7 +49,7 @@ namespace ExcelService.DataActions.SharedActions
                     column = range.Column(spec.ColumnSpecification.ColumnHeader);
                 }
 
-                act(column.Cell(spec.RowSpecification.NthRow).CurrentRegion);
+                act(column!.Cell(spec.RowSpecification.NthRow).CurrentRegion);
             }
         }
     }

@@ -1,8 +1,6 @@
 ﻿using ExcelService.DataActions.ActionParameters;
 using ExcelService.Utilities;
 using ExcelService.Worksheets;
-using System.Collections.Generic;
-using System.IO;
 
 namespace ExcelService.Workbooks
 {
@@ -10,7 +8,7 @@ namespace ExcelService.Workbooks
     {
         private Workbook() { }
 
-        internal Workbook(
+        public Workbook(
           string filePath,
           ICollection<IWorksheet> worksheets,
           IActionDefinitions workbookActions = null)

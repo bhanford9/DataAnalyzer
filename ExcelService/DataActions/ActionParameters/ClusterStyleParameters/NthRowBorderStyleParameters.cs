@@ -2,7 +2,7 @@
 
 namespace ExcelService.DataActions.ActionParameters.ClusterStyleParameters
 {
-    public class NthRowBorderStyleParameters : BorderStyleParameters
+    public class NthRowBorderStyleParameters : BorderStyleParameters, INthRowBorderStyleParameters
     {
         public override string Name => "Nth Row Border Style";
 

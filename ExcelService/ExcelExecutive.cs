@@ -7,15 +7,17 @@ using ExcelService.DataClusters;
 using ExcelService.Rows;
 using ExcelService.Workbooks;
 using ExcelService.Worksheets;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
 namespace ExcelService
 {
-    public class ExcelExecutive
+    public class ExcelExecutive : IExcelExecutive
     {
-        private readonly ActionExecutive actionExecutive = new ActionExecutive();
+        private readonly IActionExecutive actionExecutive;
+
+        public ExcelExecutive(IActionExecutive actionExecutive)
+        {
+            this.actionExecutive = actionExecutive;
+        }
 
         public void GenerateWorkbook(IWorkbook workbook)
         {

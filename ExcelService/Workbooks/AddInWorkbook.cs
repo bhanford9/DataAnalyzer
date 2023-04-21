@@ -1,11 +1,10 @@
 ﻿using ExcelService.DataActions.ActionParameters;
 using ExcelService.Utilities;
 using ExcelService.Worksheets;
-using System.Collections.Generic;
 
 namespace ExcelService.Workbooks
 {
-    class AddInWorkbook : Workbook
+    public class AddInWorkbook : Workbook, IAddInWorkbook
     {
         public AddInWorkbook(
           string filePath,

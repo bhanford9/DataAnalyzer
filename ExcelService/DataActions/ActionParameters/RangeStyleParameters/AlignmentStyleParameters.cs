@@ -3,7 +3,7 @@ using ExcelService.Utilities;
 
 namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
 {
-    public class AlignmentStyleParameters : ActionParameters
+    public class AlignmentStyleParameters : ActionParameters, IAlignmentStyleParameters
     {
         public override string Name => "Alignments";
 

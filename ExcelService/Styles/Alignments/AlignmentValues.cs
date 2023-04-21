@@ -2,7 +2,7 @@
 
 namespace ExcelService.Styles.Alignments
 {
-    public class AlignmentValues
+    public class AlignmentValues : IAlignmentValues
     {
         private HorizontalAlignment horizontalAlignment = HorizontalAlignment.Left;
         private VerticalAlignment verticalAlignment = VerticalAlignment.Center;

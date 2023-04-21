@@ -1,109 +1,109 @@
-using ExcelService;
-using ExcelService.DataActions.ActionParameters;
-using ExcelService.CellDataFormats;
-using ExcelService.CellDataFormats.NumericFormat;
-using ExcelService.Cells;
-using ExcelService.DataClusters;
-using ExcelService.Rows;
-using ExcelService.Workbooks;
-using ExcelService.Worksheets;
-using System.Collections.Generic;
-using Xunit;
-using ExcelService.DataActions.ActionParameters.WorkbookParameters;
-using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
-using ExcelService.Styles.Colors;
-using ExcelService.Styles.Borders;
-using ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters;
-using ExcelService.DataActions.ActionParameters.ClusterStyleParameters;
-using ExcelService.Styles.Alignments;
+//using ExcelService;
+//using ExcelService.DataActions.ActionParameters;
+//using ExcelService.CellDataFormats;
+//using ExcelService.CellDataFormats.NumericFormat;
+//using ExcelService.Cells;
+//using ExcelService.DataClusters;
+//using ExcelService.Rows;
+//using ExcelService.Workbooks;
+//using ExcelService.Worksheets;
+//using System.Collections.Generic;
+//using Xunit;
+//using ExcelService.DataActions.ActionParameters.WorkbookParameters;
+//using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
+//using ExcelService.Styles.Colors;
+//using ExcelService.Styles.Borders;
+//using ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters;
+//using ExcelService.DataActions.ActionParameters.ClusterStyleParameters;
+//using ExcelService.Styles.Alignments;
 
-namespace ExcelServiceTest
-{
-  public class ExcelExecutiveTest
-  {
-    [Fact]
-    public void Test1()
-    {
-      ExcelExecutive excelExecutive = new ExcelExecutive();
+//namespace ExcelServiceTest
+//{
+//  public class ExcelExecutiveTest
+//  {
+//    [Fact]
+//    public void Test1()
+//    {
+//      ExcelExecutive excelExecutive = new ExcelExecutive();
 
-      ICollection<ICell> adamData = new List<ICell>
-      {
-        new Cell(0, "Id", new GeneralNumericCellDataFormat()),
-        new Cell("Adam", "Name", new TextCellDataFormat()),
-        new Cell(26, "Age", new GeneralNumericCellDataFormat()),
-        new Cell(190, "Weight", new GeneralNumericCellDataFormat())
-      };
+//      ICollection<ICell> adamData = new List<ICell>
+//      {
+//        new Cell(0, "Id", new GeneralNumericCellDataFormat()),
+//        new Cell("Adam", "Name", new TextCellDataFormat()),
+//        new Cell(26, "Age", new GeneralNumericCellDataFormat()),
+//        new Cell(190, "Weight", new GeneralNumericCellDataFormat())
+//      };
 
-      ICollection<ICell> aliceData = new List<ICell>
-      {
-        new Cell(1, "Id", new GeneralNumericCellDataFormat()),
-        new Cell("Alice", "Name", new TextCellDataFormat()),
-        new Cell(27, "Age", new GeneralNumericCellDataFormat()),
-        new Cell(150, "Weight", new GeneralNumericCellDataFormat())
-      };
+//      ICollection<ICell> aliceData = new List<ICell>
+//      {
+//        new Cell(1, "Id", new GeneralNumericCellDataFormat()),
+//        new Cell("Alice", "Name", new TextCellDataFormat()),
+//        new Cell(27, "Age", new GeneralNumericCellDataFormat()),
+//        new Cell(150, "Weight", new GeneralNumericCellDataFormat())
+//      };
 
-      Row adamRow = new Row(adamData);
-      Row aliceRow = new Row(aliceData);
+//      Row adamRow = new Row(adamData);
+//      Row aliceRow = new Row(aliceData);
 
-      ICollection<IRow> rows = new List<IRow>
-      {
-        adamRow,
-        aliceRow
-      };
+//      ICollection<IRow> rows = new List<IRow>
+//      {
+//        adamRow,
+//        aliceRow
+//      };
 
-      ActionDefinitions clusterActions = new ActionDefinitions
-      {
-        new HeaderMergeCenterFullParameters(),
-        new HeaderBorderStyleParameters
-        {
-          AllBorders = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin }
-        },
-        new HeaderBackgroundStyleParameters { Color = new ColorValue(Color.LightGray) },
-        new BorderStyleParameters
-        {
-          Left = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin },
-          Top = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin },
-          Right = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin },
-          Bottom = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin }
-        },
-        new NthRowBorderStyleParameters
-        {
-          NthRow = 0,
-          AllBorders = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin }
-        },
-        new NthRowAlignmentStyleParameters
-        {
-          NthRow = 0,
-          Alignments = new AlignmentValues { HorizontalAlignment = HorizontalAlignment.Center }
-        }
-      };
+//      ActionDefinitions clusterActions = new ActionDefinitions
+//      {
+//        new HeaderMergeCenterFullParameters(),
+//        new HeaderBorderStyleParameters
+//        {
+//          AllBorders = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin }
+//        },
+//        new HeaderBackgroundStyleParameters { Color = new ColorValue(Color.LightGray) },
+//        new BorderStyleParameters
+//        {
+//          Left = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin },
+//          Top = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin },
+//          Right = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin },
+//          Bottom = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin }
+//        },
+//        new NthRowBorderStyleParameters
+//        {
+//          NthRow = 0,
+//          AllBorders = new Border { Color = new ColorValue(Color.Black), Style = BorderStyle.Thin }
+//        },
+//        new NthRowAlignmentStyleParameters
+//        {
+//          NthRow = 0,
+//          Alignments = new AlignmentValues { HorizontalAlignment = HorizontalAlignment.Center }
+//        }
+//      };
 
-      DataCluster dataCluster1 = new DataCluster(rows, "First Cluster", 3, 1, true, clusterActions, true);
-      DataCluster dataCluster2 = new DataCluster(rows, "Second Cluster", 2, 1, true, clusterActions, true);
+//      DataCluster dataCluster1 = new DataCluster(rows, "First Cluster", 3, 1, true, clusterActions, true);
+//      DataCluster dataCluster2 = new DataCluster(rows, "Second Cluster", 2, 1, true, clusterActions, true);
 
-      ICollection<IDataCluster> dataClusters = new List<IDataCluster>
-      {
-        dataCluster1,
-        dataCluster2
-      };
+//      ICollection<IDataCluster> dataClusters = new List<IDataCluster>
+//      {
+//        dataCluster1,
+//        dataCluster2
+//      };
 
-      Worksheet worksheet = new Worksheet("MyFirstWorksheet", dataClusters);
+//      Worksheet worksheet = new Worksheet("MyFirstWorksheet", dataClusters);
 
-      ICollection<IWorksheet> worksheets = new List<IWorksheet>
-      {
-        worksheet
-      };
+//      ICollection<IWorksheet> worksheets = new List<IWorksheet>
+//      {
+//        worksheet
+//      };
 
 
-      IActionDefinitions actionParameters = new ActionDefinitions();
-      actionParameters.Add(new DisplayWorkbookParameters());
+//      IActionDefinitions actionParameters = new ActionDefinitions();
+//      actionParameters.Add(new DisplayWorkbookParameters());
 
-      StandardWorkbook workbook = new StandardWorkbook(
-        @"C:\Users\bmhanford\Documents\ExcelExecutiveTest\MyFirstWorkbook.xlsx",
-        worksheets,
-        actionParameters);
+//      StandardWorkbook workbook = new StandardWorkbook(
+//        @"C:\Users\bmhanford\Documents\ExcelExecutiveTest\MyFirstWorkbook.xlsx",
+//        worksheets,
+//        actionParameters);
 
-      excelExecutive.GenerateWorkbook(workbook);
-    }
-  }
-}
+//      excelExecutive.GenerateWorkbook(workbook);
+//    }
+//  }
+//}

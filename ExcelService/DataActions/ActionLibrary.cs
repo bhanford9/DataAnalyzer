@@ -1,157 +1,90 @@
 ﻿using ExcelService.DataActions.ActionParameters;
-using ExcelService.DataActions.ClusterActions;
-using ExcelService.DataActions.SharedActions;
-using ExcelService.DataActions.WorkbookActions;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ExcelService.DataActions
 {
-    public class ActionLibrary
+    public class ActionLibrary : IInternalActionLibrary
     {
-        private readonly ICollection<IDataAction> workbookActions = new HashSet<IDataAction>();
-        private readonly ICollection<IDataAction> worksheetActions = new HashSet<IDataAction>();
-        private readonly ICollection<IDataAction> dataClusterActions = new HashSet<IDataAction>();
-        private readonly ICollection<IDataAction> rowActions = new HashSet<IDataAction>();
-        private readonly ICollection<IDataAction> cellActions = new HashSet<IDataAction>();
+        private readonly IReadOnlyCollection<IDataAction> workbookActions;
+        private readonly IReadOnlyCollection<IDataAction> worksheetActions;
+        private readonly IReadOnlyCollection<IDataAction> dataClusterActions;
+        private readonly IReadOnlyCollection<IDataAction> rowActions;
+        private readonly IReadOnlyCollection<IDataAction> cellActions;
 
-        public ActionLibrary()
+        public ActionLibrary(
+            IReadOnlyCollection<IDataAction> workbookActions,
+            IReadOnlyCollection<IDataAction> worksheetActions,
+            IReadOnlyCollection<IDataAction> dataClusterActions,
+            IReadOnlyCollection<IDataAction> rowActions,
+            IReadOnlyCollection<IDataAction> cellActions)
         {
-            this.RegisterWorkbookActions();
-            this.RegisterWorksheetActions();
-            this.RegisterDataClusterActions();
-            this.RegisterRowActions();
-            this.RegisterCellActions();
+            this.workbookActions = workbookActions;
+            this.worksheetActions = worksheetActions;
+            this.dataClusterActions = dataClusterActions;
+            this.rowActions = rowActions;
+            this.cellActions = cellActions;
         }
 
-        public ICollection<string> GetWorkbookActionNames()
-        {
-            return this.GetActionNames(this.workbookActions);
-        }
+        public ICollection<string> GetWorkbookActionNames() => this.GetActionNames(this.workbookActions);
 
-        public ICollection<string> GetWorksheetActionNames()
-        {
-            return this.GetActionNames(this.worksheetActions);
-        }
+        public ICollection<string> GetWorksheetActionNames() => this.GetActionNames(this.worksheetActions);
 
-        public ICollection<string> GetDataClusterActionNames()
-        {
-            return this.GetActionNames(this.dataClusterActions);
-        }
+        public ICollection<string> GetDataClusterActionNames() => this.GetActionNames(this.dataClusterActions);
 
-        public ICollection<string> GetRowActionNames()
-        {
-            return this.GetActionNames(this.rowActions);
-        }
+        public ICollection<string> GetRowActionNames() => this.GetActionNames(this.rowActions);
 
-        public ICollection<string> GetCellActionNames()
-        {
-            return this.GetActionNames(this.cellActions);
-        }
+        public ICollection<string> GetCellActionNames() => this.GetActionNames(this.cellActions);
 
-        public ICollection<string> GetWorkbookActionDescriptions()
-        {
-            return this.GetActionDescriptions(this.workbookActions);
-        }
+        public ICollection<string> GetWorkbookActionDescriptions() =>
+            this.GetActionDescriptions(this.workbookActions);
 
-        public ICollection<string> GetWorksheetActionDescriptions()
-        {
-            return this.GetActionDescriptions(this.worksheetActions);
-        }
+        public ICollection<string> GetWorksheetActionDescriptions() =>
+            this.GetActionDescriptions(this.worksheetActions);
 
-        public ICollection<string> GetDataClusterActionDescriptions()
-        {
-            return this.GetActionDescriptions(this.dataClusterActions);
-        }
+        public ICollection<string> GetDataClusterActionDescriptions() =>
+            this.GetActionDescriptions(this.dataClusterActions);
 
-        public ICollection<string> GetRowActionDescriptions()
-        {
-            return this.GetActionDescriptions(this.rowActions);
-        }
+        public ICollection<string> GetRowActionDescriptions() => this.GetActionDescriptions(this.rowActions);
 
-        public ICollection<string> GetCellActionDescriptions()
-        {
-            return this.GetActionDescriptions(this.cellActions);
-        }
+        public ICollection<string> GetCellActionDescriptions() => this.GetActionDescriptions(this.cellActions);
 
-        public ICollection<ActionInfo> GetWorkbookActionInfo()
-        {
-            return this.GetActionInfo(this.workbookActions);
-        }
+        public ICollection<ActionInfo> GetWorkbookActionInfo() => this.GetActionInfo(this.workbookActions);
 
-        public ICollection<ActionInfo> GetWorksheetActionInfo()
-        {
-            return this.GetActionInfo(this.worksheetActions);
-        }
+        public ICollection<ActionInfo> GetWorksheetActionInfo() => this.GetActionInfo(this.worksheetActions);
 
-        public ICollection<ActionInfo> GetDataClusterActionInfo()
-        {
-            return this.GetActionInfo(this.dataClusterActions);
-        }
+        public ICollection<ActionInfo> GetDataClusterActionInfo() => this.GetActionInfo(this.dataClusterActions);
 
-        public ICollection<ActionInfo> GetRowActionInfo()
-        {
-            return this.GetActionInfo(this.rowActions);
-        }
+        public ICollection<ActionInfo> GetRowActionInfo() => this.GetActionInfo(this.rowActions);
 
-        public ICollection<ActionInfo> GetCellActionInfo()
-        {
-            return this.GetActionInfo(this.cellActions);
-        }
+        public ICollection<ActionInfo> GetCellActionInfo() => this.GetActionInfo(this.cellActions);
 
-        internal IDataAction GetWorkbookAction(string name)
-        {
-            return this.GetAction(this.workbookActions, name);
-        }
+        public IDataAction? GetWorkbookAction(string name) => this.GetAction(this.workbookActions, name);
 
-        internal IDataAction GetWorksheetAction(string name)
-        {
-            return this.GetAction(this.worksheetActions, name);
-        }
+        public IDataAction? GetWorksheetAction(string name) => this.GetAction(this.worksheetActions, name);
 
-        internal IDataAction GetDataClusterAction(string name)
-        {
-            return this.GetAction(this.dataClusterActions, name);
-        }
+        public IDataAction? GetDataClusterAction(string name) => this.GetAction(this.dataClusterActions, name);
 
-        internal IDataAction GetRowAction(string name)
-        {
-            return this.GetAction(this.rowActions, name);
-        }
+        public IDataAction? GetRowAction(string name) => this.GetAction(this.rowActions, name);
 
-        internal IDataAction GetCellAction(string name)
-        {
-            return this.GetAction(this.cellActions, name);
-        }
+        public IDataAction? GetCellAction(string name) => this.GetAction(this.cellActions, name);
 
-        internal IDataAction GetWorkbookAction(IActionParameters parameters)
-        {
-            return this.GetAction(this.workbookActions, parameters);
-        }
+        public IDataAction? GetWorkbookAction(IActionParameters parameters) =>
+            this.GetAction(this.workbookActions, parameters);
 
-        internal IDataAction GetWorksheetAction(IActionParameters parameters)
-        {
-            return this.GetAction(this.worksheetActions, parameters);
-        }
+        public IDataAction? GetWorksheetAction(IActionParameters parameters) =>
+            this.GetAction(this.worksheetActions, parameters);
 
-        internal IDataAction GetDataClusterAction(IActionParameters parameters)
-        {
-            return this.GetAction(this.dataClusterActions, parameters);
-        }
+        public IDataAction? GetDataClusterAction(IActionParameters parameters) =>
+            this.GetAction(this.dataClusterActions, parameters);
 
-        internal IDataAction GetRowAction(IActionParameters parameters)
-        {
-            return this.GetAction(this.rowActions, parameters);
-        }
+        public IDataAction? GetRowAction(IActionParameters parameters) =>
+            this.GetAction(this.rowActions, parameters);
 
-        internal IDataAction GetCellAction(IActionParameters parameters)
-        {
-            return this.GetAction(this.cellActions, parameters);
-        }
+        public IDataAction? GetCellAction(IActionParameters parameters) =>
+            this.GetAction(this.cellActions, parameters);
 
-        internal IDataAction GetAction(string name)
+        public IDataAction? GetAction(string name)
         {
-            IDataAction dataAction = this.GetWorkbookAction(name);
+            IDataAction? dataAction = this.GetWorkbookAction(name);
 
             if (dataAction == default)
             {
@@ -176,24 +109,20 @@ namespace ExcelService.DataActions
             return dataAction;
         }
 
-        internal IDataAction GetAction(IActionParameters parameters)
-        {
-            switch (parameters.Performer)
+        public IDataAction? GetAction(IActionParameters parameters)
+            => parameters.Performer switch
             {
-                case ActionPerformer.Workbook: return this.GetWorkbookAction(parameters);
-                case ActionPerformer.Worksheet: return this.GetWorksheetAction(parameters);
-                case ActionPerformer.DataCluster:
-                case ActionPerformer.DataClusterHeader: return this.GetDataClusterAction(parameters);
-                case ActionPerformer.Row: return this.GetRowAction(parameters);
-                case ActionPerformer.Cell: return this.GetCellAction(parameters);
-                case ActionPerformer.Unassigned:
-                default: return this.SearchAction(parameters);
-            }
-        }
+                ActionPerformer.Workbook => this.GetWorkbookAction(parameters),
+                ActionPerformer.Worksheet => this.GetWorksheetAction(parameters),
+                ActionPerformer.DataCluster or ActionPerformer.DataClusterHeader => this.GetDataClusterAction(parameters),
+                ActionPerformer.Row => this.GetRowAction(parameters),
+                ActionPerformer.Cell => this.GetCellAction(parameters),
+                _ => this.SearchAction(parameters),
+            };
 
-        private IDataAction SearchAction(IActionParameters parameters)
+        private IDataAction? SearchAction(IActionParameters parameters)
         {
-            IDataAction dataAction = this.GetWorkbookAction(parameters);
+            IDataAction? dataAction = this.GetWorkbookAction(parameters);
 
             if (dataAction == default)
             {
@@ -218,19 +147,13 @@ namespace ExcelService.DataActions
             return dataAction;
         }
 
-        private ICollection<string> GetActionNames(ICollection<IDataAction> subLibrary)
-        {
-            return subLibrary.Select(x => x.GetName()).ToList();
-        }
+        private ICollection<string> GetActionNames(IReadOnlyCollection<IDataAction> subLibrary) =>
+            subLibrary.Select(x => x.GetName()).ToList();
 
-        private ICollection<string> GetActionDescriptions(ICollection<IDataAction> subLibrary)
-        {
-            return subLibrary.Select(x => x.GetDescription()).ToList();
-        }
+        private ICollection<string> GetActionDescriptions(IReadOnlyCollection<IDataAction> subLibrary) =>
+            subLibrary.Select(x => x.GetDescription()).ToList();
 
-        private ICollection<ActionInfo> GetActionInfo(ICollection<IDataAction> subLibrary)
-        {
-            return subLibrary
+        private ICollection<ActionInfo> GetActionInfo(IReadOnlyCollection<IDataAction> subLibrary) => subLibrary
               .Select(x => new ActionInfo
               {
                   Name = x.GetName(),
@@ -238,51 +161,11 @@ namespace ExcelService.DataActions
                   DefaultParameters = x.GetDefaultParameters()
               })
               .ToList();
-        }
 
-        private IDataAction GetAction(ICollection<IDataAction> subLibrary, string name)
-        {
-            return subLibrary.ToList().FirstOrDefault(x => x.GetName().Equals(name));
-        }
+        private IDataAction? GetAction(IReadOnlyCollection<IDataAction> subLibrary, string name) =>
+            subLibrary.ToList().FirstOrDefault(x => x.GetName().Equals(name));
 
-        private IDataAction GetAction(ICollection<IDataAction> subLibrary, IActionParameters parameters)
-        {
-            return subLibrary.ToList().FirstOrDefault(x => x.IsApplicable(parameters));
-        }
-
-        private void RegisterWorkbookActions()
-        {
-            this.workbookActions.Add(new DisplayWorkbookAction());
-        }
-
-        private void RegisterWorksheetActions()
-        {
-
-        }
-
-        private void RegisterDataClusterActions()
-        {
-            this.dataClusterActions.Add(new HeaderBorderStyleAction());
-            this.dataClusterActions.Add(new HeaderMergeCenterFullAction());
-            this.dataClusterActions.Add(new HeaderBackgroundStyleAction());
-
-            this.dataClusterActions.Add(new BorderStyleAction());
-            this.dataClusterActions.Add(new BackgroundStyleAction());
-            this.dataClusterActions.Add(new AlignmentStyleAction());
-        }
-
-        private void RegisterRowActions()
-        {
-            this.rowActions.Add(new BorderStyleAction());
-            this.rowActions.Add(new BackgroundStyleAction());
-            this.rowActions.Add(new AlignmentStyleAction());
-        }
-
-        private void RegisterCellActions()
-        {
-            this.cellActions.Add(new BorderStyleAction());
-            this.cellActions.Add(new BackgroundStyleAction());
-            this.cellActions.Add(new AlignmentStyleAction());
-        }
+        private IDataAction? GetAction(IReadOnlyCollection<IDataAction> subLibrary, IActionParameters parameters) =>
+            subLibrary.ToList().FirstOrDefault(x => x.IsApplicable(parameters));
     }
 }

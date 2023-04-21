@@ -2,7 +2,7 @@
 
 namespace ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters
 {
-    public class HeaderBorderStyleParameters : BorderStyleParameters
+    public class HeaderBorderStyleParameters : BorderStyleParameters, IHeaderBorderStyleParameters
     {
         public override string Name => "Header Border Style";
 

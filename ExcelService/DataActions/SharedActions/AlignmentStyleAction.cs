@@ -5,7 +5,7 @@ using ExcelService.Utilities;
 
 namespace ExcelService.DataActions.SharedActions
 {
-    public class AlignmentStyleAction : DataAction
+    public class AlignmentStyleAction : DataAction, IAlignmentStyleAction
     {
         public override string GetName()
         {

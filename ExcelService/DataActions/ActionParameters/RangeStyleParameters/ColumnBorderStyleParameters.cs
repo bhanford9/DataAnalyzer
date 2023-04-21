@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
 {
-    public class ColumnBorderStyleParameters : BorderStyleParameters
+    public class ColumnBorderStyleParameters : BorderStyleParameters, IColumnBorderStyleParameters
     {
         public override string Name => "Column Border";
 

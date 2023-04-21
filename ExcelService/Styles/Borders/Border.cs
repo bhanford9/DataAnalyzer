@@ -3,7 +3,7 @@ using ExcelService.Styles.Colors;
 
 namespace ExcelService.Styles.Borders
 {
-    public class Border
+    public class Border : IBorder
     {
         public bool DoApply { get; set; } = false;
 

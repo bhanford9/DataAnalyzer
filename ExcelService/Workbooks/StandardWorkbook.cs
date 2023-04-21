@@ -1,11 +1,10 @@
 ﻿using ExcelService.DataActions.ActionParameters;
 using ExcelService.Utilities;
 using ExcelService.Worksheets;
-using System.Collections.Generic;
 
 namespace ExcelService.Workbooks
 {
-    public sealed class StandardWorkbook : Workbook
+    public sealed class StandardWorkbook : Workbook, IStandardWorkbook
     {
         public StandardWorkbook(
           string filePath,

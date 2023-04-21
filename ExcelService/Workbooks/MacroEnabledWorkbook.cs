@@ -1,11 +1,10 @@
 ﻿using ExcelService.DataActions.ActionParameters;
 using ExcelService.Utilities;
 using ExcelService.Worksheets;
-using System.Collections.Generic;
 
 namespace ExcelService.Workbooks
 {
-    class MacroEnabledWorkbook : Workbook
+    public class MacroEnabledWorkbook : Workbook, IMacroEnabledWorkbook
     {
         public MacroEnabledWorkbook(
           string filePath,

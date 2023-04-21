@@ -5,7 +5,7 @@ using ExcelService.Utilities;
 
 namespace ExcelService.DataActions.SharedActions
 {
-    public class BackgroundStyleAction : DataAction
+    public class BackgroundStyleAction : DataAction, IBackgroundStyleAction
     {
 
         public override string GetName()

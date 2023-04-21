@@ -2,7 +2,7 @@
 
 namespace ExcelService.DataActions
 {
-    public class ActionInfo
+    public class ActionInfo : IActionInfo
     {
         public string Name { get; internal set; } = string.Empty;
 

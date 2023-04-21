@@ -2,7 +2,7 @@
 
 namespace ExcelService.Styles.Colors
 {
-    public class ColorValue
+    public class ColorValue : IColorValue
     {
         private const int FULL_OPAQUE = 255;
         private int alpha = -1;

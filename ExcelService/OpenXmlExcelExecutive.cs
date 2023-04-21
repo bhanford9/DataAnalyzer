@@ -2,12 +2,10 @@
 using DocumentFormat.OpenXml.Spreadsheet;
 using ExcelService.Utilities;
 using ExcelService.Workbooks;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ExcelService
 {
-    class OpenXmlExcelExecutive
+    public class OpenXmlExcelExecutive : IOpenXmlExcelExecutive
     {
         public void GenerateWorkbook(IWorkbook workbook)
         {
@@ -57,16 +55,16 @@ namespace ExcelService
 
                         dataCluster.Rows.ElementAt(rowIndex).ToList().ForEach(cell =>
                 {
-                        string cellReference = columnName + rowNumber;
-                        _ = row.AppendChild(new Cell
-                        {
-                            CellReference = cellReference,
-                            DataType = CellValues.InlineString,
-                            InlineString = new InlineString { Text = new Text(cell.Value.ToString()) }
-                        });
-
-                        columnName = ColumnConversions.NumberToName(++columnNumber);
+                    string cellReference = columnName + rowNumber;
+                    _ = row.AppendChild(new Cell
+                    {
+                        CellReference = cellReference,
+                        DataType = CellValues.InlineString,
+                        InlineString = new InlineString { Text = new Text(cell.Value.ToString()) }
                     });
+
+                    columnName = ColumnConversions.NumberToName(++columnNumber);
+                });
                     }
                 });
             }

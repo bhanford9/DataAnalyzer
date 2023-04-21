@@ -3,7 +3,7 @@ using ExcelService.Styles.Colors;
 
 namespace ExcelService.Styles.Patterns
 {
-    public class FillPatternValue
+    public class FillPatternValue : IFillPatternValue
     {
         public FillPattern Type { get; set; } = FillPattern.None;
 

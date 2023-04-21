@@ -3,7 +3,7 @@ using ExcelService.Utilities;
 
 namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
 {
-    public class BorderStyleParameters : ActionParameters
+    public class BorderStyleParameters : ActionParameters, IBorderStyleParameters
     {
         private Border left = new Border();
         private Border top = new Border();

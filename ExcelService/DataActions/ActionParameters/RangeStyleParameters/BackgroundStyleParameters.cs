@@ -4,7 +4,7 @@ using ExcelService.Utilities;
 
 namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
 {
-    public class BackgroundStyleParameters : ActionParameters
+    public class BackgroundStyleParameters : ActionParameters, IBackgroundStyleParameters
     {
         private ColorValue color = new ColorValue(Styles.Colors.Color.Transparent);
         private FillPatternValue pattern = new FillPatternValue();

@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.DataActions.ActionParameters.WorkbookParameters
 {
-    public class DisplayWorkbookParameters : ActionParameters
+    public class DisplayWorkbookParameters : ActionParameters, IDisplayWorkbookParameters
     {
         public bool DisplayAfter { get; set; } = true;
 

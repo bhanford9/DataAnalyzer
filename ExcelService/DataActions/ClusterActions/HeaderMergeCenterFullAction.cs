@@ -3,11 +3,10 @@ using ExcelService.DataActions.ActionParameters;
 using ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters;
 using ExcelService.DataClusters;
 using ExcelService.Utilities;
-using System.Linq;
 
 namespace ExcelService.DataActions.ClusterActions
 {
-    public class HeaderMergeCenterFullAction : DataAction
+    public class HeaderMergeCenterFullAction : DataAction, IHeaderMergeCenterFullAction
     {
         public override string GetName()
         {

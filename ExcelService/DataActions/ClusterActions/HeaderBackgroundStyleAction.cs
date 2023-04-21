@@ -6,7 +6,7 @@ using ExcelService.DataClusters;
 
 namespace ExcelService.DataActions.ClusterActions
 {
-    public class HeaderBackgroundStyleAction : BackgroundStyleAction
+    public class HeaderBackgroundStyleAction : BackgroundStyleAction, IHeaderBackgroundStyleAction
     {
         public override string GetName()
         {

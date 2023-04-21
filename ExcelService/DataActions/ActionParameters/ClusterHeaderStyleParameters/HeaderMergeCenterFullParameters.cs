@@ -1,6 +1,6 @@
 ﻿namespace ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters
 {
-    public class HeaderMergeCenterFullParameters : ActionParameters
+    public class HeaderMergeCenterFullParameters : ActionParameters, IHeaderMergeCenterFullParameters
     {
         public override string Name => "Merge & Center Cluster Header";
 

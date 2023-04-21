@@ -5,7 +5,7 @@ using ExcelService.Utilities;
 
 namespace ExcelService.DataActions.SharedActions
 {
-    public class BorderStyleAction : DataAction
+    public class BorderStyleAction : DataAction, IBorderStyleAction
     {
 
         public override string GetName()

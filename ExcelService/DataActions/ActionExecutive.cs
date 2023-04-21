@@ -1,13 +1,14 @@
 ﻿using ClosedXML.Excel;
 using ExcelService.DataActions.ActionParameters;
 using ExcelService.ReturnMessages;
-using System;
 
 namespace ExcelService.DataActions
 {
-    public class ActionExecutive
+    public class ActionExecutive : IActionExecutive
     {
-        private readonly ActionLibrary actionLibrary = new ActionLibrary();
+        private readonly IInternalActionLibrary actionLibrary;
+
+        internal ActionExecutive(IInternalActionLibrary actionLibrary) => this.actionLibrary = actionLibrary;
 
         public bool PerformActions(IXLWorkbook workbook, IExcelEntity excelEntity, out ActionStatus result)
         {
@@ -37,7 +38,7 @@ namespace ExcelService.DataActions
             {
                 foreach (IActionParameters actionParameters in excelEntity.ActionDefinitions)
                 {
-                    IDataAction action = this.actionLibrary.GetAction(actionParameters);
+                    IDataAction? action = this.actionLibrary.GetAction(actionParameters);
 
                     if (action == default)
                     {

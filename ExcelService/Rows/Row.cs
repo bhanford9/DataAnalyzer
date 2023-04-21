@@ -1,6 +1,5 @@
 ﻿using ExcelService.Cells;
 using ExcelService.DataActions.ActionParameters;
-using System.Collections.Generic;
 
 namespace ExcelService.Rows
 {

@@ -1,5 +1,4 @@
 ﻿using ExcelService.Rows;
-using System.Collections.Generic;
 
 namespace ExcelService.DataClusters
 {

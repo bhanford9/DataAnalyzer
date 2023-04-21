@@ -2,7 +2,7 @@
 
 namespace ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters
 {
-    public class HeaderBackgroundStyleParameters : BackgroundStyleParameters
+    public class HeaderBackgroundStyleParameters : BackgroundStyleParameters, IHeaderBackgroundStyleParameters
     {
         public override string Name => "Header Background Style";
 

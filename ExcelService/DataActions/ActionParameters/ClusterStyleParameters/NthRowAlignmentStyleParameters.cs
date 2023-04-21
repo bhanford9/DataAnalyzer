@@ -2,7 +2,7 @@
 
 namespace ExcelService.DataActions.ActionParameters.ClusterStyleParameters
 {
-    public class NthRowAlignmentStyleParameters : AlignmentStyleParameters
+    public class NthRowAlignmentStyleParameters : AlignmentStyleParameters, INthRowAlignmentStyleParameters
     {
         public override string Name => "Nth Row Alignment Style";
 

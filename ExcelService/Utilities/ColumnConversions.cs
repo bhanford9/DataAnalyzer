@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ExcelService.Utilities
+﻿namespace ExcelService.Utilities
 {
     public class ColumnConversions
     {
