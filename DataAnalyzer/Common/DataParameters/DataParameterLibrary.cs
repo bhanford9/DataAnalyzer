@@ -14,8 +14,8 @@ namespace DataAnalyzer.Common.DataParameters
         {
             parameters = new Dictionary<StatType, IDataParameterCollection>()
             {
-                { StatType.Queryable, new QueryableParameters() },
-                { StatType.CsvNames, new CsvClassParameters() },
+                { StatType.Queryable, Resolver.Resolve<IQueryableParameters>() },
+                { StatType.CsvNames, Resolver.Resolve<ICsvClassParameters>() },
             };
         }
 

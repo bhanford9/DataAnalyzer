@@ -9,11 +9,11 @@ namespace DataAnalyzer.Common.DataParameters
     {
         StatType StatType { get; }
 
-        ICollection<string> GetGroupableParameterNames();
-        ICollection<IDataParameter> GetGroupableParameters();
-        ICollection<IDataParameter> GetParameters();
-        ICollection<string> GetSortableParameterNames();
-        ICollection<IDataParameter> GetSortableParameters();
+        IReadOnlyCollection<string> GetGroupableParameterNames();
+        IReadOnlyCollection<IDataParameter> GetGroupableParameters();
+        IReadOnlyCollection<IDataParameter> GetParameters();
+        IReadOnlyCollection<string> GetSortableParameterNames();
+        IReadOnlyCollection<IDataParameter> GetSortableParameters();
         Func<IStats, IComparable> GetStatAccessor(string name);
     }
 }

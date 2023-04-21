@@ -1,10 +1,11 @@
 ﻿using DataAnalyzer.DataImport.DataObjects.TimeStats;
+using System.Collections.Generic;
 
 namespace DataAnalyzer.Common.DataParameters.TimeStatParameters
 {
     internal abstract class TimeParameters : DataParameterCollection, ITimeParameters
     {
-        protected override void InitializeParameters()
+        internal override void AddParameters()
         {
             this.parameters.Add(new DataParameter(stats => (stats as ITimeStats).Iterations, stats => stats is ITimeStats) { Name = nameof(TimeStats.Iterations) });
             this.parameters.Add(new DataParameter(stats => (stats as ITimeStats).ContainerSize, stats => stats is ITimeStats) { Name = nameof(TimeStats.ContainerSize) });
@@ -14,10 +15,6 @@ namespace DataAnalyzer.Common.DataParameters.TimeStatParameters
             this.parameters.Add(new DataParameter(stats => (stats as ITimeStats).SlowestTimeMillis, stats => stats is ITimeStats) { Name = nameof(TimeStats.SlowestTimeMillis), CanGroupBy = false });
             this.parameters.Add(new DataParameter(stats => (stats as ITimeStats).RangeTimeMillis, stats => stats is ITimeStats) { Name = nameof(TimeStats.RangeTimeMillis), CanGroupBy = false });
             this.parameters.Add(new DataParameter(stats => (stats as ITimeStats).ExecuterName, stats => stats is ITimeStats) { Name = nameof(TimeStats.ExecuterName) });
-
-            this.InternalInitializeParameters();
         }
-
-        protected abstract void InternalInitializeParameters();
     }
 }

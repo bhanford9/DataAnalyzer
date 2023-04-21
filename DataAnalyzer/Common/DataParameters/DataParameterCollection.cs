@@ -10,25 +10,20 @@ namespace DataAnalyzer.Common.DataParameters
     {
         protected ICollection<IDataParameter> parameters = new List<IDataParameter>();
 
-        public DataParameterCollection()
-        {
-            this.InitializeParameters();
-        }
-
         public abstract StatType StatType { get; }
 
-        public ICollection<IDataParameter> GetParameters() => this.parameters;
+        public IReadOnlyCollection<IDataParameter> GetParameters() => this.parameters.ToList().AsReadOnly();
 
-        public ICollection<IDataParameter> GetGroupableParameters() => this.parameters.Where(x => x.CanGroupBy).ToList();
+        public IReadOnlyCollection<IDataParameter> GetGroupableParameters() => this.parameters.Where(x => x.CanGroupBy).ToList().AsReadOnly();
 
-        public ICollection<string> GetGroupableParameterNames() => this.parameters.Where(x => x.CanGroupBy).Select(x => x.Name).ToList();
+        public IReadOnlyCollection<string> GetGroupableParameterNames() => this.parameters.Where(x => x.CanGroupBy).Select(x => x.Name).ToList().AsReadOnly();
 
-        public ICollection<IDataParameter> GetSortableParameters() => this.parameters.Where(x => x.CanSortBy).ToList();
+        public IReadOnlyCollection<IDataParameter> GetSortableParameters() => this.parameters.Where(x => x.CanSortBy).ToList().AsReadOnly();
 
-        public ICollection<string> GetSortableParameterNames() => this.parameters.Where(x => x.CanSortBy).Select(x => x.Name).ToList();
+        public IReadOnlyCollection<string> GetSortableParameterNames() => this.parameters.Where(x => x.CanSortBy).Select(x => x.Name).ToList().AsReadOnly();
 
         public Func<IStats, IComparable> GetStatAccessor(string name) => this.parameters.First(x => x.Name.Equals(name)).StatAccessor;
 
-        protected abstract void InitializeParameters();
+        internal abstract void AddParameters();
     }
 }

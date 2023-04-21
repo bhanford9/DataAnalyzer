@@ -20,10 +20,20 @@ namespace DataAnalyzer.Common
             builder.RegisterType<INotSupportedDataOrganizer, NotSupportedDataOrganizer>();
 
             // Common.DataParameters.CsvParameters
-            builder.RegisterType<ICsvClassParameters, CsvClassParameters>();
+            builder.RegisterAs<ICsvClassParameters, CsvClassParameters>(_ =>
+            {
+                CsvClassParameters parameters = new();
+                parameters.AddParameters();
+                return parameters;
+            });
 
             // Common.DataParameters.TimeStatParameters
-            builder.RegisterType<IQueryableParameters, QueryableParameters>();
+            builder.RegisterAs<IQueryableParameters, QueryableParameters>(_ =>
+            {
+                QueryableParameters parameters = new();
+                parameters.AddParameters();
+                return parameters;
+            });
 
             // Common.DataParameters
             builder.RegisterType<IDataParameter, DataParameter>();

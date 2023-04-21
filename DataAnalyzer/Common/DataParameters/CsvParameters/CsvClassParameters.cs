@@ -1,5 +1,6 @@
 ﻿using DataAnalyzer.DataImport.DataObjects.CsvStats;
 using DataAnalyzer.Services.Enums;
+using System.Collections.Generic;
 
 namespace DataAnalyzer.Common.DataParameters.CsvParameters
 {
@@ -7,7 +8,7 @@ namespace DataAnalyzer.Common.DataParameters.CsvParameters
     {
         public override StatType StatType => StatType.CsvNames;
 
-        protected override void InitializeParameters() => this.parameters.Add(
+        internal override void AddParameters() => this.parameters.Add(
                 new DataParameter(
                     x => (x as CsvNamesStats).CsvNames,
                     x => x is CsvNamesStats)
