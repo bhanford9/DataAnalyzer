@@ -13,17 +13,12 @@ namespace ExcelService
             // lays out the XML of different Office products. This makes the code
             // seem like overkill, but it works well with generating the underlying XML
 
-            //Uri newUri = PackUriHelper.CreatePartUri(new Uri(workbook.FilePath, UriKind.Absolute));
-            //Package package = Package.Open(workbook.FilePath, System.IO.FileMode.Create);
-
             SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.Create(
                workbook.FilePath,
                DocumentTypeUtilities.ToSpreadSheetType(workbook.DocumentType));
 
             WorkbookPart workbookpart = spreadsheetDocument.AddWorkbookPart();
             workbookpart.Workbook = new DocumentFormat.OpenXml.Spreadsheet.Workbook();
-
-
 
             for (int excelIndex = 1, codeIndex = 0; excelIndex <= workbook.Worksheets.Count; excelIndex++, codeIndex++)
             {

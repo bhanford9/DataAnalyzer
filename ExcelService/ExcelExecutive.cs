@@ -61,7 +61,8 @@ namespace ExcelService
                             cell.StartRowNumber = rowNumber;
                             cell.StartColNumber = colNumber;
                             closedXmlWorksheet.Cell(rowNumber, colNumber).Style.NumberFormat.Format = cell.Format.GetFormatString();
-                            closedXmlWorksheet.Cell(rowNumber, colNumber).SetValue(cell.Value);
+                            // TODO --> XLCellValue is implicitly convertable from a specific set of types. need to make sure this works
+                            closedXmlWorksheet.Cell(rowNumber, colNumber).SetValue(cell.Value.ToString());
 
                             this.UpdateActionDefinitions(cell, worksheet.SheetName, ActionPerformer.Cell);
                             this.actionExecutive.PerformActions(closedXmlWorkbook, cell);
