@@ -10,10 +10,10 @@ namespace DataAnalyzer.Common.DataParameters
         StatType StatType { get; }
 
         IReadOnlyCollection<string> GetGroupableParameterNames();
-        IReadOnlyCollection<IDataParameter> GetGroupableParameters();
-        IReadOnlyCollection<IDataParameter> GetParameters();
+        IReadOnlyCollection<IDataParameter<IStats>> GetGroupableParameters();
+        IReadOnlyCollection<IDataParameter<IStats>> GetParameters();
         IReadOnlyCollection<string> GetSortableParameterNames();
-        IReadOnlyCollection<IDataParameter> GetSortableParameters();
+        IReadOnlyCollection<IDataParameter<IStats>> GetSortableParameters();
         Func<IStats, IComparable> GetStatAccessor(string name);
     }
 }

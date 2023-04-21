@@ -19,7 +19,6 @@ namespace DataAnalyzer.Models.ExcelSetupModels
         private const string WORKBOOK_CONFIG_PATH_KEY = "WorkbookConfigs";
         private const string DATA_TYPES_CONFIG_PATH_KEY = "DataTypeConfigs";
 
-        // TODO --> several instances of classes being used in this class that should be their respective interface instead
         private readonly ISerializationService serializationService;
         private readonly IConfigurationModel configurationModel;
         private readonly IExcelDataTypeLibrary excelDataTypeLibrary;

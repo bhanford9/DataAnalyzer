@@ -12,7 +12,12 @@ namespace DataAnalyzer.DataImport.DataConverters
 {
     internal class DataConverterExecutive : IDataConverterExecutive
     {
-        private readonly DataConverterLibrary converters = BaseSingleton<DataConverterLibrary>.Instance;
+        private readonly IDataConverterLibrary converters;
+
+        public DataConverterExecutive(IDataConverterLibrary converters)
+        {
+            this.converters = converters;
+        }
 
         public ICollection<IStats> Convert(
             IImportType type,

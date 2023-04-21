@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using System.Collections.Generic;
 
@@ -14,8 +15,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
 
         public TwoParameterDataTypeViewModel(
             ITypeParameter typeParameter,
-            IExcelSetupModel excelSetupModel)
-            : base(typeParameter, excelSetupModel)
+            IExcelSetupModel excelSetupModel,
+            IExcelDataTypeLibrary excelDataTypeLibrary)
+            : base(typeParameter, excelSetupModel, excelDataTypeLibrary)
         {
             switch (typeParameter)
             {

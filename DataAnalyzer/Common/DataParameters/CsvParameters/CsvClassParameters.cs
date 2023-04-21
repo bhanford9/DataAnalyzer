@@ -1,19 +1,13 @@
 ﻿using DataAnalyzer.DataImport.DataObjects.CsvStats;
 using DataAnalyzer.Services.Enums;
-using System.Collections.Generic;
 
 namespace DataAnalyzer.Common.DataParameters.CsvParameters
 {
-    internal class CsvClassParameters : DataParameterCollection, ICsvClassParameters
+    internal class CsvClassParameters : DataParameterCollection<ICsvNamesStats>, ICsvClassParameters
     {
         public override StatType StatType => StatType.CsvNames;
 
         internal override void AddParameters() => this.parameters.Add(
-                new DataParameter(
-                    x => (x as CsvNamesStats).CsvNames,
-                    x => x is CsvNamesStats)
-                {
-                    Name = nameof(CsvNamesStats.CsvNames)
-                });
+            new DataParameter<ICsvNamesStats>(x => x.CsvNames, x => true) { Name = nameof(CsvNamesStats.CsvNames) });
     }
 }

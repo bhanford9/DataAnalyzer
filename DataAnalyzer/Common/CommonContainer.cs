@@ -4,6 +4,7 @@ using DataAnalyzer.Common.DataOrganizers;
 using DataAnalyzer.Common.DataParameters;
 using DataAnalyzer.Common.DataParameters.CsvParameters;
 using DataAnalyzer.Common.DataParameters.TimeStatParameters;
+using DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels;
 using DependencyInjectionUtilities;
 
 namespace DataAnalyzer.Common
@@ -36,8 +37,9 @@ namespace DataAnalyzer.Common
             });
 
             // Common.DataParameters
-            builder.RegisterType<IDataParameter, DataParameter>();
-            builder.RegisterType<IDataParameterLibrary, DataParameterLibrary>();
+            builder.RegisterGeneric(typeof(DataParameter<>)).As(typeof(IDataParameter<>));
+            builder.RegisterAs<IDataParameterLibrary, DataParameterLibrary>(
+                _ => new DataParameterLibrary(DataParameterLibrary.GetParameterMap()));
         }
     }
 }

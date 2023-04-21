@@ -17,6 +17,9 @@ using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSp
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Summary;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels;
 using DependencyInjectionUtilities;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
+using DataAnalyzer.Models.ExcelSetupModels;
+using DataAnalyzer.Models;
 
 namespace DataAnalyzer.ViewModels
 {
@@ -96,7 +99,18 @@ namespace DataAnalyzer.ViewModels
 
             // ViewModels.ExcelSetupViewModels
             builder.RegisterType<IExcelDashboardViewModel, ExcelDashboardViewModel>();
-            builder.RegisterType<IExcelDataTypesViewModel, ExcelDataTypesViewModel>();
+            builder.RegisterAs<IExcelDataTypesViewModel, ExcelDataTypesViewModel>(_ =>
+            {
+                IStatsModel statsModel = Resolver.Resolve<IStatsModel>();
+                IExcelSetupModel excelSetupModel = Resolver.Resolve<IExcelSetupModel>();
+                IExcelDataTypeLibrary excelDataTypeLibrary = Resolver.Resolve<IExcelDataTypeLibrary>();
+                return new ExcelDataTypesViewModel(
+                    statsModel,
+                    excelSetupModel,
+                    excelDataTypeLibrary,
+                    ExcelDataTypesViewModel.CreateEnumToViewModelMap(excelSetupModel, excelDataTypeLibrary),
+                    ExcelDataTypesViewModel.CreateTypeToViewModelMap(excelSetupModel, excelDataTypeLibrary));
+            });
             builder.RegisterType<IExcelSetupViewModel, ExcelSetupViewModel>();
 
             // ViewModels.ExecutionViewModels

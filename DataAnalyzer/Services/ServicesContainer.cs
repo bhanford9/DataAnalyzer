@@ -19,26 +19,27 @@ namespace DataAnalyzer.Services
             builder.RegisterInstance<IAccessibilityCreationExecutive, AccessibilityCreationExecutive>(_ =>
                 new AccessibilityCreationExecutive(new Dictionary<string, IAccessibilityCreator>()
                 {
-                    { ClassCreationConstants.READ_ONLY, new ReadOnlyCreator() },
-                    { ClassCreationConstants.READ_INIT, new ReadInitCreator() },
-                    { ClassCreationConstants.READ_PRIVATE_WRITE, new ReadPrivateWriteCreator() },
-                    { ClassCreationConstants.READ_PROTECTED_WRITE, new ReadProtectedWriteCreator() },
-                    { ClassCreationConstants.READ_WRITE, new ReadWriteCreator() },
+                    { ClassCreationConstants.READ_ONLY, Resolver.Resolve<IReadOnlyCreator>() },
+                    { ClassCreationConstants.READ_INIT, Resolver.Resolve<IReadInitCreator>() },
+                    { ClassCreationConstants.READ_PRIVATE_WRITE, Resolver.Resolve<IReadPrivateWriteCreator>() },
+                    { ClassCreationConstants.READ_PROTECTED_WRITE, Resolver.Resolve<IReadProtectedWriteCreator>() },
+                    { ClassCreationConstants.READ_WRITE, Resolver.Resolve<IReadWriteCreator>() },
                 }));
             builder.RegisterTypeAncestors<IAccessibilityCreator, IReadInitCreator, ReadInitCreator>();
             builder.RegisterTypeAncestors<IAccessibilityCreator, IReadOnlyCreator, ReadOnlyCreator>();
             builder.RegisterTypeAncestors<IAccessibilityCreator, IReadPrivateWriteCreator, ReadPrivateWriteCreator>();
             builder.RegisterTypeAncestors<IAccessibilityCreator, IReadProtectedWriteCreator, ReadProtectedWriteCreator>();
+            builder.RegisterTypeAncestors<IAccessibilityCreator, IReadWriteCreator, ReadWriteCreator>();
 
             // Services.ClassGenerationServices.PropertyCreators.TypeCreators
             builder.RegisterInstance<ITypeCreationExecutive, TypeCreationExecutive>(_ =>
                 new TypeCreationExecutive(new Dictionary<string, ITypeCreator>()
                 {
-                    { ClassCreationConstants.BOOL_TYPE, new BoolCreator() },
-                    { ClassCreationConstants.INT_TYPE, new IntCreator() },
-                    { ClassCreationConstants.DOUBLE_TYPE, new DoubleCreator() },
-                    { ClassCreationConstants.STRING_TYPE, new StringCreator() },
-                    { ClassCreationConstants.DATE_TIME_TYPE, new DateTimeCreator() },
+                    { ClassCreationConstants.BOOL_TYPE, Resolver.Resolve<IBoolCreator>() },
+                    { ClassCreationConstants.INT_TYPE, Resolver.Resolve<IIntCreator>() },
+                    { ClassCreationConstants.DOUBLE_TYPE, Resolver.Resolve<IDoubleCreator>() },
+                    { ClassCreationConstants.STRING_TYPE, Resolver.Resolve<IStringCreator>() },
+                    { ClassCreationConstants.DATE_TIME_TYPE, Resolver.Resolve<IDateTimeCreator>() },
                 }));
             builder.RegisterTypeAncestors<ITypeCreator, IBoolCreator, BoolCreator>();
             builder.RegisterTypeAncestors<ITypeCreator, IDateTimeCreator, DateTimeCreator>();

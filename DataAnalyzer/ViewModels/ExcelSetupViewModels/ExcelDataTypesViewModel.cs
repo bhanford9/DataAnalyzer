@@ -1,6 +1,7 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.ExcelSetupModels;
+using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels;
 using DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;
@@ -19,6 +20,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     {
         private readonly IStatsModel statsModel;
         private readonly IExcelSetupModel excelSetupModel;
+        private readonly IExcelDataTypeLibrary excelDataTypeLibrary;
 
         private string configurationDirectory = string.Empty;
         private string dataTypeConfigName = string.Empty;
@@ -32,26 +34,16 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 
         public ExcelDataTypesViewModel(
             IStatsModel statsModel,
-            IExcelSetupModel excelSetupModel)
+            IExcelSetupModel excelSetupModel,
+            IExcelDataTypeLibrary excelDataTypeLibrary,
+            IReadOnlyDictionary<Type, Func<ITypeParameter, IDataTypeConfigViewModel>> typeParameterToViewModel,
+            IReadOnlyDictionary<ParameterType, Func<ITypeParameter, IDataTypeConfigViewModel>> parameterTypeToToViewModel)
         {
             this.statsModel = statsModel;
             this.excelSetupModel = excelSetupModel;
-
-            // TODO --> these could be injected instead
-            parameterTypeToToViewModel = new Dictionary<ParameterType, Func<ITypeParameter, IDataTypeConfigViewModel>>
-            {
-                { ParameterType.None, x => new NoParameterDataTypeViewModel(x, this.excelSetupModel) },
-                { ParameterType.Integer, x => new OneParameterDataTypeViewModel<int>(x, this.excelSetupModel) },
-                { ParameterType.IntegerInteger, x => new TwoParameterDataTypeViewModel<int, int>(x, this.excelSetupModel) },
-                { ParameterType.IntegerBoolean, x => new TwoParameterDataTypeViewModel<int, bool>(x, this.excelSetupModel) },
-            };
-            typeParameterToViewModel = new Dictionary<Type, Func<ITypeParameter, IDataTypeConfigViewModel>>
-            {
-                { typeof(NoTypeParameter), x => new NoParameterDataTypeViewModel(x, this.excelSetupModel) },
-                { typeof(IntegerTypeParameter), x => new OneParameterDataTypeViewModel<int>(x, this.excelSetupModel) },
-                { typeof(IntegerIntegerTypeParameter), x => new TwoParameterDataTypeViewModel<int, int>(x, this.excelSetupModel) },
-                { typeof(IntegerBooleanTypeParameter), x => new TwoParameterDataTypeViewModel<int, bool>(x, this.excelSetupModel) },
-            };
+            this.excelDataTypeLibrary = excelDataTypeLibrary;
+            this.typeParameterToViewModel = typeParameterToViewModel;
+            this.parameterTypeToToViewModel = parameterTypeToToViewModel;
 
             this.browseDirectory = new BaseCommand(obj => this.DoBrowseDirectory());
             this.saveDataTypes = new BaseCommand(obj => this.DoSaveDataTypes());
@@ -61,6 +53,32 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
             this.statsModel.PropertyChanged += this.StatsModelPropertyChanged;
             this.excelSetupModel.ExcelConfiguration.PropertyChanged += this.ExcelConfigurationPropertyChanged;
             this.excelSetupModel.PropertyChanged += ExcelSetupModelPropertyChanged;
+        }
+
+        public static IReadOnlyDictionary<Type, Func<ITypeParameter, IDataTypeConfigViewModel>> CreateEnumToViewModelMap(
+            IExcelSetupModel excelSetupModel,
+            IExcelDataTypeLibrary excelDataTypeLibrary)
+        {
+            return new Dictionary<Type, Func<ITypeParameter, IDataTypeConfigViewModel>>
+            {
+                { typeof(NoTypeParameter), x => new NoParameterDataTypeViewModel(x, excelSetupModel, excelDataTypeLibrary) },
+                { typeof(IntegerTypeParameter), x => new OneParameterDataTypeViewModel<int>(x, excelSetupModel, excelDataTypeLibrary) },
+                { typeof(IntegerIntegerTypeParameter), x => new TwoParameterDataTypeViewModel<int, int>(x, excelSetupModel, excelDataTypeLibrary) },
+                { typeof(IntegerBooleanTypeParameter), x => new TwoParameterDataTypeViewModel<int, bool>(x, excelSetupModel, excelDataTypeLibrary) },
+            };
+        }
+
+        public static IReadOnlyDictionary<ParameterType, Func<ITypeParameter, IDataTypeConfigViewModel>> CreateTypeToViewModelMap(
+            IExcelSetupModel excelSetupModel,
+            IExcelDataTypeLibrary excelDataTypeLibrary)
+        {
+            return new Dictionary<ParameterType, Func<ITypeParameter, IDataTypeConfigViewModel>>
+            {
+                { ParameterType.None, x => new NoParameterDataTypeViewModel(x, excelSetupModel, excelDataTypeLibrary) },
+                { ParameterType.Integer, x => new OneParameterDataTypeViewModel<int>(x, excelSetupModel, excelDataTypeLibrary) },
+                { ParameterType.IntegerInteger, x => new TwoParameterDataTypeViewModel<int, int>(x, excelSetupModel, excelDataTypeLibrary) },
+                { ParameterType.IntegerBoolean, x => new TwoParameterDataTypeViewModel<int, bool>(x, excelSetupModel, excelDataTypeLibrary) },
+            };
         }
 
         public ObservableCollection<IExcelDataTypeListItemViewModel> SavedConfigurations { get; } = new();
@@ -132,9 +150,9 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
                     }
 
                     this.SavedConfigurations.Add(new ExcelDataTypeListItemViewModel(this.excelSetupModel.ExcelConfiguration)
-                    { 
-                        Value = displayText, 
-                        ToolTipText = configFile 
+                    {
+                        Value = displayText,
+                        ToolTipText = configFile
                     });
                 });
             }
@@ -166,7 +184,10 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
                             NoTypeParameter temp = new NoTypeParameter();
                             temp.DataName = name;
                             this.excelSetupModel.ExcelConfiguration.LoadedParameterTypes.Add(temp);
-                            this.ParameterSelections.Add(new NoParameterDataTypeViewModel(temp, this.excelSetupModel));
+                            this.ParameterSelections.Add(new NoParameterDataTypeViewModel(
+                                temp,
+                                this.excelSetupModel,
+                                this.excelDataTypeLibrary));
                         }
                     }
 

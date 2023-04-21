@@ -10,14 +10,17 @@ namespace DataAnalyzer.Common.DataParameters
     {
         private readonly IReadOnlyDictionary<StatType, IDataParameterCollection> parameters;
 
-        public DataParameterLibrary()
+        public DataParameterLibrary(IReadOnlyDictionary<StatType, IDataParameterCollection> parameters)
         {
-            parameters = new Dictionary<StatType, IDataParameterCollection>()
+            this.parameters = parameters;
+        }
+
+        internal static IReadOnlyDictionary<StatType, IDataParameterCollection> GetParameterMap() =>
+            new Dictionary<StatType, IDataParameterCollection>()
             {
                 { StatType.Queryable, Resolver.Resolve<IQueryableParameters>() },
                 { StatType.CsvNames, Resolver.Resolve<ICsvClassParameters>() },
             };
-        }
 
         public IDataParameterCollection GetParameters(StatType statType) =>
             this.parameters.TryGetValue(statType, out IDataParameterCollection parameters) ? parameters : default;

@@ -7,9 +7,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
     {
         private HorizontalAlignment horizontalAlignment = HorizontalAlignment.General;
         private VerticalAlignment verticalAlignment = VerticalAlignment.Top;
-
-        // TODO --> inject these
-        private IColumnSpecificationParameters columnSpecification = new ColumnSpecificationParameters ();
+        private IColumnSpecificationParameters columnSpecification = new ColumnSpecificationParameters();
         private IRowSpecificationParameters rowSpecification = new RowSpecificationParameters();
 
         public HorizontalAlignment HorizontalAlignment

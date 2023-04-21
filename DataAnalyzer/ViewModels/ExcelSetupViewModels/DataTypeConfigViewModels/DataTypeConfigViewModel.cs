@@ -11,7 +11,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
     internal abstract class DataTypeConfigViewModel : BasePropertyChanged, IDataTypeConfigViewModel
     {
         private readonly IExcelSetupModel excelSetupModel;
-        protected readonly ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
+        private readonly IExcelDataTypeLibrary excelDataTypeLibrary;
 
         private string dataName = string.Empty;
         private string dataTypeName = string.Empty;
@@ -20,10 +20,12 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
 
         public DataTypeConfigViewModel(
             ITypeParameter typeParameter,
-            IExcelSetupModel excelSetupModel)
+            IExcelSetupModel excelSetupModel,
+            IExcelDataTypeLibrary excelDataTypeLibrary)
         {
             this.TypeParameter = typeParameter;
             this.excelSetupModel = excelSetupModel;
+            this.excelDataTypeLibrary = excelDataTypeLibrary;
             this.DataName = typeParameter?.DataName ?? string.Empty;
             this.dataTypeName = typeParameter?.ExcelTypeName ?? "Invalid Data";
             this.ParameterTypes = this.excelDataTypeLibrary.GetParameterTypes().Select(x => x.ExcelTypeName).ToList();

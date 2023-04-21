@@ -9,12 +9,16 @@ namespace DataAnalyzer.Common.Mvvm.ValueConverters
 {
     internal class ExcelDataTypeTwoParamToVisibility : IValueConverter
     {
+        private IExcelDataTypeLibrary excelDataTypeLibrary;
+
+        public ExcelDataTypeTwoParamToVisibility(IExcelDataTypeLibrary excelDataTypeLibrary) =>
+            this.excelDataTypeLibrary = excelDataTypeLibrary;
+
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(value is string)) return string.Empty;
 
-            ExcelDataTypeLibrary excelDataTypeLibrary = BaseSingleton<ExcelDataTypeLibrary>.Instance;
-            if (excelDataTypeLibrary.NamedTypeParameters.TryGetValue(value as string, out var param))
+            if (this.excelDataTypeLibrary.NamedTypeParameters.TryGetValue(value as string, out var param))
             {
                 return param.Type == ParameterType.None || param.Type == ParameterType.Integer ? Visibility.Collapsed : Visibility.Visible;
             }

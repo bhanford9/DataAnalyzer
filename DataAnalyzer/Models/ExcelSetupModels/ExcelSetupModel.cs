@@ -99,7 +99,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
                             foreach (IStats rowStats in dataclusterStats.Values)
                             {
                                 RowModel rowModel = new RowModel();
-                                ITypeParameter defaultType = BaseSingleton<ExcelDataTypeLibrary>.Instance.GetParameterTypes().First();
+                                ITypeParameter defaultType = this.excelDataTypeLibrary.GetParameterTypes().First();
 
                                 // don't like this, should find a better way to handle it
                                 // TODO --> change this to import/category/flavor (this might help bypass the switch ugliness)

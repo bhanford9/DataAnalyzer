@@ -14,16 +14,6 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
         public EditActionLibrary(ICollection<Func<IExcelEntitySpecification, IEditActionViewModel>> editActionViewModels)
         {
             this.editActionViewModels = editActionViewModels.ToList();
-
-            // TODO --> this will need to go into the container
-            //    = new List<Func<IExcelEntitySpecification, IEditActionViewModel>>
-            //{
-            //    x => new EmptyEditViewModel(x),
-            //    x => new AlignmentEditViewModel(x),
-            //    x => new BackgroundEditViewModel(x),
-            //    x => new BorderEditViewModel(x),
-            //    x => new BooleanActionViewModel(x),
-            //};
         }
 
         public IEditActionViewModel GetEditAction(IActionParameters actionParameters, IExcelEntitySpecification excelEntityType) =>

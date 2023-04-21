@@ -5,9 +5,9 @@ namespace DataAnalyzer.Common.DataParameters
 {
     // TODO --> this structure was originally intended for groupable data and doesn't scale well
     //   need to refactor this to better accommodate more dynamic usages
-    internal class DataParameter : IDataParameter
+    internal class DataParameter<T> : IDataParameter<T> where T : IStats
     {
-        public DataParameter(Func<IStats, IComparable> extractor, Func<IStats, bool> validator)
+        public DataParameter(Func<T, IComparable> extractor, Func<T, bool> validator)
         {
             this.StatAccessor = stats =>
             {
@@ -26,6 +26,6 @@ namespace DataAnalyzer.Common.DataParameters
 
         public bool CanSortBy { get; set; } = true;
 
-        public Func<IStats, IComparable> StatAccessor { get; }
+        public Func<T, IComparable> StatAccessor { get; }
     }
 }
