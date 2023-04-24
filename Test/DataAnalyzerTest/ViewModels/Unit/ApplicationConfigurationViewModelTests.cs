@@ -1,9 +1,6 @@
 ﻿using DataAnalyzer.Models;
 using DataAnalyzer.ViewModels;
 using DataAnalyzerFixtures.ViewModels;
-using DocumentFormat.OpenXml.Office2010.Drawing;
-using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace DataAnalyzerTest.ViewModels.Unit

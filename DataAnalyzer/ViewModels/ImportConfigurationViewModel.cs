@@ -34,10 +34,7 @@ namespace DataAnalyzer.ViewModels
             this.dataConverters = dataConverters;
             this.ImportTypes = this.dataConverters.GetImportTypes();
 
-            if (this.configurationModel.HasLoaded)
-            {
-                this.ApplyConfiguration();
-            }
+            this.ApplyConfiguration();
 
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
         }

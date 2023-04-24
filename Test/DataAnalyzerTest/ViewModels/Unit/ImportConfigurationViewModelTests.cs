@@ -6,9 +6,7 @@ using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
 using DataScraper.DataScrapers.ScraperFlavors.CsvNamesFlavors;
 using Moq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace DataAnalyzerTest.ViewModels.Unit
@@ -43,10 +41,8 @@ namespace DataAnalyzerTest.ViewModels.Unit
             AssertionExtensions.CountIs(this.shared.ViewModel.ImportTypes, 3);
         }
 
-        [Theory]
-        [InlineData(true)]
-        [InlineData(false)]
-        public void ShouldNotApplyConfigurationUnlessLoadedOnCreation(bool hasLoaded)
+        [Fact]
+        public void ShouldApplyConfigurationWhenLoadedOnCreation()
         {
             NotApplicableImportType defaultImport = new();
             NotApplicableScraperCategory defaultCategory = new();
@@ -56,27 +52,16 @@ namespace DataAnalyzerTest.ViewModels.Unit
             CsvNamesScraperCategory actualCategory = new();
             CsvNamesStandardScraperFlavor actualFlavor = new();
 
-            this.shared.MockConfigurationModel.Setup(x => x.HasLoaded).Returns(hasLoaded);
             this.shared.MockConfigurationModel.Setup(x => x.ImportType).Returns(actualImport);
             this.shared.MockConfigurationModel.Setup(x => x.Category).Returns(actualCategory);
             this.shared.MockConfigurationModel.Setup(x => x.Flavor).Returns(actualFlavor);
 
             this.CreateViewModel();
 
-            if (hasLoaded)
-            {
-                Assert.IsType(this.shared.ViewModel.SelectedImportType.GetType(), actualImport);
-                Assert.IsType(this.shared.ViewModel.SelectedScraperCategory.GetType(), actualCategory);
-                Assert.IsType(this.shared.ViewModel.SelectedScraperFlavor.GetType(), actualFlavor);
-                this.shared.MockExecutiveCommissioner.Verify(x => x.SetDisplay(), Times.Once);
-            }
-            else
-            {
-                Assert.IsType(this.shared.ViewModel.SelectedImportType.GetType(), defaultImport);
-                Assert.IsType(this.shared.ViewModel.SelectedScraperCategory.GetType(), defaultCategory);
-                Assert.IsType(this.shared.ViewModel.SelectedScraperFlavor.GetType(), defaultFlavor);
-                this.shared.MockExecutiveCommissioner.Verify(x => x.SetDisplay(), Times.Never);
-            }
+            Assert.IsType(this.shared.ViewModel.SelectedImportType.GetType(), actualImport);
+            Assert.IsType(this.shared.ViewModel.SelectedScraperCategory.GetType(), actualCategory);
+            Assert.IsType(this.shared.ViewModel.SelectedScraperFlavor.GetType(), actualFlavor);
+            this.shared.MockExecutiveCommissioner.Verify(x => x.SetDisplay(), Times.Once);
         }
 
         [Fact]
@@ -151,7 +136,7 @@ namespace DataAnalyzerTest.ViewModels.Unit
             Mock<IScraperFlavor> expectedFlavor = new();
             expectedFlavor.Setup(x => x.Name).Returns("MyFlavor");
             this.CreateViewModel();
-            
+
             this.shared.ViewModel.SelectedScraperFlavor = expectedFlavor.Object;
 
             Assert.Equal(expectedFlavor.Object, this.shared.ViewModel.SelectedScraperFlavor);

@@ -33,84 +33,95 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             this.executiveCommissioner = executiveCommissioner;
             this.level = level;
 
-            addParameter = new BaseCommand(obj => DoAddParameter());
-            removeParameter = new BaseCommand(obj => DoRemoveParameter(obj.ToString()));
+            this.addParameter = new BaseCommand(obj => this.DoAddParameter());
+            this.removeParameter = new BaseCommand(obj => this.DoRemoveParameter(obj.ToString()));
 
-            configurationModel.PropertyChanged += ConfigurationCreationModelPropertyChanged;
+            configurationModel.PropertyChanged += this.ConfigurationCreationModelPropertyChanged;
 
-            LoadParameters();
+            this.LoadParameters();
         }
 
         public ObservableCollection<IConfigurationGroupingViewModel> Children { get; } = new();
 
         public IConfigurationGroupingViewModel Parent { get; private set; } = null;
 
-        public ICommand AddParameter => addParameter;
-        public ICommand RemoveParameter => removeParameter;
+        public ICommand AddParameter => this.addParameter;
+        public ICommand RemoveParameter => this.removeParameter;
 
-        public bool HasChildren => Children.Count > 0;
+        public bool HasChildren => this.Children.Count > 0;
 
         public string Uid { get; } = Guid.NewGuid().ToString();
 
         public string Name
         {
-            get => name;
-            set => NotifyPropertyChanged(ref name, value);
+            get => this.name;
+            set => this.NotifyPropertyChanged(ref this.name, value);
         }
 
         public string SelectedParameter
         {
-            get => selectedParameter;
-            set => NotifyPropertyChanged(ref selectedParameter, value);
+            get => this.selectedParameter;
+            set => this.NotifyPropertyChanged(ref this.selectedParameter, value);
         }
 
-        public string GroupByText => IsSubRule ? "And By:" : level == 0 ? "Group By:" : "Then By:";
+        public string GroupByText => this.IsSubRule ? "And By:" : this.level == 0 ? "Group By:" : "Then By:";
 
         public bool IsSubRule
         {
-            get => isSubRule;
-            set => NotifyPropertyChanged(ref isSubRule, value);
+            get => this.isSubRule;
+            set => this.NotifyPropertyChanged(ref this.isSubRule, value);
         }
 
         public ICollection<string> ParameterNames
         {
-            get => parameterNames;
-            set => NotifyPropertyChanged(ref parameterNames, value);
+            get => this.parameterNames;
+            set => this.NotifyPropertyChanged(ref this.parameterNames, value);
         }
 
-        public void RemoveChild(string uid) => Children.Remove(Children.First(x => x.Uid.Equals(uid)));
+        public void RemoveChild(string uid)
+        {
+            for (int i = 0; i < this.Children.Count; i++)
+            {
+                if (this.Children[i].Uid.Equals(uid))
+                {
+                    this.Children.RemoveAt(i);
+                    break;
+                }
+            }
+        }
 
         private void DoAddParameter()
         {
-            Children.Add(new ConfigurationGroupingViewModel(
+            this.Children.Add(new ConfigurationGroupingViewModel(
                 this.configurationModel,
                 this.executiveCommissioner,
                 this.level)
             { IsSubRule = true, Parent = this });
 
-            NotifyPropertyChanged(nameof(HasChildren));
+            this.NotifyPropertyChanged(nameof(this.HasChildren));
         }
 
         private void DoRemoveParameter(string uid)
         {
-            if (isSubRule)
+            if (this.isSubRule)
             {
-                Parent.RemoveChild(uid);
+                this.Parent.RemoveChild(uid);
             }
             else
             {
                 // TODO --> I don't think this was doing anything 
-                (executiveCommissioner.GetInitializedViewModel() as GroupingSetupViewModel).RemoveGroupingConfiguration(level);
+                (this.executiveCommissioner.GetInitializedViewModel() as GroupingSetupViewModel)
+                    .RemoveGroupingConfiguration(this.level);
             }
 
-            NotifyPropertyChanged(nameof(HasChildren));
+            this.NotifyPropertyChanged(nameof(this.HasChildren));
         }
 
         private void LoadParameters()
         {
-            if (configurationModel.DataParameterCollection != null)
+            if (this.configurationModel.DataParameterCollection != null)
             {
-                ParameterNames = configurationModel.DataParameterCollection.GetParameters()
+                this.ParameterNames = this.configurationModel.DataParameterCollection.GetParameters()
                   .Where(x => x.CanGroupBy)
                   .Select(x => x.Name)
                   .ToList();
@@ -121,8 +132,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         {
             switch (e.PropertyName)
             {
-                case nameof(configurationModel.DataParameterCollection):
-                    LoadParameters();
+                case nameof(this.configurationModel.DataParameterCollection):
+                    this.LoadParameters();
                     break;
                 default:
                     break;
