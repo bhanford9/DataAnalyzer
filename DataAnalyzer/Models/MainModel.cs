@@ -8,30 +8,34 @@ namespace DataAnalyzer.Models
 {
     internal class MainModel : BasePropertyChanged, IMainModel
     {
-        private LoadedDataContent loadedDataContent = new();
-        private LoadedDataStructure loadedDataStructure = new();
-        private LoadedInputFiles loadedInputFiles = new();
+        private ILoadedDataContent loadedDataContent;
+        private ILoadedDataStructure loadedDataStructure;
+        private ILoadedInputFiles loadedInputFiles;
         private readonly IConfigurationModel configurationModel;
 
         public MainModel(IConfigurationModel configurationModel)
         {
             this.configurationModel = configurationModel;
+            this.loadedDataContent = new LoadedDataContent();
+            this.loadedDataStructure = new LoadedDataStructure();
+            this.loadedInputFiles = new LoadedInputFiles();
+
             loadedInputFiles.PropertyChanged += this.LoadedInputFilesPropertyChanged;
         }
 
-        public LoadedDataContent LoadedDataContent
+        public ILoadedDataContent LoadedDataContent
         {
             get => this.loadedDataContent;
             set => this.NotifyPropertyChanged(ref this.loadedDataContent, value);
         }
 
-        public LoadedDataStructure LoadedDataStructure
+        public ILoadedDataStructure LoadedDataStructure
         {
             get => this.loadedDataStructure;
             set => this.NotifyPropertyChanged(ref this.loadedDataStructure, value);
         }
 
-        public LoadedInputFiles LoadedInputFiles
+        public ILoadedInputFiles LoadedInputFiles
         {
             get => this.loadedInputFiles;
             set => this.NotifyPropertyChanged(ref this.loadedInputFiles, value);

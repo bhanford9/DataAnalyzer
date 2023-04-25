@@ -15,7 +15,7 @@ namespace DataAnalyzerFixtures.ViewModels.DataStructureSetupViewModels
 
         internal Mock<IConfigurationModel> MockConfigurationModel { get; set; }
 
-        internal Mock<IStructureExecutiveCommissioner> MockExecutiveCommissioner {get;set; }
+        internal Mock<IStructureExecutiveCommissioner> MockExecutiveCommissioner { get; set; }
 
         internal string DataParamListPropName => nameof(this.MockConfigurationModel.Object.DataParameterCollection);
 

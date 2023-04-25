@@ -1,15 +1,10 @@
 ﻿using DataAnalyzer.Common.DataParameters;
 using DataAnalyzer.DataImport.DataObjects;
-using DataAnalyzer.ViewModels;
-using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
-using DataAnalyzerFixtures.ViewModels;
 using DataAnalyzerFixtures.ViewModels.DataStructureSetupViewModels;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using DataAnalyzerTest.Utilities;
 using DataAnalyzer.Models;
