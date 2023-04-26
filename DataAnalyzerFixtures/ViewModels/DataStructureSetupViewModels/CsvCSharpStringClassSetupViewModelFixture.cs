@@ -1,8 +1,8 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.DataStructureSetupModels;
+using DataAnalyzer.Models.LoadedConfigurations;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
-using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using Moq;
 using System.ComponentModel;
 
@@ -17,6 +17,8 @@ namespace DataAnalyzerFixtures.ViewModels.DataStructureSetupViewModels
 
         internal Mock<IConfigurationModel> MockConfigurationModel { get; set; }
 
+        internal Mock<ILoadedDataStructure> MockLoadedDataStructure { get; set; }
+
         internal Mock<IMainModel> MockMainModel { get; set; }
 
         internal Mock<IStatsModel> MockStatsModel { get; set; }
@@ -28,8 +30,20 @@ namespace DataAnalyzerFixtures.ViewModels.DataStructureSetupViewModels
         internal Mock<ICsvNamesDataConfiguration> MockDataConfiguration { get; set; }
 
         internal string DataParamListPropName => nameof(this.MockConfigurationModel.Object.DataParameterCollection);
+        
+        internal string DataConfigPropName => nameof(this.MockCsvCSharpStringClassSetupModel.Object.DataConfiguration);
+
+        internal string ImportExportKeyPropName => nameof(this.MockConfigurationModel.Object.ImportExportKey);
+
+        internal string ExportTypePropName => nameof(this.MockConfigurationModel.Object.SelectedExportType);
 
         internal PropertyChangedEventArgs DataParamListChangeArgs => this.GetNamedEventArgs(this.DataParamListPropName);
+
+        internal PropertyChangedEventArgs DataConfigChangeArgs => this.GetNamedEventArgs(this.DataConfigPropName);
+
+        internal PropertyChangedEventArgs ImportExportKeyChangeArgs => this.GetNamedEventArgs(this.ImportExportKeyPropName);
+
+        internal PropertyChangedEventArgs ExportTypeChangeArgs => this.GetNamedEventArgs(this.ExportTypePropName);
 
         internal CsvCSharpStringClassSetupViewModel ViewModel { get; set; }
     }

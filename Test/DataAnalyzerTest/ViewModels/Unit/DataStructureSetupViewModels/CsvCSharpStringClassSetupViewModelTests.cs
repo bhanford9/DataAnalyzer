@@ -1,12 +1,20 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.DataImport.DataObjects;
 using DataAnalyzer.DataImport.DataObjects.CsvStats;
+using DataAnalyzer.Models;
+using DataAnalyzer.Models.DataStructureSetupModels;
 using DataAnalyzer.Models.LoadedConfigurations;
+using DataAnalyzer.Services;
+using DataAnalyzer.Services.Enums;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using DataAnalyzerFixtures.ViewModels.DataStructureSetupViewModels;
 using DataAnalyzerTest.Utilities;
+using DataScraper.DataScrapers.ImportTypes;
+using DataScraper.DataScrapers.ScraperCategories;
+using DataScraper.DataScrapers.ScraperFlavors.CsvFlavors;
 using Moq;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -24,6 +32,8 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             this.shared.MockConfigurationModel = new();
             this.shared.MockConfigurationModel.Setup(x => x.ConfigurationDirectory).Returns(string.Empty);
             this.shared.MockConfigurationModel.Setup(x => x.ConfigurationName).Returns(string.Empty);
+
+            this.shared.MockLoadedDataStructure = new();
 
             this.shared.MockMainModel = new();
             this.shared.MockMainModel.Setup(x => x.LoadedDataStructure).Returns(Mock.Of<ILoadedDataStructure>());
@@ -164,6 +174,188 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
                 this.shared.ViewModel.GetDisplayStringName());
         }
 
+        // START PARENT CLASS TESTS
+
+        [Fact]
+        public void ShouldReportDefaultForNotSupportedViewModel()
+        {
+            this.CreateViewModel();
+            Assert.False(this.shared.ViewModel.IsDefault);
+
+            INotSupportedSetupViewModel defaultViewModel = new NotSupportedSetupViewModel(
+                this.shared.MockConfigurationModel.Object,
+                this.shared.MockMainModel.Object,
+                Mock.Of<INotSupportedSetupModel>());
+
+            Assert.True(defaultViewModel.IsDefault);
+        }
+
+        [Fact]
+        public void ShouldMapDataConfigurationToModel()
+        {
+            this.CreateViewModel();
+            this.shared.MockDataConfiguration.Setup(x => x.Name).Returns("MyName");
+            Assert.Equal(
+                this.shared.MockCsvCSharpStringClassSetupModel.Object.DataConfiguration.Name,
+                this.shared.ViewModel.DataConfiguration.Name);
+        }
+
+        [Fact]
+        public void ShouldPropagateDataTypeChangesToModels()
+        {
+            this.CreateViewModel();
+            this.shared.ViewModel.SelectedDataType = this.GetImportExportKey();
+
+            this.shared.MockConfigurationModel.VerifySet(
+                x => x.ImportExportKey = this.shared.ViewModel.SelectedDataType,
+                Times.Once);
+            this.shared.MockMainModel.VerifyGet(x => x.LoadedDataStructure, Times.Once);
+            Assert.StartsWith("MyName", this.shared.MockMainModel.Object.LoadedDataStructure.DataType);
+        }
+
+        [Fact]
+        public void ShouldPropagateConfigNameChangesToModels()
+        {
+            const string expectedName = "MyConfigurationName";
+            this.CreateViewModel();
+            this.shared.ViewModel.ConfigurationName = expectedName;
+
+            this.shared.MockConfigurationModel.VerifySet(x => x.ExecutiveConfigurationName = expectedName, Times.Once);
+            this.shared.MockMainModel.VerifyGet(x => x.LoadedDataStructure, Times.Once);
+            this.shared.MockCsvCSharpStringClassSetupModel.VerifyGet(x => x.DataConfiguration, Times.Exactly(2));
+            Assert.Equal(expectedName, this.shared.MockMainModel.Object.LoadedDataStructure.StructureName);
+            Assert.Equal(expectedName, this.shared.MockCsvCSharpStringClassSetupModel.Object.DataConfiguration.Name);
+        }
+
+        [Fact]
+        public void ShouldPropagateConfigDirectoryChangesToModels()
+        {
+            const string expectedDir = "MyConfigDir";
+            this.CreateViewModel();
+            this.shared.ViewModel.ConfigurationDirectory = expectedDir;
+
+            this.shared.MockConfigurationModel.VerifySet(x => x.ExecutiveConfigurationDirectory = expectedDir, Times.Once);
+            this.shared.MockMainModel.VerifyGet(x => x.LoadedDataStructure, Times.Once);
+            Assert.Equal(expectedDir, this.shared.MockMainModel.Object.LoadedDataStructure.DirectoryPath);
+        }
+
+        [Fact]
+        public void ShouldPropagateExportTypeChangesToModels()
+        {
+            const string expectedDataType = "MyDataType";
+            string expectedExportType = ExportType.CSharpStringProperties.ToString();
+            string expectedConfigDirectory = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}" +
+                $"\\DataAnalyzerConfigs\\{expectedExportType}\\{expectedDataType}_{expectedExportType}\\";
+            this.CreateViewModel();
+
+            Mock<ILoadedInputFiles> mockLoadedInputFiles = new();
+            mockLoadedInputFiles.Setup(x => x.DataType).Returns(expectedDataType);
+            this.shared.MockMainModel.Setup(x => x.LoadedInputFiles).Returns(mockLoadedInputFiles.Object);
+            this.shared.MockMainModel.Setup(x => x.ApplyInputExportTypes()).Returns(true);
+
+            this.shared.ViewModel.SelectedExportType = expectedExportType;
+
+            Assert.Equal(expectedConfigDirectory, this.shared.ViewModel.ConfigurationDirectory);
+            this.shared.MockConfigurationModel.VerifySet(x => x.SelectedExportType = ExportType.CSharpStringProperties, Times.Once);
+
+            // The setter also sets the configuration directory which uses the LoadedDataStructure
+            this.shared.MockMainModel.VerifyGet(x => x.LoadedDataStructure, Times.Exactly(2));
+            Assert.Equal(expectedExportType, this.shared.MockMainModel.Object.LoadedDataStructure.ExportType);
+        }
+
+        [Fact]
+        public void ShouldSetConfigDirectoryToNotSupportedIfUnableToApplyInputExportType()
+        {
+            const string expectedConfigDir = "NO SUPPORTED EXECUTIVE";
+            this.CreateViewModel();
+            this.shared.MockMainModel.Setup(x => x.ApplyInputExportTypes()).Returns(false);
+            this.shared.ViewModel.SelectedExportType = ExportType.CSharpStringProperties.ToString();
+
+            Assert.Equal(expectedConfigDir, this.shared.ViewModel.ConfigurationDirectory);
+        }
+
+        [Fact]
+        public void ShouldMapCreatingNewDataConfigurationToModel()
+        {
+            this.CreateViewModel();
+            this.shared.ViewModel.CreateNewDataConfiguration();
+            this.shared.MockCsvCSharpStringClassSetupModel.Verify(x => x.CreateNewDataConfiguration());
+        }
+
+        [Fact]
+        public void ShouldMapLoadingConfigurationToModel()
+        {
+            const string expectedConfigName = "MyConfigName";
+            this.CreateViewModel();
+            this.shared.ViewModel.LoadConfiguration(expectedConfigName);
+            this.shared.MockCsvCSharpStringClassSetupModel.Verify(x => x.LoadConfiguration(expectedConfigName));
+        }
+
+        [Fact]
+        public void ShouldLoadViewModelFromConfigWhenDataConfigChanges()
+        {
+            const string expectedConfigName = "MyName";
+            const string expectedConfigClassName = "MyClassName";
+            List<(string CsvName, string PropertyName, bool Include)> expectedNewValues = this.GetPropertyRowData();
+
+            this.shared.MockCsvCSharpStringClassSetupModel.Object.DataConfiguration.Name = expectedConfigName;
+            this.shared.MockCsvCSharpStringClassSetupModel.Object.DataConfiguration.ClassName = expectedConfigClassName;
+            this.shared.MockCsvCSharpStringClassSetupModel.Object.DataConfiguration.CsvNameAndProperties = expectedNewValues;
+
+            this.CreateViewModel();
+            this.shared.ViewModel.StartListeners();
+            this.shared.ViewModel.CsvPropertyRows.Add(new StringPropertyRowViewModel() { CsvName = "Bad", });
+
+            this.shared.MockCsvCSharpStringClassSetupModel.Raise(
+                this.shared.GetEventAction<ICsvCSharpStringClassSetupModel>(),
+                this.shared.DataConfigChangeArgs);
+
+            AssertionExtensions.CountIs(this.shared.ViewModel.CsvPropertyRows.Where(x => x.CsvName.Equals("Bad")), 0);
+            AssertionExtensions.CountIs(this.shared.ViewModel.CsvPropertyRows, 3);
+            for (int i = 0; i < this.shared.ViewModel.CsvPropertyRows.Count; i++)
+            {
+                Assert.Equal(expectedNewValues[i].CsvName, this.shared.ViewModel.CsvPropertyRows[i].CsvName);
+                Assert.Equal(expectedNewValues[i].PropertyName, this.shared.ViewModel.CsvPropertyRows[i].PropertyName);
+                Assert.Equal(expectedNewValues[i].Include, this.shared.ViewModel.CsvPropertyRows[i].Include);
+            }
+        }
+
+        [Fact]
+        public void ShouldUpdateDataTypeWhenImportKeyChangesInModel()
+        {
+            ImportExportKey expectedKey = this.GetImportExportKey();
+            this.CreateViewModel();
+            this.shared.ViewModel.SelectedDataType = null;
+            this.shared.ViewModel.StartListeners();
+
+            this.shared.MockConfigurationModel.Setup(x => x.ImportExportKey).Returns(expectedKey);
+
+            this.shared.MockConfigurationModel.Raise(
+                this.shared.GetEventAction<IConfigurationModel>(),
+                this.shared.ImportExportKeyChangeArgs);
+
+            Assert.Equal(expectedKey, this.shared.ViewModel.SelectedDataType);
+        }
+
+        [Fact]
+        public void ShouldUpdateExportTypeWhenExportTypeChangesInModel()
+        {
+            string expectedExportType = ExportType.CSharpStringProperties.ToString();
+            this.CreateViewModel();
+            this.shared.ViewModel.StartListeners();
+            this.shared.ViewModel.SelectedExportType = ExportType.NotApplicable.ToString();
+
+            this.shared.MockConfigurationModel.Setup(x => x.SelectedExportType).Returns(ExportType.CSharpStringProperties);
+
+            this.shared.MockConfigurationModel.Raise(
+                this.shared.GetEventAction<IConfigurationModel>(),
+                this.shared.ExportTypeChangeArgs);
+
+            Assert.Equal(expectedExportType, this.shared.ViewModel.SelectedExportType);
+        }
+
+        // END PARENT CLASS TESTS
+
         private List<(string CsvName, string PropertyName, bool Include)> GetPropertyRowData() => new()
         {
             ("Name1", "Property1", true),
@@ -181,6 +373,16 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             })
             .Cast<IStringPropertyRowViewModel>()
             .ToList();
+
+        private ImportExportKey GetImportExportKey() => new(
+            new ImportKey()
+            {
+                Type = new FileImportType(),
+                Category = new CsvNamesScraperCategory(),
+                Flavor = new CsvTestScraperFlavor(),
+                Name = "MyName"
+            },
+            ExportType.CSharpStringProperties);
 
         private void CreateViewModel() =>
                 this.shared.ViewModel = new(

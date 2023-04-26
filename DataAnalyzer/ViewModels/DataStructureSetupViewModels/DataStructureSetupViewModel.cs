@@ -12,7 +12,6 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
     internal abstract class DataStructureSetupViewModel<TDataConfiguration> : BasePropertyChanged, IDataStructureSetupViewModel
         where TDataConfiguration : IDataConfiguration, new()
     {
-        // TODO --> if this isn't used here, it can be removed
         private readonly IDataStructureSetupModel<TDataConfiguration> dataStructureModel;
 
         protected readonly IConfigurationModel configurationModel;
@@ -53,9 +52,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
                 {
                     this.configurationModel.ImportExportKey = value;
                     // TODO --> may need to make this more structured (data type may not be necessary)
-                    this.mainModel.LoadedDataStructure.DataType = value.Name;
+                    this.mainModel.LoadedDataStructure.DataType = value?.Name ?? string.Empty;
                 });
-
             }
         }
 
