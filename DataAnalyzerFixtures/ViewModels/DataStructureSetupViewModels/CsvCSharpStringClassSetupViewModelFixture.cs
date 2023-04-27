@@ -1,7 +1,6 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.DataStructureSetupModels;
-using DataAnalyzer.Models.LoadedConfigurations;
 using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 using Moq;
 using System.ComponentModel;

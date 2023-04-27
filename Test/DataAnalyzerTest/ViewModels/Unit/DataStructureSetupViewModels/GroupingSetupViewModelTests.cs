@@ -7,15 +7,10 @@ using DataAnalyzerFixtures.ViewModels.DataStructureSetupViewModels;
 using DataAnalyzerTest.Utilities;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
-using DataScraper.DataScrapers.ScraperFlavors;
 using Moq;
-using Newtonsoft.Json.Bson;
-using System;
-using System.Linq;
 using Xunit;
 using DataAnalyzerTest.ViewModels.Builders;
 using DataScraper.DataScrapers.ScraperFlavors.CsvFlavors;
-using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using System.Collections.Generic;
 using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using DataAnalyzer.Models.DataStructureSetupModels;
@@ -270,11 +265,11 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
         private IImportExportKey GetInvalidImportExportKey() => new ImportExportKeyBuilder().Build();
 
         private void CreateViewModel() =>
-                this.shared.ViewModel = new(
-                    this.shared.MockConfigurationModel.Object,
-                    this.shared.MockMainModel.Object,
-                    this.shared.MockDefaultSetupViewModel.Object,
-                    this.shared.MockGroupingSetupModel.Object,
-                    this.shared.MockExecutiveCommissioner.Object);
+            this.shared.ViewModel = new(
+                this.shared.MockConfigurationModel.Object,
+                this.shared.MockMainModel.Object,
+                this.shared.MockDefaultSetupViewModel.Object,
+                this.shared.MockGroupingSetupModel.Object,
+                this.shared.MockExecutiveCommissioner.Object);
     }
 }

@@ -384,11 +384,11 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             .Build();
 
         private void CreateViewModel() =>
-                this.shared.ViewModel = new(
-                    this.shared.MockConfigurationModel.Object,
-                    this.shared.MockMainModel.Object,
-                    this.shared.MockStatsModel.Object,
-                    this.shared.MockDefaultSetupViewModel.Object,
-                    this.shared.MockCsvCSharpStringClassSetupModel.Object);
+            this.shared.ViewModel = new(
+                this.shared.MockConfigurationModel.Object,
+                this.shared.MockMainModel.Object,
+                this.shared.MockStatsModel.Object,
+                this.shared.MockDefaultSetupViewModel.Object,
+                this.shared.MockCsvCSharpStringClassSetupModel.Object);
     }
 }
