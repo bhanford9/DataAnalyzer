@@ -10,7 +10,7 @@ namespace DataAnalyzer.Services
         ExportType ExportType { get; init; }
         ImportKey ImportKey { get; init; }
         bool IsValid { get; }
-        string Name { get; init; }
+        string Name { get; }
 
         bool Equals(object obj);
         int GetHashCode();

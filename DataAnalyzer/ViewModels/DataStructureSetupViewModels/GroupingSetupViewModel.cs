@@ -46,7 +46,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
                         new ConfigurationGroupingViewModel(
                             this.configurationModel,
                             this.structureExecutiveCommissioner,
-                            this.ConfigurationGroupings.Count()));
+                            this.ConfigurationGroupings.Count));
                 }
 
                 while (this.GroupingLayersCount >= 0 && this.GroupingLayersCount < this.ConfigurationGroupings.Count)
@@ -86,7 +86,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             this.ConfigurationGroupings.Clear();
 
             int level = 0;
-            foreach (GroupingConfiguration groupingConfig in this.model.DataConfiguration.GroupingConfiguration)
+            foreach (IGroupingConfiguration groupingConfig in this.model.DataConfiguration.GroupingConfiguration)
             {
                 this.ConfigurationGroupings.Add(new ConfigurationGroupingViewModel(
                     this.configurationModel,

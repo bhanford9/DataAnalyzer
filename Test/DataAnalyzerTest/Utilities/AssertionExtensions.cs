@@ -27,5 +27,18 @@ namespace DataAnalyzerTest.Utilities
                 Assert.True(equal(expectedList[i], actualList[i]));
             }
         }
+
+        public static void InstanceIs<TSource, TParam>(
+            IEnumerable<TSource> source,
+            IEnumerable<Func<TSource, bool>> action)
+        {
+            var sourceList = source.ToList();
+            var actionList = action.ToList();
+
+            for (int i = 0; i < sourceList.Count; i++)
+            {
+                Assert.True(actionList[i](sourceList[i]));
+            }
+        }
     }
 }

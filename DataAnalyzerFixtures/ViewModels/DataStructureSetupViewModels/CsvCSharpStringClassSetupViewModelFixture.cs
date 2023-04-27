@@ -17,8 +17,6 @@ namespace DataAnalyzerFixtures.ViewModels.DataStructureSetupViewModels
 
         internal Mock<IConfigurationModel> MockConfigurationModel { get; set; }
 
-        internal Mock<ILoadedDataStructure> MockLoadedDataStructure { get; set; }
-
         internal Mock<IMainModel> MockMainModel { get; set; }
 
         internal Mock<IStatsModel> MockStatsModel { get; set; }

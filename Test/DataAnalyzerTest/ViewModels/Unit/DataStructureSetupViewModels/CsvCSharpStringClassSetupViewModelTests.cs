@@ -10,6 +10,7 @@ using DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using DataAnalyzerFixtures.ViewModels.DataStructureSetupViewModels;
 using DataAnalyzerTest.Utilities;
+using DataAnalyzerTest.ViewModels.Builders;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors.CsvFlavors;
@@ -32,8 +33,6 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             this.shared.MockConfigurationModel = new();
             this.shared.MockConfigurationModel.Setup(x => x.ConfigurationDirectory).Returns(string.Empty);
             this.shared.MockConfigurationModel.Setup(x => x.ConfigurationName).Returns(string.Empty);
-
-            this.shared.MockLoadedDataStructure = new();
 
             this.shared.MockMainModel = new();
             this.shared.MockMainModel.Setup(x => x.LoadedDataStructure).Returns(Mock.Of<ILoadedDataStructure>());
@@ -204,13 +203,15 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
         public void ShouldPropagateDataTypeChangesToModels()
         {
             this.CreateViewModel();
-            this.shared.ViewModel.SelectedDataType = this.GetImportExportKey();
+            this.shared.ViewModel.SelectedDataType = this.GetValidImportExportKey();
 
             this.shared.MockConfigurationModel.VerifySet(
                 x => x.ImportExportKey = this.shared.ViewModel.SelectedDataType,
                 Times.Once);
             this.shared.MockMainModel.VerifyGet(x => x.LoadedDataStructure, Times.Once);
-            Assert.StartsWith("MyName", this.shared.MockMainModel.Object.LoadedDataStructure.DataType);
+            Assert.Equal(
+                this.shared.ViewModel.SelectedDataType.Name,
+                this.shared.MockMainModel.Object.LoadedDataStructure.DataType);
         }
 
         [Fact]
@@ -323,7 +324,7 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
         [Fact]
         public void ShouldUpdateDataTypeWhenImportKeyChangesInModel()
         {
-            ImportExportKey expectedKey = this.GetImportExportKey();
+            IImportExportKey expectedKey = this.GetValidImportExportKey();
             this.CreateViewModel();
             this.shared.ViewModel.SelectedDataType = null;
             this.shared.ViewModel.StartListeners();
@@ -374,15 +375,13 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             .Cast<IStringPropertyRowViewModel>()
             .ToList();
 
-        private ImportExportKey GetImportExportKey() => new(
-            new ImportKey()
-            {
-                Type = new FileImportType(),
-                Category = new CsvNamesScraperCategory(),
-                Flavor = new CsvTestScraperFlavor(),
-                Name = "MyName"
-            },
-            ExportType.CSharpStringProperties);
+        private IImportExportKey GetValidImportExportKey() => new ImportExportKeyBuilder()
+            .With(
+                new FileImportType(),
+                new CsvNamesScraperCategory(),
+                new CsvTestScraperFlavor(),
+                ExportType.CSharpStringProperties)
+            .Build();
 
         private void CreateViewModel() =>
                 this.shared.ViewModel = new(

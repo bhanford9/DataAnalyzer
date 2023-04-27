@@ -30,7 +30,7 @@ namespace DataAnalyzer.Services
 
         public ExportType ExportType { get => this.exportType; init => this.exportType = value; }
 
-        public string Name { get => this.name; init => this.name = value; }
+        public string Name { get => this.name; private set => this.name = value; }
 
         public bool IsValid =>
             ImportKey.Type is not NotApplicableImportType &&
