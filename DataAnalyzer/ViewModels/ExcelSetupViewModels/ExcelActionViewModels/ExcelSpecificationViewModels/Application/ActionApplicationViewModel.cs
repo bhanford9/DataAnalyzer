@@ -72,18 +72,6 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Exc
 
         public IExcelEntitySpecification ExcelEntityType { get; }
 
-        private ICollection<ICheckableTreeViewItem> GetFlattenedWhereToApply()
-        {
-            ICollection<ICheckableTreeViewItem> flattenedItems = new List<ICheckableTreeViewItem>();
-
-            if (WhereToApply.Count > 0)
-            {
-                LoadIntoFlattened(WhereToApply.First(), flattenedItems);
-            }
-
-            return flattenedItems;
-        }
-
         private void LoadIntoFlattened(ICheckableTreeViewItem baseItem, ICollection<ICheckableTreeViewItem> flattened)
         {
             foreach (ICheckableTreeViewItem child in baseItem.Children)
@@ -97,6 +85,18 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Exc
             }
 
             flattened.Add(baseItem);
+        }
+
+        private ICollection<ICheckableTreeViewItem> GetFlattenedWhereToApply()
+        {
+            ICollection<ICheckableTreeViewItem> flattenedItems = new List<ICheckableTreeViewItem>();
+
+            if (WhereToApply.Count > 0)
+            {
+                LoadIntoFlattened(WhereToApply.First(), flattenedItems);
+            }
+
+            return flattenedItems;
         }
 
         private void DoApplyAction() => GetFlattenedWhereToApply()

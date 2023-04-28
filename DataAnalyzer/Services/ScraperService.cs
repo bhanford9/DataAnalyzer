@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using DataAnalyzer.DataImport.DataConverters;
 using DataAnalyzer.DataImport.DataObjects;
 using DataScraper;

@@ -1,7 +1,4 @@
-﻿using ClosedXML.Excel;
-using ExcelService.DataActions.ActionParameters;
-
-namespace ExcelService.DataActions.WorkbookActions
+﻿namespace ExcelService.DataActions.WorkbookActions
 {
     public interface IDisplayWorkbookAction : IDataAction
     {

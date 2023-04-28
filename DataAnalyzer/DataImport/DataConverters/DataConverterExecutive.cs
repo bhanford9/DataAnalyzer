@@ -1,5 +1,4 @@
-﻿using DataAnalyzer.Common.Mvvm;
-using DataAnalyzer.DataImport.DataObjects;
+﻿using DataAnalyzer.DataImport.DataObjects;
 using DataScraper.Data;
 using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;

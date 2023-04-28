@@ -81,6 +81,15 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
             return viewModel;
         }
 
+        public override void ApplyParameterSettings()
+        {
+            AlignmentParameters alignmentParameters = this.ActionParameters as AlignmentParameters;
+            alignmentParameters.HorizontalAlignment = Enum.Parse<HorizontalAlignment>(this.SelectedHorizontalAlignment);
+            alignmentParameters.VerticalAlignment = Enum.Parse<VerticalAlignment>(this.SelectedVerticalAlignment);
+            alignmentParameters.ColumnSpecification = ColumnSpecificationConversion.ToModel(this.ColumnSpecification);
+            alignmentParameters.RowSpecification = RowSpecificationConversion.ToModel(this.RowSpecification);
+        }
+
         protected override bool InternalIsApplicable(IActionParameters parameters) => parameters is AlignmentParameters;
 
         protected override void DoAct() => throw new NotImplementedException();
@@ -89,15 +98,6 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.Edi
         {
             this.enumUtilities.LoadNames(typeof(HorizontalAlignment), this.HorizontalAlignments);
             this.enumUtilities.LoadNames(typeof(VerticalAlignment), this.VerticalAlignments);
-        }
-
-        public override void ApplyParameterSettings()
-        {
-            AlignmentParameters alignmentParameters = this.ActionParameters as AlignmentParameters;
-            alignmentParameters.HorizontalAlignment = Enum.Parse<HorizontalAlignment>(this.SelectedHorizontalAlignment);
-            alignmentParameters.VerticalAlignment = Enum.Parse<VerticalAlignment>(this.SelectedVerticalAlignment);
-            alignmentParameters.ColumnSpecification = ColumnSpecificationConversion.ToModel(this.ColumnSpecification);
-            alignmentParameters.RowSpecification = RowSpecificationConversion.ToModel(this.RowSpecification);
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using ExcelService.Utilities;
-
-namespace ExcelService.Workbooks
+﻿namespace ExcelService.Workbooks
 {
     public interface IStandardWorkbook : IWorkbook
     {

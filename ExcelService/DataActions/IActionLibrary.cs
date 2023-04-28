@@ -1,6 +1,4 @@
-﻿using ExcelService.DataActions.ActionParameters;
-
-namespace ExcelService.DataActions
+﻿namespace ExcelService.DataActions
 {
     public interface IActionLibrary
     {
