@@ -16,6 +16,6 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 
         protected override ObservableCollection<IExcelAction> GetActionCollection() => throw new NotImplementedException();
         protected override void InternalApplyAction(ICheckableTreeViewItem item, IEditActionViewModel action) => throw new NotImplementedException();
-        protected override void InternalLoadWhereToApply(ICheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats) => throw new NotImplementedException();
+        protected override void InternalLoadWhereToApply(ICheckableTreeViewItem baseItem, ICollection<IHeirarchalStats> heirarchalStats) => throw new NotImplementedException();
     }
 }

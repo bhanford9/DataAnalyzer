@@ -14,7 +14,8 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             this.shared.MockConfigurationModel = new();
             this.shared.MockConfigurationModel.Setup(x => x.ConfigurationDirectory).Returns(string.Empty);
             this.shared.MockConfigurationModel.Setup(x => x.ConfigurationName).Returns(string.Empty);
-
+            
+            this.shared.MockStatsModel = new();
             this.shared.MockMainModel = new();
             this.shared.MockDefaultSetupViewModel = new();
             this.shared.MockNotSupportedSetupModel = new();
@@ -41,6 +42,7 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
         private void CreateViewModel() =>
             this.shared.ViewModel = new(
                 this.shared.MockConfigurationModel.Object,
+                this.shared.MockStatsModel.Object,
                 this.shared.MockMainModel.Object,
                 this.shared.MockNotSupportedSetupModel.Object);
     }

@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+using DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations;
 using DependencyInjectionUtilities;
 
 namespace DataAnalyzer.ApplicationConfigurations
@@ -8,6 +9,12 @@ namespace DataAnalyzer.ApplicationConfigurations
     {
         public static void Register(ContainerBuilder builder)
         {
+            // ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations
+            builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, IClassSetupConfiguration, ClassSetupConfiguration>();
+            builder.RegisterTypeAncestors<IPropertySetupConfiguration, IClassPropertySetupConfiguration, ClassPropertySetupConfiguration>();
+            builder.RegisterTypeAncestors<IPropertySetupConfiguration, ICollectionPropertySetupConfiguration, CollectionPropertySetupConfiguration>();
+            builder.RegisterTypeAncestors<IPropertySetupConfiguration, ISimplePropertySetupConfiguration, SimplePropertySetupConfiguration>();
+
             // ApplicationConfigurations.DataConfigurations
             builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, ICsvNamesDataConfiguration, CsvNamesDataConfiguration>();
             builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, DataConfiguration>();

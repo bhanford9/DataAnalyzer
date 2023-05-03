@@ -15,6 +15,8 @@ using DataAnalyzer.DataImport.DataObjects.TimeStats;
 using DataAnalyzer.DataImport.DataObjects.TimeStats.QueryableTimeStats;
 using System;
 using DependencyInjectionUtilities;
+using DataAnalyzer.DataImport.DataConverters.ClassDataConverters;
+using DataAnalyzer.DataImport.DataObjects.ClassStats;
 
 namespace DataAnalyzer.DataImport
 {
@@ -22,6 +24,9 @@ namespace DataAnalyzer.DataImport
     {
         public static void Register(ContainerBuilder builder)
         {
+            // DataImport.DataConverters.CsvConverters
+            builder.RegisterTypeAncestors<IDataConverter, IClassDataConverter, ClassDataConverter>();
+
             // DataImport.DataConverters.CsvConverters
             builder.RegisterTypeAncestors<IDataConverter, ICsvToNameListConverter, CsvToNameListConverter>();
             builder.RegisterTypeAncestors<IDataConverter, ICsvToTestConverter, CsvToTestConverter>();
@@ -50,8 +55,14 @@ namespace DataAnalyzer.DataImport
             builder.RegisterType<IDataConverterExecutive, DataConverterExecutive>();
             builder.RegisterType<IDataConverterLibrary,  DataConverterLibrary>();
 
+            // DataImport.DataObjects.ClassStats
+            builder.RegisterTypeAncestors<IProperty, IClassProperty, ClassProperty>();
+            builder.RegisterTypeAncestors<IStats, IClassStats, ClassStats>();
+            builder.RegisterTypeAncestors<IProperty, ICollectionProperty, CollectionProperty>();
+            builder.RegisterTypeAncestors<IProperty, ISimpleProperty, SimpleProperty>();
+
             // DataImport.DataObjects.CsvStats
-            builder.RegisterTypeAncestors<IComparable, IComparableList, ComparableList>();
+            builder.RegisterTypeAncestors<IComparable, IComparableList<IComparable>, ComparableList<IComparable>>();
             builder.RegisterTypeAncestors<IStats, ICsvNamesStats, CsvNamesStats>();
             builder.RegisterTypeAncestors<IStats, ICsvTestStats, CsvTestStats>();
 

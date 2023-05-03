@@ -18,6 +18,6 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 
         protected abstract void InternalApplyAction(ICheckableTreeViewItem item, IEditActionViewModel action);
 
-        protected abstract void InternalLoadWhereToApply(ICheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats);
+        protected abstract void InternalLoadWhereToApply(ICheckableTreeViewItem baseItem, ICollection<IHeirarchalStats> heirarchalStats);
     }
 }

@@ -4,6 +4,7 @@
     {
         public override string Create(string dataType) => "bool";
 
-        public override bool IsApplicable(string dataType) => dataType.Equals(ClassCreationConstants.BOOL_TYPE);
+        public override bool IsApplicable(string dataType)
+            => dataType.Equals(ClassCreationConstants.BOOL_TYPE_DISPLAY);
     }
 }

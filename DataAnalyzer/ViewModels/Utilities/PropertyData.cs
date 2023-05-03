@@ -12,11 +12,11 @@ namespace DataAnalyzer.ViewModels.Utilities
 
         public IReadOnlyCollection<string> Types { get; } = new[]
         {
-            ClassCreationConstants.BOOL_TYPE,
-            ClassCreationConstants.INT_TYPE,
-            ClassCreationConstants.DOUBLE_TYPE,
-            ClassCreationConstants.STRING_TYPE,
-            ClassCreationConstants.DATE_TIME_TYPE,
+            ClassCreationConstants.BOOL_TYPE_DISPLAY,
+            ClassCreationConstants.INT_TYPE_DISPLAY,
+            ClassCreationConstants.DOUBLE_TYPE_DISPLAY,
+            ClassCreationConstants.STRING_TYPE_DISPLAY,
+            ClassCreationConstants.DATE_TIME_TYPE_DISPLAY,
         };
 
         public IReadOnlyCollection<string> Accessibilities { get; } = new[]

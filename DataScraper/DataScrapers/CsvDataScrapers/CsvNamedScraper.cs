@@ -19,9 +19,7 @@ namespace DataScraper.DataScrapers.CsvDataScrapers
         public abstract Dictionary<string, IDataPropertySetter> DataSetters { get; }
 
         public bool IsValidSource(IDataSource source)
-        {
-            return source is FileDataSource s && File.Exists(s.FilePath);
-        }
+            => source is FileDataSource s && File.Exists(s.FilePath);
 
         public ICollection<IData> ScrapeFromSource(IDataSource source)
         {

@@ -22,15 +22,18 @@ namespace DataAnalyzer.ViewModels.ImportViewModels
 
         private readonly IStatsModel statsModel;
         private readonly IImportFromFileModel importModel;
+        private readonly IFileDataSourceRepository fileDataSourceRepository;
 
         protected override IImportModel ImportModel => importModel;
 
         public ImportFromFileViewModel(
             IStatsModel statsModel,
-            IImportFromFileModel importModel)
+            IImportFromFileModel importModel,
+            IFileDataSourceRepository fileDataSourceRepository)
         {
             this.statsModel = statsModel;
             this.importModel = importModel;
+            this.fileDataSourceRepository = fileDataSourceRepository;
             this.browseDirectory = new BaseCommand((object o) => this.DoBrowseDirectory());
             this.importData = new BaseCommand((object o) => this.DoImportData());
 
@@ -81,7 +84,8 @@ namespace DataAnalyzer.ViewModels.ImportViewModels
             this.FlattenFiles()
                 .Where(x => x.IsChecked && !File.GetAttributes(x.Path).HasFlag(FileAttributes.Directory))
                 .ToList()
-                .ForEach(file => this.statsModel.LoadStatsFromSource(new FileDataSource(file.Path)));
+                .ForEach(file => this.statsModel.LoadStatsFromSource(
+                    this.fileDataSourceRepository.GetFileDataSource(file.Path)));
         }
 
         private ICollection<ICheckableTreeViewItem> FlattenFiles()

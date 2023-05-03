@@ -2,10 +2,12 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using DataAnalyzer.Common.DataParameters;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.DataImport.DataObjects;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.ExecutiveUtilities;
+using DataAnalyzer.Services.ExecutiveUtilities.Executives;
 using DataAnalyzer.StatConfigurations;
 using DataScraper.DataSources;
 using AppDataConfig = DataAnalyzer.ApplicationConfigurations.DataConfigurations;
@@ -16,21 +18,25 @@ namespace DataAnalyzer.Models
     {
         private readonly IConfigurationModel configurationModel;
         private readonly IScraperService scraperService;
-        private HeirarchalStats heirarchalStats;
+        private IHeirarchalStats heirarchalStats;
 
         private IDataConfiguration activeConfiguration = new NotSupportedDataConfiguration();
 
-        //  making this lazy because it instantiates classes that require this model already be in memory
         private readonly IExecutiveUtilitiesRepository executiveUtilities;
+        
+        private readonly IStatAccessorLibrary dataAccessorLibrary;
+        private IStatAccessorCollection dataAccessorCollection = null;
 
         public StatsModel(
             IConfigurationModel configModel,
             IScraperService scraperService,
-            IExecutiveUtilitiesRepository executiveUtilities)
+            IExecutiveUtilitiesRepository executiveUtilities,
+            IStatAccessorLibrary dataAccessorLibrary)
         {
             this.configurationModel = configModel;
             this.scraperService = scraperService;
             this.executiveUtilities = executiveUtilities;
+            this.dataAccessorLibrary = dataAccessorLibrary;
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
         }
 
@@ -38,7 +44,7 @@ namespace DataAnalyzer.Models
 
         public ObservableCollection<string> StatNames { get; } = new();
 
-        public HeirarchalStats HeirarchalStats
+        public IHeirarchalStats HeirarchalStats
         {
             get => this.heirarchalStats;
             set => this.NotifyPropertyChanged(ref this.heirarchalStats, value);
@@ -52,6 +58,12 @@ namespace DataAnalyzer.Models
                 this.configurationModel.DataConfiguration = value;
                 this.NotifyPropertyChanged(ref this.activeConfiguration, value);
             }
+        }
+
+        public IStatAccessorCollection DataAccessorCollection
+        {
+            get => this.dataAccessorCollection;
+            set => this.NotifyPropertyChanged(ref this.dataAccessorCollection, value);
         }
 
         public void ClearLoadedStats()
@@ -74,7 +86,9 @@ namespace DataAnalyzer.Models
 
         public void StructureStats(AppDataConfig.IDataConfiguration applicationConfiguration)
         {
-            this.activeConfiguration.Initialize(this.configurationModel.DataParameterCollection, applicationConfiguration);
+            this.activeConfiguration.Initialize(
+                this.DataAccessorCollection,
+                applicationConfiguration);
 
             this.HeirarchalStats = this.executiveUtilities
                 .GetDataOrDefault(this.configurationModel.ImportExportKey)
@@ -83,7 +97,7 @@ namespace DataAnalyzer.Models
             this.LoadStatNames(this.HeirarchalStats);
         }
 
-        private void LoadStatNames(HeirarchalStats stats)
+        private void LoadStatNames(IHeirarchalStats stats)
         {
             if (stats.Children.Count == 0)
             {
@@ -100,9 +114,16 @@ namespace DataAnalyzer.Models
             switch (e.PropertyName)
             {
                 case nameof(this.configurationModel.ImportExportKey):
-                    this.ActiveConfiguration = this.executiveUtilities
-                        .GetDataOrDefault(this.configurationModel.ImportExportKey)
-                        .DataConfiguration;
+                    this.ActiveConfiguration = this.executiveUtilities.GetDataOr(
+                        this.configurationModel.ImportExportKey,
+                        (_) => new NotSupportedExecutive()).DataConfiguration;
+
+                    if (this.Stats.Any())
+                    {
+                        // TODO --> make the stats model supply methods for getting data out of the AccessorCollection
+                        //   instead of supplying the entire collection
+                        this.DataAccessorCollection = this.dataAccessorLibrary[this.Stats.FirstOrDefault().GetType()];
+                    }
                     break;
             }
         }

@@ -15,6 +15,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         private readonly IDataStructureSetupModel<TDataConfiguration> dataStructureModel;
 
         protected readonly IConfigurationModel configurationModel;
+        protected readonly IStatsModel statsModel;
         protected readonly IMainModel mainModel;
 
         private IImportExportKey selectedDataType = ImportExportKey.Default;
@@ -25,10 +26,12 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         public DataStructureSetupViewModel(
             IConfigurationModel configurationModel,
+            IStatsModel statsModel,
             IMainModel mainModel,
             IDataStructureSetupModel<TDataConfiguration> dataStructureModel)
         {
             this.configurationModel = configurationModel;
+            this.statsModel = statsModel;
             this.mainModel = mainModel;
             this.dataStructureModel = dataStructureModel;
 

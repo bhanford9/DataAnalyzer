@@ -40,23 +40,23 @@ namespace DataAnalyzer.Services
 
         public static T GetDataOrDefault<T>(this IImportExportDataRepository<T> source, IImportExportKey key)
         {
-            source.TryGetData(key, out T Data);
-            return Data;
+            source.TryGetData(key, out T data);
+            return data;
         }
 
         public static bool TryGetData<T>(
             this IImportExportDataRepository<T> source,
             IImportExportKey key,
-            out T Data)
+            out T data)
         {
             try
             {
-                Data = source.GetData(key);
+                data = source.GetData(key);
                 return true;
             }
             catch
             {
-                Data = default;
+                data = default;
                 return false;
             }
         }

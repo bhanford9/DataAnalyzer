@@ -7,11 +7,11 @@ namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCre
     {
         private readonly IReadOnlyDictionary<string, ITypeCreator> creators = new Dictionary<string, ITypeCreator>()
         {
-            { ClassCreationConstants.BOOL_TYPE, new BoolCreator() },
-            { ClassCreationConstants.INT_TYPE, new IntCreator() },
-            { ClassCreationConstants.DOUBLE_TYPE, new DoubleCreator() },
-            { ClassCreationConstants.STRING_TYPE, new StringCreator() },
-            { ClassCreationConstants.DATE_TIME_TYPE, new DateTimeCreator() },
+            { ClassCreationConstants.BOOL_TYPE_DISPLAY, new BoolCreator() },
+            { ClassCreationConstants.INT_TYPE_DISPLAY, new IntCreator() },
+            { ClassCreationConstants.DOUBLE_TYPE_DISPLAY, new DoubleCreator() },
+            { ClassCreationConstants.STRING_TYPE_DISPLAY, new StringCreator() },
+            { ClassCreationConstants.DATE_TIME_TYPE_DISPLAY, new DateTimeCreator() },
         };
 
         public TypeCreationExecutive(IReadOnlyDictionary<string, ITypeCreator> creators)

@@ -50,9 +50,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 
         protected override ObservableCollection<IExcelAction> GetActionCollection() => this.excelSetupModel.AvailableWorkbookActions;
 
-        protected override void InternalLoadWhereToApply(ICheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
+        protected override void InternalLoadWhereToApply(ICheckableTreeViewItem baseItem, ICollection<IHeirarchalStats> heirarchalStats)
         {
-            foreach (HeirarchalStats workbookStats in heirarchalStats)
+            foreach (IHeirarchalStats workbookStats in heirarchalStats)
             {
                 string path = workbookStats.Key.ToString();
 

@@ -47,16 +47,18 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
                                 });
                             }
 
-                            worksheetItem.Description = worksheet.WorksheetActions.Select(x => x.ActionParameters.ToString()).Aggregate((a, b) => a + Environment.NewLine + b);
+                            worksheetItem.Description = worksheet.WorksheetActions
+                                .Select(x => x.ActionParameters.ToString())
+                                .Aggregate((a, b) => a + Environment.NewLine + b);
                         }
                     }
                 }
             }
         }
 
-        protected override void InternalLoadWhereToApply(IActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
+        protected override void InternalLoadWhereToApply(IActionSummaryTreeViewItem baseItem, ICollection<IHeirarchalStats> heirarchalStats)
         {
-            foreach (HeirarchalStats workbookStats in heirarchalStats)
+            foreach (IHeirarchalStats workbookStats in heirarchalStats)
             {
                 string path = workbookStats.Key.ToString();
 
@@ -67,7 +69,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
                     Id = "Workbook"
                 });
 
-                foreach (HeirarchalStats worksheetStats in workbookStats.Children)
+                foreach (IHeirarchalStats worksheetStats in workbookStats.Children)
                 {
                     path += PATH_DELIMITER + worksheetStats.Key.ToString();
 

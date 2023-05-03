@@ -10,7 +10,7 @@ namespace DataAnalyzer.DataImport.DataObjects
 
         public ICollection<IStats> Values { get; set; } = new List<IStats>();
 
-        public ICollection<HeirarchalStats> Children { get; set; } = new List<HeirarchalStats>();
+        public ICollection<IHeirarchalStats> Children { get; set; } = new List<IHeirarchalStats>();
 
         public override IReadOnlyCollection<string> ParameterNames
         {
@@ -30,19 +30,19 @@ namespace DataAnalyzer.DataImport.DataObjects
             }
         }
 
-        public override T GetEnumeratedParameters<T>()
-        {
-            if (Values.Count > 0)
-            {
-                return Values.ElementAt(0).GetEnumeratedParameters<T>();
-            }
+        //public override T GetEnumeratedParameters<T>()
+        //{
+        //    if (Values.Count > 0)
+        //    {
+        //        return Values.ElementAt(0).GetEnumeratedParameters<T>();
+        //    }
 
-            if (Children.Count > 0)
-            {
-                return Children.ElementAt(0).GetEnumeratedParameters<T>();
-            }
+        //    if (Children.Count > 0)
+        //    {
+        //        return Children.ElementAt(0).GetEnumeratedParameters<T>();
+        //    }
 
-            return default;
-        }
+        //    return default;
+        //}
     }
 }

@@ -151,7 +151,7 @@ namespace DataAnalyzer.ViewModels
             // ViewModels
             builder.RegisterType<IApplicationConfigurationViewModel, ApplicationConfigurationViewModel>();
             builder.RegisterType<IConfigurationCreationViewModel, ConfigurationCreationViewModel>();
-            builder.RegisterType<IConfigurationExecutionViewModel, ConfigurationExecutionViewModel>();
+            builder.RegisterTypeInstance<IConfigurationExecutionViewModel, ConfigurationExecutionViewModel>();
             builder.RegisterType<IImportConfigurationViewModel, ImportConfigurationViewModel>();
             builder.RegisterType<ILoadedConfigurationItemViewModel, LoadedConfigurationItemViewModel>();
             builder.RegisterType<IMainViewModel, MainViewModel>();

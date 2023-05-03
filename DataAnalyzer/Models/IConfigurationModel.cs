@@ -1,5 +1,4 @@
-﻿using DataAnalyzer.Common.DataParameters;
-using DataAnalyzer.Models.ImportModels;
+﻿using DataAnalyzer.Models.ImportModels;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.Enums;
 using DataAnalyzer.StatConfigurations;
@@ -17,7 +16,7 @@ namespace DataAnalyzer.Models
         string ConfigurationFilePath { get; set; }
         string ConfigurationName { get; set; }
         IDataConfiguration DataConfiguration { get; set; }
-        IDataParameterCollection DataParameterCollection { get; set; }
+        //IDataParameterCollection DataAccessorCollection { get; set; }
         string ExecutiveConfigurationDirectory { get; set; }
         string ExecutiveConfigurationName { get; set; }
         IScraperFlavor Flavor { get; set; }

@@ -9,9 +9,9 @@ namespace DataAnalyzer.Common.DataOrganizers
     internal class GroupingDataOrganizer<T> : DataOrganizer<GroupingDataConfiguration<T>>, IGroupingDataOrganizer
         where T : ApplicationConfigurations.DataConfigurations.IDataConfiguration
     {
-        protected override HeirarchalStats InternalOrganize(GroupingDataConfiguration<T> configuration, ICollection<IStats> data)
+        protected override IHeirarchalStats InternalOrganize(GroupingDataConfiguration<T> configuration, ICollection<IStats> data)
         {
-            HeirarchalStats heirarchalStats = new();
+            IHeirarchalStats heirarchalStats = new HeirarchalStats();
 
             ILinkedGroupingConfiguration groupingConfigurations = new LinkedGroupingConfiguration();
             groupingConfigurations.AddCondition(configuration.GroupingConfigurations.First().GetProperty);
@@ -31,7 +31,7 @@ namespace DataAnalyzer.Common.DataOrganizers
         }
 
         private void ApplyNestedGrouping(
-          HeirarchalStats heirarchalStats,
+          IHeirarchalStats heirarchalStats,
           ICollection<IStats> stats,
           ILinkedGroupingConfiguration groupingConfigurations)
         {
@@ -42,7 +42,7 @@ namespace DataAnalyzer.Common.DataOrganizers
 
             groups.ToList().ForEach(group =>
             {
-                HeirarchalStats stats = new HeirarchalStats { Key = group.Key };
+                IHeirarchalStats stats = new HeirarchalStats { Key = group.Key };
                 group.ToList().ForEach(x => stats.Values.Add(x));
 
                 if (groupingConfigurations.Next != null)

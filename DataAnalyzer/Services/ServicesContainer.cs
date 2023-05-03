@@ -35,11 +35,11 @@ namespace DataAnalyzer.Services
             builder.RegisterInstance<ITypeCreationExecutive, TypeCreationExecutive>(_ =>
                 new TypeCreationExecutive(new Dictionary<string, ITypeCreator>()
                 {
-                    { ClassCreationConstants.BOOL_TYPE, Resolver.Resolve<IBoolCreator>() },
-                    { ClassCreationConstants.INT_TYPE, Resolver.Resolve<IIntCreator>() },
-                    { ClassCreationConstants.DOUBLE_TYPE, Resolver.Resolve<IDoubleCreator>() },
-                    { ClassCreationConstants.STRING_TYPE, Resolver.Resolve<IStringCreator>() },
-                    { ClassCreationConstants.DATE_TIME_TYPE, Resolver.Resolve<IDateTimeCreator>() },
+                    { ClassCreationConstants.BOOL_TYPE_DISPLAY, Resolver.Resolve<IBoolCreator>() },
+                    { ClassCreationConstants.INT_TYPE_DISPLAY, Resolver.Resolve<IIntCreator>() },
+                    { ClassCreationConstants.DOUBLE_TYPE_DISPLAY, Resolver.Resolve<IDoubleCreator>() },
+                    { ClassCreationConstants.STRING_TYPE_DISPLAY, Resolver.Resolve<IStringCreator>() },
+                    { ClassCreationConstants.DATE_TIME_TYPE_DISPLAY, Resolver.Resolve<IDateTimeCreator>() },
                 }));
             builder.RegisterTypeAncestors<ITypeCreator, IBoolCreator, BoolCreator>();
             builder.RegisterTypeAncestors<ITypeCreator, IDateTimeCreator, DateTimeCreator>();

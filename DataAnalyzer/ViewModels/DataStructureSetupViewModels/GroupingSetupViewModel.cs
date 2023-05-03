@@ -11,20 +11,18 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 {
     internal class GroupingSetupViewModel : DataStructureSetupViewModel<GroupingDataConfiguration>, IGroupingSetupViewModel
     {
-        private readonly IStructureExecutiveCommissioner structureExecutiveCommissioner;
         private readonly IGroupingSetupModel model;
 
         private int groupingLayersCount = 0;
 
         public GroupingSetupViewModel(
             IConfigurationModel configurationModel,
+            IStatsModel statsModel,
             IMainModel mainModel,
             INotSupportedSetupViewModel defaultViewModel,
-            IGroupingSetupModel model,
-            IStructureExecutiveCommissioner structureExecutiveCommissioner)
-            : base(configurationModel, mainModel, model)
+            IGroupingSetupModel model)
+            : base(configurationModel, statsModel, mainModel, model)
         {
-            this.structureExecutiveCommissioner = structureExecutiveCommissioner;
             this.Default = defaultViewModel;
             this.model = model;
             this.model.PropertyChanged += this.ModelPropertyChanged;
@@ -44,8 +42,9 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
                 {
                     this.ConfigurationGroupings.Add(
                         new ConfigurationGroupingViewModel(
+                            this.statsModel,
                             this.configurationModel,
-                            this.structureExecutiveCommissioner,
+                            this,
                             this.ConfigurationGroupings.Count));
                 }
 
@@ -89,8 +88,9 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             foreach (IGroupingConfiguration groupingConfig in this.model.DataConfiguration.GroupingConfiguration)
             {
                 this.ConfigurationGroupings.Add(new ConfigurationGroupingViewModel(
+                    this.statsModel,
                     this.configurationModel,
-                    this.structureExecutiveCommissioner,
+                    this,
                     level++)
                 {
                     Name = groupingConfig.GroupName,

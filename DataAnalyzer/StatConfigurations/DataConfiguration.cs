@@ -9,9 +9,9 @@ namespace DataAnalyzer.StatConfigurations
     internal abstract class DataConfiguration<T> : IDataConfiguration
         where T : AppDataConfig.IDataConfiguration
     {
-        public void Initialize(IDataParameterCollection parameters, AppDataConfig.IDataConfiguration applicationConfiguration) =>
+        public void Initialize(IStatAccessorCollection parameters, AppDataConfig.IDataConfiguration applicationConfiguration) =>
             InternalInit(parameters, (T)applicationConfiguration);
 
-        protected abstract void InternalInit(IDataParameterCollection parameters, T configuration);
+        protected abstract void InternalInit(IStatAccessorCollection parameters, T configuration);
     }
 }

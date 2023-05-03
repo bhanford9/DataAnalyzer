@@ -77,6 +77,6 @@ namespace DataAnalyzer.Services
 
         public override int GetHashCode() => this.hashCode;
 
-        public override string ToString() => this.Name;
+        public override string ToString() => this.name;
     }
 }

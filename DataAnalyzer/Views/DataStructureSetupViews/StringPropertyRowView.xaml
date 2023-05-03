@@ -18,7 +18,7 @@
               IsChecked="{Binding Include}"/>
 
     <TextBlock Grid.Column="1"
-               Text="{Binding CsvName}"
+               Text="{Binding SerializedName}"
                HorizontalAlignment="Stretch"
                TextAlignment="Center"/>
 

@@ -1,12 +1,22 @@
-﻿namespace DataScraper.DataSources
+﻿using System.IO;
+
+namespace DataScraper.DataSources
 {
-    public class FileDataSource : DataSource, IFileDataSource
+    public abstract class FileDataSource : DataSource, IFileDataSource
     {
-        public FileDataSource(string filePath)
+        public string FilePath { get; private set; }
+
+        public IFileDataSource Initialize(string filePath)
         {
             this.FilePath = filePath;
+            return this;
         }
 
-        public string FilePath { get; init; }
+        public abstract string GetExpectedExtension();
+
+        protected override bool IsValidSource()
+            => !string.IsNullOrWhiteSpace(this.FilePath)
+            && Path.GetExtension(this.FilePath).Equals(this.GetExpectedExtension());
+
     }
 }

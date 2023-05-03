@@ -19,15 +19,14 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 
         public ImportExecutiveCommissioner(
             IConfigurationModel configurationModel,
-            IStatsModel statsModel,
-            IImportFromFileModel importFromFileModel)
+            IImportFromFileViewModel importFromFileViewModel)
         {
             this.configurationModel = configurationModel;
             configurationModel.PropertyChanged += ConfigurationModelPropertyChanged;
 
             viewModelMap = new Dictionary<IImportType, IImportViewModel>()
             {
-                { new FileImportType(), new ImportFromFileViewModel(statsModel, importFromFileModel) },
+                { new FileImportType(), importFromFileViewModel },
             };
         }
 

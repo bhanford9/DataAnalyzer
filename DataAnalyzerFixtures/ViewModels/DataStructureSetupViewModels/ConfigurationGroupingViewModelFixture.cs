@@ -15,9 +15,13 @@ namespace DataAnalyzerFixtures.ViewModels.DataStructureSetupViewModels
 
         internal Mock<IConfigurationModel> MockConfigurationModel { get; set; }
 
+        internal Mock<IStatsModel> MockStatsModel { get; set; }
+
         internal Mock<IStructureExecutiveCommissioner> MockExecutiveCommissioner { get; set; }
 
-        internal string DataParamListPropName => nameof(this.MockConfigurationModel.Object.DataParameterCollection);
+        internal Mock<IGroupingSetupViewModel> MockGroupingSetupViewModel { get; set; }
+
+        internal string DataParamListPropName => nameof(this.MockStatsModel.Object.DataAccessorCollection);
 
         internal PropertyChangedEventArgs DataParamListChangeArgs => this.GetNamedEventArgs(this.DataParamListPropName);
 

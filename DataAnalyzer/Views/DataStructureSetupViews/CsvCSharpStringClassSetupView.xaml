@@ -74,7 +74,7 @@
                  Text="Include"/>
 
       <TextBlock Grid.Column="1"
-                 Text="CSV Name"/>
+                 Text="Serialized Name"/>
 
       <TextBlock Grid.Column="2"
                  Text="Property Name"/>

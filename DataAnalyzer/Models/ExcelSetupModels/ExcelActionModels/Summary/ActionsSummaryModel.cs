@@ -27,6 +27,6 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
 
         public void SaveConfiguration(string configName) => this.excelSetupModel.SaveWorkbookConfiguration(configName);
 
-        protected abstract void InternalLoadWhereToApply(IActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> hierarchalStats);
+        protected abstract void InternalLoadWhereToApply(IActionSummaryTreeViewItem baseItem, ICollection<IHeirarchalStats> hierarchalStats);
     }
 }

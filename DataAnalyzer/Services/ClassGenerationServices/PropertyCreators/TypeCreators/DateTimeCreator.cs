@@ -6,6 +6,7 @@
 
         public override string Create(string dataType) => "DateTime";
 
-        public override bool IsApplicable(string dataType) => dataType.Equals(ClassCreationConstants.DATE_TIME_TYPE);
+        public override bool IsApplicable(string dataType)
+            => dataType.Equals(ClassCreationConstants.DATE_TIME_TYPE_DISPLAY);
     }
 }

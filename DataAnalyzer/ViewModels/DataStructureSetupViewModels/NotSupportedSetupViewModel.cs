@@ -9,9 +9,10 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
     {
         public NotSupportedSetupViewModel(
             IConfigurationModel configurationModel,
+            IStatsModel statsModel,
             IMainModel mainModel,
             INotSupportedSetupModel model)
-            : base(configurationModel, mainModel, model) { }
+            : base(configurationModel, statsModel, mainModel, model) { }
 
         public override IDataStructureSetupViewModel Default => this;
 

@@ -17,7 +17,7 @@ namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators
             this.accessibilityCreationExecutive = accessibilityCreationExecutive;
         }
 
-        // this should just be static and pass parameters into the method instead
+        // this should just be static and pass statAccessors into the method instead
         public string Create(string propertyName, string dataType, string accessibility)
         {
             string typeString = this.typeCreationExecutive.Create(dataType);

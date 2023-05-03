@@ -56,9 +56,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
             }
         }
 
-        protected override void InternalLoadWhereToApply(IActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
+        protected override void InternalLoadWhereToApply(IActionSummaryTreeViewItem baseItem, ICollection<IHeirarchalStats> heirarchalStats)
         {
-            foreach (HeirarchalStats workbookStats in heirarchalStats)
+            foreach (IHeirarchalStats workbookStats in heirarchalStats)
             {
                 string path = workbookStats.Key.ToString();
 
@@ -69,7 +69,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
                     Id = "Workbook"
                 });
 
-                foreach (HeirarchalStats worksheetStats in workbookStats.Children)
+                foreach (IHeirarchalStats worksheetStats in workbookStats.Children)
                 {
                     path += PATH_DELIMITER + worksheetStats.Key.ToString();
 
@@ -80,7 +80,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
                         Id = "Worksheet"
                     });
 
-                    foreach (HeirarchalStats dataClusters in worksheetStats.Children)
+                    foreach (IHeirarchalStats dataClusters in worksheetStats.Children)
                     {
                         path += PATH_DELIMITER + dataClusters.Key.ToString();
 

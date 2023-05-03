@@ -1,6 +1,7 @@
-﻿using DataAnalyzer.Common.Mvvm;
+﻿using DataAnalyzer.Common.DataParameters;
+using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.DataImport.DataObjects;
 using DataAnalyzer.Models;
-using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,8 +13,10 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 {
     internal class ConfigurationGroupingViewModel : BasePropertyChanged, IConfigurationGroupingViewModel
     {
+        private readonly IStatsModel statsModel;
         private readonly IConfigurationModel configurationModel;
-        private readonly IStructureExecutiveCommissioner executiveCommissioner;
+        private readonly IGroupingSetupViewModel parentViewModel;
+        //private readonly IStructureExecutiveCommissioner executiveCommissioner;
 
         private readonly int level = 0;
         private string name = string.Empty;
@@ -25,18 +28,22 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         private readonly BaseCommand removeParameter;
 
         public ConfigurationGroupingViewModel(
+            IStatsModel statsModel,
             IConfigurationModel configurationModel,
-            IStructureExecutiveCommissioner executiveCommissioner,
+            IGroupingSetupViewModel parent,
+            //IStructureExecutiveCommissioner executiveCommissioner,
             int level)
         {
+            this.statsModel = statsModel;
             this.configurationModel = configurationModel;
-            this.executiveCommissioner = executiveCommissioner;
+            this.parentViewModel = parent;
+            //this.executiveCommissioner = executiveCommissioner;
             this.level = level;
 
             this.addParameter = new BaseCommand(obj => this.DoAddParameter());
             this.removeParameter = new BaseCommand(obj => this.DoRemoveParameter(obj.ToString()));
 
-            configurationModel.PropertyChanged += this.ConfigurationCreationModelPropertyChanged;
+            statsModel.PropertyChanged += this.StatsModelPropertyChanged;
 
             this.LoadParameters();
         }
@@ -93,8 +100,9 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         private void DoAddParameter()
         {
             this.Children.Add(new ConfigurationGroupingViewModel(
+                this.statsModel,
                 this.configurationModel,
-                this.executiveCommissioner,
+                this.parentViewModel,
                 this.level)
             { IsSubRule = true, Parent = this });
 
@@ -109,9 +117,10 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             }
             else
             {
+                this.parentViewModel.RemoveGroupingConfiguration(this.level);
                 // TODO --> I don't think this was doing anything 
-                (this.executiveCommissioner.GetInitializedViewModel() as GroupingSetupViewModel)
-                    .RemoveGroupingConfiguration(this.level);
+                //(this.executiveCommissioner.GetInitializedViewModel() as GroupingSetupViewModel)
+                //    .RemoveGroupingConfiguration(this.level);
             }
 
             this.NotifyPropertyChanged(nameof(this.HasChildren));
@@ -119,22 +128,23 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         private void LoadParameters()
         {
-            if (this.configurationModel.DataParameterCollection != null)
+            if (this.statsModel.DataAccessorCollection != null)
             {
-                this.ParameterNames = this.configurationModel.DataParameterCollection.GetParameters()
-                  .Where(x => x.CanGroupBy)
-                  .Select(x => x.Name)
-                  .ToList();
+                this.ParameterNames = this.statsModel.DataAccessorCollection.GetStatAccessors()
+                    .OfType<IGroupableStatAccessor<IStats>>()
+                    .Where(x => x.CanGroupBy)
+                    .Select(x => x.Name)
+                    .ToList();
             }
         }
 
-        private void ConfigurationCreationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void StatsModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case nameof(this.configurationModel.DataParameterCollection):
+                case nameof(this.statsModel.DataAccessorCollection):
                     this.LoadParameters();
-                    break;
+                break;
                 default:
                     break;
             }

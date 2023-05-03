@@ -1,5 +1,4 @@
-﻿using DataAnalyzer.Services.Enums;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace DataAnalyzer.DataImport.DataObjects.CsvStats
 {
@@ -12,8 +11,8 @@ namespace DataAnalyzer.DataImport.DataObjects.CsvStats
 
         public override IReadOnlyCollection<string> ParameterNames { get; }
 
-        public ComparableList CsvNames { get; set; } = new ComparableList();
+        public IComparableList<string> CsvNames { get; set; } = new ComparableList<string>();
 
-        public override T GetEnumeratedParameters<T>() => (T)(object)StatType.CsvNames;
+        //public override T GetEnumeratedParameters<T>() => (T)(object)StatType.CsvNames;
     }
 }

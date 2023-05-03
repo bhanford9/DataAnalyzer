@@ -1,3 +1,22 @@
+# Application
+[description about what the application is and the 3 polymorphic layers]
+
+## Import, Category, Flavor, Export
+[description about the significance of these terms and how they drive everything in the application]
+
+## MVVM (Quick)
+[description about the different layers in the application]
+
+## Executive Commissioners (rename Commissioners)
+[description about what they are and why]
+
+## Model Layer
+[description about application-wide model structure]
+
+- Configuration Model - Stores a representation of the application data that will be saved to configuration files in order to manage the state of the application to try to bring it back up where the user left off in a fluid way.
+- Main Model - Stores a representation of the application stateful data that all models/viewmodels need to access throughout the application
+- Stats Model - Stores a representation of the imported data that will be used by each layer of the application
+
 # Data Import
 
 ## Overview
@@ -60,13 +79,19 @@ When creating a new *Data Converter*, the first thing you'll want to do is make 
 3. Check if an `IDataConverter` already exists for your needs and make one if one does not exist
 4. Add your *Data Converter* to the `DataConverterLibrary`
 
+## Services Layer
+[Add content about this layer supplying general utilities across the application]
+
+- `IAggregateExecutives` --> needs created for your new type combination. it will hold utilities for your specific data combination throughout the rest of the layers in the application
+- This will lead you to seeing you need an `IStatConfiguration`, `IDataConfiguration` and an `IDataOrganizer` for your new type combination. Check to see if one already exists that you can use before creating your own
+  - `IStatConfiguration` is application mutable-state of your data. This data structure will hold your imported data in a structured way for the export step.
+  - `IDataConfiguration` is application save-state of your data. it should handle to/from file configuration
+  - `IDataOrganizer` is the object that will perform the action of converting your data configuration into a structured representation of the data for whatever export type is going to be executed
+- `ExecutiveUtilitiesRepository` --> needs updated with the `IAggregateExecutives` you created
+
+At this point, if you are using a pre-existing *Import Type* (i.e. importing from a file), then you might be able to fully import your data into the application. The next step would then be to move on to the Data Structuring section below. If you had to create a new *Import Type* or if the existing *Import Types* do not supply the needed functionality and you want to update them, then continue on within this Data Import section.
+
 ## Model Layer
-
-`TODO: There are three shared models across the application that need to be better defined and organized`
-
-- Configuration Model - Stores a representation of the application data that will be saved to configuration files in order to manage the state of the application to try to bring it back up where the user left off in a fluid way.
-- Main Model - Stores a representation of the application stateful data that all models/viewmodels need to access throughout the application
-- Stats Model - Stores a representation of the imported data that will be used by each layer of the application
 
 ## View Model Layer
 
@@ -75,3 +100,12 @@ When creating a new *Data Converter*, the first thing you'll want to do is make 
 - might need a new UI
 - if new UI add boolean for executive commissioner
 - add keys to necessary structures
+
+# Data Structuring
+
+## Overview
+
+## Most Importantly
+`Structure Executive Commissioner` has 2 things driving this part of the application:
+1. Setup View Model Repository that maps the currently selected *Import Type*, *Category*, *Flavor* and *Export Type* to a respective View Model
+2. View Display Map that maps the visibility of each view based on the View Model from (1)

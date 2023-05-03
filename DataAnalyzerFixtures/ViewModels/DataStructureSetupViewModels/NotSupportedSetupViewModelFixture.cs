@@ -14,12 +14,14 @@ namespace DataAnalyzerFixtures.ViewModels.DataStructureSetupViewModels
 
         internal Mock<IConfigurationModel> MockConfigurationModel { get; set; }
 
+        internal Mock<IStatsModel> MockStatsModel { get; set; }
+
         internal Mock<IMainModel> MockMainModel { get; set; }
 
         internal Mock<INotSupportedSetupViewModel> MockDefaultSetupViewModel { get; set; }
 
         internal Mock<INotSupportedSetupModel> MockNotSupportedSetupModel { get; set; }
-        
+
         internal NotSupportedSetupViewModel ViewModel { get; set; }
     }
 }

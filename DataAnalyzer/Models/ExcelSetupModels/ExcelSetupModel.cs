@@ -87,13 +87,13 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             // if its not empty, then the previous configuration was already loaded in
             if (this.ExcelConfiguration.WorkbookModels.Count == 0)
             {
-                foreach (HeirarchalStats workbookStats in this.statsModel.HeirarchalStats.Children)
+                foreach (IHeirarchalStats workbookStats in this.statsModel.HeirarchalStats.Children)
                 {
                     WorkbookModel workbookModel = new WorkbookModel { Name = workbookStats.Key.ToString() };
-                    foreach (HeirarchalStats worksheetStats in workbookStats.Children)
+                    foreach (IHeirarchalStats worksheetStats in workbookStats.Children)
                     {
                         WorksheetModel worksheetModel = new WorksheetModel { WorksheetName = worksheetStats.Key.ToString() };
-                        foreach (HeirarchalStats dataclusterStats in worksheetStats.Children)
+                        foreach (IHeirarchalStats dataclusterStats in worksheetStats.Children)
                         {
                             DataClusterModel dataClusterModel = new DataClusterModel { Name = dataclusterStats.Key.ToString() };
                             foreach (IStats rowStats in dataclusterStats.Values)

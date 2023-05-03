@@ -1,5 +1,4 @@
-﻿using DataAnalyzer.Services.Enums;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace DataAnalyzer.DataImport.DataObjects.TimeStats.QueryableTimeStats
 {
@@ -25,6 +24,6 @@ namespace DataAnalyzer.DataImport.DataObjects.TimeStats.QueryableTimeStats
 
         protected override ICollection<string> InternalParameterNames => parameterNames;
 
-        public override T GetEnumeratedParameters<T>() => (T)(object)StatType.Queryable;
+        //public override T GetEnumeratedParameters<T>() => (T)(object)StatType.Queryable;
     }
 }

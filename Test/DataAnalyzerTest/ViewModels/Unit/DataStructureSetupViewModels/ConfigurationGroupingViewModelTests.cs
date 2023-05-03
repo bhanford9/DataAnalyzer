@@ -22,7 +22,9 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             this.shared.MockConfigurationModel.Setup(x => x.ConfigurationDirectory).Returns(string.Empty);
             this.shared.MockConfigurationModel.Setup(x => x.ConfigurationName).Returns(string.Empty);
 
+            this.shared.MockStatsModel = new();
             this.shared.MockExecutiveCommissioner = new();
+            this.shared.MockGroupingSetupViewModel = new();
         }
 
         [Fact]
@@ -32,8 +34,8 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
 
             this.CreateViewModel();
 
-            mockParameterCollection.Verify(x => x.GetParameters(), Times.Once);
-            AssertionExtensions.CountIs(mockParameterCollection.Object.GetParameters(), 3);
+            mockParameterCollection.Verify(x => x.GetStatAccessors(), Times.Once);
+            AssertionExtensions.CountIs(mockParameterCollection.Object.GetStatAccessors(), 3);
             AssertionExtensions.CountIs(this.shared.ViewModel.ParameterNames, 2);
             Assert.True(this.shared.ViewModel.ParameterNames.First().Equals("Groupable"));
             Assert.True(this.shared.ViewModel.ParameterNames.Last().Equals("Groupable"));
@@ -42,13 +44,13 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
         [Fact]
         public void ShouldNotLoadParametersIfModelIsInvalid()
         {
-            this.shared.MockConfigurationModel
-                .Setup(x => x.DataParameterCollection)
+            this.shared.MockStatsModel
+                .Setup(x => x.DataAccessorCollection)
                 .Returns(() => null);
 
             this.CreateViewModel();
 
-            this.shared.MockConfigurationModel.Verify(x => x.DataParameterCollection.GetParameters(), Times.Never);
+            this.shared.MockStatsModel.Verify(x => x.DataAccessorCollection.GetStatAccessors(), Times.Never);
         }
 
         [Fact]
@@ -165,28 +167,28 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
 
             this.SetupConfigModelDataParameterCollection();
 
-            this.shared.MockConfigurationModel.Raise(
-                this.shared.GetEventAction<IConfigurationModel>(),
+            this.shared.MockStatsModel.Raise(
+                this.shared.GetEventAction<IStatsModel>(),
                 this.shared.DataParamListChangeArgs);
 
             AssertionExtensions.CountIs(this.shared.ViewModel.ParameterNames, 2);
         }
 
-        private Mock<IDataParameterCollection> SetupConfigModelDataParameterCollection()
+        private Mock<IStatAccessorCollection> SetupConfigModelDataParameterCollection()
         {
-            Mock<IDataParameter<IStats>> groupable = new();
+            Mock<IGroupableStatAccessor<IStats>> groupable = new();
             groupable.Setup(x => x.CanGroupBy).Returns(true);
             groupable.Setup(x => x.Name).Returns("Groupable");
-            Mock<IDataParameter<IStats>> notGroupable = new();
+            Mock<IGroupableStatAccessor<IStats>> notGroupable = new();
             notGroupable.Setup(x => x.CanGroupBy).Returns(false);
             notGroupable.Setup(x => x.Name).Returns("NotGroupable");
 
-            Mock<IDataParameterCollection> mockParameterCollection = new();
-            mockParameterCollection.Setup(x => x.GetParameters()).Returns(() =>
+            Mock<IStatAccessorCollection> mockParameterCollection = new();
+            mockParameterCollection.Setup(x => x.GetStatAccessors()).Returns(() =>
                 new[] { groupable.Object, notGroupable.Object, groupable.Object });
 
-            this.shared.MockConfigurationModel
-                .Setup(x => x.DataParameterCollection)
+            this.shared.MockStatsModel
+                .Setup(x => x.DataAccessorCollection)
                 .Returns(mockParameterCollection.Object);
 
             return mockParameterCollection;
@@ -194,8 +196,9 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
 
         private void CreateViewModel(int level = 0) =>
             this.shared.ViewModel = new(
+                this.shared.MockStatsModel.Object,
                 this.shared.MockConfigurationModel.Object,
-                this.shared.MockExecutiveCommissioner.Object,
+                this.shared.MockGroupingSetupViewModel.Object,
                 level);
     }
 }

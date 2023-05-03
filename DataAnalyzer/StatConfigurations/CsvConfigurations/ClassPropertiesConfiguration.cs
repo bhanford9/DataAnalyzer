@@ -7,11 +7,13 @@ namespace DataAnalyzer.StatConfigurations.CsvConfigurations
 {
     internal class ClassPropertiesConfiguration : DataConfiguration<AppDataConfig.CsvNamesDataConfiguration>, IClassPropertiesConfiguration
     {
-        public string ClassName = string.Empty;
+        public string ClassName { get; set; } = string.Empty;
 
         public List<string> PropertyNames { get; set; } = new();
 
-        protected override void InternalInit(IDataParameterCollection parameters, AppDataConfig.CsvNamesDataConfiguration configuration)
+        protected override void InternalInit(
+            IStatAccessorCollection parameters,
+            AppDataConfig.CsvNamesDataConfiguration configuration)
         {
             ClassName = configuration.ClassName;
             PropertyNames = configuration.CsvNameAndProperties

@@ -143,7 +143,7 @@ namespace DataAnalyzer.ViewModels.ExecutionViewModels
         {
             foreach (var prop in this.PropertyItems)
             {
-                prop.SelectedType = ClassCreationConstants.STRING_TYPE;
+                prop.SelectedType = ClassCreationConstants.STRING_TYPE_DISPLAY;
             }
         }
 

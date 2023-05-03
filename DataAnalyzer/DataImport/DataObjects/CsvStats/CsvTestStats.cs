@@ -1,5 +1,4 @@
-﻿using DataAnalyzer.Services.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace DataAnalyzer.DataImport.DataObjects.CsvStats
@@ -27,6 +26,6 @@ namespace DataAnalyzer.DataImport.DataObjects.CsvStats
 
         public string Gender { get; set; } = string.Empty;
 
-        public override T GetEnumeratedParameters<T>() => (T)(object)StatType.Queryable;
+        //public override T GetEnumeratedParameters<T>() => (T)(object)StatType.Queryable;
     }
 }

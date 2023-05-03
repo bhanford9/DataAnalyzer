@@ -85,15 +85,15 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             this.shared.MockCsvCSharpStringClassSetupModel.Object.DataConfiguration.CsvNameAndProperties = expectedNewValues;
 
             this.CreateViewModel();
-            this.shared.ViewModel.CsvPropertyRows.Add(new StringPropertyRowViewModel() { CsvName = "Bad", });
+            this.shared.ViewModel.CsvPropertyRows.Add(new StringPropertyRowViewModel() { SerializedName = "Bad", });
 
             this.shared.ViewModel.LoadViewModelFromConfiguration();
 
-            AssertionExtensions.CountIs(this.shared.ViewModel.CsvPropertyRows.Where(x => x.CsvName.Equals("Bad")), 0);
+            AssertionExtensions.CountIs(this.shared.ViewModel.CsvPropertyRows.Where(x => x.SerializedName.Equals("Bad")), 0);
             AssertionExtensions.CountIs(this.shared.ViewModel.CsvPropertyRows, 3);
             for (int i = 0; i < this.shared.ViewModel.CsvPropertyRows.Count; i++)
             {
-                Assert.Equal(expectedNewValues[i].CsvName, this.shared.ViewModel.CsvPropertyRows[i].CsvName);
+                Assert.Equal(expectedNewValues[i].CsvName, this.shared.ViewModel.CsvPropertyRows[i].SerializedName);
                 Assert.Equal(expectedNewValues[i].PropertyName, this.shared.ViewModel.CsvPropertyRows[i].PropertyName);
                 Assert.Equal(expectedNewValues[i].Include, this.shared.ViewModel.CsvPropertyRows[i].Include);
             }
@@ -146,19 +146,19 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             List<string> expectedNames = new[] { "A", "B", "C" }.ToList();
             this.shared.MockStatsModel.Setup(x => x.Stats).Returns(new List<IStats>()
             {
-                new CsvNamesStats() { CsvNames = new(expectedNames)}
+                new CsvNamesStats() { CsvNames = new ComparableList<string>(expectedNames)}
             });
 
             this.CreateViewModel();
-            this.shared.ViewModel.CsvPropertyRows.Add(new StringPropertyRowViewModel() { CsvName = "Bad", });
+            this.shared.ViewModel.CsvPropertyRows.Add(new StringPropertyRowViewModel() { SerializedName = "Bad", });
 
             this.shared.ViewModel.Initialize();
 
-            AssertionExtensions.CountIs(this.shared.ViewModel.CsvPropertyRows.Where(x => x.CsvName.Equals("Bad")), 0);
+            AssertionExtensions.CountIs(this.shared.ViewModel.CsvPropertyRows.Where(x => x.SerializedName.Equals("Bad")), 0);
             AssertionExtensions.CountIs(this.shared.ViewModel.CsvPropertyRows, 3);
             for (int i = 0; i < this.shared.ViewModel.CsvPropertyRows.Count; i++)
             {
-                Assert.Equal(expectedNames[i], this.shared.ViewModel.CsvPropertyRows[i].CsvName);
+                Assert.Equal(expectedNames[i], this.shared.ViewModel.CsvPropertyRows[i].SerializedName);
                 Assert.Equal(expectedNames[i], this.shared.ViewModel.CsvPropertyRows[i].PropertyName);
                 Assert.True(this.shared.ViewModel.CsvPropertyRows[i].Include);
             }
@@ -183,6 +183,7 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
 
             INotSupportedSetupViewModel defaultViewModel = new NotSupportedSetupViewModel(
                 this.shared.MockConfigurationModel.Object,
+                this.shared.MockStatsModel.Object,
                 this.shared.MockMainModel.Object,
                 Mock.Of<INotSupportedSetupModel>());
 
@@ -305,17 +306,17 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
 
             this.CreateViewModel();
             this.shared.ViewModel.StartListeners();
-            this.shared.ViewModel.CsvPropertyRows.Add(new StringPropertyRowViewModel() { CsvName = "Bad", });
+            this.shared.ViewModel.CsvPropertyRows.Add(new StringPropertyRowViewModel() { SerializedName = "Bad", });
 
             this.shared.MockCsvCSharpStringClassSetupModel.Raise(
                 this.shared.GetEventAction<ICsvCSharpStringClassSetupModel>(),
                 this.shared.DataConfigChangeArgs);
 
-            AssertionExtensions.CountIs(this.shared.ViewModel.CsvPropertyRows.Where(x => x.CsvName.Equals("Bad")), 0);
+            AssertionExtensions.CountIs(this.shared.ViewModel.CsvPropertyRows.Where(x => x.SerializedName.Equals("Bad")), 0);
             AssertionExtensions.CountIs(this.shared.ViewModel.CsvPropertyRows, 3);
             for (int i = 0; i < this.shared.ViewModel.CsvPropertyRows.Count; i++)
             {
-                Assert.Equal(expectedNewValues[i].CsvName, this.shared.ViewModel.CsvPropertyRows[i].CsvName);
+                Assert.Equal(expectedNewValues[i].CsvName, this.shared.ViewModel.CsvPropertyRows[i].SerializedName);
                 Assert.Equal(expectedNewValues[i].PropertyName, this.shared.ViewModel.CsvPropertyRows[i].PropertyName);
                 Assert.Equal(expectedNewValues[i].Include, this.shared.ViewModel.CsvPropertyRows[i].Include);
             }
@@ -368,7 +369,7 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             .GetPropertyRowData()
             .Select(x => new StringPropertyRowViewModel()
             {
-                CsvName = x.CsvName,
+                SerializedName = x.CsvName,
                 PropertyName = x.PropertyName,
                 Include = x.Include,
             })

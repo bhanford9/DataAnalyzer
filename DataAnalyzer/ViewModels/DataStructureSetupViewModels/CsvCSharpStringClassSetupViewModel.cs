@@ -13,9 +13,8 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
     {
         private string className = string.Empty;
 
-        // optionally may want to move this into the parent as the interface
+        // optionally may want to move this into the parentViewModel as the interface
         private readonly ICsvCSharpStringClassSetupModel model;
-        private readonly IStatsModel statsModel;
 
         public CsvCSharpStringClassSetupViewModel(
             IConfigurationModel configurationModel,
@@ -23,10 +22,9 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             IStatsModel statsModel,
             INotSupportedSetupViewModel defaultViewModel,
             ICsvCSharpStringClassSetupModel model)
-            : base(configurationModel, mainModel, model)
+            : base(configurationModel, statsModel, mainModel, model)
         {
             this.model = model;
-            this.statsModel = statsModel;
             this.Default = defaultViewModel;
             this.model.PropertyChanged += this.ModelPropertyChanged;
         }
@@ -69,7 +67,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             {
                 this.CsvPropertyRows.Add(new StringPropertyRowViewModel()
                 {
-                    CsvName = x.CsvName,
+                    SerializedName = x.CsvName,
                     PropertyName = x.PropertyName,
                     Include = x.Include,
                 });
@@ -85,7 +83,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             this.CsvPropertyRows
                 .Where(row => row.Include)
                 .ToList()
-                .ForEach(row => this.model.DataConfiguration.CsvNameAndProperties.Add((row.CsvName, row.PropertyName, row.Include)));
+                .ForEach(row => this.model.DataConfiguration.CsvNameAndProperties.Add((row.SerializedName, row.PropertyName, row.Include)));
         }
 
         public override void SaveConfiguration() => this.model.SaveConfiguration();
@@ -101,7 +99,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
                     .ToList()
                     .ForEach(name => this.CsvPropertyRows.Add(new StringPropertyRowViewModel()
                     {
-                        CsvName = name,
+                        SerializedName = name,
                         PropertyName = name,
                         Include = true
                     }));

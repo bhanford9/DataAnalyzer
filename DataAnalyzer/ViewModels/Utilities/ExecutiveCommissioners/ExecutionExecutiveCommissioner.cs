@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using DataAnalyzer.Services.ExecutiveUtilities;
 using DataAnalyzer.Services;
+using DataAnalyzer.Services.ExecutiveUtilities.Executives;
 
 namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 {
@@ -53,6 +54,7 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 
         public void ClearDisplays()
         {
+            DisplayNotSupported = false;
             DisplayExcelCreation = false;
             DisplayClassCreation = false;
         }
@@ -60,7 +62,9 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
         public void SetDisplay()
         {
             ClearDisplays();
-            IAggregateExecutives executive = executiveUtilities.GetDataOrDefault(configurationModel.ImportExportKey);
+            IAggregateExecutives executive = executiveUtilities.GetDataOr(
+                configurationModel.ImportExportKey,
+                (_) => new NotSupportedExecutive());
             viewDisplayMap[executive.ExecutionDisplayKey]();
         }
     }

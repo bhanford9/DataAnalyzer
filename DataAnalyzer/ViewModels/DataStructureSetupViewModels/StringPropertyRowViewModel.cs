@@ -5,7 +5,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
     internal class StringPropertyRowViewModel : BasePropertyChanged, IStringPropertyRowViewModel
     {
         private bool include = true;
-        private string csvName = string.Empty;
+        private string serializedName = string.Empty;
         private string propertyName = string.Empty;
 
         public bool Include
@@ -14,10 +14,10 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             set => this.NotifyPropertyChanged(ref this.include, value);
         }
 
-        public string CsvName
+        public string SerializedName
         {
-            get => this.csvName;
-            set => this.NotifyPropertyChanged(ref this.csvName, value);
+            get => this.serializedName;
+            set => this.NotifyPropertyChanged(ref this.serializedName, value);
         }
 
         public string PropertyName

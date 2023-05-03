@@ -6,6 +6,7 @@ namespace DataAnalyzer.Common.DataOrganizers
 {
     internal class NotSupportedDataOrganizer : DataOrganizer<NotSupportedDataConfiguration>, INotSupportedDataOrganizer
     {
-        protected override HeirarchalStats InternalOrganize(NotSupportedDataConfiguration configuration, ICollection<IStats> data) => new();
+        protected override IHeirarchalStats InternalOrganize(NotSupportedDataConfiguration configuration, ICollection<IStats> data)
+            => new HeirarchalStats();
     }
 }

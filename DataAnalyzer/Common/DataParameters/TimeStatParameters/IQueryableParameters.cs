@@ -1,6 +1,6 @@
 ﻿namespace DataAnalyzer.Common.DataParameters.TimeStatParameters
 {
-    internal interface IQueryableParameters : IDataParameterCollection
+    internal interface IQueryableParameters : IStatAccessorCollection
     {
     }
 }

@@ -8,6 +8,6 @@ namespace DataAnalyzer.StatConfigurations
     /// </summary>
     internal interface IDataConfiguration
     {
-        void Initialize(IDataParameterCollection parameters, AppDataConfig.IDataConfiguration applicationConfiguration);
+        void Initialize(IStatAccessorCollection parameters, AppDataConfig.IDataConfiguration applicationConfiguration);
     }
 }

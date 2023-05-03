@@ -7,11 +7,14 @@ using System.Collections.Generic;
 using DataAnalyzer.Services.Enums;
 using System.Linq;
 using DataAnalyzer.Services.ExecutiveUtilities.Executives;
+using DataScraper.DataScrapers.ScraperFlavors.JsonFlavors;
 
 namespace DataAnalyzer.Services.ExecutiveUtilities
 {
     // TODO --> register as singleton
-    internal class ExecutiveUtilitiesRepository : ImportExportDataRepository<IAggregateExecutives>, IExecutiveUtilitiesRepository
+    internal class ExecutiveUtilitiesRepository :
+        ImportExportDataRepository<IAggregateExecutives>,
+        IExecutiveUtilitiesRepository
     {
         public ExecutiveUtilitiesRepository()
         {
@@ -31,6 +34,9 @@ namespace DataAnalyzer.Services.ExecutiveUtilities
             this.InitializeCategory(fileType, new CsvNamesScraperCategory())
                 .WithFlavoredData(new CsvNamesStandardScraperFlavor(), ExportType.CSharpStringProperties, new CsvCSharpClassCreation())
                 .WithFlavoredData(new CsvNamesStandardScraperFlavor(), ExportType.CSharpStringProperties, new CsvTest());
+
+            this.InitializeCategory(fileType, new JsonObjectScraperCategory())
+                .WithFlavoredData(new JsonGeneralObjectScraperFlavor(), ExportType.CSharpStringProperties, new CSharpClassCreation());
         }
 
         public override string Name => "Executive Utilities";

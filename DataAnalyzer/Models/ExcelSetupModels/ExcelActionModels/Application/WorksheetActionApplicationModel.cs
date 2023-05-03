@@ -60,9 +60,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
 
         protected override ObservableCollection<IExcelAction> GetActionCollection() => this.excelSetupModel.AvailableWorksheetActions;
 
-        protected override void InternalLoadWhereToApply(ICheckableTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
+        protected override void InternalLoadWhereToApply(ICheckableTreeViewItem baseItem, ICollection<IHeirarchalStats> heirarchalStats)
         {
-            foreach (HeirarchalStats workbookStats in heirarchalStats)
+            foreach (IHeirarchalStats workbookStats in heirarchalStats)
             {
                 string workbookPath = workbookStats.Key.ToString();
 
@@ -74,7 +74,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
                     Path = workbookPath,
                 });
 
-                foreach (HeirarchalStats worksheetStats in workbookStats.Children)
+                foreach (IHeirarchalStats worksheetStats in workbookStats.Children)
                 {
                     string worksheetPath = workbookPath + PATH_DELIMITER + worksheetStats.Key.ToString();
 

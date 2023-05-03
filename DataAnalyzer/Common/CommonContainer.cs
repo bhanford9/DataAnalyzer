@@ -13,6 +13,7 @@ namespace DataAnalyzer.Common
         public static void Register(ContainerBuilder builder)
         {
             // Common.DataOrganizers
+            builder.RegisterType<IClassCreationDataOrganizer, ClassCreationDataOrganizer>();
             builder.RegisterType<ICsvDataOrganizer, CsvDataOrganizer>();
             builder.RegisterType<IExcelDataOrganizer, ExcelDataOrganizer>();
             // TODO --> may need to register each type of available IDataConfiguration
@@ -23,7 +24,7 @@ namespace DataAnalyzer.Common
             builder.RegisterAs<ICsvClassParameters, CsvClassParameters>(_ =>
             {
                 CsvClassParameters parameters = new();
-                parameters.AddParameters();
+                parameters.AddStatAccessor();
                 return parameters;
             });
 
@@ -31,14 +32,16 @@ namespace DataAnalyzer.Common
             builder.RegisterAs<IQueryableParameters, QueryableParameters>(_ =>
             {
                 QueryableParameters parameters = new();
-                parameters.AddParameters();
+                parameters.AddStatAccessor();
                 return parameters;
             });
 
             // Common.DataParameters
-            builder.RegisterGeneric(typeof(DataParameter<>)).As(typeof(IDataParameter<>));
-            builder.RegisterAs<IDataParameterLibrary, DataParameterLibrary>(
-                _ => new DataParameterLibrary(DataParameterLibrary.GetParameterMap()));
+            builder.RegisterGeneric(typeof(StatAccessor<>)).As(typeof(IStatAccessor<>));
+            builder
+                .RegisterAs<IStatAccessorLibrary, StatAccessorLibrary>(
+                    _ => new StatAccessorLibrary(StatAccessorLibrary.GetStatAccessorMap()))
+                .SingleInstance();
         }
     }
 }

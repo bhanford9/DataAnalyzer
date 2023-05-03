@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using DataAnalyzer.StatConfigurations.ClassCreationConfigurations;
 using DataAnalyzer.StatConfigurations.CsvConfigurations;
 using DataAnalyzer.StatConfigurations.ExcelConfigurations;
 using DataAnalyzer.StatConfigurations.GroupingConfigurations;
@@ -10,6 +11,9 @@ namespace DataAnalyzer.StatConfigurations
     {
         public static void Register(ContainerBuilder builder)
         {
+            // StatConfigurations.ClassCreationConfigurations
+            builder.RegisterTypeAncestors<IDataConfiguration, IClassCreationConfiguration, ClassCreationConfiguration>();
+
             // StatConfigurations.CsvConfigurations
             builder.RegisterTypeAncestors<IDataConfiguration, IClassPropertiesConfiguration, ClassPropertiesConfiguration>();
 

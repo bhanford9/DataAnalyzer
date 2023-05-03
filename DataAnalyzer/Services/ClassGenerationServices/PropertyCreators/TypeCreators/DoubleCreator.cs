@@ -4,6 +4,7 @@
     {
         public override string Create(string dataType) => "double";
 
-        public override bool IsApplicable(string dataType) => dataType.Equals(ClassCreationConstants.DOUBLE_TYPE);
+        public override bool IsApplicable(string dataType)
+            => dataType.Equals(ClassCreationConstants.DOUBLE_TYPE_DISPLAY);
     }
 }

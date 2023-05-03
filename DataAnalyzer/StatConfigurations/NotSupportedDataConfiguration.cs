@@ -6,7 +6,7 @@ namespace DataAnalyzer.StatConfigurations
     internal class NotSupportedDataConfiguration : DataConfiguration<AppDataConfig.NotSupportedDataConfiguration>, INotSupportedDataConfiguration
     {
         protected override void InternalInit(
-            IDataParameterCollection parameters,
+            IStatAccessorCollection parameters,
             AppDataConfig.NotSupportedDataConfiguration applicationConfiguration)
         {
         }

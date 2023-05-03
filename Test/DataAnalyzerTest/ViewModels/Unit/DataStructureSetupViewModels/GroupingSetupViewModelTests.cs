@@ -28,6 +28,8 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             this.shared.MockConfigurationModel.Setup(x => x.ConfigurationDirectory).Returns(string.Empty);
             this.shared.MockConfigurationModel.Setup(x => x.ConfigurationName).Returns(string.Empty);
 
+            this.shared.MockStatsModel = new();
+
             this.shared.MockMainModel = new();
             this.shared.MockMainModel.Setup(x => x.LoadedDataStructure).Returns(Mock.Of<ILoadedDataStructure>());
             this.shared.MockMainModel.Setup(x => x.LoadedDataContent).Returns(Mock.Of<ILoadedDataContent>());
@@ -35,7 +37,6 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
 
             this.shared.MockDefaultSetupViewModel = new();
             this.shared.MockGroupingSetupModel = new();
-            this.shared.MockExecutiveCommissioner = new();
             this.shared.MockDataConfiguration = new();
 
             this.shared.MockGroupingSetupModel
@@ -65,18 +66,21 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             this.CreateViewModel();
             this.shared.ViewModel.ConfigurationGroupings.Add(
                 new ConfigurationGroupingViewModel(
+                    this.shared.MockStatsModel.Object,
                     this.shared.MockConfigurationModel.Object,
-                    this.shared.MockExecutiveCommissioner.Object,
+                    this.shared.ViewModel,
                     0));
             this.shared.ViewModel.ConfigurationGroupings.Add(
                 new ConfigurationGroupingViewModel(
+                    this.shared.MockStatsModel.Object,
                     this.shared.MockConfigurationModel.Object,
-                    this.shared.MockExecutiveCommissioner.Object,
+                    this.shared.ViewModel,
                     1));
             this.shared.ViewModel.ConfigurationGroupings.Add(
                 new ConfigurationGroupingViewModel(
+                    this.shared.MockStatsModel.Object,
                     this.shared.MockConfigurationModel.Object,
-                    this.shared.MockExecutiveCommissioner.Object,
+                    this.shared.ViewModel,
                     2));
             this.shared.ViewModel.GroupingLayersCount = expectedCount;
 
@@ -181,8 +185,9 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             for (int i = 0; i < 3; i++)
             {
                 this.shared.ViewModel.ConfigurationGroupings.Add(new ConfigurationGroupingViewModel(
+                    this.shared.MockStatsModel.Object,
                     this.shared.MockConfigurationModel.Object,
-                    this.shared.MockExecutiveCommissioner.Object,
+                    this.shared.ViewModel,
                     i)
                 {
                     Name = $"{GroupName}{i}",
@@ -267,9 +272,9 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
         private void CreateViewModel() =>
             this.shared.ViewModel = new(
                 this.shared.MockConfigurationModel.Object,
+                this.shared.MockStatsModel.Object,
                 this.shared.MockMainModel.Object,
                 this.shared.MockDefaultSetupViewModel.Object,
-                this.shared.MockGroupingSetupModel.Object,
-                this.shared.MockExecutiveCommissioner.Object);
+                this.shared.MockGroupingSetupModel.Object);
     }
 }

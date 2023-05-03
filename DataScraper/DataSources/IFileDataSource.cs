@@ -2,6 +2,9 @@
 {
     public interface IFileDataSource : IDataSource
     {
-        string FilePath { get; init; }
+        string FilePath { get; }
+
+        string GetExpectedExtension();
+        IFileDataSource Initialize(string filePath);
     }
 }

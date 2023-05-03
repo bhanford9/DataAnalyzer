@@ -2,6 +2,6 @@
 {
     internal interface ICsvNamesStats : IStats
     {
-        ComparableList CsvNames { get; set; }
+        IComparableList<string> CsvNames { get; set; }
     }
 }

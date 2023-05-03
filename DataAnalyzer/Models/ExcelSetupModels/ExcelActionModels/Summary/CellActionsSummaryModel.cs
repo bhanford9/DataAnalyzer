@@ -15,6 +15,6 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
 
         public override ObservableCollection<IExcelAction> GetActionCollection() => throw new NotImplementedException();
         public override void LoadHierarchicalSummariesFromModel(IActionSummaryTreeViewItem baseItem) => throw new NotImplementedException();
-        protected override void InternalLoadWhereToApply(IActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> hierarchalStats) => throw new NotImplementedException();
+        protected override void InternalLoadWhereToApply(IActionSummaryTreeViewItem baseItem, ICollection<IHeirarchalStats> hierarchalStats) => throw new NotImplementedException();
     }
 }

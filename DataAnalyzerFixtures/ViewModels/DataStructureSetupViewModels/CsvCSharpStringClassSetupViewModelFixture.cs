@@ -26,7 +26,7 @@ namespace DataAnalyzerFixtures.ViewModels.DataStructureSetupViewModels
 
         internal Mock<ICsvNamesDataConfiguration> MockDataConfiguration { get; set; }
 
-        internal string DataParamListPropName => nameof(this.MockConfigurationModel.Object.DataParameterCollection);
+        internal string DataParamListPropName => nameof(this.MockStatsModel.Object.DataAccessorCollection);
         
         internal string DataConfigPropName => nameof(this.MockCsvCSharpStringClassSetupModel.Object.DataConfiguration);
 

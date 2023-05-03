@@ -6,6 +6,6 @@ namespace DataAnalyzer.Common.DataOrganizers
 {
     internal interface IDataOrganizer
     {
-        public HeirarchalStats Organize(IDataConfiguration configuration, ICollection<IStats> data);
+        public IHeirarchalStats Organize(IDataConfiguration configuration, ICollection<IStats> data);
     }
 }

@@ -8,10 +8,13 @@ using DataScraper.DataScrapers.ScraperFlavors.QueryableFlavors;
 using DataScraper.DataScrapers.ScraperFlavors;
 using System.Collections.Generic;
 using DataScraper.DataScrapers.ScraperFlavors.CsvFlavors;
+using DataScraper.DataScrapers.ScraperFlavors.JsonFlavors;
 
 namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 {
-    internal class DataStructureSetupViewModelRepository : ImportExportDataRepository<IDataStructureSetupViewModel>, IDataStructureSetupViewModelRepository
+    internal class DataStructureSetupViewModelRepository :
+        ImportExportDataRepository<IDataStructureSetupViewModel>,
+        IDataStructureSetupViewModelRepository
     {
         public DataStructureSetupViewModelRepository()
         {
@@ -41,6 +44,12 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
                     Resolver.Resolve<ICsvCSharpStringClassSetupViewModel>())
                 .WithFlavoredData(
                     new CsvTestScraperFlavor(),
+                    ExportType.CSharpStringProperties,
+                    Resolver.Resolve<ICsvCSharpStringClassSetupViewModel>());
+
+            this.InitializeCategory(fileType, new JsonObjectScraperCategory())
+                .WithFlavoredData(
+                    new JsonGeneralObjectScraperFlavor(),
                     ExportType.CSharpStringProperties,
                     Resolver.Resolve<ICsvCSharpStringClassSetupViewModel>());
         }

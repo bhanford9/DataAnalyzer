@@ -44,9 +44,9 @@ namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
             }
         }
 
-        protected override void InternalLoadWhereToApply(IActionSummaryTreeViewItem baseItem, ICollection<HeirarchalStats> heirarchalStats)
+        protected override void InternalLoadWhereToApply(IActionSummaryTreeViewItem baseItem, ICollection<IHeirarchalStats> heirarchalStats)
         {
-            foreach (HeirarchalStats workbookStats in heirarchalStats)
+            foreach (IHeirarchalStats workbookStats in heirarchalStats)
             {
                 baseItem.Children.Add(new ActionSummaryTreeViewItem
                 {

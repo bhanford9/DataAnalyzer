@@ -7,6 +7,6 @@ namespace DataAnalyzer.DataImport.DataObjects
         string Uid { get; }
         IReadOnlyCollection<string> ParameterNames { get; }
 
-        T GetEnumeratedParameters<T>();
+        //T GetEnumeratedParameters<T>();
     }
 }

@@ -36,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DataImport\DataObjects\JsonStats\" />
     <Folder Include="StatConfigurations\FilteringConfigurations\" />
     <Folder Include="StatConfigurations\SortingConfigurations\" />
     <Folder Include="Documentation\" />
