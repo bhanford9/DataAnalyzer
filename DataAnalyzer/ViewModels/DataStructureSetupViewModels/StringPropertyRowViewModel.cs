@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.Common.Mvvm;
+using DataAnalyzer.Services.ClassGenerationServices;
 
 namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 {
@@ -7,6 +8,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         private bool include = true;
         private string serializedName = string.Empty;
         private string propertyName = string.Empty;
+        private PropertyType propertyType = PropertyType.Simple;
 
         public bool Include
         {
@@ -24,6 +26,12 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         {
             get => this.propertyName;
             set => this.NotifyPropertyChanged(ref this.propertyName, value);
+        }
+
+        public PropertyType PropertyType
+        {
+            get => this.propertyType;
+            set => this.NotifyPropertyChanged(ref this.propertyType, value);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using DataAnalyzer.Services.ClassGenerationServices;
+using System.ComponentModel;
 
 namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 {
@@ -7,5 +8,6 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         string SerializedName { get; set; }
         bool Include { get; set; }
         string PropertyName { get; set; }
+        PropertyType PropertyType { get; set; }
     }
 }

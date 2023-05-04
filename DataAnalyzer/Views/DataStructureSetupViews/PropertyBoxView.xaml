@@ -1,0 +1,86 @@
+﻿<UserControl x:Class="DataAnalyzer.Views.DataStructureSetupViews.PropertyBoxView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DataAnalyzer.Views.DataStructureSetupViews"
+             xmlns:converters="clr-namespace:DataAnalyzer.Common.Mvvm.ValueConverters"
+             Name="PropertyBox"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibility"/>
+  </UserControl.Resources>
+  <GroupBox Header="{Binding ContainerName}">
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="Auto"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <Grid Grid.Row="0" Margin="0 2 0 0">
+        <Grid.Resources>
+          <ResourceDictionary>
+            <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
+              <Setter Property="HorizontalAlignment" Value="Center"/>
+              <Setter Property="Margin" Value="0 0 0 10"/>
+            </Style>
+            <Style TargetType="Border" BasedOn="{StaticResource BaseBorderStyle}">
+              <Setter Property="BorderBrush" Value="{StaticResource LightText}"/>
+              <Setter Property="BorderThickness" Value="0 0 0 2"/>
+            </Style>
+          </ResourceDictionary>
+        </Grid.Resources>
+
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="70"/>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0"/>
+        <Border Grid.Column="1"/>
+        <Border Grid.Column="2"/>
+
+        <TextBlock Grid.Column="0"
+                   Text="Include"/>
+
+        <TextBlock Grid.Column="1"
+                   Text="Serialized Name"/>
+
+        <TextBlock Grid.Column="2"
+                   Text="Property Name"/>
+      </Grid>
+
+      <ScrollViewer 
+        Grid.Row="1"
+        Visibility="{Binding 
+          IsScrollable,
+          Converter={StaticResource BooleanToVisibility},
+          ElementName=PropertyBox}">
+        <ItemsControl ItemsSource="{Binding Properties}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <local:StringPropertyRowView DataContext="{Binding}"/>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </ScrollViewer>
+      
+      <ItemsControl 
+        Grid.Row="1"
+        Visibility="{Binding 
+          IsScrollable,
+          Converter={StaticResource InverseBooleanToVisibility},
+          ElementName=PropertyBox}"
+        ItemsSource="{Binding Properties}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <local:StringPropertyRowView DataContext="{Binding}"/>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+      
+    </Grid>
+  </GroupBox>
+</UserControl>

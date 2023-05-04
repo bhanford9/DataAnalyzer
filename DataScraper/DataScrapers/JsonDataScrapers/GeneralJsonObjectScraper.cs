@@ -26,7 +26,7 @@ namespace DataScraper.DataScrapers.JsonDataScrapers
 
             IClassData classData = new ClassData()
             {
-                Name = jsonObject.Path,
+                Name = Path.GetFileNameWithoutExtension(filePath),
                 Properties = jsonObject.Properties().Select(x => this.ToProperty(x)).ToList(),
             };
 

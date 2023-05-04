@@ -41,17 +41,17 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
                 .WithFlavoredData(
                     new CsvNamesStandardScraperFlavor(),
                     ExportType.CSharpStringProperties,
-                    Resolver.Resolve<ICsvCSharpStringClassSetupViewModel>())
+                    Resolver.Resolve<IClassCreationSetupViewModel>())
                 .WithFlavoredData(
                     new CsvTestScraperFlavor(),
                     ExportType.CSharpStringProperties,
-                    Resolver.Resolve<ICsvCSharpStringClassSetupViewModel>());
+                    Resolver.Resolve<IClassCreationSetupViewModel>());
 
             this.InitializeCategory(fileType, new JsonObjectScraperCategory())
                 .WithFlavoredData(
                     new JsonGeneralObjectScraperFlavor(),
                     ExportType.CSharpStringProperties,
-                    Resolver.Resolve<ICsvCSharpStringClassSetupViewModel>());
+                    Resolver.Resolve<IClassCreationSetupViewModel>());
         }
 
         public override string Name => "DataStructureSetupViewModelRepository";

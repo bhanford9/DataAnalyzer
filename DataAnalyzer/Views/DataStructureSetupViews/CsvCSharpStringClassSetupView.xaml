@@ -46,45 +46,20 @@
                Text="{Binding ClassName}"/>
     </Grid>
 
-    <Grid Grid.Row="1" Margin="0 10 0 0">
-      <Grid.Resources>
-        <ResourceDictionary>
-          <Style TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
-            <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0 0 0 10"/>
-          </Style>
-          <Style TargetType="Border" BasedOn="{StaticResource BaseBorderStyle}">
-            <Setter Property="BorderBrush" Value="{StaticResource LightText}"/>
-            <Setter Property="BorderThickness" Value="0 0 0 2"/>
-          </Style>
-        </ResourceDictionary>
-      </Grid.Resources>
-      
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="70"/>
-        <ColumnDefinition Width="*"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-
-      <Border Grid.Column="0"/>
-      <Border Grid.Column="1"/>
-      <Border Grid.Column="2"/>
-
-      <TextBlock Grid.Column="0"
-                 Text="Include"/>
-
-      <TextBlock Grid.Column="1"
-                 Text="Serialized Name"/>
-
-      <TextBlock Grid.Column="2"
-                 Text="Property Name"/>
-    </Grid>
+    <local:PropertyBoxView
+      Grid.Row="1"
+      DataContext="{Binding ClassesBox}"
+      IsScrollable="True"
+      MaxHeight="180"
+      Margin="0 0 0 28"/>
 
     <ScrollViewer Grid.Row="2">
-      <ItemsControl ItemsSource="{Binding CsvPropertyRows}">
+      <ItemsControl ItemsSource="{Binding ClassPropertiesBoxes}">
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-            <local:StringPropertyRowView DataContext="{Binding}"/>
+            <local:PropertyBoxView
+              DataContext="{Binding}"
+              IsScrollable="False"/>
           </DataTemplate>
         </ItemsControl.ItemTemplate>
       </ItemsControl>

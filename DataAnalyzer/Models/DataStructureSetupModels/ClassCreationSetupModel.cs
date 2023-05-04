@@ -1,12 +1,12 @@
-﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations;
 using DataAnalyzer.Services;
 using System;
 
 namespace DataAnalyzer.Models.DataStructureSetupModels
 {
-    internal class CsvCSharpStringClassSetupModel : DataStructureSetupModel<CsvNamesDataConfiguration>, ICsvCSharpStringClassSetupModel
+    internal class ClassCreationSetupModel : DataStructureSetupModel<ClassSetupConfiguration>, IClassCreationSetupModel
     {
-        public CsvCSharpStringClassSetupModel(
+        public ClassCreationSetupModel(
             ISerializationService serializationService,
             IConfigurationModel configurationModel)
             : base(serializationService, configurationModel)

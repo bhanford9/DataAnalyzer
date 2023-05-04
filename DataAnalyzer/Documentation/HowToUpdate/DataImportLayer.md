@@ -92,6 +92,7 @@ When creating a new *Data Converter*, the first thing you'll want to do is make 
 At this point, if you are using a pre-existing *Import Type* (i.e. importing from a file), then you might be able to fully import your data into the application. The next step would then be to move on to the Data Structuring section below. If you had to create a new *Import Type* or if the existing *Import Types* do not supply the needed functionality and you want to update them, then continue on within this Data Import section.
 
 ## Model Layer
+`Models.DataStructureSetupModels` will be needed
 
 ## View Model Layer
 

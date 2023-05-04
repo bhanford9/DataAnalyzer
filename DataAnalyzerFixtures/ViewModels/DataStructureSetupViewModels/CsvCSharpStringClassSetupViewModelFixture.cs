@@ -22,7 +22,7 @@ namespace DataAnalyzerFixtures.ViewModels.DataStructureSetupViewModels
 
         internal Mock<INotSupportedSetupViewModel> MockDefaultSetupViewModel { get; set; }
 
-        internal Mock<ICsvCSharpStringClassSetupModel> MockCsvCSharpStringClassSetupModel { get; set; }
+        internal Mock<IClassCreationSetupModel> MockCsvCSharpStringClassSetupModel { get; set; }
 
         internal Mock<ICsvNamesDataConfiguration> MockDataConfiguration { get; set; }
 
@@ -42,6 +42,6 @@ namespace DataAnalyzerFixtures.ViewModels.DataStructureSetupViewModels
 
         internal PropertyChangedEventArgs ExportTypeChangeArgs => this.GetNamedEventArgs(this.ExportTypePropName);
 
-        internal CsvCSharpStringClassSetupViewModel ViewModel { get; set; }
+        internal ClassCreationSetupViewModel ViewModel { get; set; }
     }
 }

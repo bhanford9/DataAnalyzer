@@ -24,7 +24,7 @@ namespace DataAnalyzer.Models
         public static void Register(ContainerBuilder builder)
         {
             // Models.DataStructureSetupModels
-            builder.RegisterType<ICsvCSharpStringClassSetupModel, CsvCSharpStringClassSetupModel>();
+            builder.RegisterType<DataStructureSetupModels.IClassCreationSetupModel, DataStructureSetupModels.ClassCreationSetupModel>();
             builder.RegisterType<IGroupingSetupModel, GroupingSetupModel>();
             builder.RegisterType<INotSupportedSetupModel, NotSupportedSetupModel>();
 
@@ -90,7 +90,7 @@ namespace DataAnalyzer.Models
 
             // Models.ExecutionModels.ClassCretionModels
             builder.RegisterType<IClassCreationConfigurationModel, ClassCreationConfigurationModel>();
-            builder.RegisterType<IClassCreationSetupModel, ClassCreationSetupModel>();
+            builder.RegisterType<ExecutionModels.ClassCreationModels.IClassCreationSetupModel, ExecutionModels.ClassCreationModels.ClassCreationSetupModel>();
 
             // Models.ImportModels
             builder.RegisterTypeAncestors<IFlavoredCategorizedDataLibrary<string>, IFileMap, FileMap>();

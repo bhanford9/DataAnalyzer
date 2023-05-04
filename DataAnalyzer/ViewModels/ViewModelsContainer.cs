@@ -31,9 +31,10 @@ namespace DataAnalyzer.ViewModels
             // these are currently single instance due to DataStructureSetupViewModelRepository being a repository
             //   and not a factory. If that needs to change, these will need to move away from being singletons
             builder.RegisterTypeInstance<IConfigurationGroupingViewModel, ConfigurationGroupingViewModel>();
-            builder.RegisterTypeInstance<ICsvCSharpStringClassSetupViewModel, CsvCSharpStringClassSetupViewModel>();
+            builder.RegisterTypeInstance<DataStructureSetupViewModels.IClassCreationSetupViewModel, DataStructureSetupViewModels.ClassCreationSetupViewModel>();
             builder.RegisterTypeInstance<IGroupingSetupViewModel, GroupingSetupViewModel>();
             builder.RegisterType<INotSupportedSetupViewModel, NotSupportedSetupViewModel>();
+            builder.RegisterType<IPropertyBoxViewModel, PropertyBoxViewModel>();
             builder.RegisterTypeInstance<IStringPropertyRowViewModel, StringPropertyRowViewModel>();
 
             // ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
@@ -114,7 +115,7 @@ namespace DataAnalyzer.ViewModels
             builder.RegisterType<IExcelSetupViewModel, ExcelSetupViewModel>();
 
             // ViewModels.ExecutionViewModels
-            builder.RegisterType<IClassCreationSetupViewModel, ClassCreationSetupViewModel>();
+            builder.RegisterType<ExecutionViewModels.IClassCreationSetupViewModel, ExecutionViewModels.ClassCreationSetupViewModel>();
 
             // ViewModels.ImportViewModels
             builder.RegisterType<IImportFromFileViewModel, ImportFromFileViewModel>();
