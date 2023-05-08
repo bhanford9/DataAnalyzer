@@ -6,7 +6,7 @@ namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
     {
         public string Name { get; set; } = string.Empty;
 
-        public IImportExportKey ImportExportKey { get; set; } = Services.ImportExportKey.Default;
+        public IImportExecutionKey ImportExecutionKey { get; set; } = Services.ImportExecutionKey.Default;
 
         public string SavedDataFilePath { get; set; } = string.Empty;
     }

@@ -93,13 +93,13 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
         //    ImportKey.Type is not NotApplicableImportType &&
         //    ImportKey.Category is not NotApplicableScraperCategory &&
         //    ImportKey.Flavor is not NotApplicableScraperFlavor &&
-        //    this.ExportType != ExportType.NotApplicable;
+        //    this.ExecutionType != ExecutionType.NotApplicable;
 
         [Fact]
         public void ShouldReturnTrueWithEmptyStringWhenDataTypeIsValid()
         {
             this.CreateViewModel();
-            this.shared.ViewModel.SelectedDataType = this.GetValidImportExportKey();
+            this.shared.ViewModel.SelectedDataType = this.GetValidImportExecutionKey();
 
             bool result = this.shared.ViewModel.IsValidSetup(out string reason);
 
@@ -111,7 +111,7 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
         public void ShouldReturnFalseWithMessageWhenDataTypeIsInvalid()
         {
             this.CreateViewModel();
-            this.shared.ViewModel.SelectedDataType = this.GetInvalidImportExportKey();
+            this.shared.ViewModel.SelectedDataType = this.GetInvalidImportExecutionKey();
 
             bool result = this.shared.ViewModel.IsValidSetup(out string reason);
 
@@ -125,7 +125,7 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             this.CreateViewModel();
             this.shared.ViewModel.ClearConfiguration();
 
-            Assert.Equal(ImportExportKey.Default, this.shared.ViewModel.SelectedDataType);
+            Assert.Equal(ImportExecutionKey.Default, this.shared.ViewModel.SelectedDataType);
             Assert.Equal(0, this.shared.ViewModel.GroupingLayersCount);
             Assert.Empty(this.shared.ViewModel.ConfigurationGroupings);
         }
@@ -259,15 +259,15 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             Assert.Equal($"{ParamName}2", this.shared.ViewModel.ConfigurationGroupings[1].SelectedParameter);
         }
 
-        private IImportExportKey GetValidImportExportKey() => new ImportExportKeyBuilder()
+        private IImportExecutionKey GetValidImportExecutionKey() => new ImportExecutionKeyBuilder()
             .With(
                 new FileImportType(),
                 new CsvNamesScraperCategory(),
                 new CsvTestScraperFlavor(),
-                ExportType.CSharpStringProperties)
+                ExecutionType.CSharpStringProperties)
             .Build();
 
-        private IImportExportKey GetInvalidImportExportKey() => new ImportExportKeyBuilder().Build();
+        private IImportExecutionKey GetInvalidImportExecutionKey() => new ImportExecutionKeyBuilder().Build();
 
         private void CreateViewModel() =>
             this.shared.ViewModel = new(

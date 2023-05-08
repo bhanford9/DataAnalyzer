@@ -6,10 +6,10 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Services.ExecutiveUtilities
 {
-    internal interface IExecutiveUtilitiesRepository : IImportExportDataRepository<IAggregateExecutives>
+    internal interface IExecutiveUtilitiesRepository : IImportExecutionDataRepository<IAggregateExecutives>
     {
         //IEnumerable<IDataStructureSetupViewModel> StructureSetupViewModels { get; }
-        IReadOnlyCollection<string> GetExportTypeNamess(IImportType import, IScraperCategory category, IScraperFlavor flavor);
-        IReadOnlyCollection<ExportType> GetExportTypes(IImportType import, IScraperCategory category, IScraperFlavor flavor);
+        IReadOnlyCollection<string> GetExecutionTypeNamess(IImportType import, IScraperCategory category, IScraperFlavor flavor);
+        IReadOnlyCollection<ExecutionType> GetExecutionTypes(IImportType import, IScraperCategory category, IScraperFlavor flavor);
     }
 }

@@ -63,7 +63,7 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
         {
             ClearDisplays();
             IAggregateExecutives executive = executiveUtilities.GetDataOr(
-                configurationModel.ImportExportKey,
+                configurationModel.ImportExecutionKey,
                 (_) => new NotSupportedExecutive());
             viewDisplayMap[executive.ExecutionDisplayKey]();
         }

@@ -23,7 +23,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
         private readonly BaseCommand startNewConfiguration;
         private readonly BaseCommand saveConfiguration;
         private readonly BaseCommand browseOutputDirectory;
-        private readonly BaseCommand executeExcelExport;
+        private readonly BaseCommand executeExcelExecution;
 
         private string configName = string.Empty;
         private string outputDirectory = string.Empty;
@@ -39,7 +39,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
             this.startNewConfiguration = new BaseCommand(obj => this.DoStartNewConfiguration());
             this.saveConfiguration = new BaseCommand(obj => this.DoSaveConfiguration());
             this.browseOutputDirectory = new BaseCommand(obj => this.DoBrowseOutputDirectory());
-            this.executeExcelExport = new BaseCommand(obj => this.DoExecuteExcelExport());
+            this.executeExcelExecution = new BaseCommand(obj => this.DoExecuteExcelExport());
 
             this.excelSetupModel.ExcelConfiguration.PropertyChanged += this.ExcelConfigurationPropertyChanged;
             this.excelExecutive = excelExecutive;
@@ -53,7 +53,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
 
         public ICommand BrowseOutputDirectory => this.browseOutputDirectory;
 
-        public ICommand ExecuteExcelExport => this.executeExcelExport;
+        public ICommand ExecuteExcelExecution => this.executeExcelExecution;
 
         public string ConfigName
         {

@@ -97,7 +97,7 @@ namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels
         }
 
         public string GetCurrentConfigDirectoryPath() =>
-            this.configurationDirectory + "\\" + this.configurationModel.ImportExportKey.Name + "\\" + CLASS_CREATION_KEY;
+            this.configurationDirectory + "\\" + this.configurationModel.ImportExecutionKey.Name + "\\" + CLASS_CREATION_KEY;
 
         public void AcquireConfigurations()
         {

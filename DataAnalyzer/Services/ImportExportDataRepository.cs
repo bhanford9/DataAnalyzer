@@ -11,42 +11,42 @@ namespace DataAnalyzer.Services
 {
     internal static class Extensions
     {
-        public static IDictionary<ExportType, T> AddExport<T>(
-            this IDictionary<ExportType, T> source,
-            ExportType exportType,
+        public static IDictionary<ExecutionType, T> AddExecution<T>(
+            this IDictionary<ExecutionType, T> source,
+            ExecutionType executionType,
             T data)
         {
-            source.Add(exportType, data);
+            source.Add(executionType, data);
             return source;
         }
 
-        public static IDictionary<IScraperFlavor, IDictionary<ExportType, T>> WithFlavoredData<T>(
-            this IDictionary<IScraperFlavor, IDictionary<ExportType, T>> source,
+        public static IDictionary<IScraperFlavor, IDictionary<ExecutionType, T>> WithFlavoredData<T>(
+            this IDictionary<IScraperFlavor, IDictionary<ExecutionType, T>> source,
             IScraperFlavor flavor,
-            ExportType exportType,
+            ExecutionType executionType,
             T aggregateDatas)
         {
             if (!source.ContainsKey(flavor))
             {
-                source[flavor] = new Dictionary<ExportType, T>();
+                source[flavor] = new Dictionary<ExecutionType, T>();
             }
 
-            source[flavor][exportType] = aggregateDatas;
+            source[flavor][executionType] = aggregateDatas;
             return source;
         }
 
-        public static T GetData<T>(this IImportExportDataRepository<T> source, IImportExportKey key)
-            => source[key.ImportKey.Type, key.ImportKey.Category, key.ImportKey.Flavor, key.ExportType];
+        public static T GetData<T>(this IImportExecutionDataRepository<T> source, IImportExecutionKey key)
+            => source[key.ImportKey.Type, key.ImportKey.Category, key.ImportKey.Flavor, key.ExecutionType];
 
-        public static T GetDataOrDefault<T>(this IImportExportDataRepository<T> source, IImportExportKey key)
+        public static T GetDataOrDefault<T>(this IImportExecutionDataRepository<T> source, IImportExecutionKey key)
         {
             source.TryGetData(key, out T data);
             return data;
         }
 
         public static bool TryGetData<T>(
-            this IImportExportDataRepository<T> source,
-            IImportExportKey key,
+            this IImportExecutionDataRepository<T> source,
+            IImportExecutionKey key,
             out T data)
         {
             try
@@ -62,13 +62,13 @@ namespace DataAnalyzer.Services
         }
 
         public static T GetDataOr<T>(
-            this IImportExportDataRepository<T> source,
-            IImportExportKey key,
-            Func<IImportExportDataRepository<T>, T> defaultValueGetter)
+            this IImportExecutionDataRepository<T> source,
+            IImportExecutionKey key,
+            Func<IImportExecutionDataRepository<T>, T> defaultValueGetter)
             => !source.TryGetData(key, out T data) ? defaultValueGetter(source) : data;
 
         public static IEnumerable<TExtracted> GetAll<TSource, TExtracted>(
-            this ImportExportDataRepository<TSource> source,
+            this ImportExecutionDataRepository<TSource> source,
             Func<TSource, TExtracted> getter)
             => source.Values
                 .SelectMany(x => x.Values
@@ -76,10 +76,10 @@ namespace DataAnalyzer.Services
                         .SelectMany(z => z.Values.Select(getter))));
     }
 
-    internal abstract class ImportExportDataRepository<T> : FlavoredCategorizedDataLibrary<IDictionary<ExportType, T>>, IImportExportDataRepository<T>
+    internal abstract class ImportExecutionDataRepository<T> : FlavoredCategorizedDataLibrary<IDictionary<ExecutionType, T>>, IImportExecutionDataRepository<T>
     {
-        public T this[IImportType type, IScraperCategory category, IScraperFlavor flavor, ExportType export]
-            => this[type][category][flavor][export];
+        public T this[IImportType type, IScraperCategory category, IScraperFlavor flavor, ExecutionType execution]
+            => this[type][category][flavor][execution];
 
         public override abstract string Name { get; }
     }

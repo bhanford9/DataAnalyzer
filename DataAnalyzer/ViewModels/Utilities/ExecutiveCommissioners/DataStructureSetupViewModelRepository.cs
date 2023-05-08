@@ -13,7 +13,7 @@ using DataScraper.DataScrapers.ScraperFlavors.JsonFlavors;
 namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 {
     internal class DataStructureSetupViewModelRepository :
-        ImportExportDataRepository<IDataStructureSetupViewModel>,
+        ImportExecutionDataRepository<IDataStructureSetupViewModel>,
         IDataStructureSetupViewModelRepository
     {
         public DataStructureSetupViewModelRepository()
@@ -29,28 +29,28 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
             //DatabaseImportType databaseType = new DatabaseImportType();
             //HttpImportType httpType = new HttpImportType();
 
-            this[fileType] = new Dictionary<IScraperCategory, IDictionary<IScraperFlavor, IDictionary<ExportType, IDataStructureSetupViewModel>>>();
+            this[fileType] = new Dictionary<IScraperCategory, IDictionary<IScraperFlavor, IDictionary<ExecutionType, IDataStructureSetupViewModel>>>();
 
             this.InitializeCategory(fileType, new QueryableScraperCategory())
                 .WithFlavoredData(
                     new QueryableStandardScraperFlavor(),
-                    ExportType.Excel,
+                    ExecutionType.Excel,
                     Resolver.Resolve<IGroupingSetupViewModel>());
 
             this.InitializeCategory(fileType, new CsvNamesScraperCategory())
                 .WithFlavoredData(
                     new CsvNamesStandardScraperFlavor(),
-                    ExportType.CSharpStringProperties,
+                    ExecutionType.CSharpStringProperties,
                     Resolver.Resolve<IClassCreationSetupViewModel>())
                 .WithFlavoredData(
                     new CsvTestScraperFlavor(),
-                    ExportType.CSharpStringProperties,
+                    ExecutionType.CSharpStringProperties,
                     Resolver.Resolve<IClassCreationSetupViewModel>());
 
             this.InitializeCategory(fileType, new JsonObjectScraperCategory())
                 .WithFlavoredData(
                     new JsonGeneralObjectScraperFlavor(),
-                    ExportType.CSharpStringProperties,
+                    ExecutionType.CSharpStringProperties,
                     Resolver.Resolve<IClassCreationSetupViewModel>());
         }
 

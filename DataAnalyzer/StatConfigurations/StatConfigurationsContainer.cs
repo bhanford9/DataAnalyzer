@@ -12,13 +12,13 @@ namespace DataAnalyzer.StatConfigurations
         public static void Register(ContainerBuilder builder)
         {
             // StatConfigurations.ClassCreationConfigurations
-            builder.RegisterTypeAncestors<IDataConfiguration, IClassCreationConfiguration, ClassCreationConfiguration>();
+            builder.RegisterTypeAncestors<IStatsConfiguration, IClassCreationConfiguration, ClassCreationConfiguration>();
 
             // StatConfigurations.CsvConfigurations
-            builder.RegisterTypeAncestors<IDataConfiguration, IClassPropertiesConfiguration, ClassPropertiesConfiguration>();
+            builder.RegisterTypeAncestors<IStatsConfiguration, IClassPropertiesConfiguration, ClassPropertiesConfiguration>();
 
             // StatConfigurations.ExcelConfigurations
-            builder.RegisterTypeAncestors<IDataConfiguration, IExcelConfiguration, ExcelConfiguration>();
+            builder.RegisterTypeAncestors<IStatsConfiguration, IExcelConfiguration, ExcelConfiguration>();
            
             // StatConfigurations.FilteringConfigurations
             
@@ -30,7 +30,7 @@ namespace DataAnalyzer.StatConfigurations
             // StatConfigurations.SortingConfigurations
 
             // StatConfigurations
-            builder.RegisterTypeAncestors<IDataConfiguration, INotSupportedDataConfiguration, NotSupportedDataConfiguration>();
+            builder.RegisterTypeAncestors<IStatsConfiguration, INotSupportedDataConfiguration, NotSupportedDataConfiguration>();
         }
     }
 }

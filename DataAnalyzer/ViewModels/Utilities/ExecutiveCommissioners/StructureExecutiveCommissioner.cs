@@ -22,7 +22,7 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
         private bool displayGroupingSetup = false;
         private bool displayCsvToClassSetup = false;
         private bool displayNotSupported = true;
-        private string selectedExportType = string.Empty;
+        private string selectedExecutionType = string.Empty;
         private string configurationDirectory = string.Empty;
         private readonly IReadOnlyDictionary<string, Action> viewDisplayMap;
 
@@ -42,7 +42,7 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
             this.statsModel = statsModel;
             //this.executiveUtilities = executiveUtilities;
             //this.setupViewModelRepository = setupViewModelRepository;
-            enumUtilities.LoadNames(typeof(ExportType), ExportTypes);
+            enumUtilities.LoadNames(typeof(ExecutionType), ExecutionTypes);
 
             viewDisplayMap = new Dictionary<string, Action>()
             {
@@ -59,13 +59,13 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
             statsModel.PropertyChanged += StatsModelPropertyChanged;
         }
 
-        public ObservableCollection<string> ExportTypes { get; } = new();
+        public ObservableCollection<string> ExecutionTypes { get; } = new();
 
         // TODO --> must track this locally so the executive utilities doesn't need to
         //   circular dependency in dependency injection
         public IDataStructureSetupViewModel ActiveViewModel
             => this.setupViewModelRepository.Value.GetDataOr(
-                configurationModel.ImportExportKey,
+                configurationModel.ImportExecutionKey,
                 _ => Resolver.Resolve<INotSupportedSetupViewModel>());
 
         public bool DisplayNotSupported
@@ -86,14 +86,14 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
             set => NotifyPropertyChanged(ref displayCsvToClassSetup, value);
         }
 
-        public string SelectedExportType
+        public string SelectedExecutionType
         {
-            get => selectedExportType;
+            get => selectedExecutionType;
             set
             {
-                mainModel.LoadedDataStructure.ExportType = value;
-                configurationModel.SelectedExportType = Enum.Parse<ExportType>(value);
-                NotifyPropertyChanged(ref selectedExportType, value);
+                mainModel.LoadedDataStructure.ExecutionType = value;
+                configurationModel.SelectedExecutionType = Enum.Parse<ExecutionType>(value);
+                NotifyPropertyChanged(ref selectedExecutionType, value);
             }
         }
 
@@ -137,10 +137,10 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 
             IDataConfiguration dataConfiguration = GetDataConfiguration();
 
-            viewModel.SelectedDataType = dataConfiguration.ImportExportKey;
-            viewModel.SelectedExportType = dataConfiguration.ImportExportKey.ExportType.ToString();
+            viewModel.SelectedDataType = dataConfiguration.ImportExecutionKey;
+            viewModel.SelectedExecutionType = dataConfiguration.ImportExecutionKey.ExecutionType.ToString();
 
-            configurationModel.ImportExportKey = dataConfiguration.ImportExportKey;
+            configurationModel.ImportExecutionKey = dataConfiguration.ImportExecutionKey;
         }
 
         public IDataStructureSetupViewModel GetInitializedViewModel()
@@ -149,7 +149,7 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 
             IDataStructureSetupViewModel viewModel = ActiveViewModel;
             viewModel.Initialize();
-            viewModel.SelectedExportType = selectedExportType;
+            viewModel.SelectedExecutionType = selectedExecutionType;
 
             return viewModel;
         }
@@ -173,19 +173,19 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
         {
             IDataConfiguration dataConfiguration = GetDataConfiguration();
 
-            // This is executed after Export Type is selected. Need to look at input type and export type and select appropriate UI
+            // This is executed after Execution Type is selected. Need to look at input type and execution type and select appropriate UI
             SetConfigurationName(dataConfiguration.Name);
 
             // This will update the model which will cause a propogation up to the grouping view models to populate their combo boxes
             IDataStructureSetupViewModel viewModel = ActiveViewModel;
-            viewModel.SelectedDataType = dataConfiguration.ImportExportKey;
-            viewModel.SelectedExportType = dataConfiguration.ImportExportKey.ExportType.ToString();
+            viewModel.SelectedDataType = dataConfiguration.ImportExecutionKey;
+            viewModel.SelectedExecutionType = dataConfiguration.ImportExecutionKey.ExecutionType.ToString();
             DisplayNotSupported = false;
         }
 
         private void FetchConfiguration()
         {
-            SelectedExportType = configurationModel.SelectedExportType.ToString();
+            SelectedExecutionType = configurationModel.SelectedExecutionType.ToString();
             ConfigurationDirectory = configurationModel.ExecutiveConfigurationDirectory;
         }
 
@@ -195,8 +195,8 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
 
             switch (e.PropertyName)
             {
-                case nameof(viewModel.SelectedExportType):
-                    SelectedExportType = viewModel.SelectedExportType;
+                case nameof(viewModel.SelectedExecutionType):
+                    SelectedExecutionType = viewModel.SelectedExecutionType;
                     break;
                 case nameof(viewModel.ConfigurationDirectory):
                     ConfigurationDirectory = viewModel.ConfigurationDirectory;

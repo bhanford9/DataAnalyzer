@@ -15,7 +15,7 @@ namespace DataAnalyzer.ViewModels
         ObservableCollection<ILoadableRemovableRowViewModel> Configurations { get; }
         ICommand CreateConfiguration { get; }
         IStructureExecutiveCommissioner ExecutiveCommissioner { get; }
-        ObservableCollection<string> ExportTypes { get; }
+        ObservableCollection<string> ExecutionTypes { get; }
         ICommand SaveConfiguration { get; }
     }
 }

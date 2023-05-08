@@ -75,7 +75,7 @@ namespace DataAnalyzer.Services
             });
 
             // Services
-            builder.RegisterType<IImportExportKey, ImportExportKey>();
+            builder.RegisterType<IImportExecutionKey, ImportExecutionKey>();
             builder.RegisterType<IImportKey, ImportKey>();
             builder.RegisterTypeInstance<IScraperService, ScraperService>();
             builder.RegisterTypeInstance<ISerializationService, SerializationService>();

@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.StatConfigurations.ClassCreationConfigurations
 {
-    internal interface IClassCreationConfiguration : IDataConfiguration
+    internal interface IClassCreationConfiguration : IStatsConfiguration
     {
         IClassSetupConfiguration ClassSetupConfiguration { get; set; }
     }

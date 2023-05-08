@@ -8,7 +8,7 @@ namespace DataAnalyzer.ApplicationConfigurations
     internal interface IApplicationConfiguration : IVersionedConfiguration
     {
         IScraperCategory SelectedCategory { get; set; }
-        ExportType SelectedExport { get; set; }
+        ExecutionType SelectedExecution { get; set; }
         IScraperFlavor SelectedFlavor { get; set; }
         IImportType SelectedImport { get; set; }
     }

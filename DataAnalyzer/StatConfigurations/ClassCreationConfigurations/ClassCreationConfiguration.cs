@@ -3,7 +3,7 @@ using DataAnalyzer.Common.DataParameters;
 
 namespace DataAnalyzer.StatConfigurations.ClassCreationConfigurations
 {
-    internal class ClassCreationConfiguration : DataConfiguration<ClassSetupConfiguration>, IClassCreationConfiguration
+    internal class ClassCreationConfiguration : StatsConfiguration<ClassSetupConfiguration>, IClassCreationConfiguration
     {
         public IClassSetupConfiguration ClassSetupConfiguration { get; set; } = new ClassSetupConfiguration();
 

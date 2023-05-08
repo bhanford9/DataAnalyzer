@@ -10,9 +10,9 @@ namespace DataAnalyzer.Models.LoadedConfigurations
         string DirectoryPath { get; set; }
         string DirectoryPathKey { get; }
         string DirectoryPathKeyValue { get; }
-        string ExportType { get; set; }
-        string ExportTypeKey { get; }
-        string ExportTypeKeyValue { get; }
+        string ExecutionType { get; set; }
+        string ExecutionTypeKey { get; }
+        string ExecutionTypeKeyValue { get; }
         int GroupingsCount { get; set; }
         string GroupingsKey { get; }
         string GroupingsKeyValue { get; }

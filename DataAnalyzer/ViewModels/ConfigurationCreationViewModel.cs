@@ -46,7 +46,7 @@ namespace DataAnalyzer.ViewModels
         public ICommand ApplyWithoutSave => this.applyWithoutSave;
         public ICommand SaveConfiguration => this.saveConfiguration;
 
-        public ObservableCollection<string> ExportTypes => this.ExecutiveCommissioner.ExportTypes;
+        public ObservableCollection<string> ExecutionTypes => this.ExecutiveCommissioner.ExecutionTypes;
         public ObservableCollection<ILoadableRemovableRowViewModel> Configurations { get; } = new();
 
         public IStructureExecutiveCommissioner ExecutiveCommissioner { get; }
@@ -129,7 +129,7 @@ namespace DataAnalyzer.ViewModels
 
         private void InitializeViewModel()
         {
-            if (this.configModel.ImportExportKey.IsValid)
+            if (this.configModel.ImportExecutionKey.IsValid)
             {
                 this.ActiveViewModel = this.ExecutiveCommissioner.GetInitializedViewModel();
 
@@ -146,7 +146,7 @@ namespace DataAnalyzer.ViewModels
         {
             switch (e.PropertyName)
             {
-                case nameof(this.configModel.ImportExportKey):
+                case nameof(this.configModel.ImportExecutionKey):
                     this.InitializeViewModel();
                     break;
             }

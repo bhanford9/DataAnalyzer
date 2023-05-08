@@ -1,6 +1,6 @@
 ﻿namespace DataAnalyzer.Services.Enums
 {
-    public enum ExportType
+    public enum ExecutionType
     {
         Excel,
         CSharpStringProperties,

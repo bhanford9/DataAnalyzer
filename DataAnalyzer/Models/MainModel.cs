@@ -47,9 +47,9 @@ namespace DataAnalyzer.Models
             {
                 //this.configurationModel.SelectedDataType = this.ScraperType switch
                 //{
-                //    ScraperCategory.Custom => ImportExportKey.Queryable,
-                //    ScraperCategory.CsvNames => ImportExportKey.CsvNames,
-                //    _ => ImportExportKey.NotApplicable,
+                //    ScraperCategory.Custom => ImportExecutionKey.Queryable,
+                //    ScraperCategory.CsvNames => ImportExecutionKey.CsvNames,
+                //    _ => ImportExecutionKey.NotApplicable,
                 //};
 
                 //this.NotifyPropertyChanged(nameof(this.ScraperType));
@@ -57,13 +57,13 @@ namespace DataAnalyzer.Models
             catch { }
         }
 
-        public bool ApplyInputExportTypes()
+        public bool ApplyInputExecutionTypes()
         {
-            ExportType exportType = Enum.Parse<ExportType>(this.LoadedDataStructure.ExportType);
+            ExecutionType executionType = Enum.Parse<ExecutionType>(this.LoadedDataStructure.ExecutionType);
 
-            if (exportType != ExportType.NotApplicable)
+            if (executionType != ExecutionType.NotApplicable)
             {
-                this.configurationModel.SelectedExportType = exportType;
+                this.configurationModel.SelectedExecutionType = executionType;
                 this.configurationModel.SaveConfiguration();
 
                 return true;

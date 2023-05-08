@@ -7,8 +7,8 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.Services
 {
-    internal interface IImportExportDataRepository<T> : IFlavoredCategorizedDataLibrary<IDictionary<ExportType, T>>
+    internal interface IImportExecutionDataRepository<T> : IFlavoredCategorizedDataLibrary<IDictionary<ExecutionType, T>>
     {
-        T this[IImportType type, IScraperCategory category, IScraperFlavor flavor, ExportType export] { get; }
+        T this[IImportType type, IScraperCategory category, IScraperFlavor flavor, ExecutionType execution] { get; }
     }
 }

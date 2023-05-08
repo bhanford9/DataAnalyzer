@@ -73,7 +73,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         public override void ClearConfiguration()
         {
-            this.SelectedDataType = ImportExportKey.Default;
+            this.SelectedDataType = ImportExecutionKey.Default;
             this.GroupingLayersCount = 0;
             this.ConfigurationGroupings.Clear();
         }

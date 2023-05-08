@@ -13,8 +13,8 @@ namespace DataAnalyzer.Models.LoadedConfigurations
         private readonly string dataTypeKey = "Data TypeParameter:   ";
         private string dataType = "Not set";
 
-        private readonly string exportTypeKey = "Export TypeParameter: ";
-        private string exportType = "Not set";
+        private readonly string executionTypeKey = "Execution TypeParameter: ";
+        private string executionType = "Not set";
 
         private readonly string groupingsKey = "Groupings:   ";
         private int groupingsCount = 0;
@@ -66,17 +66,17 @@ namespace DataAnalyzer.Models.LoadedConfigurations
             }
         }
 
-        public string ExportTypeKey => this.exportTypeKey;
-        public string ExportTypeKeyValue => this.exportTypeKey + this.exportType;
-        public string ExportType
+        public string ExecutionTypeKey => this.executionTypeKey;
+        public string ExecutionTypeKeyValue => this.executionTypeKey + this.executionType;
+        public string ExecutionType
         {
-            get => this.exportType;
+            get => this.executionType;
             set
             {
-                if (this.exportType != value)
+                if (this.executionType != value)
                 {
-                    this.exportType = value;
-                    this.NotifyPropertyChanged(nameof(this.ExportTypeKeyValue));
+                    this.executionType = value;
+                    this.NotifyPropertyChanged(nameof(this.ExecutionTypeKeyValue));
                 }
             }
         }

@@ -5,7 +5,7 @@ namespace DataAnalyzer.Services.ExecutiveUtilities
 {
     internal interface IAggregateExecutives
     {
-        IDataConfiguration DataConfiguration { get; }
+        IStatsConfiguration DataConfiguration { get; }
         IDataOrganizer DataOrganizer { get; }
         string ExecutionDisplayKey { get; }
     }

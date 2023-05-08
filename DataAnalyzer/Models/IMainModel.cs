@@ -9,7 +9,7 @@ namespace DataAnalyzer.Models
         ILoadedDataStructure LoadedDataStructure { get; set; }
         ILoadedInputFiles LoadedInputFiles { get; set; }
 
-        bool ApplyInputExportTypes();
+        bool ApplyInputExecutionTypes();
         void NotifyScraperTypeChange();
     }
 }

@@ -133,7 +133,7 @@
 
         <Button Grid.Column="1"
                 Content="Execute Excel Export"
-                Command="{Binding ExecuteExcelExport}"/>
+                Command="{Binding ExecuteExcelExecution}"/>
       </Grid>
     </Grid>
   </Grid>

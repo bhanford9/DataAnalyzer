@@ -9,7 +9,7 @@ namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
     {
         ICommand BrowseOutputDirectory { get; }
         string ConfigName { get; set; }
-        ICommand ExecuteExcelExport { get; }
+        ICommand ExecuteExcelExecution { get; }
         string OutputDirectory { get; set; }
         ICommand SaveConfiguration { get; }
         ObservableCollection<IWorkbookConfigListItemViewModel> SavedWorkbookConfigs { get; }

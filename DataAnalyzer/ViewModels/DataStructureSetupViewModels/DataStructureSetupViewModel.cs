@@ -18,10 +18,10 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         protected readonly IStatsModel statsModel;
         protected readonly IMainModel mainModel;
 
-        private IImportExportKey selectedDataType = ImportExportKey.Default;
+        private IImportExecutionKey selectedDataType = ImportExecutionKey.Default;
         private string configurationName = string.Empty;
         private string configurationDirectory = string.Empty;
-        private string selectedExportType = string.Empty;
+        private string selectedExecutionType = string.Empty;
         private bool isListening = true;
 
         public DataStructureSetupViewModel(
@@ -46,14 +46,14 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         public IDataConfiguration DataConfiguration => this.dataStructureModel.DataConfiguration;
 
-        public IImportExportKey SelectedDataType
+        public IImportExecutionKey SelectedDataType
         {
             get => this.selectedDataType;
             set
             {
                 this.NotifyPropertyChangedThen(ref this.selectedDataType, value, () =>
                 {
-                    this.configurationModel.ImportExportKey = value;
+                    this.configurationModel.ImportExecutionKey = value;
                     // TODO --> may need to make this more structured (data type may not be necessary)
                     this.mainModel.LoadedDataStructure.DataType = value?.Name ?? string.Empty;
                 });
@@ -70,7 +70,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
                 this.configurationModel.ExecutiveConfigurationName = value;
                 this.mainModel.LoadedDataStructure.StructureName = value;
 
-                // The data structure model may not be initialized yet during import/export type switching
+                // The data structure model may not be initialized yet during import/execution type switching
                 if (this.dataStructureModel.DataConfiguration != null)
                 {
                     this.dataStructureModel.DataConfiguration.Name = value;
@@ -91,26 +91,26 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             }
         }
 
-        public string SelectedExportType
+        public string SelectedExecutionType
         {
-            get => this.selectedExportType;
+            get => this.selectedExecutionType;
             set
             {
-                string inputExportName = this.mainModel.LoadedInputFiles.DataType + "_" + value;
+                string inputExecutionName = this.mainModel.LoadedInputFiles.DataType + "_" + value;
                 this.ConfigurationDirectory =
                     Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) +
-                    $"\\DataAnalyzerConfigs\\{value}\\{inputExportName}\\"; // TODO --> put into constant
+                    $"\\DataAnalyzerConfigs\\{value}\\{inputExecutionName}\\"; // TODO --> put into constant
 
-                this.configurationModel.SelectedExportType = Enum.Parse<ExportType>(value);
-                this.mainModel.LoadedDataStructure.ExportType = value;
+                this.configurationModel.SelectedExecutionType = Enum.Parse<ExecutionType>(value);
+                this.mainModel.LoadedDataStructure.ExecutionType = value;
 
                 // This will set the Executive Type for the app to notify to load in appropriate view models
-                if (!this.mainModel.ApplyInputExportTypes())
+                if (!this.mainModel.ApplyInputExecutionTypes())
                 {
                     this.ConfigurationDirectory = "NO SUPPORTED EXECUTIVE";
                 }
 
-                this.NotifyPropertyChanged(ref this.selectedExportType, value);
+                this.NotifyPropertyChanged(ref this.selectedExecutionType, value);
                 // TODO --> make sure input/scraper selection goes through this same logic
             }
         }
@@ -156,11 +156,11 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
             {
                 switch (e.PropertyName)
                 {
-                    case nameof(this.configurationModel.ImportExportKey):
-                        this.SelectedDataType = this.configurationModel.ImportExportKey;
+                    case nameof(this.configurationModel.ImportExecutionKey):
+                        this.SelectedDataType = this.configurationModel.ImportExecutionKey;
                         break;
-                    case nameof(this.configurationModel.SelectedExportType):
-                        this.SelectedExportType = Enum.GetName(typeof(ExportType), this.configurationModel.SelectedExportType);
+                    case nameof(this.configurationModel.SelectedExecutionType):
+                        this.SelectedExecutionType = Enum.GetName(typeof(ExecutionType), this.configurationModel.SelectedExecutionType);
                         break;
                 }
             }

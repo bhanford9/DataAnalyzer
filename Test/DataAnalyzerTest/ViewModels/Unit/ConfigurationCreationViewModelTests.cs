@@ -22,7 +22,7 @@ namespace DataAnalyzerTest.ViewModels.Unit
             this.shared.MockExecutiveCommissioner = new();
             this.shared.MockKey = new();
             this.shared.MockConfigurationModel
-                .Setup(x => x.ImportExportKey)
+                .Setup(x => x.ImportExecutionKey)
                 .Returns(this.shared.MockKey.Object);
             this.shared.MockDefaultView = new();
             this.shared.MockNotSupportedSetupModel = new();
@@ -31,7 +31,7 @@ namespace DataAnalyzerTest.ViewModels.Unit
         [Fact]
         public void ShouldSetDisplayToNotApplicableIfNothingSelectedAtConstruction()
         {
-            this.shared.MockConfigurationModel.Setup(x => x.ImportExportKey).Returns(ImportExportKey.Default);
+            this.shared.MockConfigurationModel.Setup(x => x.ImportExecutionKey).Returns(ImportExecutionKey.Default);
 
             this.CreateViewModel();
 
@@ -59,7 +59,7 @@ namespace DataAnalyzerTest.ViewModels.Unit
                 Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
                 "TestConfigs");
 
-            string expectedExportType = ExportType.CSharpTypedProperties.ToString();
+            string expectedExecutionType = ExecutionType.CSharpTypedProperties.ToString();
 
             this.shared.MockKey.Setup(x => x.IsValid).Returns(true);
 
@@ -73,8 +73,8 @@ namespace DataAnalyzerTest.ViewModels.Unit
                 .Setup(x => x.GetInitializedViewModel())
                 .Returns(mockDataStructureSetupViewModel.Object);
             this.shared.MockExecutiveCommissioner
-                .Setup(x => x.SelectedExportType)
-                .Returns(expectedExportType);
+                .Setup(x => x.SelectedExecutionType)
+                .Returns(expectedExecutionType);
 
             this.CreateViewModel();
 

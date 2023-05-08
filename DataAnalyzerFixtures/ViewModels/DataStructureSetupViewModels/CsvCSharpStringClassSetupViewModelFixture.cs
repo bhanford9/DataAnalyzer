@@ -30,17 +30,17 @@ namespace DataAnalyzerFixtures.ViewModels.DataStructureSetupViewModels
         
         internal string DataConfigPropName => nameof(this.MockCsvCSharpStringClassSetupModel.Object.DataConfiguration);
 
-        internal string ImportExportKeyPropName => nameof(this.MockConfigurationModel.Object.ImportExportKey);
+        internal string ImportExecutionKeyPropName => nameof(this.MockConfigurationModel.Object.ImportExecutionKey);
 
-        internal string ExportTypePropName => nameof(this.MockConfigurationModel.Object.SelectedExportType);
+        internal string ExecutionTypePropName => nameof(this.MockConfigurationModel.Object.SelectedExecutionType);
 
         internal PropertyChangedEventArgs DataParamListChangeArgs => this.GetNamedEventArgs(this.DataParamListPropName);
 
         internal PropertyChangedEventArgs DataConfigChangeArgs => this.GetNamedEventArgs(this.DataConfigPropName);
 
-        internal PropertyChangedEventArgs ImportExportKeyChangeArgs => this.GetNamedEventArgs(this.ImportExportKeyPropName);
+        internal PropertyChangedEventArgs ImportExecutionKeyChangeArgs => this.GetNamedEventArgs(this.ImportExecutionKeyPropName);
 
-        internal PropertyChangedEventArgs ExportTypeChangeArgs => this.GetNamedEventArgs(this.ExportTypePropName);
+        internal PropertyChangedEventArgs ExecutionTypeChangeArgs => this.GetNamedEventArgs(this.ExecutionTypePropName);
 
         internal ClassCreationSetupViewModel ViewModel { get; set; }
     }

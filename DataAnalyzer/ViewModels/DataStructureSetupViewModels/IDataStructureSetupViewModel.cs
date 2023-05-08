@@ -7,9 +7,9 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
     internal interface IDataStructureSetupViewModel : INotifyPropertyChanged
     {
         string ConfigurationName { get; set; }
-        IImportExportKey SelectedDataType { get; set; }
+        IImportExecutionKey SelectedDataType { get; set; }
         string ConfigurationDirectory { get; set; }
-        string SelectedExportType { get; set; }
+        string SelectedExecutionType { get; set; }
         IDataConfiguration DataConfiguration { get; }
         IDataStructureSetupViewModel Default { get; }
         bool IsDefault { get; }

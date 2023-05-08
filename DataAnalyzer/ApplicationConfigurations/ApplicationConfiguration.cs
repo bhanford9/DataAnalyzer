@@ -16,6 +16,6 @@ namespace DataAnalyzer.ApplicationConfigurations
 
         public IScraperFlavor SelectedFlavor { get; set; }
 
-        public ExportType SelectedExport { get; set; }
+        public ExecutionType SelectedExecution { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 # Application
 [description about what the application is and the 3 polymorphic layers]
 
-## Import, Category, Flavor, Export
+## Import, Category, Flavor, Execution
 [description about the significance of these terms and how they drive everything in the application]
 
 ## MVVM (Quick)
@@ -84,9 +84,9 @@ When creating a new *Data Converter*, the first thing you'll want to do is make 
 
 - `IAggregateExecutives` --> needs created for your new type combination. it will hold utilities for your specific data combination throughout the rest of the layers in the application
 - This will lead you to seeing you need an `IStatConfiguration`, `IDataConfiguration` and an `IDataOrganizer` for your new type combination. Check to see if one already exists that you can use before creating your own
-  - `IStatConfiguration` is application mutable-state of your data. This data structure will hold your imported data in a structured way for the export step.
-  - `IDataConfiguration` is application save-state of your data. it should handle to/from file configuration
-  - `IDataOrganizer` is the object that will perform the action of converting your data configuration into a structured representation of the data for whatever export type is going to be executed
+  - `IStatConfiguration` is application mutable-state of your data. This data structure will hold your imported data to be structured into a cleaner way to be used by the *Execution* step.
+  - `IDataConfiguration` is application working-state of your data. It handles data to/from file configuration for the *Data Setup* step and contains an organized structure for the *Execution* step to use.
+  - `IDataOrganizer` is the object that will perform the action of converting your data configuration into a structured representation of the data for whatever *Execution* type is going to be executed
 - `ExecutiveUtilitiesRepository` --> needs updated with the `IAggregateExecutives` you created
 
 At this point, if you are using a pre-existing *Import Type* (i.e. importing from a file), then you might be able to fully import your data into the application. The next step would then be to move on to the Data Structuring section below. If you had to create a new *Import Type* or if the existing *Import Types* do not supply the needed functionality and you want to update them, then continue on within this Data Import section.
@@ -108,5 +108,35 @@ At this point, if you are using a pre-existing *Import Type* (i.e. importing fro
 
 ## Most Importantly
 `Structure Executive Commissioner` has 2 things driving this part of the application:
-1. Setup View Model Repository that maps the currently selected *Import Type*, *Category*, *Flavor* and *Export Type* to a respective View Model
+1. Setup View Model Repository that maps the currently selected *Import Type*, *Category*, *Flavor* and *Execution Type* to a respective View Model
 2. View Display Map that maps the visibility of each view based on the View Model from (1)
+
+## Saved Configuration
+Something I did (and didn't realize I was doing)...
+- `DataConfigurations` are stored within the `ApplicationConfigurations` directory, but the `DataConfigurations` are their own entity for holding the state of the *Data Setup* step.
+- There is another `DataConfigurations` stored within `StatConfigurations` which is confusing and may be duplicate things
+- `IStats` made it into its own _Data Import_ directory
+- The *Execution* step area has a model for holding serializable data, a model for going to/from serialized state and the *Execution* model, and then an *Execution* model for going to/from the configuration model and the view model
+
+All of this is not quite cohesive and I want to organize a better way for it... Maybe its fine and I just need to define each explicitly. The `DataConfiguration` seems like it is maintaing two things as a single thing, *Application State* and *Serialized State*, which may not be desirable. 
+
+`IDataConfiguration (Stats)` acts as a polymorphic way of storing the `IDataConfiguration (App)` structure with the `IStats` data applied. This requires this extra entity because the `StatsModel` handles the polymorphic structuring of stats by sending this entity an `IStatAccessorColleciton` and an `IDataConfiguration (App)` so that each child of `IDataConfiguration (Stats)` can inately know how to cast/parse/organize the data configuration with the raw data.
+
+TODOs
+2. Document the description of each of these things
+3. Draw out the paths of execution for each layer *Import* --> *Setup* --> *Execution* (each layer has a use of the above thing(s))
+4. Make sure each path makes sense
+
+`*ImportViewModel` --> Apply Active Directory on `ImportModel` --> Updates last used info and stores file mapping to config
+  - other than that, import layer doesn't really deal with config things (each importer can deal with its own to/from file)
+
+`*SetupViewModel` --> Calls Save on `DataStructureSetupModel` --> Calls Serialize for `IDataConfiguration`
+
+`*ExecutionViewModel` --> Calls Save on `*ExecutionViewModel.ConfigModel`
+`*ExecutionViewModel` --> Calls Save on `StrucutureExecutiveCommissioner` --> Calls Save on active `*SetupViewModel`
+  - This seems like it should NOT be necessary. The *Execution* step should NEVER need to update the *Setup* step
+
+# Execution
+
+## Overivew
+

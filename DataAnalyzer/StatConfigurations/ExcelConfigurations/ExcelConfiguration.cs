@@ -16,11 +16,14 @@ namespace DataAnalyzer.StatConfigurations.ExcelConfigurations
             protected set => groupingLevels = value;
         }
 
-        protected override void InternalInit(IStatAccessorCollection parameters, AppDataConfig.GroupingDataConfiguration configuration)
+        protected override void InternalInit(
+            IStatAccessorCollection parameters,
+            AppDataConfig.GroupingDataConfiguration configuration)
         {
             for (int i = 0; i < configuration.GroupingConfiguration.Count; i++)
             {
-                AddGroupingRule(i, parameters.GetStatAccessor(configuration.GroupingConfiguration.ElementAt(i).SelectedParameter));
+                AddGroupingRule(i, parameters.GetStatAccessor(
+                    configuration.GroupingConfiguration.ElementAt(i).SelectedParameter));
             }
         }
     }

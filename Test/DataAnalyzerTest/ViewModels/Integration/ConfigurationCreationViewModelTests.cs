@@ -5,14 +5,14 @@
         // will want to do something like this to test all instances (present and future)
         //
         //[Theory]
-        //[ClassData(typeof(ImportExportKeyProvider))]
+        //[ClassData(typeof(ImportExecutionKeyProvider))]
         //public void ShouldSetActiveViewModelIfValidAtConstructionINTEGRATION(
         //    IImportType importType,
         //    IScraperCategory category,
         //    IScraperFlavor flavor,
-        //    ExportType exportType)
+        //    ExecutionType exportType)
         //{
-        //    this.shared.MockConfigurationModel.Setup(x => x.ImportExportKey).Returns(new ImportExportKey(
+        //    this.shared.MockConfigurationModel.Setup(x => x.ImportExecutionKey).Returns(new ImportExecutionKey(
         //        new ImportKey(importType, category, flavor),
         //        exportType));
         //}

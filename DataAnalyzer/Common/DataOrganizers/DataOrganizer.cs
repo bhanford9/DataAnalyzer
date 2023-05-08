@@ -5,9 +5,9 @@ using System.Collections.Generic;
 namespace DataAnalyzer.Common.DataOrganizers
 {
     internal abstract class DataOrganizer<T> : IDataOrganizer
-        where T : IDataConfiguration
+        where T : IStatsConfiguration
     {
-        public IHeirarchalStats Organize(IDataConfiguration configuration, ICollection<IStats> data) =>
+        public IHeirarchalStats Organize(IStatsConfiguration configuration, ICollection<IStats> data) =>
             this.InternalOrganize((T)configuration, data);
 
         protected abstract IHeirarchalStats InternalOrganize(T configuration, ICollection<IStats> data);

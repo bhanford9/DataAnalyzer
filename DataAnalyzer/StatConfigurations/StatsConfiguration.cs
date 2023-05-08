@@ -3,10 +3,7 @@ using AppDataConfig = DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 
 namespace DataAnalyzer.StatConfigurations
 {
-    /// <summary>
-    /// Converts an application loaded configuration to a stat-specific configuration
-    /// </summary>
-    internal abstract class DataConfiguration<T> : IDataConfiguration
+    internal abstract class StatsConfiguration<T> : IStatsConfiguration
         where T : AppDataConfig.IDataConfiguration
     {
         public void Initialize(IStatAccessorCollection parameters, AppDataConfig.IDataConfiguration applicationConfiguration) =>

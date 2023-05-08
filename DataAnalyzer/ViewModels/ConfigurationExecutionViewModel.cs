@@ -10,7 +10,7 @@ namespace DataAnalyzer.ViewModels
     internal class ConfigurationExecutionViewModel : BasePropertyChanged, IConfigurationExecutionViewModel
     {
         private readonly IConfigurationModel configurationModel;
-        private string selectedExportType = string.Empty;
+        private string selectedExecutionType = string.Empty;
 
         public ConfigurationExecutionViewModel(
             IConfigurationModel configModel,
@@ -21,10 +21,10 @@ namespace DataAnalyzer.ViewModels
             this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
         }
 
-        public string SelectedExportType
+        public string SelectedExecutionType
         {
-            get => this.selectedExportType;
-            set => this.NotifyPropertyChanged(ref this.selectedExportType, value);
+            get => this.selectedExecutionType;
+            set => this.NotifyPropertyChanged(ref this.selectedExecutionType, value);
         }
 
         public IExecutionExecutiveCommissioner ExecutiveCommissioner { get; }
@@ -33,9 +33,9 @@ namespace DataAnalyzer.ViewModels
         {
             switch (e.PropertyName)
             {
-                case nameof(this.configurationModel.ImportExportKey):
+                case nameof(this.configurationModel.ImportExecutionKey):
                     this.ExecutiveCommissioner.SetDisplay();
-                    this.SelectedExportType = Enum.GetName(typeof(ExportType), this.configurationModel.SelectedExportType);
+                    this.SelectedExecutionType = Enum.GetName(typeof(ExecutionType), this.configurationModel.SelectedExecutionType);
                     break;
                 default:
                     break;

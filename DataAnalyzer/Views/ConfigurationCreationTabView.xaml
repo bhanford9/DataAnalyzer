@@ -44,9 +44,9 @@
 
       <GroupBox Grid.Column="0"
                 Grid.Row="1"
-                Header="Export Type">
-        <ComboBox ItemsSource="{Binding ExportTypes}"
-                  SelectedItem="{Binding ExecutiveCommissioner.SelectedExportType}"/>
+                Header="Execution Type">
+        <ComboBox ItemsSource="{Binding ExecutionTypes}"
+                  SelectedItem="{Binding ExecutiveCommissioner.SelectedExecutionType}"/>
       </GroupBox>
 
       <GroupBox Grid.Column="0"

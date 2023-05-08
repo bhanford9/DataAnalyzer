@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace DataAnalyzer.StatConfigurations.GroupingConfigurations
 {
-    internal interface IGroupingDataConfiguration : IDataConfiguration
+    internal interface IGroupingDataConfiguration : IStatsConfiguration
     {
         ICollection<IGroupingConfiguration> GroupingConfigurations { get; }
         int GroupingLevels { get; }

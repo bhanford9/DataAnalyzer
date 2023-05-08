@@ -12,8 +12,8 @@ namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
         bool DisplayCsvToClassSetup { get; set; }
         bool DisplayGroupingSetup { get; set; }
         bool DisplayNotSupported { get; set; }
-        ObservableCollection<string> ExportTypes { get; }
-        string SelectedExportType { get; set; }
+        ObservableCollection<string> ExecutionTypes { get; }
+        string SelectedExecutionType { get; set; }
 
         void ApplyConfiguration();
         bool IsValidSetup(out string reason);

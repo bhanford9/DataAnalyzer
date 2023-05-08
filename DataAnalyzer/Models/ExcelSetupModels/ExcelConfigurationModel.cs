@@ -52,7 +52,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
                 this.lastSavedDataTypeConfigs = this.serializationService
                     .JsonDeserializeFromFile<ICollection<LastSavedConfiguration>>(configFilePath);
 
-                if (this.configurationModel.ImportExportKey.IsValid)
+                if (this.configurationModel.ImportExecutionKey.IsValid)
                 {
                     string dataTypeConfigPath = this.GetCurrentDataTypeConfigDirectoryPath();
                     this.LoadDataTypeConfigByPath(dataTypeConfigPath);
@@ -176,7 +176,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             bool found = false;
             foreach (LastSavedConfiguration config in this.lastSavedDataTypeConfigs)
             {
-                if (config.ImportExportKey.Equals(this.configurationModel.ImportExportKey))
+                if (config.ImportExecutionKey.Equals(this.configurationModel.ImportExecutionKey))
                 {
                     found = true;
                     config.FilePath = filePath;
@@ -188,7 +188,7 @@ namespace DataAnalyzer.Models.ExcelSetupModels
                 this.lastSavedDataTypeConfigs.Add(new LastSavedConfiguration
                 {
                     FilePath = filePath,
-                    ImportExportKey = this.configurationModel.ImportExportKey
+                    ImportExecutionKey = this.configurationModel.ImportExecutionKey
                 });
             }
 
@@ -244,18 +244,18 @@ namespace DataAnalyzer.Models.ExcelSetupModels
             this.configurationDirectory + "\\" + DATA_TYPE_CONFIG_FILE_NAME;
 
         public string GetCurrentDataTypeConfigDirectoryPath() =>
-            this.configurationDirectory + "\\" + this.configurationModel.ImportExportKey.Name + "\\" + DATA_TYPES_CONFIG_PATH_KEY;
+            this.configurationDirectory + "\\" + this.configurationModel.ImportExecutionKey.Name + "\\" + DATA_TYPES_CONFIG_PATH_KEY;
 
         public string GetCurrentWorkbookConfigDirectoryPath() =>
-            this.configurationDirectory + "\\" + this.configurationModel.ImportExportKey.Name + "\\" + WORKBOOK_CONFIG_PATH_KEY;
+            this.configurationDirectory + "\\" + this.configurationModel.ImportExecutionKey.Name + "\\" + WORKBOOK_CONFIG_PATH_KEY;
 
         private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
-                case nameof(this.configurationModel.ImportExportKey):
+                case nameof(this.configurationModel.ImportExecutionKey):
                     LastSavedConfiguration lastSavedConfiguration = this.lastSavedDataTypeConfigs
-                        .FirstOrDefault(x => x.ImportExportKey.Equals(this.configurationModel.ImportExportKey));
+                        .FirstOrDefault(x => x.ImportExecutionKey.Equals(this.configurationModel.ImportExecutionKey));
                     if (lastSavedConfiguration != default)
                     {
                         this.LoadDataTypesFromConfig();

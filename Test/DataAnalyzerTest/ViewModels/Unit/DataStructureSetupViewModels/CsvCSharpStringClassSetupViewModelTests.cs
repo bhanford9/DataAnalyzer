@@ -205,10 +205,10 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
         public void ShouldPropagateDataTypeChangesToModels()
         {
             this.CreateViewModel();
-            this.shared.ViewModel.SelectedDataType = this.GetValidImportExportKey();
+            this.shared.ViewModel.SelectedDataType = this.GetValidImportExecutionKey();
 
             this.shared.MockConfigurationModel.VerifySet(
-                x => x.ImportExportKey = this.shared.ViewModel.SelectedDataType,
+                x => x.ImportExecutionKey = this.shared.ViewModel.SelectedDataType,
                 Times.Once);
             this.shared.MockMainModel.VerifyGet(x => x.LoadedDataStructure, Times.Once);
             Assert.Equal(
@@ -243,36 +243,36 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
         }
 
         [Fact]
-        public void ShouldPropagateExportTypeChangesToModels()
+        public void ShouldPropagateExecutionTypeChangesToModels()
         {
             const string expectedDataType = "MyDataType";
-            string expectedExportType = ExportType.CSharpStringProperties.ToString();
+            string expectedExecutionType = ExecutionType.CSharpStringProperties.ToString();
             string expectedConfigDirectory = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}" +
-                $"\\DataAnalyzerConfigs\\{expectedExportType}\\{expectedDataType}_{expectedExportType}\\";
+                $"\\DataAnalyzerConfigs\\{expectedExecutionType}\\{expectedDataType}_{expectedExecutionType}\\";
             this.CreateViewModel();
 
             Mock<ILoadedInputFiles> mockLoadedInputFiles = new();
             mockLoadedInputFiles.Setup(x => x.DataType).Returns(expectedDataType);
             this.shared.MockMainModel.Setup(x => x.LoadedInputFiles).Returns(mockLoadedInputFiles.Object);
-            this.shared.MockMainModel.Setup(x => x.ApplyInputExportTypes()).Returns(true);
+            this.shared.MockMainModel.Setup(x => x.ApplyInputExecutionTypes()).Returns(true);
 
-            this.shared.ViewModel.SelectedExportType = expectedExportType;
+            this.shared.ViewModel.SelectedExecutionType = expectedExecutionType;
 
             Assert.Equal(expectedConfigDirectory, this.shared.ViewModel.ConfigurationDirectory);
-            this.shared.MockConfigurationModel.VerifySet(x => x.SelectedExportType = ExportType.CSharpStringProperties, Times.Once);
+            this.shared.MockConfigurationModel.VerifySet(x => x.SelectedExecutionType = ExecutionType.CSharpStringProperties, Times.Once);
 
             // The setter also sets the configuration directory which uses the LoadedDataStructure
             this.shared.MockMainModel.VerifyGet(x => x.LoadedDataStructure, Times.Exactly(2));
-            Assert.Equal(expectedExportType, this.shared.MockMainModel.Object.LoadedDataStructure.ExportType);
+            Assert.Equal(expectedExecutionType, this.shared.MockMainModel.Object.LoadedDataStructure.ExecutionType);
         }
 
         [Fact]
-        public void ShouldSetConfigDirectoryToNotSupportedIfUnableToApplyInputExportType()
+        public void ShouldSetConfigDirectoryToNotSupportedIfUnableToApplyInputExecutionType()
         {
             const string expectedConfigDir = "NO SUPPORTED EXECUTIVE";
             this.CreateViewModel();
-            this.shared.MockMainModel.Setup(x => x.ApplyInputExportTypes()).Returns(false);
-            this.shared.ViewModel.SelectedExportType = ExportType.CSharpStringProperties.ToString();
+            this.shared.MockMainModel.Setup(x => x.ApplyInputExecutionTypes()).Returns(false);
+            this.shared.ViewModel.SelectedExecutionType = ExecutionType.CSharpStringProperties.ToString();
 
             Assert.Equal(expectedConfigDir, this.shared.ViewModel.ConfigurationDirectory);
         }
@@ -326,35 +326,35 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
         [Fact]
         public void ShouldUpdateDataTypeWhenImportKeyChangesInModel()
         {
-            IImportExportKey expectedKey = this.GetValidImportExportKey();
+            IImportExecutionKey expectedKey = this.GetValidImportExecutionKey();
             this.CreateViewModel();
             this.shared.ViewModel.SelectedDataType = null;
             this.shared.ViewModel.StartListeners();
 
-            this.shared.MockConfigurationModel.Setup(x => x.ImportExportKey).Returns(expectedKey);
+            this.shared.MockConfigurationModel.Setup(x => x.ImportExecutionKey).Returns(expectedKey);
 
             this.shared.MockConfigurationModel.Raise(
                 this.shared.GetEventAction<IConfigurationModel>(),
-                this.shared.ImportExportKeyChangeArgs);
+                this.shared.ImportExecutionKeyChangeArgs);
 
             Assert.Equal(expectedKey, this.shared.ViewModel.SelectedDataType);
         }
 
         [Fact]
-        public void ShouldUpdateExportTypeWhenExportTypeChangesInModel()
+        public void ShouldUpdateExecutionTypeWhenExecutionTypeChangesInModel()
         {
-            string expectedExportType = ExportType.CSharpStringProperties.ToString();
+            string expectedExecutionType = ExecutionType.CSharpStringProperties.ToString();
             this.CreateViewModel();
             this.shared.ViewModel.StartListeners();
-            this.shared.ViewModel.SelectedExportType = ExportType.NotApplicable.ToString();
+            this.shared.ViewModel.SelectedExecutionType = ExecutionType.NotApplicable.ToString();
 
-            this.shared.MockConfigurationModel.Setup(x => x.SelectedExportType).Returns(ExportType.CSharpStringProperties);
+            this.shared.MockConfigurationModel.Setup(x => x.SelectedExecutionType).Returns(ExecutionType.CSharpStringProperties);
 
             this.shared.MockConfigurationModel.Raise(
                 this.shared.GetEventAction<IConfigurationModel>(),
-                this.shared.ExportTypeChangeArgs);
+                this.shared.ExecutionTypeChangeArgs);
 
-            Assert.Equal(expectedExportType, this.shared.ViewModel.SelectedExportType);
+            Assert.Equal(expectedExecutionType, this.shared.ViewModel.SelectedExecutionType);
         }
 
         // END PARENT CLASS TESTS
@@ -377,12 +377,12 @@ namespace DataAnalyzerTest.ViewModels.Unit.DataStructureSetupViewModels
             .Cast<IStringPropertyRowViewModel>()
             .ToList();
 
-        private IImportExportKey GetValidImportExportKey() => new ImportExportKeyBuilder()
+        private IImportExecutionKey GetValidImportExecutionKey() => new ImportExecutionKeyBuilder()
             .With(
                 new FileImportType(),
                 new CsvNamesScraperCategory(),
                 new CsvTestScraperFlavor(),
-                ExportType.CSharpStringProperties)
+                ExecutionType.CSharpStringProperties)
             .Build();
 
         private void CreateViewModel() =>

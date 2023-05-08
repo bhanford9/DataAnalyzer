@@ -20,7 +20,7 @@ namespace DataAnalyzer.Models
         private readonly IScraperService scraperService;
         private IHeirarchalStats heirarchalStats;
 
-        private IDataConfiguration activeConfiguration = new NotSupportedDataConfiguration();
+        private IStatsConfiguration activeConfiguration = new NotSupportedDataConfiguration();
 
         private readonly IExecutiveUtilitiesRepository executiveUtilities;
         
@@ -50,7 +50,7 @@ namespace DataAnalyzer.Models
             set => this.NotifyPropertyChanged(ref this.heirarchalStats, value);
         }
 
-        public IDataConfiguration ActiveConfiguration
+        public IStatsConfiguration ActiveConfiguration
         {
             get => this.activeConfiguration;
             set
@@ -77,7 +77,7 @@ namespace DataAnalyzer.Models
         {
             this.Stats.Clear();
 
-            this.scraperService.ScrapeFromSource(source, this.configurationModel.ImportExportKey.ImportKey)
+            this.scraperService.ScrapeFromSource(source, this.configurationModel.ImportExecutionKey.ImportKey)
                 .ToList()
                 .ForEach(this.Stats.Add);
 
@@ -91,7 +91,7 @@ namespace DataAnalyzer.Models
                 applicationConfiguration);
 
             this.HeirarchalStats = this.executiveUtilities
-                .GetDataOrDefault(this.configurationModel.ImportExportKey)
+                .GetDataOrDefault(this.configurationModel.ImportExecutionKey)
                 .DataOrganizer.Organize(this.activeConfiguration, this.Stats);
 
             this.LoadStatNames(this.HeirarchalStats);
@@ -113,9 +113,9 @@ namespace DataAnalyzer.Models
         {
             switch (e.PropertyName)
             {
-                case nameof(this.configurationModel.ImportExportKey):
+                case nameof(this.configurationModel.ImportExecutionKey):
                     this.ActiveConfiguration = this.executiveUtilities.GetDataOr(
-                        this.configurationModel.ImportExportKey,
+                        this.configurationModel.ImportExecutionKey,
                         (_) => new NotSupportedExecutive()).DataConfiguration;
 
                     if (this.Stats.Any())

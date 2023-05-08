@@ -73,7 +73,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
         public override void ClearConfiguration()
         {
-            //this.SelectedDataType = ImportExportKey.NotApplicable.ToString();
+            //this.SelectedDataType = ImportExecutionKey.NotApplicable.ToString();
         }
 
         public override void LoadViewModelFromConfiguration()
@@ -94,34 +94,43 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
 
             foreach (IPropertyBoxViewModel propBox in this.ClassPropertiesBoxes)
             {
-                IClassPropertySetupConfiguration classProp = new ClassPropertySetupConfiguration
-                {
-                    Name = propBox.ContainerName
-                };
-
-                // TODO --> this did not seem to get properly serialized
-
-                propBox.Properties.ToList().ForEach(
-                        x => classProp.Properties.Add(x.PropertyType switch
-                        {
-                            PropertyType.Class => new ClassPropertySetupConfiguration()
-                            {
-                                Name = x.PropertyName,
-                            },
-                            PropertyType.Collection => new CollectionPropertySetupConfiguration()
-                            {
-                                Name = x.PropertyName,
-                            },
-                            PropertyType.Simple => new SimplePropertySetupConfiguration()
-                            {
-                                Name = x.PropertyName
-                            },
-                            _ => throw new ArgumentOutOfRangeException(),
-                        }));
+                this.model.DataConfiguration.Properties.Add(this.ApplyToPropertyConfig(propBox));
             }
         }
 
-        public override void SaveConfiguration() => this.model.SaveConfiguration();
+        private IClassPropertySetupConfiguration ApplyToPropertyConfig(IPropertyBoxViewModel propBox)
+        {
+            IClassPropertySetupConfiguration classProp = new ClassPropertySetupConfiguration
+            {
+                Name = propBox.ContainerName
+            };
+
+            propBox.Properties.ToList().ForEach(
+                    x => classProp.Properties.Add(x.PropertyType switch
+                    {
+                        PropertyType.Class => new ClassPropertySetupConfiguration()
+                        {
+                            Name = x.PropertyName,
+                        },
+                        PropertyType.Collection => new CollectionPropertySetupConfiguration()
+                        {
+                            Name = x.PropertyName,
+                        },
+                        PropertyType.Simple => new SimplePropertySetupConfiguration()
+                        {
+                            Name = x.PropertyName
+                        },
+                        _ => throw new ArgumentOutOfRangeException(),
+                    }));
+
+            return classProp;
+        }
+
+        public override void SaveConfiguration()
+        {
+            this.ApplyConfiguration();
+            this.model.SaveConfiguration();
+        }
 
         public override void Initialize()
         {
@@ -158,25 +167,34 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
         {
             if (appConfig is IClassPropertySetupConfiguration classConfig)
             {
-                classConfig.Properties.ToList().ForEach(x =>
+                foreach (IPropertySetupConfiguration x in classConfig.Properties)
                 {
-                    if (this.ClassPropertiesBoxes.All(y => y.ContainerName != x.Name))
+                    if (this.ClassPropertiesBoxes.All(y => y.ContainerName != classConfig.Name))
                     {
                         this.AddPropertyBoxFromAppConfig(x);
-                        this.ClassPropertiesBoxes.Add(GetPropertyBoxFromAppConfig(x));
                     }
-                });
+                }
+
+                IPropertyBoxViewModel newViewModel = GetPropertyBoxFromAppConfig(classConfig);
+                if (newViewModel.Properties.Count > 0)
+                {
+                    this.ClassPropertiesBoxes.Add(newViewModel);
+                }
             }
             else if (appConfig is ICollectionPropertySetupConfiguration collectionConfig)
             {
-                collectionConfig.Properties.ToList().ForEach(x =>
+                foreach (IPropertySetupConfiguration x in collectionConfig.Properties)
                 {
-                    if (this.ClassPropertiesBoxes.All(y => y.ContainerName != x.Name))
+                    if (this.ClassPropertiesBoxes.All(y => y.ContainerName != collectionConfig.Name))
                     {
                         this.AddPropertyBoxFromAppConfig(x);
-                        this.ClassPropertiesBoxes.Add(GetPropertyBoxFromAppConfig(x));
+                        IPropertyBoxViewModel newViewModel = GetPropertyBoxFromAppConfig(x);
+                        if (newViewModel.Properties.Count > 0)
+                        {
+                            this.ClassPropertiesBoxes.Add(newViewModel);
+                        }
                     }
-                });
+                }
             }
         }
 
@@ -194,7 +212,7 @@ namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
                         collectionConfig.Properties
                             .Select(x => this.GetPropertyRow(x.Name, PropertyType.Collection, true))
                             .ToList(),
-                    _ => throw new Exception()
+                    _ => new List<IStringPropertyRowViewModel>()
                 },
             };
 

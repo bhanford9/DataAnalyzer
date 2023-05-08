@@ -13,7 +13,7 @@ namespace DataAnalyzer.Services.ExecutiveUtilities
 {
     // TODO --> register as singleton
     internal class ExecutiveUtilitiesRepository :
-        ImportExportDataRepository<IAggregateExecutives>,
+        ImportExecutionDataRepository<IAggregateExecutives>,
         IExecutiveUtilitiesRepository
     {
         public ExecutiveUtilitiesRepository()
@@ -26,26 +26,26 @@ namespace DataAnalyzer.Services.ExecutiveUtilities
             //DatabaseImportType databaseType = new DatabaseImportType();
             //HttpImportType httpType = new HttpImportType();
 
-            this[fileType] = new Dictionary<IScraperCategory, IDictionary<IScraperFlavor, IDictionary<ExportType, IAggregateExecutives>>>();
+            this[fileType] = new Dictionary<IScraperCategory, IDictionary<IScraperFlavor, IDictionary<ExecutionType, IAggregateExecutives>>>();
 
             this.InitializeCategory(fileType, new QueryableScraperCategory())
-                .WithFlavoredData(new QueryableStandardScraperFlavor(), ExportType.Excel, new QueryableExcelCreation());
+                .WithFlavoredData(new QueryableStandardScraperFlavor(), ExecutionType.Excel, new QueryableExcelCreation());
 
             this.InitializeCategory(fileType, new CsvNamesScraperCategory())
-                .WithFlavoredData(new CsvNamesStandardScraperFlavor(), ExportType.CSharpStringProperties, new CsvCSharpClassCreation())
-                .WithFlavoredData(new CsvNamesStandardScraperFlavor(), ExportType.CSharpStringProperties, new CsvTest());
+                .WithFlavoredData(new CsvNamesStandardScraperFlavor(), ExecutionType.CSharpStringProperties, new CsvCSharpClassCreation())
+                .WithFlavoredData(new CsvNamesStandardScraperFlavor(), ExecutionType.CSharpStringProperties, new CsvTest());
 
             this.InitializeCategory(fileType, new JsonObjectScraperCategory())
-                .WithFlavoredData(new JsonGeneralObjectScraperFlavor(), ExportType.CSharpStringProperties, new CSharpClassCreation());
+                .WithFlavoredData(new JsonGeneralObjectScraperFlavor(), ExecutionType.CSharpStringProperties, new CSharpClassCreation());
         }
 
         public override string Name => "Executive Utilities";
 
-        public IReadOnlyCollection<ExportType> GetExportTypes(IImportType import, IScraperCategory category, IScraperFlavor flavor)
+        public IReadOnlyCollection<ExecutionType> GetExecutionTypes(IImportType import, IScraperCategory category, IScraperFlavor flavor)
             => this[import][category][flavor].Keys.ToList();
 
-        public IReadOnlyCollection<string> GetExportTypeNamess(IImportType import, IScraperCategory category, IScraperFlavor flavor)
-            => GetExportTypes(import, category, flavor).Select(x => x.ToString()).ToList();
+        public IReadOnlyCollection<string> GetExecutionTypeNamess(IImportType import, IScraperCategory category, IScraperFlavor flavor)
+            => GetExecutionTypes(import, category, flavor).Select(x => x.ToString()).ToList();
 
         //public IEnumerable<IDataStructureSetupViewModel> StructureSetupViewModels => this.GetAll(x => x.DataStructureSetupViewModel);
     }

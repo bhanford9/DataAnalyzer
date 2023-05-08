@@ -1,6 +1,6 @@
 ﻿namespace DataAnalyzer.StatConfigurations.ExcelConfigurations
 {
-    internal interface IExcelConfiguration : IDataConfiguration
+    internal interface IExcelConfiguration : IStatsConfiguration
     {
     }
 }

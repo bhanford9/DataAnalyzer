@@ -15,21 +15,19 @@ namespace DataAnalyzer.Models
         string ConfigurationDirectory { get; set; }
         string ConfigurationFilePath { get; set; }
         string ConfigurationName { get; set; }
-        IDataConfiguration DataConfiguration { get; set; }
+        IStatsConfiguration DataConfiguration { get; set; }
         //IDataParameterCollection DataAccessorCollection { get; set; }
         string ExecutiveConfigurationDirectory { get; set; }
         string ExecutiveConfigurationName { get; set; }
         IScraperFlavor Flavor { get; set; }
         bool HasLoaded { get; }
-        IImportExportKey ImportExportKey { get; set; }
+        IImportExecutionKey ImportExecutionKey { get; set; }
         IImportType ImportType { get; set; }
         string SavedDataFilePath { get; set; }
-        ExportType SelectedExportType { get; set; }
+        ExecutionType SelectedExecutionType { get; set; }
 
         void ApplyConfiguration(IImportType import, IScraperCategory category, IScraperFlavor flavor);
-        IFileMap GetFileImportMappings();
         bool LoadConfiguration();
         void SaveConfiguration();
-        void UpdateFileImportMappings(IFileMap fileMap);
     }
 }

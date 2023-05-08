@@ -1,6 +1,6 @@
 ﻿namespace DataAnalyzer.StatConfigurations
 {
-    internal interface INotSupportedDataConfiguration : IDataConfiguration
+    internal interface INotSupportedDataConfiguration : IStatsConfiguration
     {
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+using DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations;
 using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models;
 using DataAnalyzer.Models.ExecutionModels.ClassCreationModels;
@@ -116,16 +117,17 @@ namespace DataAnalyzer.ViewModels.ExecutionViewModels
 
         private void DoLoadInData()
         {
-            CsvNamesDataConfiguration dataConfig = this.executiveCommissioner.GetDataConfiguration<CsvNamesDataConfiguration>();
+            ClassSetupConfiguration dataConfig = this.executiveCommissioner.GetDataConfiguration<ClassSetupConfiguration>();
             this.statsModel.StructureStats(dataConfig);
 
             this.PropertyItems.Clear();
 
             this.ClassName = dataConfig.ClassName;
 
-            foreach (var property in dataConfig.CsvNameAndProperties)
+            foreach (var property in dataConfig.Properties)
             {
-                this.PropertyItems.Add(new PropertyData() { Name = property.PropertyName });
+                // TODO --> this needs to be a nested structure
+                this.PropertyItems.Add(new PropertyData() { Name = property.Name });
             }
         }
 

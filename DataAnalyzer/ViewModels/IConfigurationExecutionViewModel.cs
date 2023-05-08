@@ -6,6 +6,6 @@ namespace DataAnalyzer.ViewModels
     internal interface IConfigurationExecutionViewModel : INotifyPropertyChanged
     {
         IExecutionExecutiveCommissioner ExecutiveCommissioner { get; }
-        string SelectedExportType { get; set; }
+        string SelectedExecutionType { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace DataAnalyzer.ViewModels
             this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.DirectoryPathKeyValue);
             this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.StructureNameKeyValue);
             this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.DataTypeKeyValue);
-            this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.ExportTypeKeyValue);
+            this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.ExecutionTypeKeyValue);
             this.LoadedConfigs.Last().ConfigData.Add(this.mainModel.LoadedDataStructure.GroupingsKeyValue);
 
             this.LoadedConfigs.Add(new LoadedConfigurationItemViewModel { Title = this.mainModel.LoadedDataContent.Name });
@@ -92,11 +92,11 @@ namespace DataAnalyzer.ViewModels
                       this.mainModel.LoadedDataStructure.DataTypeKey,
                       this.mainModel.LoadedDataStructure.DataTypeKeyValue);
                     break;
-                case nameof(this.mainModel.LoadedDataStructure.ExportTypeKeyValue):
+                case nameof(this.mainModel.LoadedDataStructure.ExecutionTypeKeyValue):
                     this.UpdateLoadedConfigs(
                       this.mainModel.LoadedDataStructure.Name,
-                      this.mainModel.LoadedDataStructure.ExportTypeKey,
-                      this.mainModel.LoadedDataStructure.ExportTypeKeyValue);
+                      this.mainModel.LoadedDataStructure.ExecutionTypeKey,
+                      this.mainModel.LoadedDataStructure.ExecutionTypeKeyValue);
                     break;
                 case nameof(this.mainModel.LoadedDataStructure.GroupingsKeyValue):
                     this.UpdateLoadedConfigs(

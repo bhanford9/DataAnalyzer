@@ -2,7 +2,7 @@
 
 namespace DataAnalyzer.StatConfigurations.CsvConfigurations
 {
-    internal interface IClassPropertiesConfiguration : IDataConfiguration
+    internal interface IClassPropertiesConfiguration : IStatsConfiguration
     {
         string ClassName { get; set; }
 

@@ -18,9 +18,9 @@ namespace DataAnalyzerFixtures.ViewModels
 
         internal Mock<IExecutionExecutiveCommissioner> MockExecutiveCommissioner { get; set; }
 
-        internal Mock<IImportExportKey> MockKey { get; set; }
+        internal Mock<IImportExecutionKey> MockKey { get; set; }
 
-        internal string ConfigKeyPropName => nameof(this.MockConfigurationModel.Object.ImportExportKey);
+        internal string ConfigKeyPropName => nameof(this.MockConfigurationModel.Object.ImportExecutionKey);
 
         internal PropertyChangedEventArgs ConfigKeyChangeArgs => this.GetNamedEventArgs(this.ConfigKeyPropName);
 

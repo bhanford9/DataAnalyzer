@@ -6,29 +6,29 @@ using DataScraper.DataScrapers.ScraperFlavors;
 
 namespace DataAnalyzer.Services
 {
-    internal class ImportExportKey : IImportExportKey
+    internal class ImportExecutionKey : IImportExecutionKey
     {
-        private ExportType exportType = ExportType.NotApplicable;
+        private ExecutionType executionType = ExecutionType.NotApplicable;
         private string name;
 
         private readonly int hashCode;
 
-        public static ImportExportKey Default => new(ImportKey.Default, ExportType.NotApplicable);
+        public static ImportExecutionKey Default => new(ImportKey.Default, ExecutionType.NotApplicable);
 
-        public ImportExportKey() { }
+        public ImportExecutionKey() { }
 
-        public ImportExportKey(ImportKey importKey, ExportType exportType)
+        public ImportExecutionKey(ImportKey importKey, ExecutionType executionType)
         {
             this.ImportKey = importKey;
-            this.ExportType = exportType;
+            this.ExecutionType = executionType;
             this.SetName();
 
-            this.hashCode = HashCode.Combine(this.ImportKey, this.ExportType);
+            this.hashCode = HashCode.Combine(this.ImportKey, this.ExecutionType);
         }
 
         public ImportKey ImportKey { get; init; } = ImportKey.Default;
 
-        public ExportType ExportType { get => this.exportType; init => this.exportType = value; }
+        public ExecutionType ExecutionType { get => this.executionType; init => this.executionType = value; }
 
         public string Name { get => this.name; private set => this.name = value; }
 
@@ -36,7 +36,7 @@ namespace DataAnalyzer.Services
             ImportKey.Type is not NotApplicableImportType &&
             ImportKey.Category is not NotApplicableScraperCategory &&
             ImportKey.Flavor is not NotApplicableScraperFlavor &&
-            this.ExportType != ExportType.NotApplicable;
+            this.ExecutionType != ExecutionType.NotApplicable;
 
         public void Update(IImportType type)
         {
@@ -56,21 +56,21 @@ namespace DataAnalyzer.Services
             this.SetName();
         }
 
-        public void Update(ExportType export)
+        public void Update(ExecutionType execution)
         {
-            this.exportType = export;
+            this.executionType = execution;
             this.SetName();
         }
 
         private void SetName()
         {
-            this.name = $"{ImportKey}_{ExportType}";
+            this.name = $"{ImportKey}_{ExecutionType}";
         }
 
         public override bool Equals(object obj) =>
-            obj is ImportExportKey key &&
+            obj is ImportExecutionKey key &&
                 ImportKey.Equals(key.ImportKey) &&
-                ExportType.Equals(key.ExportType);
+                ExecutionType.Equals(key.ExecutionType);
 
         public override int GetHashCode() => this.hashCode;
 

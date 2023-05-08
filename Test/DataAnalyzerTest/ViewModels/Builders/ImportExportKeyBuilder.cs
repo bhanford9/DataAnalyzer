@@ -6,47 +6,47 @@ using DataScraper.DataScrapers.ScraperFlavors;
 
 namespace DataAnalyzerTest.ViewModels.Builders
 {
-    internal class ImportExportKeyBuilder
+    internal class ImportExecutionKeyBuilder
     {
-        private readonly IImportExportKey importExportKey = ImportExportKey.Default;
+        private readonly IImportExecutionKey importExecutionKey = ImportExecutionKey.Default;
 
-        public ImportExportKeyBuilder With(
+        public ImportExecutionKeyBuilder With(
             IImportType importType = null,
             IScraperCategory category = null,
             IScraperFlavor flavor = null,
-            ExportType export = ExportType.NotApplicable) => this
+            ExecutionType execution = ExecutionType.NotApplicable) => this
                 .WithImportType(importType)
                 .WithCategory(category)
                 .WithFlavor(flavor)
-                .WithExportType(export);
+                .WithExecutionType(execution);
 
-        public ImportExportKeyBuilder WithImportType(IImportType importType)
+        public ImportExecutionKeyBuilder WithImportType(IImportType importType)
         {
-            this.importExportKey.Update(importType ?? new NotApplicableImportType());
+            this.importExecutionKey.Update(importType ?? new NotApplicableImportType());
             return this;
         }
 
-        public ImportExportKeyBuilder WithCategory(IScraperCategory category)
+        public ImportExecutionKeyBuilder WithCategory(IScraperCategory category)
         {
-            this.importExportKey.Update(category ?? new NotApplicableScraperCategory());
+            this.importExecutionKey.Update(category ?? new NotApplicableScraperCategory());
             return this;
         }
 
-        public ImportExportKeyBuilder WithFlavor(IScraperFlavor flavor)
+        public ImportExecutionKeyBuilder WithFlavor(IScraperFlavor flavor)
         {
-            this.importExportKey.Update(flavor ?? new NotApplicableScraperFlavor());
+            this.importExecutionKey.Update(flavor ?? new NotApplicableScraperFlavor());
             return this;
         }
 
-        public ImportExportKeyBuilder WithExportType(ExportType? export)
+        public ImportExecutionKeyBuilder WithExecutionType(ExecutionType? execution)
         {
-            this.importExportKey.Update(export ?? ExportType.NotApplicable);
+            this.importExecutionKey.Update(execution ?? ExecutionType.NotApplicable);
             return this;
         }
 
-        public IImportExportKey Build()
+        public IImportExecutionKey Build()
         {
-            return this.importExportKey;
+            return this.importExecutionKey;
         }
     }
 }
