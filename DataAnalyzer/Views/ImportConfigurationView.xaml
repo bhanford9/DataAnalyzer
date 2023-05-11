@@ -8,10 +8,6 @@
              mc:Ignorable="d" 
              Name="ImportConfigView"
              d:DesignHeight="450" d:DesignWidth="800">
-  <UserControl.Resources>
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
-  </UserControl.Resources>
-
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
@@ -62,7 +58,7 @@
         Visibility="{Binding 
           DataContext.ExecutiveCommissioner.DisplayFileImport, 
           ElementName=ImportConfigView,
-          Converter={StaticResource BooleanToVisibility}}"/>
+          Converter={StaticResource BoolVisibilityConverter}}"/>
     </Grid>
   </Grid>
 </UserControl>

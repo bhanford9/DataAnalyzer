@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.Services.ExecutiveUtilities.Executives
+﻿namespace DataAnalyzer.Services.ExecutiveUtilities.Executives;
+
+internal interface INotSupportedExecutive : IAggregateExecutives
 {
-    internal interface INotSupportedExecutive : IAggregateExecutives
-    {
-    }
 }

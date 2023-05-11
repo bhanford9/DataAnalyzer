@@ -1,9 +1,8 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 
-namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels
+namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels;
+
+internal interface INoParameterDataTypeViewModel : IDataTypeConfigViewModel
 {
-    internal interface INoParameterDataTypeViewModel : IDataTypeConfigViewModel
-    {
-        void UpdateTypeParam(ITypeParameter param);
-    }
+    void UpdateTypeParam(ITypeParameter param);
 }

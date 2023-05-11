@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace DataAnalyzer.DataImport.DataObjects.ClassStats
+namespace DataAnalyzer.DataImport.DataObjects.ClassStats;
+
+internal interface ICollectionProperty : IProperty
 {
-    internal interface ICollectionProperty : IProperty
-    {
-        ICollection<IProperty> Properties { get; set; }
-    }
+    ICollection<IProperty> Properties { get; set; }
 }

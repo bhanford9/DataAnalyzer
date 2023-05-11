@@ -3,28 +3,28 @@ using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 using DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations;
 using DependencyInjectionUtilities;
 
-namespace DataAnalyzer.ApplicationConfigurations
+namespace DataAnalyzer.ApplicationConfigurations;
+
+internal class ApplicationConfigurationContainer
 {
-    internal class ApplicationConfigurationContainer
+    public static void Register(ContainerBuilder builder)
     {
-        public static void Register(ContainerBuilder builder)
-        {
-            // ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations
-            builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, IClassSetupConfiguration, ClassSetupConfiguration>();
-            builder.RegisterTypeAncestors<IPropertySetupConfiguration, IClassPropertySetupConfiguration, ClassPropertySetupConfiguration>();
-            builder.RegisterTypeAncestors<IPropertySetupConfiguration, ICollectionPropertySetupConfiguration, CollectionPropertySetupConfiguration>();
-            builder.RegisterTypeAncestors<IPropertySetupConfiguration, ISimplePropertySetupConfiguration, SimplePropertySetupConfiguration>();
+        // ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations
+        builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, IClassCollectionSetupConfiguration, ClassCollectionSetupConfiguration>();
+        builder.RegisterType<IClassSetupConfiguration, ClassSetupConfiguration>();
+        builder.RegisterTypeAncestors<IPropertySetupConfiguration, IClassPropertySetupConfiguration, ClassPropertySetupConfiguration>();
+        builder.RegisterTypeAncestors<IPropertySetupConfiguration, IPropertyCollectionSetupConfiguration, PropertyCollectionSetupConfiguration>();
+        builder.RegisterTypeAncestors<IPropertySetupConfiguration, ISimplePropertySetupConfiguration, SimplePropertySetupConfiguration>();
 
-            // ApplicationConfigurations.DataConfigurations
-            builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, ICsvNamesDataConfiguration, CsvNamesDataConfiguration>();
-            builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, DataConfiguration>();
-            builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, IGroupingConfiguration, GroupingConfiguration>();
-            builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, IGroupingDataConfiguration, GroupingDataConfiguration>();
-            builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, INotSupportedDataConfiguration, NotSupportedDataConfiguration>();
+        // ApplicationConfigurations.DataConfigurations
+        builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, ICsvNamesDataConfiguration, CsvNamesDataConfiguration>();
+        builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, DataConfiguration>();
+        builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, IGroupingConfiguration, GroupingConfiguration>();
+        builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, IGroupingDataConfiguration, GroupingDataConfiguration>();
+        builder.RegisterTypeAncestors<IVersionedConfiguration, IDataConfiguration, INotSupportedDataConfiguration, NotSupportedDataConfiguration>();
 
-            // ApplicationConfigurations
-            builder.RegisterTypeAncestors<IVersionedConfiguration, IApplicationConfiguration, ApplicationConfiguration>();
-            builder.RegisterType<IVersionedConfiguration, VersionedConfiguration>();
-        }
+        // ApplicationConfigurations
+        builder.RegisterTypeAncestors<IVersionedConfiguration, IApplicationConfiguration, ApplicationConfiguration>();
+        builder.RegisterType<IVersionedConfiguration, VersionedConfiguration>();
     }
 }

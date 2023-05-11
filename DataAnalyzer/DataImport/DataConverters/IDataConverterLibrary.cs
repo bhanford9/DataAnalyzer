@@ -1,8 +1,7 @@
 ﻿using DataScraper;
 
-namespace DataAnalyzer.DataImport.DataConverters
+namespace DataAnalyzer.DataImport.DataConverters;
+
+internal interface IDataConverterLibrary : IFlavoredCategorizedDataLibrary<IDataConverter>
 {
-    internal interface IDataConverterLibrary : IFlavoredCategorizedDataLibrary<IDataConverter>
-    {
-    }
 }

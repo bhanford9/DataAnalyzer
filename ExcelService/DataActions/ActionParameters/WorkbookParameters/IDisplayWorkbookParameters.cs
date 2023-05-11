@@ -1,7 +1,6 @@
-﻿namespace ExcelService.DataActions.ActionParameters.WorkbookParameters
+﻿namespace ExcelService.DataActions.ActionParameters.WorkbookParameters;
+
+public interface IDisplayWorkbookParameters : IActionParameters
 {
-    public interface IDisplayWorkbookParameters : IActionParameters
-    {
-        bool DisplayAfter { get; set; }
-    }
+    bool DisplayAfter { get; set; }
 }

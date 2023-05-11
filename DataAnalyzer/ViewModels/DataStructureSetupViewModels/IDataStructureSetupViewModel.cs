@@ -2,28 +2,27 @@
 using DataAnalyzer.Services;
 using System.ComponentModel;
 
-namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
-{
-    internal interface IDataStructureSetupViewModel : INotifyPropertyChanged
-    {
-        string ConfigurationName { get; set; }
-        IImportExecutionKey SelectedDataType { get; set; }
-        string ConfigurationDirectory { get; set; }
-        string SelectedExecutionType { get; set; }
-        IDataConfiguration DataConfiguration { get; }
-        IDataStructureSetupViewModel Default { get; }
-        bool IsDefault { get; }
+namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels;
 
-        bool IsValidSetup(out string reason);
-        void ClearConfiguration();
-        void CreateNewDataConfiguration();
-        void Initialize();
-        void LoadConfiguration(string configName);
-        void LoadViewModelFromConfiguration();
-        void ApplyConfiguration();
-        void SaveConfiguration();
-        void StartListeners();
-        void StopListeners();
-        string GetDisplayStringName();
-    }
+internal interface IDataStructureSetupViewModel : INotifyPropertyChanged
+{
+    string ConfigurationName { get; set; }
+    IImportExecutionKey SelectedDataType { get; set; }
+    string ConfigurationDirectory { get; set; }
+    string SelectedExecutionType { get; set; }
+    IDataConfiguration DataConfiguration { get; }
+    IDataStructureSetupViewModel Default { get; }
+    bool IsDefault { get; }
+
+    bool IsValidSetup(out string reason);
+    void ClearConfiguration();
+    void CreateNewDataConfiguration();
+    void Initialize();
+    void LoadConfiguration(string configName);
+    void LoadViewModelFromConfiguration();
+    void ApplyConfiguration();
+    void SaveConfiguration();
+    void StartListeners();
+    void StopListeners();
+    string GetDisplayStringName();
 }

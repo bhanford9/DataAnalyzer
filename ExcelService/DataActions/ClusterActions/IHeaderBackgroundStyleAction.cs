@@ -1,8 +1,7 @@
 ﻿using ExcelService.DataActions.SharedActions;
 
-namespace ExcelService.DataActions.ClusterActions
+namespace ExcelService.DataActions.ClusterActions;
+
+public interface IHeaderBackgroundStyleAction : IBackgroundStyleAction
 {
-    public interface IHeaderBackgroundStyleAction : IBackgroundStyleAction
-    {
-    }
 }

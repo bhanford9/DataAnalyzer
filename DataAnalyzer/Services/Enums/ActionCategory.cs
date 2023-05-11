@@ -1,15 +1,14 @@
-﻿namespace DataAnalyzer.Services.Enums
+﻿namespace DataAnalyzer.Services.Enums;
+
+public enum ActionCategory
 {
-    public enum ActionCategory
-    {
-        Unknown,
-        AlignmentStyle,
-        BorderStyle,
-        BackgroundStyle,
-        BooleanOperation,
+    Unknown,
+    AlignmentStyle,
+    BorderStyle,
+    BackgroundStyle,
+    BooleanOperation,
 
-        // Difficult to place:
-        ColumnBorderStyle,
+    // Difficult to place:
+    ColumnBorderStyle,
 
-    }
 }

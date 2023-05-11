@@ -2,12 +2,11 @@
 using DataScraper.Data;
 using System.Collections.Generic;
 
-namespace DataAnalyzer.DataImport.DataConverters
+namespace DataAnalyzer.DataImport.DataConverters;
+
+internal interface IDataConverter
 {
-    internal interface IDataConverter
-    {
-        bool IsValidData(IData data);
-        ICollection<IStats> ToAnalyzerStats(ICollection<IData> data);
-        IStats ToAnalyzerStats(IData data);
-    }
+    bool IsValidData(IData data);
+    ICollection<IStats> ToAnalyzerStats(ICollection<IData> data);
+    IStats ToAnalyzerStats(IData data);
 }

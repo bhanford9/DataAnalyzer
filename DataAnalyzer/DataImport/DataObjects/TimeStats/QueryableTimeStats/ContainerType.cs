@@ -1,12 +1,11 @@
-﻿namespace DataAnalyzer.DataImport.DataObjects.TimeStats.QueryableTimeStats
+﻿namespace DataAnalyzer.DataImport.DataObjects.TimeStats.QueryableTimeStats;
+
+public enum ContainerType
 {
-    public enum ContainerType
-    {
-        Array,
-        Deque,
-        List,
-        MultiSet,
-        Set,
-        Vector
-    }
+    Array,
+    Deque,
+    List,
+    MultiSet,
+    Set,
+    Vector
 }

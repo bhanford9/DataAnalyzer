@@ -6,14 +6,13 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
-namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Application
+namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Application;
+
+internal interface IActionApplicationViewModel : INotifyPropertyChanged
 {
-    internal interface IActionApplicationViewModel : INotifyPropertyChanged
-    {
-        ObservableCollection<ILoadableRemovableRowViewModel> Actions { get; }
-        ICommand ApplyAction { get; }
-        IEditActionViewModel CurrentAction { get; set; }
-        IExcelEntitySpecification ExcelEntityType { get; }
-        ObservableCollection<ICheckableTreeViewItem> WhereToApply { get; }
-    }
+    ObservableCollection<ILoadableRemovableRowViewModel> Actions { get; }
+    ICommand ApplyAction { get; }
+    IEditActionViewModel CurrentAction { get; set; }
+    IExcelEntitySpecification ExcelEntityType { get; }
+    ObservableCollection<ICheckableTreeViewItem> WhereToApply { get; }
 }

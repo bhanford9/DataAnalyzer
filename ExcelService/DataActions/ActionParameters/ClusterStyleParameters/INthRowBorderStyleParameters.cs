@@ -1,9 +1,8 @@
 ﻿using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
 
-namespace ExcelService.DataActions.ActionParameters.ClusterStyleParameters
+namespace ExcelService.DataActions.ActionParameters.ClusterStyleParameters;
+
+public interface INthRowBorderStyleParameters : IBorderStyleParameters
 {
-    public interface INthRowBorderStyleParameters : IBorderStyleParameters
-    {
-        int NthRow { get; set; }
-    }
+    int NthRow { get; set; }
 }

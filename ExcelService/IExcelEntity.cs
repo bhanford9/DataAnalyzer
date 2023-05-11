@@ -1,10 +1,9 @@
 ﻿using ExcelService.DataActions.ActionParameters;
 
-namespace ExcelService
+namespace ExcelService;
+
+public interface IExcelEntity
 {
-    public interface IExcelEntity
-    {
-        IActionDefinitions ActionDefinitions { get; }
-        string Name { get; }
-    }
+    IActionDefinitions ActionDefinitions { get; }
+    string Name { get; }
 }

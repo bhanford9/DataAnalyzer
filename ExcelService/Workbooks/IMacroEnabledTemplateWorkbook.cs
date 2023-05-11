@@ -1,6 +1,5 @@
-﻿namespace ExcelService.Workbooks
+﻿namespace ExcelService.Workbooks;
+
+public interface IMacroEnabledTemplateWorkbook : IWorkbook
 {
-    public interface IMacroEnabledTemplateWorkbook : IWorkbook
-    {
-    }
 }

@@ -1,8 +1,7 @@
-﻿namespace DataAnalyzer.Services.Enums.ScraperFlavors
+﻿namespace DataAnalyzer.Services.Enums.ScraperFlavors;
+
+internal enum CustomFlavors
 {
-    internal enum CustomFlavors
-    {
-        Queryable,
-        NotApplicable,
-    }
+    Queryable,
+    NotApplicable,
 }

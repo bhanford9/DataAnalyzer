@@ -1,6 +1,5 @@
-﻿namespace ExcelService.DataActions.ClusterActions
+﻿namespace ExcelService.DataActions.ClusterActions;
+
+public interface IHeaderMergeCenterFullAction : IDataAction
 {
-    public interface IHeaderMergeCenterFullAction : IDataAction
-    {
-    }
 }

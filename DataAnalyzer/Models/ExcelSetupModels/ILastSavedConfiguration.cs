@@ -1,10 +1,9 @@
 ﻿using DataAnalyzer.Services;
 
-namespace DataAnalyzer.Models.ExcelSetupModels
+namespace DataAnalyzer.Models.ExcelSetupModels;
+
+internal interface ILastSavedConfiguration
 {
-    internal interface ILastSavedConfiguration
-    {
-        string FilePath { get; set; }
-        IImportExecutionKey ImportExecutionKey { get; set; }
-    }
+    string FilePath { get; set; }
+    IImportExecutionKey ImportExecutionKey { get; set; }
 }

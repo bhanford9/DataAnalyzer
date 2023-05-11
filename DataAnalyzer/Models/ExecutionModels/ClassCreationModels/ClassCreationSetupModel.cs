@@ -1,76 +1,84 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Services.ClassGenerationServices;
 using DataAnalyzer.ViewModels.Utilities;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 
-namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels
+namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels;
+
+internal class ClassCreationSetupModel : BasePropertyChanged, IClassCreationSetupModel
 {
-    internal class ClassCreationSetupModel : BasePropertyChanged, IClassCreationSetupModel
+    private string configurationName = string.Empty;
+    private readonly IClassCreator classCreator;
+
+    public ClassCreationSetupModel(
+        IClassCreationConfigurationModel classCreationConfigModel,
+        IClassCreator classCreator)
     {
-        private string configurationName = string.Empty;
-        private readonly IClassCreator classCreator;
+        this.ClassCreationConfigModel = classCreationConfigModel;
+        this.ClassCreationConfigModel.PropertyChanged += ClassCreationConfigModelPropertyChanged;
+        this.classCreator = classCreator;
+    }
 
-        public ClassCreationSetupModel(
-            IClassCreationConfigurationModel classCreationConfigModel,
-            IClassCreator classCreator)
-        {
-            this.ClassCreationConfigModel = classCreationConfigModel;
-            this.ClassCreationConfigModel.PropertyChanged += ClassCreationConfigModelPropertyChanged;
-            this.classCreator = classCreator;
-        }
+    public IClassCreationConfigurationModel ClassCreationConfigModel { get; }
 
-        public IClassCreationConfigurationModel ClassCreationConfigModel { get; }
+    public ICollection<IClassData> DataItems { get; } = new List<IClassData>();
 
-        public ObservableCollection<IPropertyData> DataItems { get; } = new();
+    public string ConfigurationName
+    {
+        get => this.configurationName;
+        set => this.NotifyPropertyChanged(ref this.configurationName, value);
+    }
 
-        public string ConfigurationName
-        {
-            get => this.configurationName;
-            set => this.NotifyPropertyChanged(ref this.configurationName, value);
-        }
-
-        public string GetClassString(string className, ICollection<IPropertyData> propertyData)
-        {
-            // TODO --> create radio button or combo box for class accessibility
-            return this.classCreator.Create(
-                "public",
-                className,
-                propertyData
+    public string GetClassesString(ICollection<IClassData> classes)
+    {
+        // TODO --> create radio button or combo box for class accessibility
+        return string.Join($"{Environment.NewLine}{Environment.NewLine}", classes
+            .Select(x => this.classCreator.Create(
+                x.Accessibility,
+                x.ClassName,
+                x.Properties
                     .Select(x => (x.Name, x.SelectedType, x.SelectedAccessibility))
-                    .ToList());
+                    .ToList())));
+    }
+
+    public void LoadDataFromConfiguration()
+    {
+        this.DataItems.Clear();
+
+        foreach (var classData in this.ClassCreationConfigModel.ClassesData.Classes)
+        {
+            DataItems.Add(new ClassData()
+            {
+                Accessibility = classData.Accessibility,
+                ClassName = classData.ClassName,
+                Properties = classData.ClassProperties.Properties
+                    .Select(property => new PropertyData()
+                    {
+                        SelectedAccessibility = property.Accessibility,
+                        Name = property.Name,
+                        SelectedType = property.DataType,
+                    })
+                    .ToList(),
+            });
         }
 
-        public void LoadDataFromConfiguration()
+        this.NotifyPropertyChanged(nameof(this.DataItems));
+    }
+
+    private void ClassCreationConfigModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
         {
-            this.DataItems.Clear();
-
-            foreach (var property in this.ClassCreationConfigModel.ClassProperties.Properties)
-            {
-                DataItems.Add(new PropertyData()
-                {
-                    SelectedAccessibility = property.Accessibility,
-                    Name = property.Name,
-                    SelectedType = property.DataType
-                });
-            }
-
-            this.NotifyPropertyChanged(nameof(this.DataItems));
-        }
-
-        private void ClassCreationConfigModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(this.ClassCreationConfigModel.ClassProperties):
-                    this.LoadDataFromConfiguration();
-                    break;
-                case nameof(this.ClassCreationConfigModel.CurrentConfigName):
-                    this.ConfigurationName = this.ClassCreationConfigModel.CurrentConfigName;
-                    break;
-            }
+            // TODO --> get this event handler back in place
+            case nameof(this.ClassCreationConfigModel.ClassesData):
+                this.LoadDataFromConfiguration();
+                break;
+            case nameof(this.ClassCreationConfigModel.CurrentConfigName):
+                this.ConfigurationName = this.ClassCreationConfigModel.CurrentConfigName;
+                break;
         }
     }
 }

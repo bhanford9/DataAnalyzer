@@ -1,23 +1,22 @@
-﻿namespace ExcelService.CellDataFormats.NumericFormat
+﻿namespace ExcelService.CellDataFormats.NumericFormat;
+
+public class ZeroPrependFloatingPrecisionCellDataFormat : IZeroPrependFloatingPrecisionCellDataFormat
 {
-    public class ZeroPrependFloatingPrecisionCellDataFormat : IZeroPrependFloatingPrecisionCellDataFormat
+    private readonly int zerosPrependedCount = 0;
+    private readonly int precisionCount = 0;
+
+    public string Example => "0023.100";
+
+    public string Name => "Leading Zeros with Decimals";
+
+    public ZeroPrependFloatingPrecisionCellDataFormat(int zerosPrependedCount, int precisionCount)
     {
-        private readonly int zerosPrependedCount = 0;
-        private readonly int precisionCount = 0;
+        this.zerosPrependedCount = zerosPrependedCount < 1 ? 1 : zerosPrependedCount;
+        this.precisionCount = precisionCount < 1 ? 1 : precisionCount;
+    }
 
-        public string Example => "0023.100";
-
-        public string Name => "Leading Zeros with Decimals";
-
-        public ZeroPrependFloatingPrecisionCellDataFormat(int zerosPrependedCount, int precisionCount)
-        {
-            this.zerosPrependedCount = zerosPrependedCount < 1 ? 1 : zerosPrependedCount;
-            this.precisionCount = precisionCount < 1 ? 1 : precisionCount;
-        }
-
-        public string GetFormatString()
-        {
-            return new string('0', this.zerosPrependedCount) + "." + new string('0', this.precisionCount);
-        }
+    public string GetFormatString()
+    {
+        return new string('0', this.zerosPrependedCount) + "." + new string('0', this.precisionCount);
     }
 }

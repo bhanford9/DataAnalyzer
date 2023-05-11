@@ -1,9 +1,7 @@
-﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
-using DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations;
+﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations;
 
-namespace DataAnalyzer.Models.DataStructureSetupModels
+namespace DataAnalyzer.Models.DataStructureSetupModels;
+
+internal interface IClassCreationSetupModel : IDataStructureSetupModel<ClassCollectionSetupConfiguration>
 {
-    internal interface IClassCreationSetupModel : IDataStructureSetupModel<ClassSetupConfiguration>
-    {
-    }
 }

@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace DataAnalyzer.ViewModels.Utilities
+namespace DataAnalyzer.ViewModels.Utilities;
+
+internal interface IRowViewModel : INotifyPropertyChanged
 {
-    internal interface IRowViewModel : INotifyPropertyChanged
-    {
-        string Value { get; set; }
-    }
+    string Value { get; set; }
 }

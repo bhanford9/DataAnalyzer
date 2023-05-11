@@ -1,7 +1,6 @@
-﻿namespace DataAnalyzer.Services.ExcelUtilities
+﻿namespace DataAnalyzer.Services.ExcelUtilities;
+
+internal class ExcelWorksheetSpecification : ExcelEntitySpecification, IExcelWorksheetSpecification
 {
-    internal class ExcelWorksheetSpecification : ExcelEntitySpecification, IExcelWorksheetSpecification
-    {
-        public override string Name => "Worksheet";
-    }
+    public override string Name => "Worksheet";
 }

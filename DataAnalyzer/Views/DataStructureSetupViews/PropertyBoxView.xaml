@@ -8,10 +8,6 @@
              Name="PropertyBox"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-  <UserControl.Resources>
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
-    <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibility"/>
-  </UserControl.Resources>
   <GroupBox Header="{Binding ContainerName}">
     <Grid>
       <Grid.RowDefinitions>
@@ -56,7 +52,7 @@
         Grid.Row="1"
         Visibility="{Binding 
           IsScrollable,
-          Converter={StaticResource BooleanToVisibility},
+          Converter={StaticResource BoolVisibilityConverter},
           ElementName=PropertyBox}">
         <ItemsControl ItemsSource="{Binding Properties}">
           <ItemsControl.ItemTemplate>
@@ -71,7 +67,7 @@
         Grid.Row="1"
         Visibility="{Binding 
           IsScrollable,
-          Converter={StaticResource InverseBooleanToVisibility},
+          Converter={StaticResource InverseBoolVisibilityConverter},
           ElementName=PropertyBox}"
         ItemsSource="{Binding Properties}">
         <ItemsControl.ItemTemplate>

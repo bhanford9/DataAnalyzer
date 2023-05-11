@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views.DataStructureSetupViews
+namespace DataAnalyzer.Views.DataStructureSetupViews;
+
+public partial class GroupingSetupView : UserControl
 {
-    public partial class GroupingSetupView : UserControl
+    public GroupingSetupView()
     {
-        public GroupingSetupView()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

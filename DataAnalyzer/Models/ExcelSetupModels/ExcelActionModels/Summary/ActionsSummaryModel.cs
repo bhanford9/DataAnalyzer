@@ -4,29 +4,28 @@ using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ActionS
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
+namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary;
+
+internal abstract class ActionsSummaryModel : BasePropertyChanged, IActionsSummaryModel
 {
-    internal abstract class ActionsSummaryModel : BasePropertyChanged, IActionsSummaryModel
+    protected readonly IExcelSetupModel excelSetupModel;
+    protected readonly IStatsModel statsModel;
+
+    public ActionsSummaryModel(
+        IStatsModel statsModel,
+        IExcelSetupModel excelSetupModel)
     {
-        protected readonly IExcelSetupModel excelSetupModel;
-        protected readonly IStatsModel statsModel;
-
-        public ActionsSummaryModel(
-            IStatsModel statsModel,
-            IExcelSetupModel excelSetupModel)
-        {
-            this.statsModel = statsModel;
-            this.excelSetupModel = excelSetupModel;
-        }
-
-        public void LoadHierarchicalSummariesFromStats(IActionSummaryTreeViewItem baseItem) => this.InternalLoadWhereToApply(baseItem, this.statsModel.HeirarchalStats.Children);
-
-        public abstract void LoadHierarchicalSummariesFromModel(IActionSummaryTreeViewItem baseItem);
-
-        public abstract ObservableCollection<IExcelAction> GetActionCollection();
-
-        public void SaveConfiguration(string configName) => this.excelSetupModel.SaveWorkbookConfiguration(configName);
-
-        protected abstract void InternalLoadWhereToApply(IActionSummaryTreeViewItem baseItem, ICollection<IHeirarchalStats> hierarchalStats);
+        this.statsModel = statsModel;
+        this.excelSetupModel = excelSetupModel;
     }
+
+    public void LoadHierarchicalSummariesFromStats(IActionSummaryTreeViewItem baseItem) => this.InternalLoadWhereToApply(baseItem, this.statsModel.HeirarchalStats.Children);
+
+    public abstract void LoadHierarchicalSummariesFromModel(IActionSummaryTreeViewItem baseItem);
+
+    public abstract ObservableCollection<IExcelAction> GetActionCollection();
+
+    public void SaveConfiguration(string configName) => this.excelSetupModel.SaveWorkbookConfiguration(configName);
+
+    protected abstract void InternalLoadWhereToApply(IActionSummaryTreeViewItem baseItem, ICollection<IHeirarchalStats> hierarchalStats);
 }

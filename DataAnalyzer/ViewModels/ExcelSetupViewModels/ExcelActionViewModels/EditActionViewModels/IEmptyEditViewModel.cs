@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
+﻿namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels;
+
+internal interface IEmptyEditViewModel : IEditActionViewModel
 {
-    internal interface IEmptyEditViewModel : IEditActionViewModel
-    {
-    }
 }

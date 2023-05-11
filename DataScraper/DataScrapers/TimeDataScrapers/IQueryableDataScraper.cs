@@ -1,6 +1,5 @@
-﻿namespace DataScraper.DataScrapers.TimeDataScrapers
+﻿namespace DataScraper.DataScrapers.TimeDataScrapers;
+
+public interface IQueryableDataScraper : IDataScraper
 {
-    public interface IQueryableDataScraper : IDataScraper
-    {
-    }
 }

@@ -1,6 +1,5 @@
-﻿namespace ExcelService.DataActions
+﻿namespace ExcelService.DataActions;
+
+internal interface IInternalActionLibrary : IActionLibrary, IActionLookup
 {
-    internal interface IInternalActionLibrary : IActionLibrary, IActionLookup
-    {
-    }
 }

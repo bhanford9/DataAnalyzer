@@ -4,15 +4,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
-namespace DataAnalyzer.ViewModels.ExcelSetupViewModels
+namespace DataAnalyzer.ViewModels.ExcelSetupViewModels;
+
+internal interface IExcelDataTypesViewModel : INotifyPropertyChanged
 {
-    internal interface IExcelDataTypesViewModel : INotifyPropertyChanged
-    {
-        ICommand BrowseDirectory { get; }
-        string ConfigurationDirectory { get; set; }
-        string DataTypeConfigName { get; set; }
-        ObservableCollection<IDataTypeConfigViewModel> ParameterSelections { get; }
-        ICommand SaveDataTypes { get; }
-        ObservableCollection<IExcelDataTypeListItemViewModel> SavedConfigurations { get; }
-    }
+    ICommand BrowseDirectory { get; }
+    string ConfigurationDirectory { get; set; }
+    string DataTypeConfigName { get; set; }
+    ObservableCollection<IDataTypeConfigViewModel> ParameterSelections { get; }
+    ICommand SaveDataTypes { get; }
+    ObservableCollection<IExcelDataTypeListItemViewModel> SavedConfigurations { get; }
 }

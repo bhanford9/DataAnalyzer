@@ -7,136 +7,135 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 
-namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
+namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels;
+
+internal class GroupingSetupViewModel : DataStructureSetupViewModel<GroupingDataConfiguration>, IGroupingSetupViewModel
 {
-    internal class GroupingSetupViewModel : DataStructureSetupViewModel<GroupingDataConfiguration>, IGroupingSetupViewModel
+    private readonly IGroupingSetupModel model;
+
+    private int groupingLayersCount = 0;
+
+    public GroupingSetupViewModel(
+        IConfigurationModel configurationModel,
+        IStatsModel statsModel,
+        IMainModel mainModel,
+        INotSupportedSetupViewModel defaultViewModel,
+        IGroupingSetupModel model)
+        : base(configurationModel, statsModel, mainModel, model)
     {
-        private readonly IGroupingSetupModel model;
+        this.Default = defaultViewModel;
+        this.model = model;
+        this.model.PropertyChanged += this.ModelPropertyChanged;
+    }
 
-        private int groupingLayersCount = 0;
+    public ObservableCollection<IConfigurationGroupingViewModel> ConfigurationGroupings { get; } = new();
 
-        public GroupingSetupViewModel(
-            IConfigurationModel configurationModel,
-            IStatsModel statsModel,
-            IMainModel mainModel,
-            INotSupportedSetupViewModel defaultViewModel,
-            IGroupingSetupModel model)
-            : base(configurationModel, statsModel, mainModel, model)
+    public int GroupingLayersCount
+    {
+        get => this.groupingLayersCount;
+        set
         {
-            this.Default = defaultViewModel;
-            this.model = model;
-            this.model.PropertyChanged += this.ModelPropertyChanged;
-        }
+            this.NotifyPropertyChanged(ref this.groupingLayersCount, value);
+            this.mainModel.LoadedDataStructure.GroupingsCount = value;
 
-        public ObservableCollection<IConfigurationGroupingViewModel> ConfigurationGroupings { get; } = new();
-
-        public int GroupingLayersCount
-        {
-            get => this.groupingLayersCount;
-            set
+            while (this.GroupingLayersCount > this.ConfigurationGroupings.Count)
             {
-                this.NotifyPropertyChanged(ref this.groupingLayersCount, value);
-                this.mainModel.LoadedDataStructure.GroupingsCount = value;
-
-                while (this.GroupingLayersCount > this.ConfigurationGroupings.Count)
-                {
-                    this.ConfigurationGroupings.Add(
-                        new ConfigurationGroupingViewModel(
-                            this.statsModel,
-                            this.configurationModel,
-                            this,
-                            this.ConfigurationGroupings.Count));
-                }
-
-                while (this.GroupingLayersCount >= 0 && this.GroupingLayersCount < this.ConfigurationGroupings.Count)
-                {
-                    this.ConfigurationGroupings.RemoveAt(this.ConfigurationGroupings.Count - 1);
-                }
-            }
-        }
-
-        public override IDataStructureSetupViewModel Default { get; }
-
-        public override bool IsValidSetup(out string reason)
-        {
-            reason = string.Empty;
-
-            if (!this.SelectedDataType.IsValid)
-            {
-                // TODO --> create better reason
-                reason = "Must have selected Data Type";
-                return false;
+                this.ConfigurationGroupings.Add(
+                    new ConfigurationGroupingViewModel(
+                        this.statsModel,
+                        this.configurationModel,
+                        this,
+                        this.ConfigurationGroupings.Count));
             }
 
-            return true;
-        }
-
-        public override void ClearConfiguration()
-        {
-            this.SelectedDataType = ImportExecutionKey.Default;
-            this.GroupingLayersCount = 0;
-            this.ConfigurationGroupings.Clear();
-        }
-
-        public override void LoadViewModelFromConfiguration()
-        {
-            this.ConfigurationName = this.model.DataConfiguration.Name;
-            this.GroupingLayersCount = this.model.DataConfiguration.GroupingConfiguration.Count;
-            this.ConfigurationGroupings.Clear();
-
-            int level = 0;
-            foreach (IGroupingConfiguration groupingConfig in this.model.DataConfiguration.GroupingConfiguration)
+            while (this.GroupingLayersCount >= 0 && this.GroupingLayersCount < this.ConfigurationGroupings.Count)
             {
-                this.ConfigurationGroupings.Add(new ConfigurationGroupingViewModel(
-                    this.statsModel,
-                    this.configurationModel,
-                    this,
-                    level++)
-                {
-                    Name = groupingConfig.GroupName,
-                    SelectedParameter = groupingConfig.SelectedParameter,
-                });
+                this.ConfigurationGroupings.RemoveAt(this.ConfigurationGroupings.Count - 1);
             }
         }
+    }
 
-        public override void ApplyConfiguration()
+    public override IDataStructureSetupViewModel Default { get; }
+
+    public override bool IsValidSetup(out string reason)
+    {
+        reason = string.Empty;
+
+        if (!this.SelectedDataType.IsValid)
         {
-            this.model.ClearGroupingConfigurations();
+            // TODO --> create better reason
+            reason = "Must have selected Data Type";
+            return false;
+        }
 
-            this.model.DataConfiguration.Name = this.ConfigurationName;
-            int level = 0;
-            this.ConfigurationGroupings.ToList().ForEach(configGroupingViewModel =>
+        return true;
+    }
+
+    public override void ClearConfiguration()
+    {
+        this.SelectedDataType = ImportExecutionKey.Default;
+        this.GroupingLayersCount = 0;
+        this.ConfigurationGroupings.Clear();
+    }
+
+    public override void LoadViewModelFromConfiguration()
+    {
+        this.ConfigurationName = this.model.DataConfiguration.Name;
+        this.GroupingLayersCount = this.model.DataConfiguration.GroupingConfiguration.Count;
+        this.ConfigurationGroupings.Clear();
+
+        int level = 0;
+        foreach (IGroupingConfiguration groupingConfig in this.model.DataConfiguration.GroupingConfiguration)
+        {
+            this.ConfigurationGroupings.Add(new ConfigurationGroupingViewModel(
+                this.statsModel,
+                this.configurationModel,
+                this,
+                level++)
             {
-                this.model.AddGroupingConfiguration(new GroupingConfiguration
-                {
-                    GroupLevel = level++,
-                    GroupName = configGroupingViewModel.Name,
-                    SelectedParameter = configGroupingViewModel.SelectedParameter
-                });
+                Name = groupingConfig.GroupName,
+                SelectedParameter = groupingConfig.SelectedParameter,
             });
         }
+    }
 
-        public override void SaveConfiguration() => this.model.SaveConfiguration();
+    public override void ApplyConfiguration()
+    {
+        this.model.ClearGroupingConfigurations();
 
-        public void RemoveGroupingConfiguration(int level) => this.model.RemoveGroupingConfiguration(level);
-
-        public override void Initialize() { }
-
-        public override string GetDisplayStringName() => nameof(StructureExecutiveCommissioner.DisplayGroupingSetup);
-
-        protected void ModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        this.model.DataConfiguration.Name = this.ConfigurationName;
+        int level = 0;
+        this.ConfigurationGroupings.ToList().ForEach(configGroupingViewModel =>
         {
-            switch (e.PropertyName)
+            this.model.AddGroupingConfiguration(new GroupingConfiguration
             {
-                case nameof(this.model.RemoveLevel):
-                    this.ConfigurationGroupings.RemoveAt(this.model.RemoveLevel);
+                GroupLevel = level++,
+                GroupName = configGroupingViewModel.Name,
+                SelectedParameter = configGroupingViewModel.SelectedParameter
+            });
+        });
+    }
 
-                    this.groupingLayersCount--;
-                    this.NotifyPropertyChanged(nameof(this.GroupingLayersCount));
-                    break;
-                default:
-                    break;
-            }
+    public override void SaveConfiguration() => this.model.SaveConfiguration();
+
+    public void RemoveGroupingConfiguration(int level) => this.model.RemoveGroupingConfiguration(level);
+
+    public override void Initialize() { }
+
+    public override string GetDisplayStringName() => nameof(StructureExecutiveCommissioner.DisplayGroupingSetup);
+
+    protected void ModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
+        {
+            case nameof(this.model.RemoveLevel):
+                this.ConfigurationGroupings.RemoveAt(this.model.RemoveLevel);
+
+                this.groupingLayersCount--;
+                this.NotifyPropertyChanged(nameof(this.GroupingLayersCount));
+                break;
+            default:
+                break;
         }
     }
 }

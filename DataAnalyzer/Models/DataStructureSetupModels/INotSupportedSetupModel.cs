@@ -1,8 +1,7 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations;
 
-namespace DataAnalyzer.Models.DataStructureSetupModels
+namespace DataAnalyzer.Models.DataStructureSetupModels;
+
+internal interface INotSupportedSetupModel : IDataStructureSetupModel<NotSupportedDataConfiguration>
 {
-    internal interface INotSupportedSetupModel : IDataStructureSetupModel<NotSupportedDataConfiguration>
-    {
-    }
 }

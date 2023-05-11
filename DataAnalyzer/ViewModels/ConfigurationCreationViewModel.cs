@@ -10,146 +10,145 @@ using System.IO;
 using System.Linq;
 using System.Windows.Input;
 
-namespace DataAnalyzer.ViewModels
+namespace DataAnalyzer.ViewModels;
+
+internal class ConfigurationCreationViewModel : BasePropertyChanged, IConfigurationCreationViewModel
 {
-    internal class ConfigurationCreationViewModel : BasePropertyChanged, IConfigurationCreationViewModel
+    private readonly IConfigurationModel configModel;
+
+    private IDataStructureSetupViewModel activeViewModel;
+
+    private readonly BaseCommand createConfiguration;
+    private readonly BaseCommand cancelChanges;
+    private readonly BaseCommand applyWithoutSave;
+    private readonly BaseCommand saveConfiguration;
+
+    public ConfigurationCreationViewModel(
+        IConfigurationModel configModel,
+        IStructureExecutiveCommissioner executiveCommissioner,
+        INotSupportedSetupViewModel defaultActiveView)
     {
-        private readonly IConfigurationModel configModel;
+        this.configModel = configModel;
+        this.ExecutiveCommissioner = executiveCommissioner;
+        this.activeViewModel = defaultActiveView;
 
-        private IDataStructureSetupViewModel activeViewModel;
+        this.InitializeViewModel();
+        this.createConfiguration = new BaseCommand(obj => this.DoCreateConfiguration());
+        this.cancelChanges = new BaseCommand(obj => this.DoCancelChanges());
+        this.applyWithoutSave = new BaseCommand(obj => this.DoApplyConfiguration());
+        this.saveConfiguration = new BaseCommand(obj => this.DoSaveConfiguration());
 
-        private readonly BaseCommand createConfiguration;
-        private readonly BaseCommand cancelChanges;
-        private readonly BaseCommand applyWithoutSave;
-        private readonly BaseCommand saveConfiguration;
+        this.configModel.PropertyChanged += this.ConfigModelPropertyChanged;
+    }
 
-        public ConfigurationCreationViewModel(
-            IConfigurationModel configModel,
-            IStructureExecutiveCommissioner executiveCommissioner,
-            INotSupportedSetupViewModel defaultActiveView)
+    public ICommand CreateConfiguration => this.createConfiguration;
+    public ICommand CancelChanges => this.cancelChanges;
+    public ICommand ApplyWithoutSave => this.applyWithoutSave;
+    public ICommand SaveConfiguration => this.saveConfiguration;
+
+    public ObservableCollection<string> ExecutionTypes => this.ExecutiveCommissioner.ExecutionTypes;
+    public ObservableCollection<ILoadableRemovableRowViewModel> Configurations { get; } = new();
+
+    public IStructureExecutiveCommissioner ExecutiveCommissioner { get; }
+
+    public IDataStructureSetupViewModel ActiveViewModel
+    {
+        get => this.activeViewModel;
+        set => this.NotifyPropertyChanged(ref this.activeViewModel, value);
+    }
+
+    private void DoCreateConfiguration()
+    {
+        this.ExecutiveCommissioner.DisplayNotSupported = false;
+        this.ClearConfigurationData();
+        this.ExecutiveCommissioner.CreateNewDataConfiguration();
+    }
+
+    private void DoCancelChanges()
+    {
+        this.ExecutiveCommissioner.DisplayNotSupported = true;
+        this.ClearConfigurationData();
+    }
+
+    private void ClearConfigurationData() => this.ExecutiveCommissioner.ClearConfiguration();
+
+    private bool DoApplyConfiguration()
+    {
+        if (string.IsNullOrEmpty(this.ExecutiveCommissioner.GetConfigurationName()))
         {
-            this.configModel = configModel;
-            this.ExecutiveCommissioner = executiveCommissioner;
-            this.activeViewModel = defaultActiveView;
-
-            this.InitializeViewModel();
-            this.createConfiguration = new BaseCommand(obj => this.DoCreateConfiguration());
-            this.cancelChanges = new BaseCommand(obj => this.DoCancelChanges());
-            this.applyWithoutSave = new BaseCommand(obj => this.DoApplyConfiguration());
-            this.saveConfiguration = new BaseCommand(obj => this.DoSaveConfiguration());
-
-            this.configModel.PropertyChanged += this.ConfigModelPropertyChanged;
+            // TODO --> Display that there is a problem
+            return false;
         }
 
-        public ICommand CreateConfiguration => this.createConfiguration;
-        public ICommand CancelChanges => this.cancelChanges;
-        public ICommand ApplyWithoutSave => this.applyWithoutSave;
-        public ICommand SaveConfiguration => this.saveConfiguration;
-
-        public ObservableCollection<string> ExecutionTypes => this.ExecutiveCommissioner.ExecutionTypes;
-        public ObservableCollection<ILoadableRemovableRowViewModel> Configurations { get; } = new();
-
-        public IStructureExecutiveCommissioner ExecutiveCommissioner { get; }
-
-        public IDataStructureSetupViewModel ActiveViewModel
+        if (!this.ExecutiveCommissioner.IsValidSetup(out string reason))
         {
-            get => this.activeViewModel;
-            set => this.NotifyPropertyChanged(ref this.activeViewModel, value);
+            // TODO --> Display that there is a problem
+            return false;
         }
 
-        private void DoCreateConfiguration()
+        this.ExecutiveCommissioner.ApplyConfiguration();
+        return true;
+    }
+
+    private void DoSaveConfiguration()
+    {
+        if (this.DoApplyConfiguration())
         {
-            this.ExecutiveCommissioner.DisplayNotSupported = false;
-            this.ClearConfigurationData();
-            this.ExecutiveCommissioner.CreateNewDataConfiguration();
+            this.ExecutiveCommissioner.SaveConfiguration();
         }
+    }
 
-        private void DoCancelChanges()
+    private void ApplyConfigurationDirectory(string directoryPath)
+    {
+        Directory.CreateDirectory(directoryPath);
+
+        List<string> configFiles = Directory.GetFiles(directoryPath).ToList();
+        this.Configurations.Clear();
+
+        configFiles.ForEach(configFilePath =>
         {
-            this.ExecutiveCommissioner.DisplayNotSupported = true;
-            this.ClearConfigurationData();
-        }
-
-        private void ClearConfigurationData() => this.ExecutiveCommissioner.ClearConfiguration();
-
-        private bool DoApplyConfiguration()
-        {
-            if (string.IsNullOrEmpty(this.ExecutiveCommissioner.GetConfigurationName()))
+            string configFile = Path.GetFileName(configFilePath);
+            string displayText = configFile;
+            while (displayText.Contains('.'))
             {
-                // TODO --> Display that there is a problem
-                return false;
+                displayText = Path.GetFileNameWithoutExtension(displayText);
             }
 
-            if (!this.ExecutiveCommissioner.IsValidSetup(out string reason))
+            this.Configurations.Add(new ConfigurationFileListItemViewModel(this.ExecutiveCommissioner)
             {
-                // TODO --> Display that there is a problem
-                return false;
-            }
-
-            this.ExecutiveCommissioner.ApplyConfiguration();
-            return true;
-        }
-
-        private void DoSaveConfiguration()
-        {
-            if (this.DoApplyConfiguration())
-            {
-                this.ExecutiveCommissioner.SaveConfiguration();
-            }
-        }
-
-        private void ApplyConfigurationDirectory(string directoryPath)
-        {
-            Directory.CreateDirectory(directoryPath);
-
-            List<string> configFiles = Directory.GetFiles(directoryPath).ToList();
-            this.Configurations.Clear();
-
-            configFiles.ForEach(configFilePath =>
-            {
-                string configFile = Path.GetFileName(configFilePath);
-                string displayText = configFile;
-                while (displayText.Contains('.'))
-                {
-                    displayText = Path.GetFileNameWithoutExtension(displayText);
-                }
-
-                this.Configurations.Add(new ConfigurationFileListItemViewModel(this.ExecutiveCommissioner)
-                {
-                    Value = displayText,
-                    ToolTipText = configFile
-                });
+                Value = displayText,
+                ToolTipText = configFile
             });
+        });
 
-            if (!this.Configurations.Any())
+        if (!this.Configurations.Any())
+        {
+            this.DoCreateConfiguration();
+        }
+    }
+
+    private void InitializeViewModel()
+    {
+        if (this.configModel.ImportExecutionKey.IsValid)
+        {
+            this.ActiveViewModel = this.ExecutiveCommissioner.GetInitializedViewModel();
+
+            if (!this.ActiveViewModel.IsDefault)
             {
-                this.DoCreateConfiguration();
+                this.ApplyConfigurationDirectory(this.ExecutiveCommissioner.GetConfigurationDirectory());
             }
         }
 
-        private void InitializeViewModel()
+        this.ExecutiveCommissioner.SetDisplay();
+    }
+
+    private void ConfigModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
         {
-            if (this.configModel.ImportExecutionKey.IsValid)
-            {
-                this.ActiveViewModel = this.ExecutiveCommissioner.GetInitializedViewModel();
-
-                if (!this.ActiveViewModel.IsDefault)
-                {
-                    this.ApplyConfigurationDirectory(this.ExecutiveCommissioner.GetConfigurationDirectory());
-                }
-            }
-
-            this.ExecutiveCommissioner.SetDisplay();
-        }
-
-        private void ConfigModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(this.configModel.ImportExecutionKey):
-                    this.InitializeViewModel();
-                    break;
-            }
+            case nameof(this.configModel.ImportExecutionKey):
+                this.InitializeViewModel();
+                break;
         }
     }
 }

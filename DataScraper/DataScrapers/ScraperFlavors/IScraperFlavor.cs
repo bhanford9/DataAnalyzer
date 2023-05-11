@@ -1,6 +1,5 @@
-﻿namespace DataScraper.DataScrapers.ScraperFlavors
+﻿namespace DataScraper.DataScrapers.ScraperFlavors;
+
+public interface IScraperFlavor : IScraperKey
 {
-    public interface IScraperFlavor : IScraperKey
-    {
-    }
 }

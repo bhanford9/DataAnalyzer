@@ -10,65 +10,64 @@ using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
 using DataScraper.DataSources;
 
-namespace DataAnalyzer.Services
+namespace DataAnalyzer.Services;
+
+internal class ScraperService : IScraperService
 {
-    internal class ScraperService : IScraperService
+    private readonly IScraperExecutive scraperExecutive;
+    private readonly IDataConverterExecutive dataConverterExecutive;
+    private readonly IScraperLibrary scraperLibrary;
+
+    public ScraperService(IScraperExecutive scraperExecutive, IDataConverterExecutive dataConverterExecutive)
     {
-        private readonly IScraperExecutive scraperExecutive;
-        private readonly IDataConverterExecutive dataConverterExecutive;
-        private readonly IScraperLibrary scraperLibrary;
+        this.scraperExecutive = scraperExecutive;
+        this.dataConverterExecutive = dataConverterExecutive;
+        this.scraperLibrary = this.scraperExecutive.Scrapers;
+    }
 
-        public ScraperService(IScraperExecutive scraperExecutive, IDataConverterExecutive dataConverterExecutive)
+    public IDataScraper GetScraper(ImportKey importKey) => scraperLibrary.GetData(importKey);
+
+    public IDataScraper GetScraper(IImportType type, IScraperCategory category, IScraperFlavor flavor)
+        => scraperLibrary[type, category, flavor];
+
+    public IReadOnlyDictionary<IScraperCategory, ICollection<IScraperFlavor>> GetMapForType(IImportType type)
+        => scraperLibrary[type].ToDictionary(x => x.Key, x => x.Value.Keys);
+
+    public IReadOnlyCollection<IScraperCategory> GetCategoriesForType(IImportType type)
+        => scraperLibrary[type].Keys.ToList();
+
+    public IReadOnlyCollection<IScraperFlavor> GetFlavorsForCategory(IImportType type, IScraperCategory category)
+        => scraperLibrary[type][category].Keys.ToList();
+
+    public ICollection<IStats> ScrapeFromSource(IDataSource source, ImportKey key)
+        => ScrapeFromSource(source, key.Type, key.Category, key.Flavor);
+
+    public ICollection<IStats> ScrapeFromSource(
+        IDataSource source,
+        IImportType type,
+        IScraperCategory category,
+        IScraperFlavor flavor)
+        => dataConverterExecutive.Convert(
+            type,
+            category,
+            flavor,
+            scraperExecutive.ScrapeOutData(source, type, category, flavor));
+
+    public bool TryScrapeFromSource(
+        IDataSource source,
+        IDataConverter converter,
+        IImportType type,
+        IScraperCategory category,
+        IScraperFlavor flavor,
+        out ICollection<IStats> stats)
+    {
+        if (scraperExecutive.TryScrapeOutData(source, type, category, flavor, out ICollection<IData> data))
         {
-            this.scraperExecutive = scraperExecutive;
-            this.dataConverterExecutive = dataConverterExecutive;
-            this.scraperLibrary = this.scraperExecutive.Scrapers;
+            stats = converter.ToAnalyzerStats(data);
+            return true;
         }
 
-        public IDataScraper GetScraper(ImportKey importKey) => scraperLibrary.GetData(importKey);
-
-        public IDataScraper GetScraper(IImportType type, IScraperCategory category, IScraperFlavor flavor)
-            => scraperLibrary[type, category, flavor];
-
-        public IReadOnlyDictionary<IScraperCategory, ICollection<IScraperFlavor>> GetMapForType(IImportType type)
-            => scraperLibrary[type].ToDictionary(x => x.Key, x => x.Value.Keys);
-
-        public IReadOnlyCollection<IScraperCategory> GetCategoriesForType(IImportType type)
-            => scraperLibrary[type].Keys.ToList();
-
-        public IReadOnlyCollection<IScraperFlavor> GetFlavorsForCategory(IImportType type, IScraperCategory category)
-            => scraperLibrary[type][category].Keys.ToList();
-
-        public ICollection<IStats> ScrapeFromSource(IDataSource source, ImportKey key)
-            => ScrapeFromSource(source, key.Type, key.Category, key.Flavor);
-
-        public ICollection<IStats> ScrapeFromSource(
-            IDataSource source,
-            IImportType type,
-            IScraperCategory category,
-            IScraperFlavor flavor)
-            => dataConverterExecutive.Convert(
-                type,
-                category,
-                flavor,
-                scraperExecutive.ScrapeOutData(source, type, category, flavor));
-
-        public bool TryScrapeFromSource(
-            IDataSource source,
-            IDataConverter converter,
-            IImportType type,
-            IScraperCategory category,
-            IScraperFlavor flavor,
-            out ICollection<IStats> stats)
-        {
-            if (scraperExecutive.TryScrapeOutData(source, type, category, flavor, out ICollection<IData> data))
-            {
-                stats = converter.ToAnalyzerStats(data);
-                return true;
-            }
-
-            stats = new List<IStats>();
-            return false;
-        }
+        stats = new List<IStats>();
+        return false;
     }
 }

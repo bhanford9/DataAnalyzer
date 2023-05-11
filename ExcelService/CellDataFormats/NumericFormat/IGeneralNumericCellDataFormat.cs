@@ -1,6 +1,5 @@
-﻿namespace ExcelService.CellDataFormats.NumericFormat
+﻿namespace ExcelService.CellDataFormats.NumericFormat;
+
+public interface IGeneralNumericCellDataFormat : ICellDataFormat
 {
-    public interface IGeneralNumericCellDataFormat : ICellDataFormat
-    {
-    }
 }

@@ -2,13 +2,12 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
+namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels;
+
+internal interface IBorderSettingsViewModel : INotifyPropertyChanged
 {
-    internal interface IBorderSettingsViewModel : INotifyPropertyChanged
-    {
-        string BorderName { get; set; }
-        ObservableCollection<string> BorderStyles { get; }
-        IColorsComboBoxViewModel ComboBoxColors { get; }
-        string SelectedStyle { get; set; }
-    }
+    string BorderName { get; set; }
+    ObservableCollection<string> BorderStyles { get; }
+    IColorsComboBoxViewModel ComboBoxColors { get; }
+    string SelectedStyle { get; set; }
 }

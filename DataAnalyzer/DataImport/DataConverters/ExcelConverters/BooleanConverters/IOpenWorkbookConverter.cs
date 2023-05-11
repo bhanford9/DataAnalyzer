@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.BooleanConverters
+﻿namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.BooleanConverters;
+
+internal interface IOpenWorkbookConverter : IExcelActionParamConverter
 {
-    internal interface IOpenWorkbookConverter : IExcelActionParamConverter
-    {
-    }
 }

@@ -1,47 +1,46 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using System.ComponentModel;
 
-namespace DataAnalyzer.Models.ImportModels
+namespace DataAnalyzer.Models.ImportModels;
+
+internal class ImportModel : BasePropertyChanged, IImportModel
 {
-    internal class ImportModel : BasePropertyChanged, IImportModel
+    private string selectedScraperCategory = string.Empty;
+
+    protected readonly IMainModel mainModel;
+    protected readonly IConfigurationModel configurationModel;
+
+    public ImportModel(
+        IConfigurationModel configurationModel,
+        IMainModel mainModel)
     {
-        private string selectedScraperCategory = string.Empty;
+        this.configurationModel = configurationModel;
+        this.mainModel = mainModel;
+        this.SelectedScraperCategory = Properties.Settings.Default.LastSelectedScraperType;
 
-        protected readonly IMainModel mainModel;
-        protected readonly IConfigurationModel configurationModel;
+        this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
+    }
 
-        public ImportModel(
-            IConfigurationModel configurationModel,
-            IMainModel mainModel)
+    public string SelectedScraperCategory
+    {
+        get => this.selectedScraperCategory;
+        set
         {
-            this.configurationModel = configurationModel;
-            this.mainModel = mainModel;
-            this.SelectedScraperCategory = Properties.Settings.Default.LastSelectedScraperType;
+            this.mainModel.LoadedInputFiles.DataType = value;
+            this.NotifyPropertyChanged(ref this.selectedScraperCategory, value);
 
-            this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
+            Properties.Settings.Default.LastSelectedScraperType = value;
+            Properties.Settings.Default.Save();
         }
+    }
 
-        public string SelectedScraperCategory
+    private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
         {
-            get => this.selectedScraperCategory;
-            set
-            {
-                this.mainModel.LoadedInputFiles.DataType = value;
-                this.NotifyPropertyChanged(ref this.selectedScraperCategory, value);
-
-                Properties.Settings.Default.LastSelectedScraperType = value;
-                Properties.Settings.Default.Save();
-            }
-        }
-
-        private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(this.configurationModel.Category):
-                    this.SelectedScraperCategory = this.configurationModel.Category.ToString();
-                    break;
-            }
+            case nameof(this.configurationModel.Category):
+                this.SelectedScraperCategory = this.configurationModel.Category.ToString();
+                break;
         }
     }
 }

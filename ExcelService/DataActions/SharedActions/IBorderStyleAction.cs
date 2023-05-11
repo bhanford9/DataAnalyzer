@@ -1,6 +1,5 @@
-﻿namespace ExcelService.DataActions.SharedActions
+﻿namespace ExcelService.DataActions.SharedActions;
+
+public interface IBorderStyleAction : IDataAction
 {
-    public interface IBorderStyleAction : IDataAction
-    {
-    }
 }

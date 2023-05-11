@@ -1,14 +1,13 @@
-﻿namespace ExcelService.CellDataFormats.NumericFormat.Dates
+﻿namespace ExcelService.CellDataFormats.NumericFormat.Dates;
+
+public class DateAndTimeCellDataFormat : IDateAndTimeCellDataFormat
 {
-    public class DateAndTimeCellDataFormat : IDateAndTimeCellDataFormat
+    public string Example => "1/1/2001 12:00";
+
+    public string Name => "Date and Time";
+
+    public string GetFormatString()
     {
-        public string Example => "1/1/2001 12:00";
-
-        public string Name => "Date and Time";
-
-        public string GetFormatString()
-        {
-            return "m/d/yy h:mm";
-        }
+        return "m/d/yy h:mm";
     }
 }

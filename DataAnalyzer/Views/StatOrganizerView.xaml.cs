@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views
+namespace DataAnalyzer.Views;
+
+public partial class StatOrganizerView : UserControl
 {
-    public partial class StatOrganizerView : UserControl
+    public StatOrganizerView()
     {
-        public StatOrganizerView()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

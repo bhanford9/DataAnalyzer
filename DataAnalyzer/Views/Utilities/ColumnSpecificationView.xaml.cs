@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views.Utilities
+namespace DataAnalyzer.Views.Utilities;
+
+public partial class ColumnSpecificationView : UserControl
 {
-    public partial class ColumnSpecificationView : UserControl
+    public ColumnSpecificationView()
     {
-        public ColumnSpecificationView()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

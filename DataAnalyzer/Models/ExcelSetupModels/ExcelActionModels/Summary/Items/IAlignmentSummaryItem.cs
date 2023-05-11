@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
+﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items;
+
+internal interface IAlignmentSummaryItem : ISummaryItem
 {
-    internal interface IAlignmentSummaryItem : ISummaryItem
-    {
-    }
 }

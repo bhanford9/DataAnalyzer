@@ -1,8 +1,7 @@
-﻿namespace DataAnalyzer.DataImport.DataObjects.ClassStats
+﻿namespace DataAnalyzer.DataImport.DataObjects.ClassStats;
+
+internal interface IClassStats : IStats
 {
-    internal interface IClassStats : IStats
-    {
-        string Name { get; set; }
-        IComparableList<IProperty> Properties { get; set; }
-    }
+    string Name { get; set; }
+    IComparableList<IProperty> Properties { get; set; }
 }

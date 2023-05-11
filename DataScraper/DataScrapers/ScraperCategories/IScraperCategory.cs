@@ -1,6 +1,5 @@
-﻿namespace DataScraper.DataScrapers.ScraperCategories
+﻿namespace DataScraper.DataScrapers.ScraperCategories;
+
+public interface IScraperCategory : IScraperKey
 {
-    public interface IScraperCategory : IScraperKey
-    {
-    }
 }

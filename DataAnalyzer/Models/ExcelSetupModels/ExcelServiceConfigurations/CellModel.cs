@@ -2,18 +2,17 @@
 using DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
 using System.Collections.Generic;
 
-namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations
+namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;
+
+internal class CellModel : BasePropertyChanged, ICellModel
 {
-    internal class CellModel : BasePropertyChanged, ICellModel
-    {
-        public ICollection<IExcelAction> CellActions { get; set; } = new List<IExcelAction>();
+    public ICollection<IExcelAction> CellActions { get; set; } = new List<IExcelAction>();
 
-        public object Value { get; set; } = new();
+    public object Value { get; set; } = new();
 
-        public ITypeParameter DataType { get; set; }
+    public ITypeParameter DataType { get; set; }
 
-        public int ColumnIndex { get; set; }
+    public int ColumnIndex { get; set; }
 
-        public string DataMemberName { get; set; } = string.Empty;
-    }
+    public string DataMemberName { get; set; } = string.Empty;
 }

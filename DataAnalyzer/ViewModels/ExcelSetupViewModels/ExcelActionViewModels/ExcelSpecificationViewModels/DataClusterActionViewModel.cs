@@ -3,17 +3,16 @@ using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSp
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Creation;
 using DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Summary;
 
-namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels
+namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels;
+
+internal class DataClusterActionViewModel : ExcelActionViewModel, IDataClusterActionViewModel
 {
-    internal class DataClusterActionViewModel : ExcelActionViewModel, IDataClusterActionViewModel
+    public DataClusterActionViewModel(
+        IDataClusterActionCreationViewModel actionCreationViewModel,
+        IDataClusterActionApplicationViewModel actionApplicationViewModel,
+        IDataClusterActionsSummaryViewModel actionsSummaryViewModel,
+        IExcelDataClusterSpecification excelEntitySpecification)
+        : base(actionCreationViewModel, actionApplicationViewModel, actionsSummaryViewModel, excelEntitySpecification)
     {
-        public DataClusterActionViewModel(
-            IDataClusterActionCreationViewModel actionCreationViewModel,
-            IDataClusterActionApplicationViewModel actionApplicationViewModel,
-            IDataClusterActionsSummaryViewModel actionsSummaryViewModel,
-            IExcelDataClusterSpecification excelEntitySpecification)
-            : base(actionCreationViewModel, actionApplicationViewModel, actionsSummaryViewModel, excelEntitySpecification)
-        {
-        }
     }
 }

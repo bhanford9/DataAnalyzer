@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews
+namespace DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews;
+
+public partial class BorderCreationView : UserControl
 {
-    public partial class BorderCreationView : UserControl
+    public BorderCreationView()
     {
-        public BorderCreationView()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

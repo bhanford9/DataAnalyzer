@@ -1,8 +1,7 @@
-﻿namespace DataSerialization.Serializers
+﻿namespace DataSerialization.Serializers;
+
+internal interface ISerializer<T>
 {
-    internal interface ISerializer<T>
-    {
-        T Deserialize(string content);
-        string Serialize(T data);
-    }
+    T Deserialize(string content);
+    string Serialize(T data);
 }

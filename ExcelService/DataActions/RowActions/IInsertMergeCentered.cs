@@ -1,6 +1,5 @@
-﻿namespace ExcelService.DataActions.RowActions
+﻿namespace ExcelService.DataActions.RowActions;
+
+internal interface IInsertMergeCentered : IDataAction
 {
-    internal interface IInsertMergeCentered : IDataAction
-    {
-    }
 }

@@ -1,11 +1,10 @@
-﻿namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
+﻿namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+
+internal class GroupingConfiguration : DataConfiguration, IGroupingConfiguration
 {
-    internal class GroupingConfiguration : DataConfiguration, IGroupingConfiguration
-    {
-        public string GroupName { get; set; } = string.Empty;
+    public string GroupName { get; set; } = string.Empty;
 
-        public int GroupLevel { get; set; }
+    public int GroupLevel { get; set; }
 
-        public string SelectedParameter { get; set; } = string.Empty;
-    }
+    public string SelectedParameter { get; set; } = string.Empty;
 }

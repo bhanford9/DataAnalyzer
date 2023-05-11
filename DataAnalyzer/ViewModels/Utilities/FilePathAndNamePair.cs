@@ -1,38 +1,37 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using System.IO;
 
-namespace DataAnalyzer.ViewModels.Utilities
+namespace DataAnalyzer.ViewModels.Utilities;
+
+internal class FilePathAndNamePair : BasePropertyChanged, IFilePathAndNamePair
 {
-    internal class FilePathAndNamePair : BasePropertyChanged, IFilePathAndNamePair
+    private string filePath = string.Empty;
+
+    public FilePathAndNamePair(string fullPath)
     {
-        private string filePath = string.Empty;
+        this.filePath = fullPath;
+    }
 
-        public FilePathAndNamePair(string fullPath)
+    public string FilePath
+    {
+        get => this.filePath;
+        set
         {
-            this.filePath = fullPath;
-        }
-
-        public string FilePath
-        {
-            get => this.filePath;
-            set
+            if (this.filePath != value)
             {
-                if (this.filePath != value)
-                {
-                    this.filePath = value;
-                    this.NotifyPropertyChanged(nameof(this.FilePath));
-                    this.NotifyPropertyChanged(nameof(this.FileName));
-                }
+                this.filePath = value;
+                this.NotifyPropertyChanged(nameof(this.FilePath));
+                this.NotifyPropertyChanged(nameof(this.FileName));
             }
         }
+    }
 
-        public string FileName
+    public string FileName
+    {
+        get
         {
-            get
-            {
-                string name = Path.GetFileName(this.filePath);
-                return name.Substring(0, name.IndexOf("."));
-            }
+            string name = Path.GetFileName(this.filePath);
+            return name.Substring(0, name.IndexOf("."));
         }
     }
 }

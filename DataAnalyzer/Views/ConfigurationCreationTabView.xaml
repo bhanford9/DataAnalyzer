@@ -10,11 +10,6 @@
              Name="ConfigCreation"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-  <UserControl.Resources>
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
-    <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibility"/>
-  </UserControl.Resources>
-
   <Border>
     <Border.Resources>
       <Style TargetType="GroupBox" BasedOn="{StaticResource DarkGroupBoxStyle}">
@@ -89,21 +84,21 @@
         <dataStructureViews:GroupingSetupView
           Visibility="{Binding 
             DataContext.ExecutiveCommissioner.DisplayGroupingSetup,
-            Converter={StaticResource BooleanToVisibility},
+            Converter={StaticResource BoolVisibilityConverter},
             ElementName=ConfigCreation}"
           DataContext="{Binding DataContext.ActiveViewModel, ElementName=ConfigCreation}"/>
 
         <dataStructureViews:CsvCSharpStringClassSetupView
           Visibility="{Binding
             DataContext.ExecutiveCommissioner.DisplayCsvToClassSetup,
-            Converter={StaticResource BooleanToVisibility},
+            Converter={StaticResource BoolVisibilityConverter},
             ElementName=ConfigCreation}"
           DataContext="{Binding DataContext.ActiveViewModel, ElementName=ConfigCreation}"/>
         
         <dataStructureViews:NotSupportedSetupView 
           Visibility="{Binding
             DataContext.ExecutiveCommissioner.DisplayNotSupported,
-            Converter={StaticResource BooleanToVisibility},
+            Converter={StaticResource BoolVisibilityConverter},
             ElementName=ConfigCreation}"
           DataContext="{Binding DataContext.ActiveViewModel, ElementName=ConfigCreation}"/>
 

@@ -1,11 +1,10 @@
-﻿namespace ExcelService.Utilities
+﻿namespace ExcelService.Utilities;
+
+public class RowSpecification : IRowSpecification
 {
-    public class RowSpecification : IRowSpecification
-    {
-        public int NthRow { get; set; }
+    public int NthRow { get; set; }
 
-        public bool AllRows { get; set; } = true;
+    public bool AllRows { get; set; } = true;
 
-        public bool UseNthRow { get; set; } = false;
-    }
+    public bool UseNthRow { get; set; } = false;
 }

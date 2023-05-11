@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.Services.ExecutiveUtilities.Executives
+﻿namespace DataAnalyzer.Services.ExecutiveUtilities.Executives;
+
+internal interface ICsvTest : IAggregateExecutives
 {
-    internal interface ICsvTest : IAggregateExecutives
-    {
-    }
 }

@@ -1,7 +1,6 @@
-﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators
+﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators;
+
+internal interface IPropertyCreator
 {
-    internal interface IPropertyCreator
-    {
-        string Create(string propertyName, string dataType, string accessibility);
-    }
+    string Create(string propertyName, string dataType, string accessibility);
 }

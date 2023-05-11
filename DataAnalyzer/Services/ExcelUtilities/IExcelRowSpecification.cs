@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.Services.ExcelUtilities
+﻿namespace DataAnalyzer.Services.ExcelUtilities;
+
+internal interface IExcelRowSpecification : IExcelEntitySpecification
 {
-    internal interface IExcelRowSpecification : IExcelEntitySpecification
-    {
-    }
 }

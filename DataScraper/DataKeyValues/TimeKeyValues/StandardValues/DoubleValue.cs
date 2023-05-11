@@ -1,10 +1,9 @@
-﻿namespace DataScraper.DataKeyValues.TimeKeyValues.StandardValues
+﻿namespace DataScraper.DataKeyValues.TimeKeyValues.StandardValues;
+
+public class DoubleValue : ExtractableValue<double>
 {
-    public class DoubleValue : ExtractableValue<double>
+    public override double ExtractValue(string str)
     {
-        public override double ExtractValue(string str)
-        {
-            return double.Parse(str);
-        }
+        return double.Parse(str);
     }
 }

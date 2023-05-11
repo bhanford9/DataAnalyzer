@@ -1,4 +1,3 @@
-﻿namespace DataScraper.DataSources
-{
-    public interface ICsvFileSource : IFileDataSource { }
-}
+﻿namespace DataScraper.DataSources;
+
+public interface ICsvFileSource : IFileDataSource { }

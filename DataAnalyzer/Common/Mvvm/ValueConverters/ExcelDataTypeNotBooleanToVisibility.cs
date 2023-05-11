@@ -5,29 +5,25 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace DataAnalyzer.Common.Mvvm.ValueConverters
+namespace DataAnalyzer.Common.Mvvm.ValueConverters;
+
+internal class ExcelDataTypeNotBooleanToVisibility : IValueConverter
 {
-    internal class ExcelDataTypeNotBooleanToVisibility : IValueConverter
+    private IExcelDataTypeLibrary excelDataTypeLibrary = Resolver.Resolve<IExcelDataTypeLibrary>();
+
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        private IExcelDataTypeLibrary excelDataTypeLibrary;
+        if (!(value is string)) return string.Empty;
 
-        public ExcelDataTypeNotBooleanToVisibility(IExcelDataTypeLibrary excelDataTypeLibrary) =>
-            this.excelDataTypeLibrary = excelDataTypeLibrary;
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        if (this.excelDataTypeLibrary.NamedTypeParameters.TryGetValue(value as string, out var param))
         {
-            if (!(value is string)) return string.Empty;
-
-            if (this.excelDataTypeLibrary.NamedTypeParameters.TryGetValue(value as string, out var param))
-            {
-                return param.Type != ParameterType.IntegerBoolean ? Visibility.Visible : Visibility.Hidden;
-            }
-
-            return string.Empty;
+            return param.Type != ParameterType.IntegerBoolean ? Visibility.Visible : Visibility.Hidden;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
-            // No need to convert back
-            default;
+        return string.Empty;
     }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
+        // No need to convert back
+        default;
 }

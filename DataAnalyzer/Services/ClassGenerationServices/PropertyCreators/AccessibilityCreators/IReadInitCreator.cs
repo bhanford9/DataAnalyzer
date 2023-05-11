@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.AccessibilityCreators
+﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.AccessibilityCreators;
+
+internal interface IReadInitCreator : IAccessibilityCreator
 {
-    internal interface IReadInitCreator : IAccessibilityCreator
-    {
-    }
 }

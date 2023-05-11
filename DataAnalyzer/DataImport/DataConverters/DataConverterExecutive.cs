@@ -7,65 +7,64 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace DataAnalyzer.DataImport.DataConverters
+namespace DataAnalyzer.DataImport.DataConverters;
+
+internal class DataConverterExecutive : IDataConverterExecutive
 {
-    internal class DataConverterExecutive : IDataConverterExecutive
+    private readonly IDataConverterLibrary converters;
+
+    public DataConverterExecutive(IDataConverterLibrary converters)
     {
-        private readonly IDataConverterLibrary converters;
+        this.converters = converters;
+    }
 
-        public DataConverterExecutive(IDataConverterLibrary converters)
+    public ICollection<IStats> Convert(
+        IImportType type,
+        IScraperCategory category,
+        IScraperFlavor flavor,
+        ICollection<IData> data)
+    {
+        IDataConverter converter = this.converters.GetData(type, category, flavor);
+
+        return data
+            .Where(x => converter.IsValidData(x))
+            .Select(x => converter.ToAnalyzerStats(x))
+            .ToList();
+    }
+
+    public IStats Convert(
+        IImportType type,
+        IScraperCategory category,
+        IScraperFlavor flavor,
+        IData data)
+    {
+        IDataConverter converter = this.converters.GetData(type, category, flavor);
+
+        if (converter.IsValidData(data))
         {
-            this.converters = converters;
+            return converter.ToAnalyzerStats(data);
         }
 
-        public ICollection<IStats> Convert(
-            IImportType type,
-            IScraperCategory category,
-            IScraperFlavor flavor,
-            ICollection<IData> data)
+        throw new ArgumentException("Invalid data supplied");
+    }
+
+    public bool TryConvert(
+        IImportType type,
+        IScraperCategory category,
+        IScraperFlavor flavor,
+        IData data,
+        out IStats stats)
+    {
+        if (this.converters.TryGetData(type, category, flavor, out IDataConverter converter))
         {
-            IDataConverter converter = this.converters.GetData(type, category, flavor);
-
-            return data
-                .Where(x => converter.IsValidData(x))
-                .Select(x => converter.ToAnalyzerStats(x))
-                .ToList();
-        }
-
-        public IStats Convert(
-            IImportType type,
-            IScraperCategory category,
-            IScraperFlavor flavor,
-            IData data)
-        {
-            IDataConverter converter = this.converters.GetData(type, category, flavor);
-
             if (converter.IsValidData(data))
             {
-                return converter.ToAnalyzerStats(data);
+                stats = converter.ToAnalyzerStats(data);
+                return true;
             }
-
-            throw new ArgumentException("Invalid data supplied");
         }
 
-        public bool TryConvert(
-            IImportType type,
-            IScraperCategory category,
-            IScraperFlavor flavor,
-            IData data,
-            out IStats stats)
-        {
-            if (this.converters.TryGetData(type, category, flavor, out IDataConverter converter))
-            {
-                if (converter.IsValidData(data))
-                {
-                    stats = converter.ToAnalyzerStats(data);
-                    return true;
-                }
-            }
-
-            stats = default;
-            return false;
-        }
+        stats = default;
+        return false;
     }
 }

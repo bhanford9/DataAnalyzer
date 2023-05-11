@@ -2,98 +2,97 @@
 using System;
 using System.Collections.Generic;
 
-namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
+namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
+
+internal class IntegerIntegerTypeParameter : TypeParameter, IIntegerIntegerTypeParameter
 {
-    internal class IntegerIntegerTypeParameter : TypeParameter, IIntegerIntegerTypeParameter
+    private int integer1Value = 1;
+    private int integer2Value = 1;
+
+    public IntegerIntegerTypeParameter() : base() { }
+
+    public IntegerIntegerTypeParameter(ITypeParameter typeParameter) : base(typeParameter)
     {
-        private int integer1Value = 1;
-        private int integer2Value = 1;
+        this.Integer1Name = (typeParameter as IIntegerIntegerTypeParameter).Integer1Name;
+        this.Integer1Value = (typeParameter as IIntegerIntegerTypeParameter).Integer1Value;
+        this.Integer2Name = (typeParameter as IIntegerIntegerTypeParameter).Integer2Name;
+        this.Integer2Value = (typeParameter as IIntegerIntegerTypeParameter).Integer2Value;
+    }
 
-        public IntegerIntegerTypeParameter() : base() { }
+    public IntegerIntegerTypeParameter(
+      string integer1Name,
+      string integer2Name,
+      ICellDataFormat cellDataFormat,
+      Func<ITypeParameter, ICellDataFormat> createCellDataFormat)
+      : base(cellDataFormat, createCellDataFormat)
+    {
+        this.Integer1Name = integer1Name;
+        this.Integer2Name = integer2Name;
+    }
 
-        public IntegerIntegerTypeParameter(ITypeParameter typeParameter) : base(typeParameter)
+    public int Integer1Value
+    {
+        get => this.integer1Value;
+        set
         {
-            this.Integer1Name = (typeParameter as IIntegerIntegerTypeParameter).Integer1Name;
-            this.Integer1Value = (typeParameter as IIntegerIntegerTypeParameter).Integer1Value;
-            this.Integer2Name = (typeParameter as IIntegerIntegerTypeParameter).Integer2Name;
-            this.Integer2Value = (typeParameter as IIntegerIntegerTypeParameter).Integer2Value;
-        }
+            this.NotifyPropertyChanged(ref this.integer1Value, value);
 
-        public IntegerIntegerTypeParameter(
-          string integer1Name,
-          string integer2Name,
-          ICellDataFormat cellDataFormat,
-          Func<ITypeParameter, ICellDataFormat> createCellDataFormat)
-          : base(cellDataFormat, createCellDataFormat)
-        {
-            this.Integer1Name = integer1Name;
-            this.Integer2Name = integer2Name;
-        }
-
-        public int Integer1Value
-        {
-            get => this.integer1Value;
-            set
+            // deserialization guard
+            if (this.createCellDataFormat != null)
             {
-                this.NotifyPropertyChanged(ref this.integer1Value, value);
-
-                // deserialization guard
-                if (this.createCellDataFormat != null)
-                {
-                    this.cellDataFormat = this.createCellDataFormat(this);
-                    this.NotifyPropertyChanged(nameof(this.Example));
-                }
+                this.cellDataFormat = this.createCellDataFormat(this);
+                this.NotifyPropertyChanged(nameof(this.Example));
             }
         }
+    }
 
-        public int Integer2Value
+    public int Integer2Value
+    {
+        get => this.integer2Value;
+        set
         {
-            get => this.integer2Value;
-            set
-            {
-                this.NotifyPropertyChanged(ref this.integer2Value, value);
+            this.NotifyPropertyChanged(ref this.integer2Value, value);
 
-                // deserialization guard
-                if (this.createCellDataFormat != null)
-                {
-                    this.cellDataFormat = this.createCellDataFormat(this);
-                    this.NotifyPropertyChanged(nameof(this.Example));
-                }
+            // deserialization guard
+            if (this.createCellDataFormat != null)
+            {
+                this.cellDataFormat = this.createCellDataFormat(this);
+                this.NotifyPropertyChanged(nameof(this.Example));
             }
         }
+    }
 
-        public string Integer1Name { get; set; }
+    public string Integer1Name { get; set; }
 
-        public string Integer2Name { get; set; }
+    public string Integer2Name { get; set; }
 
-        public override ParameterType Type => ParameterType.IntegerInteger;
+    public override ParameterType Type => ParameterType.IntegerInteger;
 
-        public override object[] GetParameterNameValuePairs() => new object[]
-            {
-                this.Integer1Name,
-                this.Integer1Value,
-                this.Integer2Name,
-                this.Integer2Value
-            };
-
-        public override void UpdateValues(IReadOnlyDictionary<string, object> namedValues)
+    public override object[] GetParameterNameValuePairs() => new object[]
         {
-            if (namedValues.TryGetValue(this.Integer1Name, out object value1))
-            {
-                this.Integer1Value = value1 is int v ? v : this.integer1Value;
-            }
+            this.Integer1Name,
+            this.Integer1Value,
+            this.Integer2Name,
+            this.Integer2Value
+        };
 
-            if (namedValues.TryGetValue(this.Integer2Name, out object value2))
-            {
-                this.Integer2Value = value2 is int v ? v : this.integer2Value;
-            }
+    public override void UpdateValues(IReadOnlyDictionary<string, object> namedValues)
+    {
+        if (namedValues.TryGetValue(this.Integer1Name, out object value1))
+        {
+            this.Integer1Value = value1 is int v ? v : this.integer1Value;
         }
 
-        protected override void InternalCloneParameters(ITypeParameter other)
+        if (namedValues.TryGetValue(this.Integer2Name, out object value2))
         {
-            IIntegerIntegerTypeParameter local = other as IIntegerIntegerTypeParameter;
-            this.Integer1Name = local.Integer1Name;
-            this.Integer1Value = local.Integer1Value;
+            this.Integer2Value = value2 is int v ? v : this.integer2Value;
         }
+    }
+
+    protected override void InternalCloneParameters(ITypeParameter other)
+    {
+        IIntegerIntegerTypeParameter local = other as IIntegerIntegerTypeParameter;
+        this.Integer1Name = local.Integer1Name;
+        this.Integer1Value = local.Integer1Value;
     }
 }

@@ -1,6 +1,5 @@
-﻿namespace DataScraper.DataScrapers.JsonDataScrapers
+﻿namespace DataScraper.DataScrapers.JsonDataScrapers;
+
+public interface IGeneralJsonObjectScraper : IDataScraper
 {
-    public interface IGeneralJsonObjectScraper : IDataScraper
-    {
-    }
 }

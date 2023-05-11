@@ -1,12 +1,11 @@
-﻿namespace DataScraper.Data.TimeData.QueryableData
+﻿namespace DataScraper.Data.TimeData.QueryableData;
+
+public enum ContainerType
 {
-    public enum ContainerType
-    {
-        Array,
-        Deque,
-        List,
-        MultiSet,
-        Set,
-        Vector
-    }
+    Array,
+    Deque,
+    List,
+    MultiSet,
+    Set,
+    Vector
 }

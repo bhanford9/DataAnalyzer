@@ -1,4 +1,3 @@
-﻿namespace DataScraper.DataSources
-{
-    internal interface IJsonFileSource : IFileDataSource { }
-}
+﻿namespace DataScraper.DataSources;
+
+internal interface IJsonFileSource : IFileDataSource { }

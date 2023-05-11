@@ -7,11 +7,6 @@
              xmlns:converters="clr-namespace:DataAnalyzer.Common.Mvvm.ValueConverters"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="400">
-  <UserControl.Resources>
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
-    <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibility"/>
-  </UserControl.Resources>
-
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto"/>
@@ -31,10 +26,10 @@
 
     <TextBlock Grid.Column="0"
                Text="Name:"
-               Visibility="{Binding IsSubRule, Converter={StaticResource InverseBooleanToVisibility}}"/>
+               Visibility="{Binding IsSubRule, Converter={StaticResource InverseBoolVisibilityConverter}}"/>
     <TextBox Grid.Column="1"
              Text="{Binding Name}"
-             Visibility="{Binding IsSubRule, Converter={StaticResource InverseBooleanToVisibility}}"/>
+             Visibility="{Binding IsSubRule, Converter={StaticResource InverseBoolVisibilityConverter}}"/>
 
     <TextBlock Grid.Column="2"
                Text="{Binding GroupByText}"/>
@@ -46,7 +41,7 @@
             Command="{Binding AddParameter}"
             Style="{StaticResource IconAddButton}"
             ToolTip="Add Property to Grouping Rule"
-            Visibility="{Binding IsSubRule, Converter={StaticResource InverseBooleanToVisibility}}"/>
+            Visibility="{Binding IsSubRule, Converter={StaticResource InverseBoolVisibilityConverter}}"/>
 
     <Button Grid.Column="5"
             Command="{Binding RemoveParameter}"

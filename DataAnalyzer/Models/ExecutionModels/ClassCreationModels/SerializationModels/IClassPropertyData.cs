@@ -1,9 +1,8 @@
-﻿namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels.SerializationModels
+﻿namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels.SerializationModels;
+
+internal interface IClassPropertyData
 {
-    internal interface IClassPropertyData
-    {
-        string Accessibility { get; set; }
-        string DataType { get; set; }
-        string Name { get; set; }
-    }
+    string Accessibility { get; set; }
+    string DataType { get; set; }
+    string Name { get; set; }
 }

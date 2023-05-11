@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace DataAnalyzer.ViewModels.ImportViewModels
+namespace DataAnalyzer.ViewModels.ImportViewModels;
+
+internal interface IImportViewModel : INotifyPropertyChanged
 {
-    internal interface IImportViewModel : INotifyPropertyChanged
-    {
-        string SelectedScraperCategory { get; }
-    }
+    string SelectedScraperCategory { get; }
 }

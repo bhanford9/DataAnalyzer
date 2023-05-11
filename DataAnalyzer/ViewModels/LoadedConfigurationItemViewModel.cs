@@ -1,22 +1,21 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using System.Collections.ObjectModel;
 
-namespace DataAnalyzer.ViewModels
+namespace DataAnalyzer.ViewModels;
+
+internal class LoadedConfigurationItemViewModel : BasePropertyChanged, ILoadedConfigurationItemViewModel
 {
-    internal class LoadedConfigurationItemViewModel : BasePropertyChanged, ILoadedConfigurationItemViewModel
+    private string title = string.Empty;
+
+    public LoadedConfigurationItemViewModel()
     {
-        private string title = string.Empty;
+    }
 
-        public LoadedConfigurationItemViewModel()
-        {
-        }
+    public ObservableCollection<string> ConfigData { get; } = new();
 
-        public ObservableCollection<string> ConfigData { get; } = new();
-
-        public string Title
-        {
-            get => this.title;
-            set => this.NotifyPropertyChanged(ref this.title, value);
-        }
+    public string Title
+    {
+        get => this.title;
+        set => this.NotifyPropertyChanged(ref this.title, value);
     }
 }

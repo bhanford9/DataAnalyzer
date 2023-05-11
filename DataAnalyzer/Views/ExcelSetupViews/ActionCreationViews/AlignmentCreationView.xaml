@@ -8,10 +8,6 @@
              xmlns:utils="clr-namespace:DataAnalyzer.Views.Utilities"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-  <UserControl.Resources>
-    <converters:ExcelEntityTypeToColumnVisibility x:Key="ColVisibilityConverter"/>
-    <converters:ExcelEntityTypeToRowVisibility x:Key="RowVisibilityConverter"/>
-  </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>

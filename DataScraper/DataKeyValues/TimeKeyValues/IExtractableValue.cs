@@ -1,7 +1,6 @@
-﻿namespace DataScraper.DataKeyValues.TimeKeyValues
+﻿namespace DataScraper.DataKeyValues.TimeKeyValues;
+
+public interface IExtractableValue<T>
 {
-    public interface IExtractableValue<T>
-    {
-        T ExtractValue(string str);
-    }
+    T ExtractValue(string str);
 }

@@ -1,6 +1,5 @@
-﻿namespace ExcelService.CellDataFormats.NumericFormat.Dates
+﻿namespace ExcelService.CellDataFormats.NumericFormat.Dates;
+
+public interface ITimeMeridiemCellDataFormat : ICellDataFormat
 {
-    public interface ITimeMeridiemCellDataFormat : ICellDataFormat
-    {
-    }
 }

@@ -8,9 +8,6 @@
              mc:Ignorable="d"
              Name="MainSetupTab"
              d:DesignHeight="450" d:DesignWidth="800">
-  <UserControl.Resources>
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
-  </UserControl.Resources>
   
   <Border>
     <Border.Resources>
@@ -22,13 +19,13 @@
       <executionViews:ExcelConfigurationSetupView
         Visibility="{Binding 
           DataContext.ExecutiveCommissioner.DisplayExcelCreation, 
-          Converter={StaticResource BooleanToVisibility},
+          Converter={StaticResource BoolVisibilityConverter},
           ElementName=MainSetupTab}"/>
 
       <executionViews:ClassCreationSetupView
         Visibility="{Binding 
           DataContext.ExecutiveCommissioner.DisplayClassCreation,
-          Converter={StaticResource BooleanToVisibility},
+          Converter={StaticResource BoolVisibilityConverter},
           ElementName=MainSetupTab}"/>
 
     </Grid>

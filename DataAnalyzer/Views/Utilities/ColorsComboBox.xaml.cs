@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views.Utilities
+namespace DataAnalyzer.Views.Utilities;
+
+public partial class ColorsComboBox : UserControl
 {
-    public partial class ColorsComboBox : UserControl
+    public ColorsComboBox()
     {
-        public ColorsComboBox()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

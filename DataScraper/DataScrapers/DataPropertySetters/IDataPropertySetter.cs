@@ -1,9 +1,8 @@
 ﻿using DataScraper.Data;
 
-namespace DataScraper.DataScrapers.DataPropertySetters
+namespace DataScraper.DataScrapers.DataPropertySetters;
+
+public interface IDataPropertySetter
 {
-    public interface IDataPropertySetter
-    {
-        void Set(IData data, string value);
-    }
+    void Set(IData data, string value);
 }

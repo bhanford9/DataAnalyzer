@@ -1,6 +1,5 @@
-﻿namespace ExcelService.DataClusters
+﻿namespace ExcelService.DataClusters;
+
+internal interface IUniformDataCluster : IDataCluster
 {
-    internal interface IUniformDataCluster : IDataCluster
-    {
-    }
 }

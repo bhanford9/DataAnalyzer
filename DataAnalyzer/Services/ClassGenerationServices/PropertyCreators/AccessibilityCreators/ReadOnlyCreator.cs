@@ -1,9 +1,8 @@
-﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.AccessibilityCreators
-{
-    internal class ReadOnlyCreator : AccessibilityCreator, IReadOnlyCreator
-    {
-        public override string Create(string accessibility) => "{ get; }";
+﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.AccessibilityCreators;
 
-        public override bool IsApplicable(string accessibility) => accessibility.Equals(ClassCreationConstants.READ_ONLY);
-    }
+internal class ReadOnlyCreator : AccessibilityCreator, IReadOnlyCreator
+{
+    public override string Create(string accessibility) => "{ get; }";
+
+    public override bool IsApplicable(string accessibility) => accessibility.Equals(ClassCreationConstants.READ_ONLY);
 }

@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.Common.DataOrganizers
+﻿namespace DataAnalyzer.Common.DataOrganizers;
+
+internal interface IExcelDataOrganizer : IDataOrganizer
 {
-    internal interface IExcelDataOrganizer : IDataOrganizer
-    {
-    }
 }

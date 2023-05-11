@@ -1,7 +1,6 @@
-﻿namespace DataScraper.DataSources
+﻿namespace DataScraper.DataSources;
+
+public class CsvFileSource : FileDataSource, ICsvFileSource
 {
-    public class CsvFileSource : FileDataSource, ICsvFileSource
-    {
-        public override string GetExpectedExtension() => ".csv";
-    }
+    public override string GetExpectedExtension() => ".csv";
 }

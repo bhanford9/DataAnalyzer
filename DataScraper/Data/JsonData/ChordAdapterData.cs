@@ -1,6 +1,5 @@
-﻿namespace DataScraper.Data.JsonData
+﻿namespace DataScraper.Data.JsonData;
+
+internal class ChordAdapterData
 {
-    internal class ChordAdapterData
-    {
-    }
 }

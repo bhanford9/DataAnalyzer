@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.DataImport.DataObjects.ClassStats
+﻿namespace DataAnalyzer.DataImport.DataObjects.ClassStats;
+
+internal interface ISimpleProperty : IProperty
 {
-    internal interface ISimpleProperty : IProperty
-    {
-    }
 }

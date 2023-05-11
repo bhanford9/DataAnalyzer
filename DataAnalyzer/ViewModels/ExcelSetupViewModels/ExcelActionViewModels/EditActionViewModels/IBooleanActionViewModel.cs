@@ -1,7 +1,6 @@
-﻿namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels
+﻿namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.EditActionViewModels;
+
+internal interface IBooleanActionViewModel : IEditActionViewModel
 {
-    internal interface IBooleanActionViewModel : IEditActionViewModel
-    {
-        bool DoPerform { get; set; }
-    }
+    bool DoPerform { get; set; }
 }

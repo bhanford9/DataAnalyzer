@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.Common.DataParameters.CsvParameters
+﻿namespace DataAnalyzer.Common.DataParameters.CsvParameters;
+
+internal interface ICsvClassParameters : IStatAccessorCollection
 {
-    internal interface ICsvClassParameters : IStatAccessorCollection
-    {
-    }
 }

@@ -1,19 +1,18 @@
 ﻿using System.ComponentModel;
 
-namespace DataAnalyzerFixtures
+namespace DataAnalyzerFixtures;
+
+public class BaseFixture : IDisposable
 {
-    public class BaseFixture : IDisposable
-    {
-        public void Dispose() { }
+    public void Dispose() { }
 
-        public Action<T> GetEventAction<T>()
-            where T : INotifyPropertyChanged
-            => (input) => input.PropertyChanged += null;
+    public Action<T> GetEventAction<T>()
+        where T : INotifyPropertyChanged
+        => (input) => input.PropertyChanged += null;
 
-        public PropertyChangedEventArgs GetNamedEventArgs(string name) => new(name);
+    public PropertyChangedEventArgs GetNamedEventArgs(string name) => new(name);
 
-        public (Action<T> Event, PropertyChangedEventArgs Args) GetPropertyChangedArgs<T>(string name)
-            where T : INotifyPropertyChanged
-            => (this.GetEventAction<T>(), this.GetNamedEventArgs(name));
-    }
+    public (Action<T> Event, PropertyChangedEventArgs Args) GetPropertyChangedArgs<T>(string name)
+        where T : INotifyPropertyChanged
+        => (this.GetEventAction<T>(), this.GetNamedEventArgs(name));
 }

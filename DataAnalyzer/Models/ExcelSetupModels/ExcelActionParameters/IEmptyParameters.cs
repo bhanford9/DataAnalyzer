@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
+﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+
+internal interface IEmptyParameters : IActionParameters
 {
-    internal interface IEmptyParameters : IActionParameters
-    {
-    }
 }

@@ -1,7 +1,6 @@
-﻿namespace DataScraper.DataSources
+﻿namespace DataScraper.DataSources;
+
+public interface IFileDataSourceRepository
 {
-    public interface IFileDataSourceRepository
-    {
-        IFileDataSource GetFileDataSource(string path);
-    }
+    IFileDataSource GetFileDataSource(string path);
 }

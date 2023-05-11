@@ -1,14 +1,13 @@
-﻿namespace ExcelService.CellDataFormats.NumericFormat
+﻿namespace ExcelService.CellDataFormats.NumericFormat;
+
+public class IntegerWIthSeparatorCellDataFormat : IIntegerWIthSeparatorCellDataFormat
 {
-    public class IntegerWIthSeparatorCellDataFormat : IIntegerWIthSeparatorCellDataFormat
+    public string Example => "123,456,000";
+
+    public string Name => "Separated";
+
+    public string GetFormatString()
     {
-        public string Example => "123,456,000";
-
-        public string Name => "Separated";
-
-        public string GetFormatString()
-        {
-            return "#,##0";
-        }
+        return "#,##0";
     }
 }

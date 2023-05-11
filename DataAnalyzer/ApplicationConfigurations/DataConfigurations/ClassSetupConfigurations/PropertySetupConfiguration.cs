@@ -1,11 +1,12 @@
 ﻿using DataAnalyzer.Services.ClassGenerationServices;
 
-namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations
-{
-    internal class PropertySetupConfiguration : IPropertySetupConfiguration
-    {
-        public string Name { get; set; } = string.Empty;
+namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations;
 
-        public string Accessibility { get; set; } = ClassCreationConstants.PUBLIC_ACCESS;
-    }
+internal class PropertySetupConfiguration : IPropertySetupConfiguration
+{
+    public string Name { get; set; } = string.Empty;
+
+    public string Accessibility { get; set; } = ClassCreationConstants.PUBLIC_ACCESS;
+
+    public string DataType { get; set; } = string.Empty;
 }

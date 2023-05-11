@@ -1,6 +1,5 @@
-﻿namespace DataScraper.DataScrapers
+﻿namespace DataScraper.DataScrapers;
+
+public interface IScraperLibrary : IFlavoredCategorizedDataLibrary<IDataScraper>
 {
-    public interface IScraperLibrary : IFlavoredCategorizedDataLibrary<IDataScraper>
-    {
-    }
 }

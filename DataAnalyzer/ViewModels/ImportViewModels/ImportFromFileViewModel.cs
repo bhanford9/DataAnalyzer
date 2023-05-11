@@ -11,137 +11,136 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace DataAnalyzer.ViewModels.ImportViewModels
+namespace DataAnalyzer.ViewModels.ImportViewModels;
+
+internal class ImportFromFileViewModel : ImportViewModel, IImportFromFileViewModel
 {
-    internal class ImportFromFileViewModel : ImportViewModel, IImportFromFileViewModel
+    private string activeDirectory = string.Empty;
+
+    private readonly BaseCommand browseDirectory;
+    private readonly BaseCommand importData;
+
+    private readonly IStatsModel statsModel;
+    private readonly IImportFromFileModel importModel;
+    private readonly IFileDataSourceRepository fileDataSourceRepository;
+
+    protected override IImportModel ImportModel => importModel;
+
+    public ImportFromFileViewModel(
+        IStatsModel statsModel,
+        IImportFromFileModel importModel,
+        IFileDataSourceRepository fileDataSourceRepository)
     {
-        private string activeDirectory = string.Empty;
+        this.statsModel = statsModel;
+        this.importModel = importModel;
+        this.fileDataSourceRepository = fileDataSourceRepository;
+        this.browseDirectory = new BaseCommand((object o) => this.DoBrowseDirectory());
+        this.importData = new BaseCommand((object o) => this.DoImportData());
 
-        private readonly BaseCommand browseDirectory;
-        private readonly BaseCommand importData;
+        this.ActiveDirectory = this.importModel.ActiveDirectory;
+        this.importModel.PropertyChanged += this.LocalImportModelPropertyChanged;
+        this.importModel.PropertyChanged += this.ImportModelPropertyChanged;
+    }
 
-        private readonly IStatsModel statsModel;
-        private readonly IImportFromFileModel importModel;
-        private readonly IFileDataSourceRepository fileDataSourceRepository;
+    public ObservableCollection<ICheckableTreeViewItem> Files { get; } = new();
 
-        protected override IImportModel ImportModel => importModel;
+    public ICommand BrowseDirectory => this.browseDirectory;
 
-        public ImportFromFileViewModel(
-            IStatsModel statsModel,
-            IImportFromFileModel importModel,
-            IFileDataSourceRepository fileDataSourceRepository)
+    public ICommand ImportData => this.importData;
+
+    public string ActiveDirectory
+    {
+        get => this.activeDirectory;
+        set
         {
-            this.statsModel = statsModel;
-            this.importModel = importModel;
-            this.fileDataSourceRepository = fileDataSourceRepository;
-            this.browseDirectory = new BaseCommand((object o) => this.DoBrowseDirectory());
-            this.importData = new BaseCommand((object o) => this.DoImportData());
+            this.NotifyPropertyChanged(ref this.activeDirectory, value);
 
-            this.ActiveDirectory = this.importModel.ActiveDirectory;
-            this.importModel.PropertyChanged += this.LocalImportModelPropertyChanged;
-            this.importModel.PropertyChanged += this.ImportModelPropertyChanged;
-        }
+            this.Files.Clear();
 
-        public ObservableCollection<ICheckableTreeViewItem> Files { get; } = new();
-
-        public ICommand BrowseDirectory => this.browseDirectory;
-
-        public ICommand ImportData => this.importData;
-
-        public string ActiveDirectory
-        {
-            get => this.activeDirectory;
-            set
+            this.Files.Add(new CheckableTreeViewItem
             {
-                this.NotifyPropertyChanged(ref this.activeDirectory, value);
+                Path = this.ActiveDirectory,
+                Name = Path.GetFileName(this.ActiveDirectory)
+            });
 
-                this.Files.Clear();
+            this.LoadAllChildren(this.ActiveDirectory, this.Files[0]);
+        }
+    }
 
-                this.Files.Add(new CheckableTreeViewItem
-                {
-                    Path = this.ActiveDirectory,
-                    Name = Path.GetFileName(this.ActiveDirectory)
-                });
+    private void DoBrowseDirectory()
+    {
+        FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
 
-                this.LoadAllChildren(this.ActiveDirectory, this.Files[0]);
+        if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+        {
+            this.importModel.ApplyActiveDirectory(folderBrowserDialog.SelectedPath);
+        }
+    }
+
+    private void DoImportData()
+    {
+        this.statsModel.ClearLoadedStats();
+
+        this.FlattenFiles()
+            .Where(x => x.IsChecked && !File.GetAttributes(x.Path).HasFlag(FileAttributes.Directory))
+            .ToList()
+            .ForEach(file => this.statsModel.LoadStatsFromSource(
+                this.fileDataSourceRepository.GetFileDataSource(file.Path)));
+    }
+
+    private ICollection<ICheckableTreeViewItem> FlattenFiles()
+    {
+        ICollection<ICheckableTreeViewItem> flattenedFiles = new List<ICheckableTreeViewItem>();
+        this.AddChildren(this.Files.First(), flattenedFiles);
+        return flattenedFiles;
+    }
+
+    private void AddChildren(ICheckableTreeViewItem root, ICollection<ICheckableTreeViewItem> flattenedFiles)
+    {
+        flattenedFiles.Add(root);
+        root.Children.ToList().ForEach(x => this.AddChildren(x, flattenedFiles));
+    }
+
+    private void LoadAllChildren(string pathRoot, ICheckableTreeViewItem treeRoot)
+    {
+        try
+        {
+            foreach (string file in Directory.GetFiles(pathRoot))
+            {
+                treeRoot.Children.Add(
+                  new CheckableTreeViewItem
+                  {
+                      Path = file,
+                      Name = Path.GetFileName(file)
+                  });
             }
         }
+        catch { }
 
-        private void DoBrowseDirectory()
+        try
         {
-            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
-
-            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            foreach (string directory in Directory.GetDirectories(pathRoot))
             {
-                this.importModel.ApplyActiveDirectory(folderBrowserDialog.SelectedPath);
+                treeRoot.Children.Add(
+                  new CheckableTreeViewItem
+                  {
+                      Path = directory,
+                      Name = Path.GetFileName(directory)
+                  });
+
+                this.LoadAllChildren(directory, treeRoot.Children[^1]);
             }
         }
+        catch { }
+    }
 
-        private void DoImportData()
+    private void LocalImportModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
         {
-            this.statsModel.ClearLoadedStats();
-
-            this.FlattenFiles()
-                .Where(x => x.IsChecked && !File.GetAttributes(x.Path).HasFlag(FileAttributes.Directory))
-                .ToList()
-                .ForEach(file => this.statsModel.LoadStatsFromSource(
-                    this.fileDataSourceRepository.GetFileDataSource(file.Path)));
-        }
-
-        private ICollection<ICheckableTreeViewItem> FlattenFiles()
-        {
-            ICollection<ICheckableTreeViewItem> flattenedFiles = new List<ICheckableTreeViewItem>();
-            this.AddChildren(this.Files.First(), flattenedFiles);
-            return flattenedFiles;
-        }
-
-        private void AddChildren(ICheckableTreeViewItem root, ICollection<ICheckableTreeViewItem> flattenedFiles)
-        {
-            flattenedFiles.Add(root);
-            root.Children.ToList().ForEach(x => this.AddChildren(x, flattenedFiles));
-        }
-
-        private void LoadAllChildren(string pathRoot, ICheckableTreeViewItem treeRoot)
-        {
-            try
-            {
-                foreach (string file in Directory.GetFiles(pathRoot))
-                {
-                    treeRoot.Children.Add(
-                      new CheckableTreeViewItem
-                      {
-                          Path = file,
-                          Name = Path.GetFileName(file)
-                      });
-                }
-            }
-            catch { }
-
-            try
-            {
-                foreach (string directory in Directory.GetDirectories(pathRoot))
-                {
-                    treeRoot.Children.Add(
-                      new CheckableTreeViewItem
-                      {
-                          Path = directory,
-                          Name = Path.GetFileName(directory)
-                      });
-
-                    this.LoadAllChildren(directory, treeRoot.Children[^1]);
-                }
-            }
-            catch { }
-        }
-
-        private void LocalImportModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(this.importModel.ActiveDirectory):
-                    this.ActiveDirectory = this.importModel.ActiveDirectory;
-                    break;
-            }
+            case nameof(this.importModel.ActiveDirectory):
+                this.ActiveDirectory = this.importModel.ActiveDirectory;
+                break;
         }
     }
 }

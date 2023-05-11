@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels.SerializationModels
+namespace DataAnalyzer.Models.ExecutionModels.ClassCreationModels.SerializationModels;
+
+internal class ClassProperties : IClassProperties
 {
-    internal class ClassProperties : IClassProperties
-    {
-        public ICollection<IClassPropertyData> Properties { get; set; } = new List<IClassPropertyData>();
-    }
+    public ICollection<IClassPropertyData> Properties { get; set; } = new List<IClassPropertyData>();
 }

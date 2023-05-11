@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.DataImport.DataConverters.CsvConverters
+﻿namespace DataAnalyzer.DataImport.DataConverters.CsvConverters;
+
+internal interface ICsvToTestConverter : IDataConverter
 {
-    internal interface ICsvToTestConverter : IDataConverter
-    {
-    }
 }

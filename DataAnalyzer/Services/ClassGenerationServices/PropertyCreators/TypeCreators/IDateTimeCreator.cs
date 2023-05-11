@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCreators
+﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCreators;
+
+internal interface IDateTimeCreator : ITypeCreator
 {
-    internal interface IDateTimeCreator : ITypeCreator
-    {
-    }
 }

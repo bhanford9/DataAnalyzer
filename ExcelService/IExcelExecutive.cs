@@ -1,10 +1,9 @@
 ﻿using ExcelService.Workbooks;
 
-namespace ExcelService
+namespace ExcelService;
+
+public interface IExcelExecutive
 {
-    public interface IExcelExecutive
-    {
-        void GenerateWorkbook(IWorkbook workbook);
-        void GenerateWorkbooks(ICollection<IWorkbook> workbooks);
-    }
+    void GenerateWorkbook(IWorkbook workbook);
+    void GenerateWorkbooks(ICollection<IWorkbook> workbooks);
 }

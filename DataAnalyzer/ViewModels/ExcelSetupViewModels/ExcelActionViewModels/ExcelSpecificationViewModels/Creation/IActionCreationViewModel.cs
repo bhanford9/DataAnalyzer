@@ -4,12 +4,11 @@ using DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Creation
+namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Creation;
+
+internal interface IActionCreationViewModel : INotifyPropertyChanged
 {
-    internal interface IActionCreationViewModel : INotifyPropertyChanged
-    {
-        ObservableCollection<ILoadableRemovableRowViewModel> Actions { get; }
-        IEditActionViewModel CurrentAction { get; set; }
-        IExcelEntitySpecification ExcelEntityType { get; }
-    }
+    ObservableCollection<ILoadableRemovableRowViewModel> Actions { get; }
+    IEditActionViewModel CurrentAction { get; set; }
+    IExcelEntitySpecification ExcelEntityType { get; }
 }

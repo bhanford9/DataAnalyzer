@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:DataAnalyzer.Common.Mvvm.ValueConverters"
+                    xmlns:project="clr-namespace:DataAnalyzer">
+  <local:BooleanVisibilityConverter x:Key="BoolVisibilityConverter"
+                                    TrueValue="Visible"
+                                    FalseValue="Hidden"/>
+  <local:BooleanVisibilityConverter x:Key="InverseBoolVisibilityConverter"
+                                    TrueValue="Hidden"
+                                    FalseValue="Visible"/>
+  
+  <local:ActionCategoryToVisibilityConverter x:Key="ActionCategoryToVisibilityConverter"/>
+  <local:BooleanToScrollabilityConverter x:Key="BoolToScrollabilityConverter"/>
+  <local:ExcelDataTypeIsBooleanToVisibility x:Key="ExcelDataTypeIsBooleanToVisibility "/>
+  <local:ExcelDataTypeNoParamToVisibility x:Key="ExcelDataTypeNoParamToVisibility"/>
+  <local:ExcelDataTypeNotBooleanToVisibility x:Key="ExcelDataTypeNotBooleanToVisibility"/>
+  <local:ExcelDataTypeOneParamToVisibility x:Key="ExcelDataTypeOneParamToVisibility"/>
+  <local:ExcelDataTypeToConcreteIntParam x:Key="ExcelDataTypeToConcreteIntParam"/>
+  <local:ExcelDataTypeTwoParamToVisibility x:Key="ExcelDataTypeTwoParamToVisibility"/>
+  <local:ExcelEntityTypeToColumnVisibility x:Key="ExcelEntityTypeToColumnVisibility"/>
+  <local:ExcelEntityTypeToRowVisibility x:Key="ExcelEntityTypeToRowVisibility"/>
+  <local:NegativeIsHiddenConverter x:Key="NegativeIsHiddenConverter"/>
+</ResourceDictionary>

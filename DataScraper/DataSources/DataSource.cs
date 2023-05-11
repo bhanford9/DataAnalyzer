@@ -1,7 +1,6 @@
-﻿namespace DataScraper.DataSources
+﻿namespace DataScraper.DataSources;
+
+public abstract class DataSource : IDataSource
 {
-    public abstract class DataSource : IDataSource
-    {
-        protected abstract bool IsValidSource();
-    }
+    protected abstract bool IsValidSource();
 }

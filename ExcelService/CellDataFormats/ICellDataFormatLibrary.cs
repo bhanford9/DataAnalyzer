@@ -1,7 +1,6 @@
-﻿namespace ExcelService.CellDataFormats
+﻿namespace ExcelService.CellDataFormats;
+
+public interface ICellDataFormatLibrary
 {
-    public interface ICellDataFormatLibrary
-    {
-        ICellDataFormat GetByName(string name);
-    }
+    ICellDataFormat GetByName(string name);
 }

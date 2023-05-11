@@ -1,6 +1,5 @@
-﻿namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters
+﻿namespace ExcelService.DataActions.ActionParameters.RangeStyleParameters;
+
+public interface IColumnBorderStyleParameters : IBorderStyleParameters
 {
-    public interface IColumnBorderStyleParameters : IBorderStyleParameters
-    {
-    }
 }

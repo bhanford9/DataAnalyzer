@@ -1,7 +1,6 @@
-﻿namespace DataScraper.DataScrapers.ScraperFlavors
+﻿namespace DataScraper.DataScrapers.ScraperFlavors;
+
+public abstract class ScraperFlavor<T> : ScraperKey<T>, IScraperFlavor
+     where T : IScraperFlavor, new()
 {
-    public abstract class ScraperFlavor<T> : ScraperKey<T>, IScraperFlavor
-         where T : IScraperFlavor, new()
-    {
-    }
 }

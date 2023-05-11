@@ -6,42 +6,41 @@ using DataAnalyzer.Common.DataParameters.CsvParameters;
 using DataAnalyzer.Common.DataParameters.TimeStatParameters;
 using DependencyInjectionUtilities;
 
-namespace DataAnalyzer.Common
+namespace DataAnalyzer.Common;
+
+internal class CommonContainer
 {
-    internal class CommonContainer
+    public static void Register(ContainerBuilder builder)
     {
-        public static void Register(ContainerBuilder builder)
+        // Common.DataOrganizers
+        builder.RegisterType<IClassCreationDataOrganizer, ClassCreationDataOrganizer>();
+        builder.RegisterType<ICsvDataOrganizer, CsvDataOrganizer>();
+        builder.RegisterType<IExcelDataOrganizer, ExcelDataOrganizer>();
+        // TODO --> may need to register each type of available IDataConfiguration
+        builder.RegisterType<IGroupingDataOrganizer, GroupingDataOrganizer<IDataConfiguration>>();
+        builder.RegisterType<INotSupportedDataOrganizer, NotSupportedDataOrganizer>();
+
+        // Common.DataParameters.CsvParameters
+        builder.RegisterAs<ICsvClassParameters, CsvClassParameters>(_ =>
         {
-            // Common.DataOrganizers
-            builder.RegisterType<IClassCreationDataOrganizer, ClassCreationDataOrganizer>();
-            builder.RegisterType<ICsvDataOrganizer, CsvDataOrganizer>();
-            builder.RegisterType<IExcelDataOrganizer, ExcelDataOrganizer>();
-            // TODO --> may need to register each type of available IDataConfiguration
-            builder.RegisterType<IGroupingDataOrganizer, GroupingDataOrganizer<IDataConfiguration>>();
-            builder.RegisterType<INotSupportedDataOrganizer, NotSupportedDataOrganizer>();
+            CsvClassParameters parameters = new();
+            parameters.AddStatAccessor();
+            return parameters;
+        });
 
-            // Common.DataParameters.CsvParameters
-            builder.RegisterAs<ICsvClassParameters, CsvClassParameters>(_ =>
-            {
-                CsvClassParameters parameters = new();
-                parameters.AddStatAccessor();
-                return parameters;
-            });
+        // Common.DataParameters.TimeStatParameters
+        builder.RegisterAs<IQueryableParameters, QueryableParameters>(_ =>
+        {
+            QueryableParameters parameters = new();
+            parameters.AddStatAccessor();
+            return parameters;
+        });
 
-            // Common.DataParameters.TimeStatParameters
-            builder.RegisterAs<IQueryableParameters, QueryableParameters>(_ =>
-            {
-                QueryableParameters parameters = new();
-                parameters.AddStatAccessor();
-                return parameters;
-            });
-
-            // Common.DataParameters
-            builder.RegisterGeneric(typeof(StatAccessor<>)).As(typeof(IStatAccessor<>));
-            builder
-                .RegisterAs<IStatAccessorLibrary, StatAccessorLibrary>(
-                    _ => new StatAccessorLibrary(StatAccessorLibrary.GetStatAccessorMap()))
-                .SingleInstance();
-        }
+        // Common.DataParameters
+        builder.RegisterGeneric(typeof(StatAccessor<>)).As(typeof(IStatAccessor<>));
+        builder
+            .RegisterAs<IStatAccessorLibrary, StatAccessorLibrary>(
+                _ => new StatAccessorLibrary(StatAccessorLibrary.GetStatAccessorMap()))
+            .SingleInstance();
     }
 }

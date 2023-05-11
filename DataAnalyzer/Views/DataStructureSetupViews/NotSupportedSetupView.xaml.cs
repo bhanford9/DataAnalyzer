@@ -1,11 +1,10 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views.DataStructureSetupViews
-{    public partial class NotSupportedSetupView : UserControl
+namespace DataAnalyzer.Views.DataStructureSetupViews;
+public partial class NotSupportedSetupView : UserControl
+{
+    public NotSupportedSetupView()
     {
-        public NotSupportedSetupView()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

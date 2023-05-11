@@ -1,7 +1,6 @@
-﻿namespace DataScraper.DataSources
+﻿namespace DataScraper.DataSources;
+
+internal class JsonFileSource : FileDataSource, IJsonFileSource
 {
-    internal class JsonFileSource : FileDataSource, IJsonFileSource
-    {
-        public override string GetExpectedExtension() => ".json";
-    }
+    public override string GetExpectedExtension() => ".json";
 }

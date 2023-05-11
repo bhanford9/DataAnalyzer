@@ -1,10 +1,9 @@
-﻿namespace DataAnalyzer.Services.Enums
+﻿namespace DataAnalyzer.Services.Enums;
+
+public enum StatType
 {
-    public enum StatType
-    {
-        Queryable,
-        CsvNames,
-        Csv,
-        NotApplicable
-    }
+    Queryable,
+    CsvNames,
+    Csv,
+    NotApplicable
 }

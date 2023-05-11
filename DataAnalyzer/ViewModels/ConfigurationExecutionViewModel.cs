@@ -5,41 +5,40 @@ using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using System;
 using System.ComponentModel;
 
-namespace DataAnalyzer.ViewModels
+namespace DataAnalyzer.ViewModels;
+
+internal class ConfigurationExecutionViewModel : BasePropertyChanged, IConfigurationExecutionViewModel
 {
-    internal class ConfigurationExecutionViewModel : BasePropertyChanged, IConfigurationExecutionViewModel
+    private readonly IConfigurationModel configurationModel;
+    private string selectedExecutionType = string.Empty;
+
+    public ConfigurationExecutionViewModel(
+        IConfigurationModel configModel,
+        IExecutionExecutiveCommissioner executiveCommissioner)
     {
-        private readonly IConfigurationModel configurationModel;
-        private string selectedExecutionType = string.Empty;
+        this.configurationModel = configModel;
+        this.ExecutiveCommissioner = executiveCommissioner;
+        this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
+    }
 
-        public ConfigurationExecutionViewModel(
-            IConfigurationModel configModel,
-            IExecutionExecutiveCommissioner executiveCommissioner)
+    public string SelectedExecutionType
+    {
+        get => this.selectedExecutionType;
+        set => this.NotifyPropertyChanged(ref this.selectedExecutionType, value);
+    }
+
+    public IExecutionExecutiveCommissioner ExecutiveCommissioner { get; }
+
+    private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
         {
-            this.configurationModel = configModel;
-            this.ExecutiveCommissioner = executiveCommissioner;
-            this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
-        }
-
-        public string SelectedExecutionType
-        {
-            get => this.selectedExecutionType;
-            set => this.NotifyPropertyChanged(ref this.selectedExecutionType, value);
-        }
-
-        public IExecutionExecutiveCommissioner ExecutiveCommissioner { get; }
-
-        private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(this.configurationModel.ImportExecutionKey):
-                    this.ExecutiveCommissioner.SetDisplay();
-                    this.SelectedExecutionType = Enum.GetName(typeof(ExecutionType), this.configurationModel.SelectedExecutionType);
-                    break;
-                default:
-                    break;
-            }
+            case nameof(this.configurationModel.ImportExecutionKey):
+                this.ExecutiveCommissioner.SetDisplay();
+                this.SelectedExecutionType = Enum.GetName(typeof(ExecutionType), this.configurationModel.SelectedExecutionType);
+                break;
+            default:
+                break;
         }
     }
 }

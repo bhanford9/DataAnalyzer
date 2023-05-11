@@ -1,9 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace DataAnalyzer.ViewModels
+namespace DataAnalyzer.ViewModels;
+
+internal interface IMainViewModel
 {
-    internal interface IMainViewModel
-    {
-        ObservableCollection<LoadedConfigurationItemViewModel> LoadedConfigs { get; }
-    }
+    ObservableCollection<LoadedConfigurationItemViewModel> LoadedConfigs { get; }
 }

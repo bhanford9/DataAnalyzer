@@ -1,13 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
+namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels;
+
+internal interface IGroupingSetupViewModel : IDataStructureSetupViewModel
 {
-    internal interface IGroupingSetupViewModel : IDataStructureSetupViewModel
-    {
-        ObservableCollection<IConfigurationGroupingViewModel> ConfigurationGroupings { get; }
+    ObservableCollection<IConfigurationGroupingViewModel> ConfigurationGroupings { get; }
 
-        int GroupingLayersCount { get; set; }
+    int GroupingLayersCount { get; set; }
 
-        void RemoveGroupingConfiguration(int level);
-    }
+    void RemoveGroupingConfiguration(int level);
 }

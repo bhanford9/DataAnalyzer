@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace DataAnalyzer.StatConfigurations.CsvConfigurations
-{
-    internal interface IClassPropertiesConfiguration : IStatsConfiguration
-    {
-        string ClassName { get; set; }
+namespace DataAnalyzer.StatConfigurations.CsvConfigurations;
 
-        List<string> PropertyNames { get; set; }
-    }
+internal interface IClassPropertiesConfiguration : IStatsConfiguration
+{
+    string ClassName { get; set; }
+
+    List<string> PropertyNames { get; set; }
 }

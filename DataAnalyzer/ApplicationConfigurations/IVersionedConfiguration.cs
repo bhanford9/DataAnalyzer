@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace DataAnalyzer.ApplicationConfigurations
+namespace DataAnalyzer.ApplicationConfigurations;
+
+internal interface IVersionedConfiguration
 {
-    internal interface IVersionedConfiguration
-    {
-        string VersionUid { get; set; }
-        DateTime DateTime { get; set; }
-    }
+    string VersionUid { get; set; }
+    DateTime DateTime { get; set; }
 }

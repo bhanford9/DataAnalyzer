@@ -5,25 +5,24 @@ using DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 using Moq;
 using System.ComponentModel;
 
-namespace DataAnalyzerFixtures.ViewModels
+namespace DataAnalyzerFixtures.ViewModels;
+
+public class ConfigurationExecutionViewModelFixture : BaseFixture
 {
-    public class ConfigurationExecutionViewModelFixture : BaseFixture
+    public ConfigurationExecutionViewModelFixture()
     {
-        public ConfigurationExecutionViewModelFixture()
-        {
-            // one time setup
-        }
-
-        internal Mock<IConfigurationModel> MockConfigurationModel { get; set; }
-
-        internal Mock<IExecutionExecutiveCommissioner> MockExecutiveCommissioner { get; set; }
-
-        internal Mock<IImportExecutionKey> MockKey { get; set; }
-
-        internal string ConfigKeyPropName => nameof(this.MockConfigurationModel.Object.ImportExecutionKey);
-
-        internal PropertyChangedEventArgs ConfigKeyChangeArgs => this.GetNamedEventArgs(this.ConfigKeyPropName);
-
-        internal ConfigurationExecutionViewModel ViewModel { get; set; }
+        // one time setup
     }
+
+    internal Mock<IConfigurationModel> MockConfigurationModel { get; set; }
+
+    internal Mock<IExecutionExecutiveCommissioner> MockExecutiveCommissioner { get; set; }
+
+    internal Mock<IImportExecutionKey> MockKey { get; set; }
+
+    internal string ConfigKeyPropName => nameof(this.MockConfigurationModel.Object.ImportExecutionKey);
+
+    internal PropertyChangedEventArgs ConfigKeyChangeArgs => this.GetNamedEventArgs(this.ConfigKeyPropName);
+
+    internal ConfigurationExecutionViewModel ViewModel { get; set; }
 }

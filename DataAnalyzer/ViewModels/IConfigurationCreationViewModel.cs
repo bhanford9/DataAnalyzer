@@ -5,17 +5,16 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
-namespace DataAnalyzer.ViewModels
+namespace DataAnalyzer.ViewModels;
+
+internal interface IConfigurationCreationViewModel : INotifyPropertyChanged
 {
-    internal interface IConfigurationCreationViewModel : INotifyPropertyChanged
-    {
-        IDataStructureSetupViewModel ActiveViewModel { get; set; }
-        ICommand ApplyWithoutSave { get; }
-        ICommand CancelChanges { get; }
-        ObservableCollection<ILoadableRemovableRowViewModel> Configurations { get; }
-        ICommand CreateConfiguration { get; }
-        IStructureExecutiveCommissioner ExecutiveCommissioner { get; }
-        ObservableCollection<string> ExecutionTypes { get; }
-        ICommand SaveConfiguration { get; }
-    }
+    IDataStructureSetupViewModel ActiveViewModel { get; set; }
+    ICommand ApplyWithoutSave { get; }
+    ICommand CancelChanges { get; }
+    ObservableCollection<ILoadableRemovableRowViewModel> Configurations { get; }
+    ICommand CreateConfiguration { get; }
+    IStructureExecutiveCommissioner ExecutiveCommissioner { get; }
+    ObservableCollection<string> ExecutionTypes { get; }
+    ICommand SaveConfiguration { get; }
 }

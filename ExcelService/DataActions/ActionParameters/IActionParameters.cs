@@ -1,10 +1,9 @@
-﻿namespace ExcelService.DataActions.ActionParameters
+﻿namespace ExcelService.DataActions.ActionParameters;
+
+public interface IActionParameters
 {
-    public interface IActionParameters
-    {
-        string Name { get; }
-        string WorksheetName { get; set; }
-        ActionPerformer Performer { get; set; }
-        ActionCategory Category { get; }
-    }
+    string Name { get; }
+    string WorksheetName { get; set; }
+    ActionPerformer Performer { get; set; }
+    ActionCategory Category { get; }
 }

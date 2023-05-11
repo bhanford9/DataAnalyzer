@@ -1,9 +1,8 @@
-﻿namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
+﻿namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+
+internal interface IGroupingConfiguration : IDataConfiguration
 {
-    internal interface IGroupingConfiguration : IDataConfiguration
-    {
-        int GroupLevel { get; set; }
-        string GroupName { get; set; }
-        string SelectedParameter { get; set; }
-    }
+    int GroupLevel { get; set; }
+    string GroupName { get; set; }
+    string SelectedParameter { get; set; }
 }

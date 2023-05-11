@@ -1,11 +1,10 @@
 ﻿using ExcelService.CellDataFormats;
 
-namespace ExcelService.Cells
+namespace ExcelService.Cells;
+
+public interface ICell : ICellRange
 {
-    public interface ICell : ICellRange
-    {
-        ICellDataFormat Format { get; }
-        string ColumnId { get; }
-        object Value { get; }
-    }
+    ICellDataFormat Format { get; }
+    string ColumnId { get; }
+    object Value { get; }
 }

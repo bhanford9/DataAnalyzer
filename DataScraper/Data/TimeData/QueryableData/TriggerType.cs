@@ -1,16 +1,15 @@
-﻿namespace DataScraper.Data.TimeData.QueryableData
+﻿namespace DataScraper.Data.TimeData.QueryableData;
+
+public enum TriggerType
 {
-    public enum TriggerType
-    {
-        Begin,
-        Quarter,
-        Half,
-        ThreeQuarter,
-        End,
-        Never,
-        LowFrequency,
-        MediumFrequency,
-        HighFrequency,
-        NotApplicable
-    };
-}
+    Begin,
+    Quarter,
+    Half,
+    ThreeQuarter,
+    End,
+    Never,
+    LowFrequency,
+    MediumFrequency,
+    HighFrequency,
+    NotApplicable
+};

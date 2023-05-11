@@ -1,8 +1,8 @@
-﻿namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations
+﻿namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations;
+
+internal interface IPropertySetupConfiguration
 {
-    internal interface IPropertySetupConfiguration
-    {
-        string Accessibility { get; set; }
-        string Name { get; set; }
-    }
+    string Accessibility { get; set; }
+    string Name { get; set; }
+    string DataType { get; set; }
 }

@@ -5,6 +5,8 @@
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="Common/Mvvm/ValueConverters/Converters.xaml"/>
+
         <ResourceDictionary Source="Styles/ColorBrushes.xaml"/>
         <ResourceDictionary Source="Styles/BaseTextBlockStyle.xaml"/>
         <ResourceDictionary Source="Styles/BaseScrollViewerStyle.xaml"/>

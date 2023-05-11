@@ -1,6 +1,5 @@
-﻿namespace ExcelService.CellDataFormats.NumericFormat.Dates
+﻿namespace ExcelService.CellDataFormats.NumericFormat.Dates;
+
+public interface IDayOfWeekCellDataFormat : ICellDataFormat
 {
-    public interface IDayOfWeekCellDataFormat : ICellDataFormat
-    {
-    }
 }

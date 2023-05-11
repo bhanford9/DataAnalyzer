@@ -1,6 +1,5 @@
-﻿namespace DataSerialization.Serializers
+﻿namespace DataSerialization.Serializers;
+
+internal interface IJsonSerializer<T> : ISerializer<T>
 {
-    internal interface IJsonSerializer<T> : ISerializer<T>
-    {
-    }
 }

@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
+﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary;
+
+internal interface ICellActionsSummaryModel : IActionsSummaryModel
 {
-    internal interface ICellActionsSummaryModel : IActionsSummaryModel
-    {
-    }
 }

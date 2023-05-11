@@ -1,6 +1,5 @@
-﻿namespace ExcelService.DataActions.WorkbookActions
+﻿namespace ExcelService.DataActions.WorkbookActions;
+
+public interface IDisplayWorkbookAction : IDataAction
 {
-    public interface IDisplayWorkbookAction : IDataAction
-    {
-    }
 }

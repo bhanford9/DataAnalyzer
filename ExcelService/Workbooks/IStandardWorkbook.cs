@@ -1,6 +1,5 @@
-﻿namespace ExcelService.Workbooks
+﻿namespace ExcelService.Workbooks;
+
+public interface IStandardWorkbook : IWorkbook
 {
-    public interface IStandardWorkbook : IWorkbook
-    {
-    }
 }

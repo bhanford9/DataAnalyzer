@@ -1,7 +1,6 @@
-﻿namespace DataScraper.Data.ClassData
+﻿namespace DataScraper.Data.ClassData;
+
+public interface IProperty
 {
-    public interface IProperty
-    {
-        string Name { get; set; }
-    }
+    string Name { get; set; }
 }

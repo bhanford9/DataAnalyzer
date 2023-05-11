@@ -5,32 +5,31 @@ using DataAnalyzer.StatConfigurations.ExcelConfigurations;
 using DataAnalyzer.StatConfigurations.GroupingConfigurations;
 using DependencyInjectionUtilities;
 
-namespace DataAnalyzer.StatConfigurations
+namespace DataAnalyzer.StatConfigurations;
+
+internal class StatConfigurationsContainer
 {
-    internal class StatConfigurationsContainer
+    public static void Register(ContainerBuilder builder)
     {
-        public static void Register(ContainerBuilder builder)
-        {
-            // StatConfigurations.ClassCreationConfigurations
-            builder.RegisterTypeAncestors<IStatsConfiguration, IClassCreationConfiguration, ClassCreationConfiguration>();
+        // StatConfigurations.ClassCreationConfigurations
+        builder.RegisterTypeAncestors<IStatsConfiguration, IClassCreationConfiguration, ClassCreationConfiguration>();
 
-            // StatConfigurations.CsvConfigurations
-            builder.RegisterTypeAncestors<IStatsConfiguration, IClassPropertiesConfiguration, ClassPropertiesConfiguration>();
+        // StatConfigurations.CsvConfigurations
+        builder.RegisterTypeAncestors<IStatsConfiguration, IClassPropertiesConfiguration, ClassPropertiesConfiguration>();
 
-            // StatConfigurations.ExcelConfigurations
-            builder.RegisterTypeAncestors<IStatsConfiguration, IExcelConfiguration, ExcelConfiguration>();
-           
-            // StatConfigurations.FilteringConfigurations
-            
-            // StatConfigurations.GroupingConfigurations
-            builder.RegisterType<IGroupingConfiguration, GroupingConfiguration>();
-            builder.RegisterTypeAncestors<IGroupingConfiguration, ILinkedGroupingConfiguration, LinkedGroupingConfiguration>();
-            //builder.RegisterTypeAncestors<IDataConfiguration, IGroupingDataConfiguration, GroupingDataConfiguration<AppDataConfig.IDataConfiguration>>();
+        // StatConfigurations.ExcelConfigurations
+        builder.RegisterTypeAncestors<IStatsConfiguration, IExcelConfiguration, ExcelConfiguration>();
+       
+        // StatConfigurations.FilteringConfigurations
+        
+        // StatConfigurations.GroupingConfigurations
+        builder.RegisterType<IGroupingConfiguration, GroupingConfiguration>();
+        builder.RegisterTypeAncestors<IGroupingConfiguration, ILinkedGroupingConfiguration, LinkedGroupingConfiguration>();
+        //builder.RegisterTypeAncestors<IDataConfiguration, IGroupingDataConfiguration, GroupingDataConfiguration<AppDataConfig.IDataConfiguration>>();
 
-            // StatConfigurations.SortingConfigurations
+        // StatConfigurations.SortingConfigurations
 
-            // StatConfigurations
-            builder.RegisterTypeAncestors<IStatsConfiguration, INotSupportedDataConfiguration, NotSupportedDataConfiguration>();
-        }
+        // StatConfigurations
+        builder.RegisterTypeAncestors<IStatsConfiguration, INotSupportedDataConfiguration, NotSupportedDataConfiguration>();
     }
 }

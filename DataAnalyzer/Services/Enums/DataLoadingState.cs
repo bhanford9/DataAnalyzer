@@ -1,9 +1,8 @@
-﻿namespace DataAnalyzer.Services.Enums
+﻿namespace DataAnalyzer.Services.Enums;
+
+public enum DataLoadingState
 {
-    public enum DataLoadingState
-    {
-        NoDataLoaded,
-        LoadingData,
-        DataLoaded
-    }
+    NoDataLoaded,
+    LoadingData,
+    DataLoaded
 }

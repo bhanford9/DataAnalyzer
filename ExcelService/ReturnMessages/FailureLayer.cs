@@ -1,12 +1,11 @@
-﻿namespace ExcelService.ReturnMessages
+﻿namespace ExcelService.ReturnMessages;
+
+public enum FailureLayer
 {
-    public enum FailureLayer
-    {
-        IsApplicable,
-        CanExecute,
-        Execute,
-        PostExecution,
-        Exception,
-        None
-    }
+    IsApplicable,
+    CanExecute,
+    Execute,
+    PostExecution,
+    Exception,
+    None
 }

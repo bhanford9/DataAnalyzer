@@ -1,7 +1,6 @@
-﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCreators
+﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCreators;
+
+internal interface ITypeCreationExecutive
 {
-    internal interface ITypeCreationExecutive
-    {
-        string Create(string dataType);
-    }
+    string Create(string dataType);
 }

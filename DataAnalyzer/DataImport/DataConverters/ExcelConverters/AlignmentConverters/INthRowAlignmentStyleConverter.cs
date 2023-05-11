@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.AlignmentConverters
+﻿namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.AlignmentConverters;
+
+internal interface INthRowAlignmentStyleConverter : IExcelActionParamConverter
 {
-    internal interface INthRowAlignmentStyleConverter : IExcelActionParamConverter
-    {
-    }
 }

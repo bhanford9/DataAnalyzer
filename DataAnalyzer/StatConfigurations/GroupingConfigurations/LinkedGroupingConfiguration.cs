@@ -1,11 +1,10 @@
-﻿namespace DataAnalyzer.StatConfigurations.GroupingConfigurations
-{
-    internal class LinkedGroupingConfiguration : GroupingConfiguration, ILinkedGroupingConfiguration
-    {
-        public LinkedGroupingConfiguration() : base()
-        {
-        }
+﻿namespace DataAnalyzer.StatConfigurations.GroupingConfigurations;
 
-        public ILinkedGroupingConfiguration Next { get; set; } = null;
+internal class LinkedGroupingConfiguration : GroupingConfiguration, ILinkedGroupingConfiguration
+{
+    public LinkedGroupingConfiguration() : base()
+    {
     }
+
+    public ILinkedGroupingConfiguration Next { get; set; } = null;
 }

@@ -1,15 +1,14 @@
 ﻿using Autofac;
 
-namespace DependencyInjectionUtilities
+namespace DependencyInjectionUtilities;
+
+public class Resolver
 {
-    public class Resolver
-    {
-        static Resolver() { }
+    static Resolver() { }
 
-        public static IContainer Container { get; set; }
+    public static IContainer Container { get; set; }
 
-        public static T Resolve<T>() => Container.Resolve<T>();
+    public static T Resolve<T>() => Container.Resolve<T>();
 
-        public static object Resolve(Type type) => Container.Resolve(type);
-    }
+    public static object Resolve(Type type) => Container.Resolve(type);
 }

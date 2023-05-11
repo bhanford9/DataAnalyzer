@@ -1,13 +1,12 @@
-﻿namespace ExcelService.Utilities
+﻿namespace ExcelService.Utilities;
+
+public interface IColumnSpecification
 {
-    public interface IColumnSpecification
-    {
-        string ColumnAddress { get; set; }
-        string ColumnHeader { get; set; }
-        int NthColumn { get; set; }
-        bool AllColumns { get; set; }
-        bool UseColumnAddress { get; }
-        bool UseColumnHeader { get; }
-        bool UseNthColumn { get; }
-    }
+    string ColumnAddress { get; set; }
+    string ColumnHeader { get; set; }
+    int NthColumn { get; set; }
+    bool AllColumns { get; set; }
+    bool UseColumnAddress { get; }
+    bool UseColumnHeader { get; }
+    bool UseNthColumn { get; }
 }

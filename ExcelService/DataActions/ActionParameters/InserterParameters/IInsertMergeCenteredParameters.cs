@@ -1,6 +1,5 @@
-﻿namespace ExcelService.DataActions.ActionParameters.InserterParameters
+﻿namespace ExcelService.DataActions.ActionParameters.InserterParameters;
+
+internal interface IInsertMergeCenteredParameters : IActionParameters
 {
-    internal interface IInsertMergeCenteredParameters : IActionParameters
-    {
-    }
 }

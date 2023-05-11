@@ -7,12 +7,6 @@
              xmlns:converters="clr-namespace:DataAnalyzer.Common.Mvvm.ValueConverters"
              mc:Ignorable="d" 
              d:DesignHeight="160" d:DesignWidth="270">
-  <UserControl.Resources>
-    <converters:ExcelDataTypeOneParamToVisibility x:Key="OneParamToVisibility"/>
-    <converters:ExcelDataTypeTwoParamToVisibility x:Key="TwoParamToVisibility"/>
-    <converters:ExcelDataTypeIsBooleanToVisibility x:Key="ParamIsBooleanToVisibility"/>
-    <converters:ExcelDataTypeNotBooleanToVisibility x:Key="ParamNotBooleanToVisibility"/>
-  </UserControl.Resources>
   <Grid Margin="4"
         MinWidth="270"
         MinHeight="160">
@@ -88,7 +82,7 @@
       </Grid.RowDefinitions>
 
       <Grid Grid.Row="0"
-            Visibility="{Binding DataTypeName, Converter={StaticResource OneParamToVisibility}}">
+            Visibility="{Binding DataTypeName, Converter={StaticResource ExcelDataTypeOneParamToVisibility}}">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="Auto"/>
           <ColumnDefinition Width="*"/>
@@ -101,7 +95,7 @@
       </Grid>
 
       <Grid Grid.Row="1"
-            Visibility="{Binding DataTypeName, Converter={StaticResource TwoParamToVisibility}}">
+            Visibility="{Binding DataTypeName, Converter={StaticResource ExcelDataTypeTwoParamToVisibility}}">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="Auto"/>
           <ColumnDefinition Width="*"/>
@@ -110,10 +104,10 @@
                    Margin="10 0 4 0"
                    Text="{Binding Parameter2Name}"/>
         <TextBox Grid.Column="1"
-                 Visibility="{Binding DataTypeName, Converter={StaticResource ParamNotBooleanToVisibility}}"
+                 Visibility="{Binding DataTypeName, Converter={StaticResource ExcelDataTypeNotBooleanToVisibility}}"
                  Text="{Binding Parameter2Value}"/>
         <CheckBox Grid.Column="1"
-                  Visibility="{Binding DataTypeName, Converter={StaticResource ParamIsBooleanToVisibility}}"
+                  Visibility="{Binding DataTypeName, Converter={StaticResource ExcelDataTypeIsBooleanToVisibility }}"
                   IsChecked="{Binding Parameter2Value}"/>
       </Grid>
     </Grid>

@@ -1,12 +1,11 @@
 ﻿using ClosedXML.Excel;
 
-namespace ExcelService.Styles.Colors
+namespace ExcelService.Styles.Colors;
+
+public interface IColorValue
 {
-    public interface IColorValue
-    {
-        System.Drawing.Color ToSystemColor();
-        XLColor ToXlColor(Color color);
-        XLColor ToXlColorFromArgb();
-        XLColor ToXlColorFromLocal();
-    }
+    System.Drawing.Color ToSystemColor();
+    XLColor ToXlColor(Color color);
+    XLColor ToXlColorFromArgb();
+    XLColor ToXlColorFromLocal();
 }

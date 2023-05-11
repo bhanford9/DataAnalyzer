@@ -1,9 +1,8 @@
 ﻿using DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations;
 
-namespace DataAnalyzer.StatConfigurations.ClassCreationConfigurations
+namespace DataAnalyzer.StatConfigurations.ClassCreationConfigurations;
+
+internal interface IClassCreationConfiguration : IStatsConfiguration
 {
-    internal interface IClassCreationConfiguration : IStatsConfiguration
-    {
-        IClassSetupConfiguration ClassSetupConfiguration { get; set; }
-    }
+    IClassCollectionSetupConfiguration ClassSetupConfiguration { get; set; }
 }

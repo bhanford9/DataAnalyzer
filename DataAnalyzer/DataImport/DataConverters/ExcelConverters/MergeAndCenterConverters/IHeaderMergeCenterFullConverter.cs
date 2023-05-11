@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.MergeAndCenterConverters
+﻿namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.MergeAndCenterConverters;
+
+internal interface IHeaderMergeCenterFullConverter : IExcelActionParamConverter
 {
-    internal interface IHeaderMergeCenterFullConverter : IExcelActionParamConverter
-    {
-    }
 }

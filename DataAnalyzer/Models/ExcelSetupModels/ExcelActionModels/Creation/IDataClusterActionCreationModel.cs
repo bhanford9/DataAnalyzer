@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation
+﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
+
+internal interface IDataClusterActionCreationModel : IActionCreationModel
 {
-    internal interface IDataClusterActionCreationModel : IActionCreationModel
-    {
-    }
 }

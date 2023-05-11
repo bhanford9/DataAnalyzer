@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations
+namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations;
+
+internal interface IClassPropertySetupConfiguration : IPropertySetupConfiguration
 {
-    internal interface IClassPropertySetupConfiguration : IPropertySetupConfiguration
-    {
-        ICollection<IPropertySetupConfiguration> Properties { get; set; }
-    }
+    ICollection<IPropertySetupConfiguration> Properties { get; set; }
 }

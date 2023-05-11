@@ -1,7 +1,6 @@
-﻿namespace DataAnalyzer.DataImport.DataObjects.CsvStats
+﻿namespace DataAnalyzer.DataImport.DataObjects.CsvStats;
+
+internal interface ICsvNamesStats : IStats
 {
-    internal interface ICsvNamesStats : IStats
-    {
-        IComparableList<string> CsvNames { get; set; }
-    }
+    IComparableList<string> CsvNames { get; set; }
 }

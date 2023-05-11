@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace DataAnalyzer.DataImport.DataObjects.ClassStats
+namespace DataAnalyzer.DataImport.DataObjects.ClassStats;
+
+internal interface IProperty : IComparable
 {
-    internal interface IProperty : IComparable
-    {
-        string Name { get; set; }
-    }
+    string Name { get; set; }
 }

@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views
+namespace DataAnalyzer.Views;
+
+public partial class LoadedConfigurationItemView : UserControl
 {
-    public partial class LoadedConfigurationItemView : UserControl
+    public LoadedConfigurationItemView()
     {
-        public LoadedConfigurationItemView()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

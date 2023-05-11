@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations
+﻿namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations.ClassSetupConfigurations;
+
+internal interface ISimplePropertySetupConfiguration : IPropertySetupConfiguration
 {
-    internal interface ISimplePropertySetupConfiguration : IPropertySetupConfiguration
-    {
-    }
 }

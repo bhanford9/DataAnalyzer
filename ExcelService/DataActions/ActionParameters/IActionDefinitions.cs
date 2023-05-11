@@ -1,6 +1,5 @@
-﻿namespace ExcelService.DataActions.ActionParameters
+﻿namespace ExcelService.DataActions.ActionParameters;
+
+public interface IActionDefinitions : ICollection<IActionParameters>
 {
-    public interface IActionDefinitions : ICollection<IActionParameters>
-    {
-    }
 }

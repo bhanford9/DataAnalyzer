@@ -1,8 +1,7 @@
-﻿namespace DataScraper.DataScrapers.ScraperFlavors.QueryableFlavors
+﻿namespace DataScraper.DataScrapers.ScraperFlavors.QueryableFlavors;
+
+public interface IQueryableStandardScraperFlavor : IScraperFlavor { }
+public class QueryableStandardScraperFlavor : ScraperFlavor<QueryableStandardScraperFlavor>, IQueryableStandardScraperFlavor
 {
-    public interface IQueryableStandardScraperFlavor : IScraperFlavor { }
-    public class QueryableStandardScraperFlavor : ScraperFlavor<QueryableStandardScraperFlavor>, IQueryableStandardScraperFlavor
-    {
-        public override string Name => "Standard Queryable";
-    }
+    public override string Name => "Standard Queryable";
 }

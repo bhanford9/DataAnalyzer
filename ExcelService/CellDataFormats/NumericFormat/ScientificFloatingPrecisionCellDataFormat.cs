@@ -1,38 +1,37 @@
-﻿namespace ExcelService.CellDataFormats.NumericFormat
+﻿namespace ExcelService.CellDataFormats.NumericFormat;
+
+public class ScientificFloatingPrecisionCellDataFormat : IScientificFloatingPrecisionCellDataFormat
 {
-    public class ScientificFloatingPrecisionCellDataFormat : IScientificFloatingPrecisionCellDataFormat
+    private readonly int precisionCount = 1;
+
+    public string Name => "Scientific with Decimals";
+
+    public string Example
     {
-        private readonly int precisionCount = 1;
-
-        public string Name => "Scientific with Decimals";
-
-        public string Example
+        get
         {
-            get
+            if (this.precisionCount == 1)
             {
-                if (this.precisionCount == 1)
-                {
-                    return "6.3E+04";
-                }
-                if (this.precisionCount == 2)
-                {
-                    return "6.30E+04";
-                }
-
-                int zeroCount = this.precisionCount - 2;
-
-                return "6.39" + new string(new string('0', zeroCount < 0 ? 0 : zeroCount)) + "E+04";
+                return "6.3E+04";
             }
-        }
+            if (this.precisionCount == 2)
+            {
+                return "6.30E+04";
+            }
 
-        public ScientificFloatingPrecisionCellDataFormat(int precisionCount)
-        {
-            this.precisionCount = precisionCount;
-        }
+            int zeroCount = this.precisionCount - 2;
 
-        public string GetFormatString()
-        {
-            return "0." + new string('0', this.precisionCount) + "E+00";
+            return "6.39" + new string(new string('0', zeroCount < 0 ? 0 : zeroCount)) + "E+04";
         }
+    }
+
+    public ScientificFloatingPrecisionCellDataFormat(int precisionCount)
+    {
+        this.precisionCount = precisionCount;
+    }
+
+    public string GetFormatString()
+    {
+        return "0." + new string('0', this.precisionCount) + "E+00";
     }
 }

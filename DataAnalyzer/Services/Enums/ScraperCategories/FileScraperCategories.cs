@@ -1,10 +1,9 @@
-﻿namespace DataAnalyzer.Services.Enums.ScraperCategories
+﻿namespace DataAnalyzer.Services.Enums.ScraperCategories;
+
+internal enum FileScraperCategories
 {
-    internal enum FileScraperCategories
-    {
-        Custom,
-        CsvNames,
-        Csv,
-        NotApplicable
-    }
+    Custom,
+    CsvNames,
+    Csv,
+    NotApplicable
 }

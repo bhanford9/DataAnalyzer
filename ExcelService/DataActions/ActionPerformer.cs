@@ -1,13 +1,12 @@
-﻿namespace ExcelService.DataActions
+﻿namespace ExcelService.DataActions;
+
+public enum ActionPerformer
 {
-    public enum ActionPerformer
-    {
-        Workbook,
-        Worksheet,
-        DataCluster,
-        DataClusterHeader,
-        Row,
-        Cell,
-        Unassigned
-    }
+    Workbook,
+    Worksheet,
+    DataCluster,
+    DataClusterHeader,
+    Row,
+    Cell,
+    Unassigned
 }

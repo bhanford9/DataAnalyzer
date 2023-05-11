@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views.DataStructureSetupViews
+namespace DataAnalyzer.Views.DataStructureSetupViews;
+
+public partial class StringPropertyRowView : UserControl
 {
-    public partial class StringPropertyRowView : UserControl
+    public StringPropertyRowView()
     {
-        public StringPropertyRowView()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.BorderConverters
+﻿namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.BorderConverters;
+
+internal interface IBorderStyleConverter : IExcelActionParamConverter
 {
-    internal interface IBorderStyleConverter : IExcelActionParamConverter
-    {
-    }
 }

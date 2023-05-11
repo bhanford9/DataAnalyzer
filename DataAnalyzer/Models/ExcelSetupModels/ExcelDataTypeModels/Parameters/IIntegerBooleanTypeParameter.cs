@@ -1,8 +1,7 @@
-﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters
+﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelDataTypeModels.Parameters;
+
+internal interface IIntegerBooleanTypeParameter : IIntegerTypeParameter
 {
-    internal interface IIntegerBooleanTypeParameter : IIntegerTypeParameter
-    {
-        string BooleanName { get; set; }
-        bool BooleanValue { get; set; }
-    }
+    string BooleanName { get; set; }
+    bool BooleanValue { get; set; }
 }

@@ -1,6 +1,5 @@
-﻿namespace DataScraper.Data.ClassData
+﻿namespace DataScraper.Data.ClassData;
+
+public interface ISimpleProperty : IProperty
 {
-    public interface ISimpleProperty : IProperty
-    {
-    }
 }

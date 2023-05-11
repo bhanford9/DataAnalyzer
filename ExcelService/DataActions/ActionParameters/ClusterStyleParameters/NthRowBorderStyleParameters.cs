@@ -1,15 +1,14 @@
 ﻿using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
 
-namespace ExcelService.DataActions.ActionParameters.ClusterStyleParameters
+namespace ExcelService.DataActions.ActionParameters.ClusterStyleParameters;
+
+public class NthRowBorderStyleParameters : BorderStyleParameters, INthRowBorderStyleParameters
 {
-    public class NthRowBorderStyleParameters : BorderStyleParameters, INthRowBorderStyleParameters
-    {
-        public override string Name => "Nth Row Border Style";
+    public override string Name => "Nth Row Border Style";
 
-        public override ActionPerformer Performer { get; set; } = ActionPerformer.DataCluster;
+    public override ActionPerformer Performer { get; set; } = ActionPerformer.DataCluster;
 
-        public int NthRow { get; set; }
+    public int NthRow { get; set; }
 
-        public override ActionCategory Category => ActionCategory.BorderStyle;
-    }
+    public override ActionCategory Category => ActionCategory.BorderStyle;
 }

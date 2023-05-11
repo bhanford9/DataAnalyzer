@@ -1,7 +1,6 @@
-﻿namespace DataAnalyzer.StatConfigurations.GroupingConfigurations
+﻿namespace DataAnalyzer.StatConfigurations.GroupingConfigurations;
+
+internal interface ILinkedGroupingConfiguration : IGroupingConfiguration
 {
-    internal interface ILinkedGroupingConfiguration : IGroupingConfiguration
-    {
-        ILinkedGroupingConfiguration Next { get; set; }
-    }
+    ILinkedGroupingConfiguration Next { get; set; }
 }

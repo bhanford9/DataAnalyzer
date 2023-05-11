@@ -1,6 +1,5 @@
-﻿namespace DataScraper.DataSources
+﻿namespace DataScraper.DataSources;
+
+public interface IDataSource
 {
-    public interface IDataSource
-    {
-    }
 }

@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views.ExcelSetupViews.DataTypeConfigViews
+namespace DataAnalyzer.Views.ExcelSetupViews.DataTypeConfigViews;
+
+public partial class TwoParameterDataTypeView : UserControl
 {
-    public partial class TwoParameterDataTypeView : UserControl
+    public TwoParameterDataTypeView()
     {
-        public TwoParameterDataTypeView()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

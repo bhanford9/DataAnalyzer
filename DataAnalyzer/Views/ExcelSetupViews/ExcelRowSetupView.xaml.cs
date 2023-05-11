@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views.ExcelSetupViews
+namespace DataAnalyzer.Views.ExcelSetupViews;
+
+public partial class ExcelRowSetupView : UserControl
 {
-    public partial class ExcelRowSetupView : UserControl
+    public ExcelRowSetupView()
     {
-        public ExcelRowSetupView()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

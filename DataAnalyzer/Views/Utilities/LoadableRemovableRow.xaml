@@ -7,11 +7,7 @@
              mc:Ignorable="d" 
              Height="38"
              d:DesignHeight="50" 
-             d:DesignWidth="300">
-  <UserControl.Resources>
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
-  </UserControl.Resources>
-  
+             d:DesignWidth="300">  
   <Grid ToolTip="{Binding ToolTipText}">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="4"/>
@@ -33,7 +29,7 @@
     <Button Grid.Column="3"
             Command="{Binding Remove}"
             ToolTip="Delete Configuration"
-            Visibility="{Binding IsRemovable, Converter={StaticResource BooleanToVisibility}}"
+            Visibility="{Binding IsRemovable, Converter={StaticResource BoolVisibilityConverter}}"
             Style="{StaticResource IconDeleteButton}"/>
   </Grid>
 </UserControl>

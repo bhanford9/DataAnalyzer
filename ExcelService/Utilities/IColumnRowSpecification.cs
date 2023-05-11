@@ -1,8 +1,7 @@
-﻿namespace ExcelService.Utilities
+﻿namespace ExcelService.Utilities;
+
+internal interface IColumnRowSpecification
 {
-    internal interface IColumnRowSpecification
-    {
-        IColumnSpecification ColumnSpecification { get; set; }
-        IRowSpecification RowSpecification { get; set; }
-    }
+    IColumnSpecification ColumnSpecification { get; set; }
+    IRowSpecification RowSpecification { get; set; }
 }

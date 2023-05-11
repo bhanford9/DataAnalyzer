@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels
+﻿namespace DataAnalyzer.ViewModels.DataStructureSetupViewModels;
+
+internal interface INotSupportedSetupViewModel : IDataStructureSetupViewModel
 {
-    internal interface INotSupportedSetupViewModel : IDataStructureSetupViewModel
-    {
-    }
 }

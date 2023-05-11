@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace DataAnalyzer.Models.LoadedConfigurations
+namespace DataAnalyzer.Models.LoadedConfigurations;
+
+internal interface ILoadedDataContent : INotifyPropertyChanged
 {
-    internal interface ILoadedDataContent : INotifyPropertyChanged
-    {
-        string Name { get; }
-    }
+    string Name { get; }
 }

@@ -1,31 +1,30 @@
 ﻿using System.Drawing;
 
-namespace DataSerialization
+namespace DataSerialization;
+
+public class ColorParser
 {
-    public class ColorParser
+    private const int START_INDEX = 7;
+
+    public static Color Parse(string colorString)
     {
-        private const int START_INDEX = 7;
+        int indexOfLast = colorString.LastIndexOf(']') - 1;
+        int length = indexOfLast - START_INDEX + 1;
+        string result = colorString.Substring(START_INDEX, length);
 
-        public static Color Parse(string colorString)
+        if (result.StartsWith("A="))
         {
-            int indexOfLast = colorString.LastIndexOf(']') - 1;
-            int length = indexOfLast - START_INDEX + 1;
-            string result = colorString.Substring(START_INDEX, length);
+            string[] argb = result.Split(", ").Select(x => x[2..]).ToArray();
+            int alpha = int.Parse(argb[0]);
+            int red = int.Parse(argb[1]);
+            int green = int.Parse(argb[2]);
+            int blue = int.Parse(argb[3]);
 
-            if (result.StartsWith("A="))
-            {
-                string[] argb = result.Split(", ").Select(x => x[2..]).ToArray();
-                int alpha = int.Parse(argb[0]);
-                int red = int.Parse(argb[1]);
-                int green = int.Parse(argb[2]);
-                int blue = int.Parse(argb[3]);
-
-                return Color.FromArgb(alpha, red, green, blue);
-            }
-            else
-            {
-                return Color.FromName(result);
-            }
+            return Color.FromArgb(alpha, red, green, blue);
+        }
+        else
+        {
+            return Color.FromName(result);
         }
     }
 }

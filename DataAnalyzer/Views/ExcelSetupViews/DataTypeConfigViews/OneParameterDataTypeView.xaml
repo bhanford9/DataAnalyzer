@@ -8,12 +8,6 @@
              xmlns:dataTypeConfigs="clr-namespace:DataAnalyzer.ViewModels.ExcelSetupViewModels.DataTypeConfigViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="160" d:DesignWidth="270">
-  <UserControl.Resources>
-    <converters:ExcelDataTypeOneParamToVisibility x:Key="OneParamToVisibility"/>
-    <converters:ExcelDataTypeTwoParamToVisibility x:Key="TwoParamToVisibility"/>
-    <converters:ExcelDataTypeIsBooleanToVisibility x:Key="ParamIsBooleanToVisibility"/>
-    <converters:ExcelDataTypeNotBooleanToVisibility x:Key="ParamNotBooleanToVisibility"/>
-  </UserControl.Resources>
   <Grid Margin="4"
         MinWidth="270"
         MinHeight="160">
@@ -90,10 +84,10 @@
                  Margin="10 0 4 0"
                  Text="{Binding DataContext.ParameterName}"/>
       <TextBox Grid.Column="1"
-               Visibility="{Binding DataTypeName, Converter={StaticResource ParamNotBooleanToVisibility}}"
+               Visibility="{Binding DataTypeName, Converter={StaticResource ExcelDataTypeNotBooleanToVisibility}}"
                Text="{Binding Path=ParameterValue}"/>
       <CheckBox Grid.Column="1"
-                Visibility="{Binding DataTypeName, Converter={StaticResource ParamIsBooleanToVisibility}}"
+                Visibility="{Binding DataTypeName, Converter={StaticResource ExcelDataTypeIsBooleanToVisibility}}"
                 IsChecked="{Binding ParameterValue}"/>
     </Grid>
   </Grid>

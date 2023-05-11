@@ -1,6 +1,5 @@
-﻿namespace ExcelService.DataActions.SharedActions
+﻿namespace ExcelService.DataActions.SharedActions;
+
+public interface IAlignmentStyleAction : IDataAction
 {
-    public interface IAlignmentStyleAction : IDataAction
-    {
-    }
 }

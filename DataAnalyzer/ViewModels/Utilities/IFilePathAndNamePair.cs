@@ -1,8 +1,7 @@
-﻿namespace DataAnalyzer.ViewModels.Utilities
+﻿namespace DataAnalyzer.ViewModels.Utilities;
+
+internal interface IFilePathAndNamePair
 {
-    internal interface IFilePathAndNamePair
-    {
-        string FileName { get; }
-        string FilePath { get; set; }
-    }
+    string FileName { get; }
+    string FilePath { get; set; }
 }

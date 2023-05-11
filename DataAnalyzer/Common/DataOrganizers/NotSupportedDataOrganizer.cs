@@ -2,11 +2,10 @@
 using DataAnalyzer.DataImport.DataObjects;
 using System.Collections.Generic;
 
-namespace DataAnalyzer.Common.DataOrganizers
+namespace DataAnalyzer.Common.DataOrganizers;
+
+internal class NotSupportedDataOrganizer : DataOrganizer<NotSupportedDataConfiguration>, INotSupportedDataOrganizer
 {
-    internal class NotSupportedDataOrganizer : DataOrganizer<NotSupportedDataConfiguration>, INotSupportedDataOrganizer
-    {
-        protected override IHeirarchalStats InternalOrganize(NotSupportedDataConfiguration configuration, ICollection<IStats> data)
-            => new HeirarchalStats();
-    }
+    protected override IHeirarchalStats InternalOrganize(NotSupportedDataConfiguration configuration, ICollection<IStats> data)
+        => new HeirarchalStats();
 }

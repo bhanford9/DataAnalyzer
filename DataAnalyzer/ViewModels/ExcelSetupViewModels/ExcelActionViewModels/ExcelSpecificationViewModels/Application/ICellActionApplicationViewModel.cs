@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Application
+﻿namespace DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ExcelSpecificationViewModels.Application;
+
+internal interface ICellActionApplicationViewModel : IActionApplicationViewModel
 {
-    internal interface ICellActionApplicationViewModel : IActionApplicationViewModel
-    {
-    }
 }

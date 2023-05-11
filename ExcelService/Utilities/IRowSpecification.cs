@@ -1,9 +1,8 @@
-﻿namespace ExcelService.Utilities
+﻿namespace ExcelService.Utilities;
+
+public interface IRowSpecification
 {
-    public interface IRowSpecification
-    {
-        bool AllRows { get; set; }
-        bool UseNthRow { get; }
-        int NthRow { get; set; }
-    }
+    bool AllRows { get; set; }
+    bool UseNthRow { get; }
+    int NthRow { get; set; }
 }

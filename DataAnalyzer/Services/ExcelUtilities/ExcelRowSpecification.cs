@@ -1,7 +1,6 @@
-﻿namespace DataAnalyzer.Services.ExcelUtilities
+﻿namespace DataAnalyzer.Services.ExcelUtilities;
+
+internal class ExcelRowSpecification : ExcelEntitySpecification, IExcelRowSpecification
 {
-    internal class ExcelRowSpecification : ExcelEntitySpecification, IExcelRowSpecification
-    {
-        public override string Name => "Row";
-    }
+    public override string Name => "Row";
 }

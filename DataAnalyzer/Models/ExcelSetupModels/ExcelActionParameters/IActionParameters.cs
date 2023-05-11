@@ -2,20 +2,19 @@
 using DataAnalyzer.Services.ExcelUtilities;
 using System.ComponentModel;
 
-namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
+namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+
+internal interface IActionParameters : INotifyPropertyChanged
 {
-    internal interface IActionParameters : INotifyPropertyChanged
-    {
-        string Name { get; set; }
+    string Name { get; set; }
 
-        ActionCategory ActionCategory { get; }
+    ActionCategory ActionCategory { get; }
 
-        IExcelEntitySpecification ExcelEntityType { get; set; }
+    IExcelEntitySpecification ExcelEntityType { get; set; }
 
-        string ToString();
+    string ToString();
 
-        IActionParameters WithExcelEntity(IExcelEntitySpecification excelEntityType);
+    IActionParameters WithExcelEntity(IExcelEntitySpecification excelEntityType);
 
-        IActionParameters Clone();
-    }
+    IActionParameters Clone();
 }

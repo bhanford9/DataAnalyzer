@@ -1,11 +1,10 @@
-﻿namespace DataAnalyzer.Services.Enums
+﻿namespace DataAnalyzer.Services.Enums;
+
+public enum VerticalAlignment
 {
-    public enum VerticalAlignment
-    {
-        Bottom = 0,
-        Center = 1,
-        Distributed = 2,
-        Justify = 3,
-        Top = 4
-    }
+    Bottom = 0,
+    Center = 1,
+    Distributed = 2,
+    Justify = 3,
+    Top = 4
 }

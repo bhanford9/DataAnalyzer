@@ -1,8 +1,7 @@
-﻿namespace DataScraper.DataScrapers.ImportTypes
+﻿namespace DataScraper.DataScrapers.ImportTypes;
+
+public interface IDatabaseImportType : IImportType { }
+public class DatabaseImportType : ImportType<DatabaseImportType>, IDatabaseImportType
 {
-    public interface IDatabaseImportType : IImportType { }
-    public class DatabaseImportType : ImportType<DatabaseImportType>, IDatabaseImportType
-    {
-        public override string Name => "Database";
-    }
+    public override string Name => "Database";
 }

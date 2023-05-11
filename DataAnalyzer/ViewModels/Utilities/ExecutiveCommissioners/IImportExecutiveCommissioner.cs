@@ -1,9 +1,8 @@
-﻿namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
-{
-    internal interface IImportExecutiveCommissioner
-    {
-        bool DisplayFileImport { get; set; }
+﻿namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
 
-        void SetDisplay();
-    }
+internal interface IImportExecutiveCommissioner
+{
+    bool DisplayFileImport { get; set; }
+
+    void SetDisplay();
 }

@@ -6,66 +6,65 @@ using DataAnalyzer.Services.ExecutiveUtilities;
 using DataAnalyzer.Services;
 using DataAnalyzer.Services.ExecutiveUtilities.Executives;
 
-namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners
+namespace DataAnalyzer.ViewModels.Utilities.ExecutiveCommissioners;
+
+internal class ExecutionExecutiveCommissioner : BasePropertyChanged, IExecutionExecutiveCommissioner
 {
-    internal class ExecutionExecutiveCommissioner : BasePropertyChanged, IExecutionExecutiveCommissioner
+    private readonly IConfigurationModel configurationModel;
+    private readonly IExecutiveUtilitiesRepository executiveUtilities;
+
+    private bool displayExcelCreation = false;
+    private bool displayClassCreation = false;
+    private bool displayNotSupported = true;
+    private readonly IReadOnlyDictionary<string, Action> viewDisplayMap;
+
+    public ExecutionExecutiveCommissioner(
+        IConfigurationModel configModel,
+        IExecutiveUtilitiesRepository executiveUtilities)
     {
-        private readonly IConfigurationModel configurationModel;
-        private readonly IExecutiveUtilitiesRepository executiveUtilities;
+        this.configurationModel = configModel;
+        this.executiveUtilities = executiveUtilities;
 
-        private bool displayExcelCreation = false;
-        private bool displayClassCreation = false;
-        private bool displayNotSupported = true;
-        private readonly IReadOnlyDictionary<string, Action> viewDisplayMap;
-
-        public ExecutionExecutiveCommissioner(
-            IConfigurationModel configModel,
-            IExecutiveUtilitiesRepository executiveUtilities)
+        // TODO --> might be able to inject
+        viewDisplayMap = new Dictionary<string, Action>()
         {
-            this.configurationModel = configModel;
-            this.executiveUtilities = executiveUtilities;
+            { nameof(DisplayExcelCreation), () => DisplayExcelCreation = true },
+            { nameof(DisplayClassCreation), () => DisplayClassCreation = true },
+            { nameof(DisplayNotSupported), () => DisplayNotSupported = true },
+        };
+    }
 
-            // TODO --> might be able to inject
-            viewDisplayMap = new Dictionary<string, Action>()
-            {
-                { nameof(DisplayExcelCreation), () => DisplayExcelCreation = true },
-                { nameof(DisplayClassCreation), () => DisplayClassCreation = true },
-                { nameof(DisplayNotSupported), () => DisplayNotSupported = true },
-            };
-        }
+    public bool DisplayNotSupported
+    {
+        get => displayNotSupported;
+        set => NotifyPropertyChanged(ref displayNotSupported, value);
+    }
 
-        public bool DisplayNotSupported
-        {
-            get => displayNotSupported;
-            set => NotifyPropertyChanged(ref displayNotSupported, value);
-        }
+    public bool DisplayExcelCreation
+    {
+        get => displayExcelCreation;
+        set => NotifyPropertyChanged(ref displayExcelCreation, value);
+    }
 
-        public bool DisplayExcelCreation
-        {
-            get => displayExcelCreation;
-            set => NotifyPropertyChanged(ref displayExcelCreation, value);
-        }
+    public bool DisplayClassCreation
+    {
+        get => displayClassCreation;
+        set => NotifyPropertyChanged(ref displayClassCreation, value);
+    }
 
-        public bool DisplayClassCreation
-        {
-            get => displayClassCreation;
-            set => NotifyPropertyChanged(ref displayClassCreation, value);
-        }
+    public void ClearDisplays()
+    {
+        DisplayNotSupported = false;
+        DisplayExcelCreation = false;
+        DisplayClassCreation = false;
+    }
 
-        public void ClearDisplays()
-        {
-            DisplayNotSupported = false;
-            DisplayExcelCreation = false;
-            DisplayClassCreation = false;
-        }
-
-        public void SetDisplay()
-        {
-            ClearDisplays();
-            IAggregateExecutives executive = executiveUtilities.GetDataOr(
-                configurationModel.ImportExecutionKey,
-                (_) => new NotSupportedExecutive());
-            viewDisplayMap[executive.ExecutionDisplayKey]();
-        }
+    public void SetDisplay()
+    {
+        ClearDisplays();
+        IAggregateExecutives executive = executiveUtilities.GetDataOr(
+            configurationModel.ImportExecutionKey,
+            (_) => new NotSupportedExecutive());
+        viewDisplayMap[executive.ExecutionDisplayKey]();
     }
 }

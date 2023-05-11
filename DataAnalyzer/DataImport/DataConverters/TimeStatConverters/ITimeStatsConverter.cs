@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.DataImport.DataConverters.TimeStatConverters
+﻿namespace DataAnalyzer.DataImport.DataConverters.TimeStatConverters;
+
+internal interface ITimeStatsConverter : IDataConverter
 {
-    internal interface ITimeStatsConverter : IDataConverter
-    {
-    }
 }

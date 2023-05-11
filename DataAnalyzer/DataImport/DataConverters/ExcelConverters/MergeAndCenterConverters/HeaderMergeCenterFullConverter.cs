@@ -3,34 +3,33 @@ using ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters;
 using System;
 using ExcelParms = ExcelService.DataActions.ActionParameters;
 
-namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.MergeAndCenterConverters
+namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.MergeAndCenterConverters;
+
+internal class HeaderMergeCenterFullConverter : ExcelActionParamConverter, IHeaderMergeCenterFullConverter
 {
-    internal class HeaderMergeCenterFullConverter : ExcelActionParamConverter, IHeaderMergeCenterFullConverter
+    public HeaderMergeCenterFullConverter() : base(new HeaderMergeCenterFullParameters()) { }
+
+    public override IActionParameters FromExcel(ExcelParms.IActionParameters input)
     {
-        public HeaderMergeCenterFullConverter() : base(new HeaderMergeCenterFullParameters()) { }
-
-        public override IActionParameters FromExcel(ExcelParms.IActionParameters input)
+        if (input is HeaderMergeCenterFullParameters mergeAndCenterParams)
         {
-            if (input is HeaderMergeCenterFullParameters mergeAndCenterParams)
+            return new BooleanOperationParameters
             {
-                return new BooleanOperationParameters
-                {
-                    Name = mergeAndCenterParams.Name,
-                    DoPerform = true
-                };
-            }
-
-            throw new ArgumentException("Invalid type. Expected HeaderMergeCenterFullParameters.");
+                Name = mergeAndCenterParams.Name,
+                DoPerform = true
+            };
         }
 
-        public override ExcelParms.IActionParameters ToExcel(IActionParameters input)
-        {
-            if (input is BooleanOperationParameters booleanParams)
-            {
-                return new HeaderMergeCenterFullParameters();
-            }
+        throw new ArgumentException("Invalid type. Expected HeaderMergeCenterFullParameters.");
+    }
 
-            throw new ArgumentException("Invalid type. Expected BooleanOperationParameters.");
+    public override ExcelParms.IActionParameters ToExcel(IActionParameters input)
+    {
+        if (input is BooleanOperationParameters booleanParams)
+        {
+            return new HeaderMergeCenterFullParameters();
         }
+
+        throw new ArgumentException("Invalid type. Expected BooleanOperationParameters.");
     }
 }

@@ -1,11 +1,10 @@
 ﻿using DataAnalyzer.DataImport.DataObjects;
 using System;
 
-namespace DataAnalyzer.StatConfigurations.GroupingConfigurations
+namespace DataAnalyzer.StatConfigurations.GroupingConfigurations;
+
+internal interface IGroupingConfiguration
 {
-    internal interface IGroupingConfiguration
-    {
-        void AddCondition(Func<IStats, IComparable> propertyGetter);
-        IComparable GetProperty(IStats stats);
-    }
+    void AddCondition(Func<IStats, IComparable> propertyGetter);
+    IComparable GetProperty(IStats stats);
 }

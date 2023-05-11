@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
+﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application;
+
+internal interface IWorkbookActionApplicationModel : IActionApplicationModel
 {
-    internal interface IWorkbookActionApplicationModel : IActionApplicationModel
-    {
-    }
 }

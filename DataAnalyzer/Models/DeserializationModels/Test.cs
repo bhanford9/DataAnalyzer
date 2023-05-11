@@ -1,13 +1,12 @@
-﻿namespace DataAnalyzer.Models.DeserializationModels
+﻿namespace DataAnalyzer.Models.DeserializationModels;
+
+public class Test
 {
-    public class Test
-    {
-        public string Date { get; set; }
+    public string Date { get; set; }
 
-        public string Name { get; set; }
+    public string Name { get; set; }
 
-        public string Age { get; set; }
+    public string Age { get; set; }
 
-        public string Gender { get; set; }
-    }
+    public string Gender { get; set; }
 }

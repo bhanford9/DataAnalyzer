@@ -1,8 +1,7 @@
-﻿namespace DataScraper.DataScrapers.ScraperFlavors.JsonFlavors
+﻿namespace DataScraper.DataScrapers.ScraperFlavors.JsonFlavors;
+
+public interface IJsonGeneralObjectScraperFlavor : IScraperFlavor { }
+public class JsonGeneralObjectScraperFlavor : ScraperFlavor<JsonGeneralObjectScraperFlavor>, IJsonGeneralObjectScraperFlavor
 {
-    public interface IJsonGeneralObjectScraperFlavor : IScraperFlavor { }
-    public class JsonGeneralObjectScraperFlavor : ScraperFlavor<JsonGeneralObjectScraperFlavor>, IJsonGeneralObjectScraperFlavor
-    {
-        public override string Name => "General JSON Object";
-    }
+    public override string Name => "General JSON Object";
 }

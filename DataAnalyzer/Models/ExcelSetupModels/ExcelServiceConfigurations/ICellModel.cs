@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations
+namespace DataAnalyzer.Models.ExcelSetupModels.ExcelServiceConfigurations;
+
+internal interface ICellModel : INotifyPropertyChanged
 {
-    internal interface ICellModel : INotifyPropertyChanged
-    {
-        ICollection<IExcelAction> CellActions { get; set; }
-        int ColumnIndex { get; set; }
-        string DataMemberName { get; set; }
-        ITypeParameter DataType { get; set; }
-        object Value { get; set; }
-    }
+    ICollection<IExcelAction> CellActions { get; set; }
+    int ColumnIndex { get; set; }
+    string DataMemberName { get; set; }
+    ITypeParameter DataType { get; set; }
+    object Value { get; set; }
 }

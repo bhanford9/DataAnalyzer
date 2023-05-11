@@ -1,10 +1,9 @@
-﻿namespace DataSerialization
+﻿namespace DataSerialization;
+
+public interface ISerializationExecutive
 {
-    public interface ISerializationExecutive
-    {
-        T JsonDeserialize<T>(string json);
-        T JsonDeserializeFromFile<T>(string filePath);
-        string JsonSerialize<T>(T data);
-        void JsonSerializeToFile<T>(T data, string filePath);
-    }
+    T JsonDeserialize<T>(string json);
+    T JsonDeserializeFromFile<T>(string filePath);
+    string JsonSerialize<T>(T data);
+    void JsonSerializeToFile<T>(T data, string filePath);
 }

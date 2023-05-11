@@ -1,18 +1,17 @@
 ﻿using DataAnalyzer.Common.Mvvm;
 using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 
-namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
+namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items;
+
+internal abstract class SummaryItem : BasePropertyChanged, ISummaryItem
 {
-    internal abstract class SummaryItem : BasePropertyChanged, ISummaryItem
-    {
-        public int Level { get; set; }
+    public int Level { get; set; }
 
-        public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
 
-        public string Description { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
 
-        public abstract bool IsApplicable(IActionParameters actionParameters);
+    public abstract bool IsApplicable(IActionParameters actionParameters);
 
-        public abstract void SetDescription(IActionParameters actionParameters);
-    }
+    public abstract void SetDescription(IActionParameters actionParameters);
 }

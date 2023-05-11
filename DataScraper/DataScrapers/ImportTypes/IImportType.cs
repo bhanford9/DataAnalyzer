@@ -1,6 +1,5 @@
-﻿namespace DataScraper.DataScrapers.ImportTypes
+﻿namespace DataScraper.DataScrapers.ImportTypes;
+
+public interface IImportType : IScraperKey
 {
-    public interface IImportType : IScraperKey
-    {
-    }
 }

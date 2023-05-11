@@ -1,15 +1,14 @@
 ﻿using DataAnalyzer.ViewModels.ExcelSetupViewModels;
 using System.Windows.Controls;
 
-namespace DataAnalyzer.Views.ExecutionViews
+namespace DataAnalyzer.Views.ExecutionViews;
+
+public partial class ExcelConfigurationSetupView : UserControl
 {
-    public partial class ExcelConfigurationSetupView : UserControl
+    public ExcelConfigurationSetupView() : this(Resolver.Resolve<IExcelSetupViewModel>()) { }
+    internal ExcelConfigurationSetupView(IExcelSetupViewModel viewModel)
     {
-        public ExcelConfigurationSetupView() : this(Resolver.Resolve<IExcelSetupViewModel>()) { }
-        internal ExcelConfigurationSetupView(IExcelSetupViewModel viewModel)
-        {
-            this.InitializeComponent();
-            this.DataContext = viewModel;
-        }
+        this.InitializeComponent();
+        this.DataContext = viewModel;
     }
 }

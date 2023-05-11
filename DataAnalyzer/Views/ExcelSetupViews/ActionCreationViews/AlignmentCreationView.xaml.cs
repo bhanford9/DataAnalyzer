@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews
+namespace DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews;
+
+public partial class AlignmentCreationView : UserControl
 {
-    public partial class AlignmentCreationView : UserControl
+    public AlignmentCreationView()
     {
-        public AlignmentCreationView()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

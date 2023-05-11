@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations
+﻿namespace DataAnalyzer.ApplicationConfigurations.DataConfigurations;
+
+internal interface INotSupportedDataConfiguration : IDataConfiguration
 {
-    internal interface INotSupportedDataConfiguration : IDataConfiguration
-    {
-    }
 }

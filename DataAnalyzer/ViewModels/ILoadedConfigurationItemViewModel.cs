@@ -1,11 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace DataAnalyzer.ViewModels
+namespace DataAnalyzer.ViewModels;
+
+internal interface ILoadedConfigurationItemViewModel : INotifyPropertyChanged
 {
-    internal interface ILoadedConfigurationItemViewModel : INotifyPropertyChanged
-    {
-        ObservableCollection<string> ConfigData { get; }
-        string Title { get; set; }
-    }
+    ObservableCollection<string> ConfigData { get; }
+    string Title { get; set; }
 }

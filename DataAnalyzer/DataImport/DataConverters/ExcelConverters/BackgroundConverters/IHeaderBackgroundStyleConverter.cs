@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.BackgroundConverters
+﻿namespace DataAnalyzer.DataImport.DataConverters.ExcelConverters.BackgroundConverters;
+
+internal interface IHeaderBackgroundStyleConverter : IExcelActionParamConverter
 {
-    internal interface IHeaderBackgroundStyleConverter : IExcelActionParamConverter
-    {
-    }
 }

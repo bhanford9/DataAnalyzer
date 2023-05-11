@@ -1,8 +1,7 @@
-﻿namespace DataScraper.DataScrapers.ImportTypes
+﻿namespace DataScraper.DataScrapers.ImportTypes;
+
+public interface IHttpImportType : IImportType { }
+public class HttpImportType : ImportType<HttpImportType>, IHttpImportType
 {
-    public interface IHttpImportType : IImportType { }
-    public class HttpImportType : ImportType<HttpImportType>, IHttpImportType
-    {
-        public override string Name => "HTTP";
-    }
+    public override string Name => "HTTP";
 }

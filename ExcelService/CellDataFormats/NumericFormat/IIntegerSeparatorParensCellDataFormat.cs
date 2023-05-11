@@ -1,6 +1,5 @@
-﻿namespace ExcelService.CellDataFormats.NumericFormat
+﻿namespace ExcelService.CellDataFormats.NumericFormat;
+
+public interface IIntegerSeparatorParensCellDataFormat : ICellDataFormat
 {
-    public interface IIntegerSeparatorParensCellDataFormat : ICellDataFormat
-    {
-    }
 }

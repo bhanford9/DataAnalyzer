@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.Services.ExecutiveUtilities.Executives
+﻿namespace DataAnalyzer.Services.ExecutiveUtilities.Executives;
+
+internal interface ICsvCSharpClassCreation : IAggregateExecutives
 {
-    internal interface ICsvCSharpClassCreation : IAggregateExecutives
-    {
-    }
 }

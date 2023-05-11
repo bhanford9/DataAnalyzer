@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace DataScraper.Data.ClassData
+namespace DataScraper.Data.ClassData;
+
+public interface ICollectionProperty : IProperty
 {
-    public interface ICollectionProperty : IProperty
-    {
-        ICollection<IProperty> Properties { get; set; }
-    }
+    ICollection<IProperty> Properties { get; set; }
 }

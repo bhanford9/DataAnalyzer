@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel;
 
-namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels
-{
-    internal interface IExcelActionModel : INotifyPropertyChanged
-    {
-        string LoadedActionName { get; set; }
+namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels;
 
-        IExcelAction GetLoadedAction();
-        void LoadAction(string name);
-    }
+internal interface IExcelActionModel : INotifyPropertyChanged
+{
+    string LoadedActionName { get; set; }
+
+    IExcelAction GetLoadedAction();
+    void LoadAction(string name);
 }

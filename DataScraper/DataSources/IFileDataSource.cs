@@ -1,10 +1,9 @@
-﻿namespace DataScraper.DataSources
-{
-    public interface IFileDataSource : IDataSource
-    {
-        string FilePath { get; }
+﻿namespace DataScraper.DataSources;
 
-        string GetExpectedExtension();
-        IFileDataSource Initialize(string filePath);
-    }
+public interface IFileDataSource : IDataSource
+{
+    string FilePath { get; }
+
+    string GetExpectedExtension();
+    IFileDataSource Initialize(string filePath);
 }

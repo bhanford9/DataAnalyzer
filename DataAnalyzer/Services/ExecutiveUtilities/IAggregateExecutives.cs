@@ -1,12 +1,11 @@
 ﻿using DataAnalyzer.Common.DataOrganizers;
 using DataAnalyzer.StatConfigurations;
 
-namespace DataAnalyzer.Services.ExecutiveUtilities
+namespace DataAnalyzer.Services.ExecutiveUtilities;
+
+internal interface IAggregateExecutives
 {
-    internal interface IAggregateExecutives
-    {
-        IStatsConfiguration DataConfiguration { get; }
-        IDataOrganizer DataOrganizer { get; }
-        string ExecutionDisplayKey { get; }
-    }
+    IStatsConfiguration DataConfiguration { get; }
+    IDataOrganizer DataOrganizer { get; }
+    string ExecutionDisplayKey { get; }
 }

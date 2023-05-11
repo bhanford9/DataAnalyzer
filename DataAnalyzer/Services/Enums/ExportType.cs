@@ -1,10 +1,9 @@
-﻿namespace DataAnalyzer.Services.Enums
+﻿namespace DataAnalyzer.Services.Enums;
+
+public enum ExecutionType
 {
-    public enum ExecutionType
-    {
-        Excel,
-        CSharpStringProperties,
-        CSharpTypedProperties,
-        NotApplicable
-    }
+    Excel,
+    CSharpStringProperties,
+    CSharpTypedProperties,
+    NotApplicable
 }

@@ -1,7 +1,6 @@
-﻿namespace DataScraper.DataKeyValues.TimeKeyValues
+﻿namespace DataScraper.DataKeyValues.TimeKeyValues;
+
+public abstract class ExtractableValue<T> : IExtractableValue<T>
 {
-    public abstract class ExtractableValue<T> : IExtractableValue<T>
-    {
-        public abstract T ExtractValue(string str);
-    }
+    public abstract T ExtractValue(string str);
 }

@@ -8,121 +8,120 @@ using DataScraper.DataScrapers.ScraperFlavors;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace DataAnalyzer.ViewModels
+namespace DataAnalyzer.ViewModels;
+
+internal class ImportConfigurationViewModel : BasePropertyChanged, IImportConfigurationViewModel
 {
-    internal class ImportConfigurationViewModel : BasePropertyChanged, IImportConfigurationViewModel
+    private bool categoryIsSelectable = false;
+    private bool flavorIsSelectable = false;
+
+    private IImportType selectedImportType = new NotApplicableImportType();
+    private IScraperCategory selectedScraperCategory = new NotApplicableScraperCategory();
+    private IScraperFlavor selectedScraperFlavor = new NotApplicableScraperFlavor();
+    private IReadOnlyCollection<IScraperCategory> scraperCategories = new List<IScraperCategory>();
+    private IReadOnlyCollection<IScraperFlavor> scrpaerFlavors = new List<IScraperFlavor>();
+
+    private readonly IDataConverterLibrary dataConverters;
+    private readonly IConfigurationModel configurationModel;
+
+    public ImportConfigurationViewModel(
+        IConfigurationModel configModel,
+        IImportExecutiveCommissioner executiveCommissioner,
+        IDataConverterLibrary dataConverters)
     {
-        private bool categoryIsSelectable = false;
-        private bool flavorIsSelectable = false;
+        this.configurationModel = configModel;
+        this.ExecutiveCommissioner = executiveCommissioner;
+        this.dataConverters = dataConverters;
+        this.ImportTypes = this.dataConverters.GetImportTypes();
 
-        private IImportType selectedImportType = new NotApplicableImportType();
-        private IScraperCategory selectedScraperCategory = new NotApplicableScraperCategory();
-        private IScraperFlavor selectedScraperFlavor = new NotApplicableScraperFlavor();
-        private IReadOnlyCollection<IScraperCategory> scraperCategories = new List<IScraperCategory>();
-        private IReadOnlyCollection<IScraperFlavor> scrpaerFlavors = new List<IScraperFlavor>();
+        this.ApplyConfiguration();
 
-        private readonly IDataConverterLibrary dataConverters;
-        private readonly IConfigurationModel configurationModel;
+        this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
+    }
 
-        public ImportConfigurationViewModel(
-            IConfigurationModel configModel,
-            IImportExecutiveCommissioner executiveCommissioner,
-            IDataConverterLibrary dataConverters)
+    public IImportExecutiveCommissioner ExecutiveCommissioner { get; }
+
+    public bool CategoryIsSelectable
+    {
+        get => this.categoryIsSelectable;
+        set => this.NotifyPropertyChanged(ref this.categoryIsSelectable, value);
+    }
+
+    public bool FlavorIsSelectable
+    {
+        get => this.flavorIsSelectable;
+        set => this.NotifyPropertyChanged(ref this.flavorIsSelectable, value);
+    }
+
+    public IImportType SelectedImportType
+    {
+        get => this.selectedImportType;
+        set
         {
-            this.configurationModel = configModel;
-            this.ExecutiveCommissioner = executiveCommissioner;
-            this.dataConverters = dataConverters;
-            this.ImportTypes = this.dataConverters.GetImportTypes();
-
-            this.ApplyConfiguration();
-
-            this.configurationModel.PropertyChanged += this.ConfigurationModelPropertyChanged;
+            this.NotifyPropertyChanged(ref this.selectedImportType, value);
+            this.ScraperCategories = this.dataConverters.GetCategories(value, true);
+            this.CategoryIsSelectable = true;
+            this.configurationModel.ImportType = value;
         }
+    }
 
-        public IImportExecutiveCommissioner ExecutiveCommissioner { get; }
-
-        public bool CategoryIsSelectable
+    public IScraperCategory SelectedScraperCategory
+    {
+        get => this.selectedScraperCategory;
+        set
         {
-            get => this.categoryIsSelectable;
-            set => this.NotifyPropertyChanged(ref this.categoryIsSelectable, value);
+            this.NotifyPropertyChanged(ref this.selectedScraperCategory, value);
+            this.ScraperFlavors = this.dataConverters.GetFlavors(this.SelectedImportType, value, true);
+            this.FlavorIsSelectable = true;
+            this.configurationModel.Category = value;
         }
+    }
 
-        public bool FlavorIsSelectable
+    public IScraperFlavor SelectedScraperFlavor
+    {
+        get => this.selectedScraperFlavor;
+        set
         {
-            get => this.flavorIsSelectable;
-            set => this.NotifyPropertyChanged(ref this.flavorIsSelectable, value);
+            this.NotifyPropertyChanged(ref this.selectedScraperFlavor, value);
+            this.configurationModel.Flavor = value;
         }
+    }
 
-        public IImportType SelectedImportType
+    public IReadOnlyCollection<IImportType> ImportTypes { get; private set; }
+
+    public IReadOnlyCollection<IScraperCategory> ScraperCategories
+    {
+        get => this.scraperCategories;
+        private set => this.NotifyPropertyChanged(ref this.scraperCategories, value);
+    }
+
+    public IReadOnlyCollection<IScraperFlavor> ScraperFlavors
+    {
+        get => this.scrpaerFlavors;
+        private set => this.NotifyPropertyChanged(ref this.scrpaerFlavors, value);
+    }
+
+    private void ApplyConfiguration()
+    {
+        this.SelectedImportType = this.configurationModel.ImportType;
+        this.SelectedScraperCategory = this.configurationModel.Category;
+        this.SelectedScraperFlavor = this.configurationModel.Flavor;
+        this.ExecutiveCommissioner.SetDisplay();
+    }
+
+    private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        switch (e.PropertyName)
         {
-            get => this.selectedImportType;
-            set
-            {
-                this.NotifyPropertyChanged(ref this.selectedImportType, value);
-                this.ScraperCategories = this.dataConverters.GetCategories(value, true);
-                this.CategoryIsSelectable = true;
-                this.configurationModel.ImportType = value;
-            }
-        }
-
-        public IScraperCategory SelectedScraperCategory
-        {
-            get => this.selectedScraperCategory;
-            set
-            {
-                this.NotifyPropertyChanged(ref this.selectedScraperCategory, value);
-                this.ScraperFlavors = this.dataConverters.GetFlavors(this.SelectedImportType, value, true);
-                this.FlavorIsSelectable = true;
-                this.configurationModel.Category = value;
-            }
-        }
-
-        public IScraperFlavor SelectedScraperFlavor
-        {
-            get => this.selectedScraperFlavor;
-            set
-            {
-                this.NotifyPropertyChanged(ref this.selectedScraperFlavor, value);
-                this.configurationModel.Flavor = value;
-            }
-        }
-
-        public IReadOnlyCollection<IImportType> ImportTypes { get; private set; }
-
-        public IReadOnlyCollection<IScraperCategory> ScraperCategories
-        {
-            get => this.scraperCategories;
-            private set => this.NotifyPropertyChanged(ref this.scraperCategories, value);
-        }
-
-        public IReadOnlyCollection<IScraperFlavor> ScraperFlavors
-        {
-            get => this.scrpaerFlavors;
-            private set => this.NotifyPropertyChanged(ref this.scrpaerFlavors, value);
-        }
-
-        private void ApplyConfiguration()
-        {
-            this.SelectedImportType = this.configurationModel.ImportType;
-            this.SelectedScraperCategory = this.configurationModel.Category;
-            this.SelectedScraperFlavor = this.configurationModel.Flavor;
-            this.ExecutiveCommissioner.SetDisplay();
-        }
-
-        private void ConfigurationModelPropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(this.configurationModel.ImportType):
-                    this.SelectedImportType = this.configurationModel.ImportType;
-                    break;
-                case nameof(this.configurationModel.Category):
-                    this.SelectedScraperCategory = this.configurationModel.Category;
-                    break;
-                case nameof(this.configurationModel.Flavor):
-                    this.SelectedScraperFlavor = this.configurationModel.Flavor;
-                    break;
-            }
+            case nameof(this.configurationModel.ImportType):
+                this.SelectedImportType = this.configurationModel.ImportType;
+                break;
+            case nameof(this.configurationModel.Category):
+                this.SelectedScraperCategory = this.configurationModel.Category;
+                break;
+            case nameof(this.configurationModel.Flavor):
+                this.SelectedScraperFlavor = this.configurationModel.Flavor;
+                break;
         }
     }
 }

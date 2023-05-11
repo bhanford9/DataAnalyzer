@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
+﻿namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;
+
+internal interface IClassCreationConfigListItemViewModel : ILoadableRemovableRowViewModel
 {
-    internal interface IClassCreationConfigListItemViewModel : ILoadableRemovableRowViewModel
-    {
-    }
 }

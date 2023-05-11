@@ -3,19 +3,18 @@ using DataAnalyzer.DataImport.DataObjects;
 using DataAnalyzer.DataImport.DataObjects.CsvStats;
 using System.Collections.Generic;
 
-namespace DataAnalyzer.Common.DataOrganizers
+namespace DataAnalyzer.Common.DataOrganizers;
+
+internal class CsvDataOrganizer : DataOrganizer<ClassPropertiesConfiguration>, ICsvDataOrganizer
 {
-    internal class CsvDataOrganizer : DataOrganizer<ClassPropertiesConfiguration>, ICsvDataOrganizer
+    protected override IHeirarchalStats InternalOrganize(ClassPropertiesConfiguration configuration, ICollection<IStats> data) => new HeirarchalStats()
     {
-        protected override IHeirarchalStats InternalOrganize(ClassPropertiesConfiguration configuration, ICollection<IStats> data) => new HeirarchalStats()
-        {
-            Values = new List<IStats>()
+        Values = new List<IStats>()
+            {
+                new CsvNamesStats()
                 {
-                    new CsvNamesStats()
-                    {
-                        CsvNames = new ComparableList<string>(configuration.PropertyNames)
-                    }
+                    CsvNames = new ComparableList<string>(configuration.PropertyNames)
                 }
-        };
-    }
+            }
+    };
 }

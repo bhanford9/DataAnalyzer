@@ -1,8 +1,7 @@
-﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.AccessibilityCreators
+﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.AccessibilityCreators;
+
+internal interface IAccessibilityCreator
 {
-    internal interface IAccessibilityCreator
-    {
-        string Create(string accessibility);
-        bool IsApplicable(string accessibility);
-    }
+    string Create(string accessibility);
+    bool IsApplicable(string accessibility);
 }

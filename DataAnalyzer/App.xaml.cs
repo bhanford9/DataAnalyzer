@@ -11,42 +11,41 @@ using DataSerialization;
 using ExcelService;
 using System.Windows;
 
-namespace DataAnalyzer
+namespace DataAnalyzer;
+
+public partial class App : Application
 {
-    public partial class App : Application
+    private IContainer container;
+
+    protected override void OnStartup(StartupEventArgs e)
     {
-        private IContainer container;
+        base.OnStartup(e);
 
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            base.OnStartup(e);
+        ContainerBuilder builder = new();
 
-            ContainerBuilder builder = new();
+        DataSerializationContainer.Register(builder);
 
-            DataSerializationContainer.Register(builder);
+        ExcelSerivceContainer.Register(builder);
+        
+        DataScraperContainer.Register(builder);
 
-            ExcelSerivceContainer.Register(builder);
-            
-            DataScraperContainer.Register(builder);
+        ApplicationConfigurationContainer.Register(builder);
+        CommonContainer.Register(builder);
+        ModelsContainer.Register(builder);
+        ViewModelsContainer.Register(builder);
+        DataImportContainer.Register(builder);
+        ServicesContainer.Register(builder);
+        StatConfigurationsContainer.Register(builder);
 
-            ApplicationConfigurationContainer.Register(builder);
-            CommonContainer.Register(builder);
-            ModelsContainer.Register(builder);
-            ViewModelsContainer.Register(builder);
-            DataImportContainer.Register(builder);
-            ServicesContainer.Register(builder);
-            StatConfigurationsContainer.Register(builder);
+        this.container = builder.Build();
 
-            this.container = builder.Build();
+        // Give access to XAML for DI
+        Resolver.Container = container;
 
-            // Give access to XAML for DI
-            Resolver.Container = container;
+        // Give solution wide access to DI Resolution
+        DependencyInjectionUtilities.Resolver.Container = container;
 
-            // Give solution wide access to DI Resolution
-            DependencyInjectionUtilities.Resolver.Container = container;
-
-            MainWindow mainWindow = new(container.Resolve<IMainViewModel>());
-            mainWindow.Show();
-        }
+        MainWindow mainWindow = new(container.Resolve<IMainViewModel>());
+        mainWindow.Show();
     }
 }

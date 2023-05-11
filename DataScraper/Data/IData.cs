@@ -1,6 +1,5 @@
-﻿namespace DataScraper.Data
+﻿namespace DataScraper.Data;
+
+public interface IData
 {
-    public interface IData
-    {
-    }
 }

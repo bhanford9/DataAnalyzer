@@ -1,9 +1,8 @@
-﻿namespace DataAnalyzer.Services.Enums.ScraperCategories
+﻿namespace DataAnalyzer.Services.Enums.ScraperCategories;
+
+internal enum DatabaseScraperCategories
 {
-    internal enum DatabaseScraperCategories
-    {
-        MySql,
-        Oracle,
-        NoSql,
-    }
+    MySql,
+    Oracle,
+    NoSql,
 }

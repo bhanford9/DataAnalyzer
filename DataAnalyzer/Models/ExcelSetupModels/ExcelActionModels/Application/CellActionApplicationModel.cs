@@ -5,17 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application
-{
-    internal class CellActionApplicationModel : ActionApplicationModel, ICellActionApplicationModel
-    {
-        public CellActionApplicationModel(IStatsModel statsModel, IExcelSetupModel excelSetupModel)
-            : base(statsModel, excelSetupModel)
-        {
-        }
+namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Application;
 
-        protected override ObservableCollection<IExcelAction> GetActionCollection() => throw new NotImplementedException();
-        protected override void InternalApplyAction(ICheckableTreeViewItem item, IEditActionViewModel action) => throw new NotImplementedException();
-        protected override void InternalLoadWhereToApply(ICheckableTreeViewItem baseItem, ICollection<IHeirarchalStats> heirarchalStats) => throw new NotImplementedException();
+internal class CellActionApplicationModel : ActionApplicationModel, ICellActionApplicationModel
+{
+    public CellActionApplicationModel(IStatsModel statsModel, IExcelSetupModel excelSetupModel)
+        : base(statsModel, excelSetupModel)
+    {
     }
+
+    protected override ObservableCollection<IExcelAction> GetActionCollection() => throw new NotImplementedException();
+    protected override void InternalApplyAction(ICheckableTreeViewItem item, IEditActionViewModel action) => throw new NotImplementedException();
+    protected override void InternalLoadWhereToApply(ICheckableTreeViewItem baseItem, ICollection<IHeirarchalStats> heirarchalStats) => throw new NotImplementedException();
 }

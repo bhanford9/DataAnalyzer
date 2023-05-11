@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views.DataStructureSetupViews
+namespace DataAnalyzer.Views.DataStructureSetupViews;
+
+public partial class CsvCSharpTypedClassSetupView : UserControl
 {
-    public partial class CsvCSharpTypedClassSetupView : UserControl
+    public CsvCSharpTypedClassSetupView()
     {
-        public CsvCSharpTypedClassSetupView()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

@@ -1,6 +1,5 @@
-﻿namespace ExcelService.DataActions.SharedActions
+﻿namespace ExcelService.DataActions.SharedActions;
+
+public interface IBackgroundStyleAction : IDataAction
 {
-    public interface IBackgroundStyleAction : IDataAction
-    {
-    }
 }

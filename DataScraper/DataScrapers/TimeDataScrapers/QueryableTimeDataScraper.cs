@@ -5,75 +5,74 @@ using DataScraper.Data.TimeData.QueryableData;
 using DataScraper.DataKeyValues.TimeKeyValues.Queryable;
 using DataScraper.DataSources;
 
-namespace DataScraper.DataScrapers.TimeDataScrapers
+namespace DataScraper.DataScrapers.TimeDataScrapers;
+
+public class QueryableDataScraper : IQueryableDataScraper
 {
-    public class QueryableDataScraper : IQueryableDataScraper
+    private const string STD_LIB_NAME = "Standard Library";
+    private const string QUERYABLE_LIB_NAME = "Queryable Library";
+
+    public string Name => "Queryable Scraper";
+
+    public bool IsValidSource(IDataSource source)
     {
-        private const string STD_LIB_NAME = "Standard Library";
-        private const string QUERYABLE_LIB_NAME = "Queryable Library";
+        return source is FileDataSource s && File.Exists(s.FilePath);
+    }
 
-        public string Name => "Queryable Scraper";
+    public ICollection<IData> ScrapeFromSource(IDataSource source)
+    {
+        string filePath = (source as FileDataSource).FilePath;
 
-        public bool IsValidSource(IDataSource source)
+        ICollection<IData> timeData = new List<IData>();
+        QueryableTimeDataSetter dataSetter = new QueryableTimeDataSetter();
+        QueryableTimeData standardTimeDatum = new QueryableTimeData { ExecuterName = STD_LIB_NAME };
+        QueryableTimeData queryableTimeDatum = new QueryableTimeData { ExecuterName = QUERYABLE_LIB_NAME };
+
+        string[] lines = File.ReadAllLines(filePath);
+
+        for (int i = 0; i < lines.Length; i++)
         {
-            return source is FileDataSource s && File.Exists(s.FilePath);
-        }
-
-        public ICollection<IData> ScrapeFromSource(IDataSource source)
-        {
-            string filePath = (source as FileDataSource).FilePath;
-
-            ICollection<IData> timeData = new List<IData>();
-            QueryableTimeDataSetter dataSetter = new QueryableTimeDataSetter();
-            QueryableTimeData standardTimeDatum = new QueryableTimeData { ExecuterName = STD_LIB_NAME };
-            QueryableTimeData queryableTimeDatum = new QueryableTimeData { ExecuterName = QUERYABLE_LIB_NAME };
-
-            string[] lines = File.ReadAllLines(filePath);
-
-            for (int i = 0; i < lines.Length; i++)
+            if (lines[i].Trim().Length == 0)
             {
-                if (lines[i].Trim().Length == 0)
-                {
-                    timeData.Add(standardTimeDatum);
-                    timeData.Add(queryableTimeDatum);
-                    standardTimeDatum = new QueryableTimeData { ExecuterName = STD_LIB_NAME };
-                    queryableTimeDatum = new QueryableTimeData { ExecuterName = QUERYABLE_LIB_NAME };
-                    continue;
-                }
-
-                string[] keyValue = lines[i].Split(':');
-                string key = keyValue[0].Trim();
-                string valueString = keyValue[1].Trim();
-
-                switch (key)
-                {
-                    case QueryableTimeDataKeys.CATEGORY:
-                    case QueryableTimeDataKeys.CONTAINER:
-                    case QueryableTimeDataKeys.TRIGGER:
-                    case QueryableTimeDataKeys.METHOD:
-                    case QueryableTimeDataKeys.CONTAINER_SIZE:
-                    case QueryableTimeDataKeys.ITERATIONS:
-                        dataSetter.Set(standardTimeDatum, key, valueString);
-                        dataSetter.Set(queryableTimeDatum, key, valueString);
-                        break;
-                    case QueryableTimeDataKeys.STANDARD_TOTAL_MILLIS:
-                    case QueryableTimeDataKeys.STANDARD_AVERAGE_MILLIS:
-                    case QueryableTimeDataKeys.STANDARD_FASTEST_MILLIS:
-                    case QueryableTimeDataKeys.STANDARD_SLOWEST_MILLIS:
-                    case QueryableTimeDataKeys.STANDARD_RANGE_MILLIS:
-                        dataSetter.Set(standardTimeDatum, key, valueString);
-                        break;
-                    case QueryableTimeDataKeys.QUERYABLE_TOTAL_MILLIS:
-                    case QueryableTimeDataKeys.QUERYABLE_AVERAGE_MILLIS:
-                    case QueryableTimeDataKeys.QUERYABLE_FASTEST_MILLIS:
-                    case QueryableTimeDataKeys.QUERYABLE_SLOWEST_MILLIS:
-                    case QueryableTimeDataKeys.QUERYABLE_RANGE_MILLIS:
-                        dataSetter.Set(queryableTimeDatum, key, valueString);
-                        break;
-                }
+                timeData.Add(standardTimeDatum);
+                timeData.Add(queryableTimeDatum);
+                standardTimeDatum = new QueryableTimeData { ExecuterName = STD_LIB_NAME };
+                queryableTimeDatum = new QueryableTimeData { ExecuterName = QUERYABLE_LIB_NAME };
+                continue;
             }
 
-            return timeData;
+            string[] keyValue = lines[i].Split(':');
+            string key = keyValue[0].Trim();
+            string valueString = keyValue[1].Trim();
+
+            switch (key)
+            {
+                case QueryableTimeDataKeys.CATEGORY:
+                case QueryableTimeDataKeys.CONTAINER:
+                case QueryableTimeDataKeys.TRIGGER:
+                case QueryableTimeDataKeys.METHOD:
+                case QueryableTimeDataKeys.CONTAINER_SIZE:
+                case QueryableTimeDataKeys.ITERATIONS:
+                    dataSetter.Set(standardTimeDatum, key, valueString);
+                    dataSetter.Set(queryableTimeDatum, key, valueString);
+                    break;
+                case QueryableTimeDataKeys.STANDARD_TOTAL_MILLIS:
+                case QueryableTimeDataKeys.STANDARD_AVERAGE_MILLIS:
+                case QueryableTimeDataKeys.STANDARD_FASTEST_MILLIS:
+                case QueryableTimeDataKeys.STANDARD_SLOWEST_MILLIS:
+                case QueryableTimeDataKeys.STANDARD_RANGE_MILLIS:
+                    dataSetter.Set(standardTimeDatum, key, valueString);
+                    break;
+                case QueryableTimeDataKeys.QUERYABLE_TOTAL_MILLIS:
+                case QueryableTimeDataKeys.QUERYABLE_AVERAGE_MILLIS:
+                case QueryableTimeDataKeys.QUERYABLE_FASTEST_MILLIS:
+                case QueryableTimeDataKeys.QUERYABLE_SLOWEST_MILLIS:
+                case QueryableTimeDataKeys.QUERYABLE_RANGE_MILLIS:
+                    dataSetter.Set(queryableTimeDatum, key, valueString);
+                    break;
+            }
         }
+
+        return timeData;
     }
 }

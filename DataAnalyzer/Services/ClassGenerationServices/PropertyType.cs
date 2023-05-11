@@ -1,9 +1,8 @@
-﻿namespace DataAnalyzer.Services.ClassGenerationServices
+﻿namespace DataAnalyzer.Services.ClassGenerationServices;
+
+internal enum PropertyType
 {
-    internal enum PropertyType
-    {
-        Class,
-        Collection,
-        Simple,
-    }
+    Class,
+    Collection,
+    Simple,
 }

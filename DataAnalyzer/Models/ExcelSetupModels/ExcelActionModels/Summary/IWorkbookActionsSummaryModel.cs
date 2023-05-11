@@ -1,9 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary
+namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary;
+
+internal interface IWorkbookActionsSummaryModel : IActionsSummaryModel
 {
-    internal interface IWorkbookActionsSummaryModel : IActionsSummaryModel
-    {
-        ObservableCollection<IExcelAction> GetActionCollection();
-    }
+    ObservableCollection<IExcelAction> GetActionCollection();
 }

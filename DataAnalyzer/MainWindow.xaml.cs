@@ -1,14 +1,13 @@
 ﻿using DataAnalyzer.ViewModels;
 using System.Windows;
 
-namespace DataAnalyzer
+namespace DataAnalyzer;
+
+public partial class MainWindow : Window
 {
-    public partial class MainWindow : Window
+    internal MainWindow(IMainViewModel viewModel)
     {
-        internal MainWindow(IMainViewModel viewModel)
-        {
-            this.InitializeComponent();
-            this.DataContext = viewModel;
-        }
+        this.InitializeComponent();
+        this.DataContext = viewModel;
     }
 }

@@ -3,19 +3,18 @@ using DataScraper.DataScrapers.ImportTypes;
 using DataScraper.DataScrapers.ScraperCategories;
 using DataScraper.DataScrapers.ScraperFlavors;
 
-namespace DataAnalyzer.ApplicationConfigurations
+namespace DataAnalyzer.ApplicationConfigurations;
+
+/// <summary>
+/// Holds the last used state of the application to be serialized and saved to file and loaded in on application startup
+/// </summary>
+internal class ApplicationConfiguration : VersionedConfiguration, IApplicationConfiguration
 {
-    /// <summary>
-    /// Holds the last used state of the application to be serialized and saved to file and loaded in on application startup
-    /// </summary>
-    internal class ApplicationConfiguration : VersionedConfiguration, IApplicationConfiguration
-    {
-        public IImportType SelectedImport { get; set; }
+    public IImportType SelectedImport { get; set; }
 
-        public IScraperCategory SelectedCategory { get; set; }
+    public IScraperCategory SelectedCategory { get; set; }
 
-        public IScraperFlavor SelectedFlavor { get; set; }
+    public IScraperFlavor SelectedFlavor { get; set; }
 
-        public ExecutionType SelectedExecution { get; set; }
-    }
+    public ExecutionType SelectedExecution { get; set; }
 }

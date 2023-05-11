@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views
+namespace DataAnalyzer.Views;
+
+public partial class ConfigurationGroupingRuleRow : UserControl
 {
-    public partial class ConfigurationGroupingRuleRow : UserControl
+    public ConfigurationGroupingRuleRow()
     {
-        public ConfigurationGroupingRuleRow()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

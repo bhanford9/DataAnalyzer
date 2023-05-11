@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 
-namespace DataScraper.Data.JsonData
+namespace DataScraper.Data.JsonData;
+
+internal class JsonObjectData : IJsonObjectData
 {
-    internal class JsonObjectData : IJsonObjectData
-    {
-        public JObject JsonObject { get; set; }
-    }
+    public JObject JsonObject { get; set; }
 }

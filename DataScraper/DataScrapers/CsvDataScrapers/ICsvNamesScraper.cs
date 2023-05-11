@@ -1,6 +1,5 @@
-﻿namespace DataScraper.DataScrapers.CsvDataScrapers
+﻿namespace DataScraper.DataScrapers.CsvDataScrapers;
+
+public interface ICsvNamesScraper : IDataScraper
 {
-    public interface ICsvNamesScraper : IDataScraper
-    {
-    }
 }

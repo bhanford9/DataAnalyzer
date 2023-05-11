@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCreators
+﻿namespace DataAnalyzer.Services.ClassGenerationServices.PropertyCreators.TypeCreators;
+
+internal interface IBoolCreator : ITypeCreator
 {
-    internal interface IBoolCreator : ITypeCreator
-    {
-    }
 }

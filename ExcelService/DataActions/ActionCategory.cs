@@ -1,13 +1,12 @@
-﻿namespace ExcelService.DataActions
-{
-    public enum ActionCategory
-    {
-        AlignmentStyle,
-        BorderStyle,
-        BackgroundStyle,
-        BooleanOperation,
+﻿namespace ExcelService.DataActions;
 
-        // Difficult to place:
-        ColumnBorderStyle
-    }
+public enum ActionCategory
+{
+    AlignmentStyle,
+    BorderStyle,
+    BackgroundStyle,
+    BooleanOperation,
+
+    // Difficult to place:
+    ColumnBorderStyle
 }

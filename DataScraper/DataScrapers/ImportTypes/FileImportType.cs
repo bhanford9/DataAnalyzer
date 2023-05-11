@@ -1,8 +1,7 @@
-﻿namespace DataScraper.DataScrapers.ImportTypes
+﻿namespace DataScraper.DataScrapers.ImportTypes;
+
+public interface IFileImportType : IImportType { }
+public class FileImportType : ImportType<FileImportType>, IFileImportType
 {
-    public interface IFileImportType : IImportType { }
-    public class FileImportType : ImportType<FileImportType>, IFileImportType
-    {
-        public override string Name => "File";
-    }
+    public override string Name => "File";
 }

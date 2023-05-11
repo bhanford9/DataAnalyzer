@@ -1,8 +1,7 @@
 ﻿using ExcelService.DataActions.ActionParameters.RangeStyleParameters;
 
-namespace ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters
+namespace ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters;
+
+public interface IHeaderBorderStyleParameters : IBorderStyleParameters
 {
-    public interface IHeaderBorderStyleParameters : IBorderStyleParameters
-    {
-    }
 }

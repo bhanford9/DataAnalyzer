@@ -1,10 +1,9 @@
-﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation
+﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Creation;
+
+internal abstract class ActionCreationModel : ExcelActionModel, IActionCreationModel
 {
-    internal abstract class ActionCreationModel : ExcelActionModel, IActionCreationModel
+    protected ActionCreationModel(IStatsModel statsModel, IExcelSetupModel excelSetupModel)
+        : base(statsModel, excelSetupModel)
     {
-        protected ActionCreationModel(IStatsModel statsModel, IExcelSetupModel excelSetupModel)
-            : base(statsModel, excelSetupModel)
-        {
-        }
     }
 }

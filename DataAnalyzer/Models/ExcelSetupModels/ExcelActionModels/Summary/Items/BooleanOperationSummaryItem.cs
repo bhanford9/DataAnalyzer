@@ -1,18 +1,17 @@
 ﻿using DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
 using System;
 
-namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items
+namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionModels.Summary.Items;
+
+internal class BooleanOperationSummaryItem : SummaryItem, IBooleanOperationSummaryItem
 {
-    internal class BooleanOperationSummaryItem : SummaryItem, IBooleanOperationSummaryItem
+    public override bool IsApplicable(IActionParameters actionParameters) => actionParameters is BooleanOperationParameters;
+
+    public override void SetDescription(IActionParameters actionParameters)
     {
-        public override bool IsApplicable(IActionParameters actionParameters) => actionParameters is BooleanOperationParameters;
+        BooleanOperationParameters booleanOperationParameters = actionParameters as BooleanOperationParameters;
 
-        public override void SetDescription(IActionParameters actionParameters)
-        {
-            BooleanOperationParameters booleanOperationParameters = actionParameters as BooleanOperationParameters;
-
-            this.Description =
-              $"Background Color: {booleanOperationParameters.DoPerform}{Environment.NewLine}";
-        }
+        this.Description =
+          $"Background Color: {booleanOperationParameters.DoPerform}{Environment.NewLine}";
     }
 }

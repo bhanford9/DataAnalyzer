@@ -1,7 +1,6 @@
-﻿namespace DataScraper.Data.ClassData
+﻿namespace DataScraper.Data.ClassData;
+
+internal abstract class Property : IProperty
 {
-    internal abstract class Property : IProperty
-    {
-        public string Name { get; set; } = string.Empty;
-    }
+    public string Name { get; set; } = string.Empty;
 }

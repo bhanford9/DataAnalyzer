@@ -1,29 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace DataAnalyzer.DataImport.DataObjects.ClassStats
+namespace DataAnalyzer.DataImport.DataObjects.ClassStats;
+
+internal class ClassProperty : Property, IClassProperty
 {
-    internal class ClassProperty : Property, IClassProperty
+    public ICollection<IProperty> Properties { get; set; } = new List<IProperty>();
+
+    public override int CompareTo(object obj)
     {
-        public ICollection<IProperty> Properties { get; set; } = new List<IProperty>();
-
-        public override int CompareTo(object obj)
+        if (obj is ClassProperty classProperty)
         {
-            if (obj is ClassProperty classProperty)
+            int nameComparison = this.Name.CompareTo(classProperty.Name);
+
+            if (nameComparison == 0)
             {
-                int nameComparison = this.Name.CompareTo(classProperty.Name);
-
-                if (nameComparison == 0)
-                {
-                    return this.Properties.FirstOrDefault(
-                        x => classProperty.Properties.All(y => y.CompareTo(x) != 0)) == default
-                        ? 0 : 1;
-                }
-
-                return nameComparison;
+                return this.Properties.FirstOrDefault(
+                    x => classProperty.Properties.All(y => y.CompareTo(x) != 0)) == default
+                    ? 0 : 1;
             }
 
-            return -1;
+            return nameComparison;
         }
+
+        return -1;
     }
 }

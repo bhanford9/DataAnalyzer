@@ -1,13 +1,12 @@
 ﻿using ExcelService.Rows;
 
-namespace ExcelService.DataClusters
+namespace ExcelService.DataClusters;
+
+public interface IDataCluster : ICellRange
 {
-    public interface IDataCluster : ICellRange
-    {
-        string ClusterHeader { get; }
-        IRow Titles { get; }
-        ICollection<IRow> Rows { get; }
-        bool UseClusterHeader { get; }
-        IRow HeaderRange { get; set; }
-    }
+    string ClusterHeader { get; }
+    IRow Titles { get; }
+    ICollection<IRow> Rows { get; }
+    bool UseClusterHeader { get; }
+    IRow HeaderRange { get; set; }
 }

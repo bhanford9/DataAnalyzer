@@ -1,13 +1,12 @@
-﻿namespace DataScraper.Data.TimeData.QueryableData
+﻿namespace DataScraper.Data.TimeData.QueryableData;
+
+public enum CategoryType
 {
-    public enum CategoryType
-    {
-        BuiltIn,
-        //BuiltInMediumLoad,
-        //BuiltInHeavyLoad,
-        Class,
-        //ClassMediumLoad,
-        //ClassHeavyLoad,
-        Other
-    }
+    BuiltIn,
+    //BuiltInMediumLoad,
+    //BuiltInHeavyLoad,
+    Class,
+    //ClassMediumLoad,
+    //ClassHeavyLoad,
+    Other
 }

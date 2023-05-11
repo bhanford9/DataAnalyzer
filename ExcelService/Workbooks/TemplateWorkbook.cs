@@ -2,18 +2,17 @@
 using ExcelService.Utilities;
 using ExcelService.Worksheets;
 
-namespace ExcelService.Workbooks
-{
-    public class TemplateWorkbook : Workbook, ITemplateWorkbook
-    {
-        public TemplateWorkbook(
-          string filePath,
-          ICollection<IWorksheet> worksheets,
-          IActionDefinitions workbookActions = null)
-          : base(filePath, worksheets, workbookActions)
-        {
-        }
+namespace ExcelService.Workbooks;
 
-        public override DocumentType DocumentType => DocumentType.Template;
+public class TemplateWorkbook : Workbook, ITemplateWorkbook
+{
+    public TemplateWorkbook(
+      string filePath,
+      ICollection<IWorksheet> worksheets,
+      IActionDefinitions workbookActions = null)
+      : base(filePath, worksheets, workbookActions)
+    {
     }
+
+    public override DocumentType DocumentType => DocumentType.Template;
 }

@@ -1,6 +1,5 @@
-﻿namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows
+﻿namespace DataAnalyzer.ViewModels.Utilities.LoadableRemovableRows;
+
+internal interface IExcelDataTypeListItemViewModel : ILoadableRemovableRowViewModel
 {
-    internal interface IExcelDataTypeListItemViewModel : ILoadableRemovableRowViewModel
-    {
-    }
 }

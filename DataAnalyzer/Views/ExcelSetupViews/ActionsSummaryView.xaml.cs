@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views.ExcelSetupViews
+namespace DataAnalyzer.Views.ExcelSetupViews;
+
+public partial class ActionsSummaryView : UserControl
 {
-    public partial class ActionsSummaryView : UserControl
+    public ActionsSummaryView()
     {
-        public ActionsSummaryView()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

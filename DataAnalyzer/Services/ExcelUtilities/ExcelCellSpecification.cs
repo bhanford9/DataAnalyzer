@@ -1,7 +1,6 @@
-﻿namespace DataAnalyzer.Services.ExcelUtilities
+﻿namespace DataAnalyzer.Services.ExcelUtilities;
+
+internal class ExcelCellSpecification : ExcelEntitySpecification, IExcelCellSpecification
 {
-    internal class ExcelCellSpecification : ExcelEntitySpecification, IExcelCellSpecification
-    {
-        public override string Name => "Cell";
-    }
+    public override string Name => "Cell";
 }

@@ -8,11 +8,6 @@
              xmlns:actionSummaryViewModels="clr-namespace:DataAnalyzer.ViewModels.ExcelSetupViewModels.ExcelActionViewModels.ActionSummaryViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-  <UserControl.Resources>
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
-    <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibility"/>
-  </UserControl.Resources>
-
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
@@ -69,7 +64,7 @@
             <!-- Then need a way to distinguish which type of Summary to display (i.e. border vs background etc.) -->
             <!-- ActionApplicationView used a CategoryToVisibility converter to have all of them present but only the correct one visible -->
             <Grid>
-              <Grid Visibility="{Binding IsLeaf, Converter={StaticResource BooleanToVisibility}}">
+              <Grid Visibility="{Binding IsLeaf, Converter={StaticResource BoolVisibilityConverter}}">
                 <Grid.ColumnDefinitions>
                   <ColumnDefinition Width="10"/>
                   <ColumnDefinition Width="*"/>
@@ -162,7 +157,7 @@
               </Grid>
 
               <StackPanel Orientation="Horizontal"
-                          Visibility="{Binding IsLeaf, Converter={StaticResource InverseBooleanToVisibility}}"
+                          Visibility="{Binding IsLeaf, Converter={StaticResource InverseBoolVisibilityConverter}}"
                           Margin="1 3">
                 <Grid>
                   <Grid.ColumnDefinitions>

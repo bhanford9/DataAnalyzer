@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews
+namespace DataAnalyzer.Views.ExcelSetupViews.ActionCreationViews;
+
+public partial class BackgroundCreationView : UserControl
 {
-    public partial class BackgroundCreationView : UserControl
+    public BackgroundCreationView()
     {
-        public BackgroundCreationView()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

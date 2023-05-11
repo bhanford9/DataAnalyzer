@@ -1,6 +1,5 @@
-﻿namespace ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters
+﻿namespace ExcelService.DataActions.ActionParameters.ClusterHeaderStyleParameters;
+
+public interface IHeaderMergeCenterFullParameters : IActionParameters
 {
-    public interface IHeaderMergeCenterFullParameters : IActionParameters
-    {
-    }
 }

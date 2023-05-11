@@ -1,12 +1,11 @@
 ﻿using System.Windows.Controls;
 
-namespace DataAnalyzer.Views.Utilities
+namespace DataAnalyzer.Views.Utilities;
+
+public partial class LoadableRemovableRow : UserControl
 {
-    public partial class LoadableRemovableRow : UserControl
+    public LoadableRemovableRow()
     {
-        public LoadableRemovableRow()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
     }
 }

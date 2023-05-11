@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace DataAnalyzer.Services.ClassGenerationServices
+namespace DataAnalyzer.Services.ClassGenerationServices;
+
+internal interface IClassCreator
 {
-    internal interface IClassCreator
-    {
-        string Create(
-            string classAccessibility,
-            string className,
-            IReadOnlyCollection<(string Name, string Type, string Accessibility)> propertyData);
-    }
+    string Create(
+        string classAccessibility,
+        string className,
+        IReadOnlyCollection<(string Name, string Type, string Accessibility)> propertyData);
 }

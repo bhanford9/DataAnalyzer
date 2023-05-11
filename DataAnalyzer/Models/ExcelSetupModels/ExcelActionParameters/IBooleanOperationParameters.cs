@@ -1,7 +1,6 @@
-﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters
+﻿namespace DataAnalyzer.Models.ExcelSetupModels.ExcelActionParameters;
+
+internal interface IBooleanOperationParameters : IActionParameters
 {
-    internal interface IBooleanOperationParameters : IActionParameters
-    {
-        bool DoPerform { get; set; }
-    }
+    bool DoPerform { get; set; }
 }

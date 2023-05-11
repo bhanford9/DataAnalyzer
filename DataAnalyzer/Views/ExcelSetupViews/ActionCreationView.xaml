@@ -11,9 +11,6 @@
              mc:Ignorable="d" 
              Name="ActionCreation"
              d:DesignHeight="450" d:DesignWidth="800">
-  <UserControl.Resources>
-    <converters:ActionCategoryToVisibilityConverter x:Key="CategoryToVisibility"/>
-  </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" MinWidth="150"/>
@@ -85,7 +82,7 @@
             Visibility="{Binding 
               DataContext.CurrentAction.ActionParameters.ActionCategory,
               ElementName=ActionCreation,
-              Converter={StaticResource CategoryToVisibility}, 
+              Converter={StaticResource ActionCategoryToVisibilityConverter}, 
               ConverterParameter={x:Static enums:ActionCategory.AlignmentStyle}}"
             DataContext="{Binding DataContext.CurrentAction, ElementName=ActionCreation}"/>
           
@@ -94,7 +91,7 @@
             Visibility="{Binding 
               DataContext.CurrentAction.ActionParameters.ActionCategory,
               ElementName=ActionCreation,
-              Converter={StaticResource CategoryToVisibility}, 
+              Converter={StaticResource ActionCategoryToVisibilityConverter}, 
               ConverterParameter={x:Static enums:ActionCategory.BackgroundStyle}}"
             DataContext="{Binding DataContext.CurrentAction, ElementName=ActionCreation}"/>
 
@@ -103,7 +100,7 @@
             Visibility="{Binding 
               DataContext.CurrentAction.ActionParameters.ActionCategory,
               ElementName=ActionCreation,
-              Converter={StaticResource CategoryToVisibility}, 
+              Converter={StaticResource ActionCategoryToVisibilityConverter}, 
               ConverterParameter={x:Static enums:ActionCategory.BorderStyle}}"
             DataContext="{Binding DataContext.CurrentAction, ElementName=ActionCreation}"/>
 
@@ -112,7 +109,7 @@
             Visibility="{Binding 
               DataContext.CurrentAction.ActionParameters.ActionCategory,
               ElementName=ActionCreation,
-              Converter={StaticResource CategoryToVisibility}, 
+              Converter={StaticResource ActionCategoryToVisibilityConverter}, 
               ConverterParameter={x:Static enums:ActionCategory.BooleanOperation}}"
             DataContext="{Binding DataContext.CurrentAction, ElementName=ActionCreation}"/>
         </Grid>
